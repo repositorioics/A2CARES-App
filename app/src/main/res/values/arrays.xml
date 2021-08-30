@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="menu_principal">
+        <item>@string/main_1</item>
+        <item>@string/main_2</item>
+        <item>@string/main_3</item>
+        <item>@string/main_4</item>
+        <item>@string/main_5</item>
+        <item>@string/main_6</item>
+    </string-array>
+
+    <string-array name="menu_participante">
+        <item>@string/new_consultation</item>
+        <item>@string/new_visit</item>
+        <item>@string/new_survey_1</item>
+        <item>@string/new_survey_2</item>
+        <item>@string/new_survey_3</item>
+        <item>@string/samples</item>
+        <item>@string/go_home</item>
+    </string-array>
+
+    <string-array name="menu_casa">
+        <item>@string/participants</item>
+        <item>@string/phones</item>
+        <item>@string/send_house</item>
+    </string-array>
+</resources>

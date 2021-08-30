@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources  xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">A2CARES-App</string>
+    <string name="main_header">Estudio A2CARES</string>
+    <string name="desc_logo">Instituto de Ciencias Sostenibles</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <string name="title_home">Página principal</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="main_1">Agregar Participante</string>
+    <string name="main_2">Buscar Participante</string>
+    <string name="main_3">Buscar Casa</string>
+    <string name="main_4">Recibir Casa</string>
+    <string name="main_5">Descargar Datos</string>
+    <string name="main_6">Subir Datos</string>
+    <string name="main_7">Supervisor</string>
+    <string name="datos_part">Datos participante</string>
+    <string name="participants">Lista Participantes</string>
+    <string name="phones">Teléfonos</string>
+    <string name="send_house">Enviar casa</string>
+    <string name="menu_house">Menu Casa</string>
+
+    <string name="exit">Salir</string>
+    <string name="success">Operación exitosa!</string>
+    <string name="error">Ha ocurrido un error! <xliff:g id="desc_error">%1$s</xliff:g></string>
+    <string name="storage_error">Medio de almacenamiento no disponible!</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="confirm">Confirmar</string>
+    <string name="exiting">Realmente desea Salir?</string>
+    <string name="errordb">Ha ocurrido un error, base de datos no existe!</string>
+    <string name="wipe_db_confirm">Al marcar esta opción borrará la base de datos del equipo, los datos almacenados se borrarán si continúa. Aún desea marcar esta opción?</string>
+    <string name="error_wipe_db_super">No tiene el rol necesario para limpiar base de datos</string>
+    <string name="change_date">Seleccionar fecha</string>
+    <string name="desc_barcode">Escanear código de barras</string>
+    <!--Busquedas -->
+    <string name="enter">Ingresar</string>
+    <string name="barcode_error">Escaner de código de barras no disponible</string>
+    <string name="search_hint">Ingresar texto de búsqueda</string>
+    <string name="select">Seleccionar</string>
+    <string name="no_items">No hay registros!</string>
+    <string name="casa_search">Buscar Casa</string>
+    <string name="parametro">Parámetro de búsqueda</string>
+    <string name="method">Método:</string>
+    <string name="ok">Aceptar</string>
+    <string name="enter_code">Ingresar código</string>
+    <string name="enter_name">Ingresar nombre</string>
+    <string name="enter_lastname">Ingresar apellido</string>
+    <string name="selec_part">Seleccionar participante</string>
+    <string name="code_notfound">Identificador no encontrado!</string>
+    <string name="text_notfound">Valor no encontrado!</string>
+    <string name="scan_error">Esta lectura es inválida!</string>
+
+    <!-- Formularios-->
+    <string name="next">Siguiente</string>
+    <string name="prev">Previo</string>
+    <string name="finish">Finalizar</string>
+    <string name="review">Revisar</string>
+    <string name="submit_confirm_message">Guardar la informacion en la base de datos?</string>
+    <string name="submit_confirm_button">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="is_null">(Nulo)</string>
+    <string name="loading">Cargando.....</string>
+
+    <string name="new_consultation">Hoja Clínica</string>
+    <string name="new_visit">Visita</string>
+    <string name="new_survey_1">Encuesta Casa</string>
+    <string name="new_survey_2">Encuesta Participante</string>
+    <string name="new_survey_3">Peso y Talla</string>
+    <string name="samples">Muestras</string>
+    <string name="go_home">Ir Casa</string>
+    <string name="code">Código</string>
+    <string name="casa">Casa</string>
+    <string name="participant">Participante</string>
+    <string name="edad">Edad</string>
+    <string name="notavailable">No disponible</string>
+    <string name="pending">Pendiente</string>
+    <string name="done">Realizado</string>
+
+    <string name="home">Inicio</string>
+    <string name="back">Regresar</string>
+
+    <string name="download">Descargar Datos</string>
+    <string name="upload">Subir Datos</string>
+    <string name="err_cancel">Ha cancelado el proceso!</string>
+    <string name="outofrange">Fuera de rango</string>
+
+    <!-- Bluetooth-->
+    <!--  BluetoothChat -->
+    <string name="intro_message">
+        <![CDATA[
+            Para enviar información tiene que estar pareado con el otro dispositivo:
+              (1) Buscar en los dispositivos pareados
+              (2) Conectar al dispositivo remoto
+              (3) Enviar los datos
+        ]]>
+    </string>
+    <string name="send">Enviar</string>
+    <string name="not_connected">No está conectado!</string>
+    <string name="bt_not_enabled_leaving">Bluetooth deshabilitado. Saliendo de la actividad.</string>
+    <string name="title_connecting">conectando..</string>
+    <string name="title_connected_to">Conectado a <xliff:g id="device_name">%1$s</xliff:g></string>
+    <string name="connected_to">Conectado a </string>
+    <string name="send_to">Enviar a ..</string>
+    <string name="title_not_connected">No conectado</string>
+    <string name="waiting_data">Esperando datos..</string>
+    <string name="send_request">Enviar solicitud</string>
+    <string name="start_part">/*Enviar participante*/</string>
+    <string name="finished_part">/*Terminado participantes*/</string>
+    <string name="start_phone">/*Enviar telefono*/</string>
+    <string name="finished">/*Proceso finalizado*/</string>
+    <!--  DeviceListActivity -->
+    <string name="scanning">Buscando dispositivos..</string>
+    <string name="select_device">Seleccionar dispositivo para conectar</string>
+    <string name="none_paired">Ho hay equipos pareados</string>
+    <string name="none_found">No se encuentran dispositivos</string>
+    <string name="title_paired_devices">Equipos pareados</string>
+    <string name="title_other_devices">Otros disponibles</string>
+    <string name="button_scan">Buscar equipos</string>
+
+    <!-- Options Menu -->
+    <string name="secure_connect">Conectar</string>
+    <string name="insecure_connect">Conectar (inseguro)..</string>
+    <string name="discoverable">Hacer visible</string>
+    <string name="sample_show_log">Ver actividad</string>
+    <string name="sample_hide_log">Esconder actividad</string>
+
+    <string name="fechaVisita">Fecha visita</string>
+    <string name="fechaVisitaHint"></string>
+    <string name="visitaExitosa">¿Visita exitosa?</string>
+    <string name="visitaExitosaHint"></string>
+    <string name="razonVisitaNoExitosa">Razon visita no exitosa</string>
+    <string name="razonVisitaNoExitosaHint">Seleccione porque razón no logró realizar una visita exitosa</string>
+    <string name="otraRazonVisitaNoExitosa">Otra razón visita no exitosa</string>
+    <string name="otraRazonVisitaNoExitosaHint">Indicar porque otra razón no logró realizar una visita exitosa</string>
+    <string name="visitaNoExitosa">Visita registrada. Se guardó en la base de datos una visita fallida por <xliff:g id="razon">%1$s</xliff:g></string>
+
+    <!-- Mapas -->
+    <string name="marker_detail_latlng">(%1$.6f, %2$.6f)</string>
+    <string name="marker_latlng_format">%1$.6f</string>
+    <string name="latlng">Lat/Long</string>
+    <string name="latlngHelp">*Presionar el punto unos 3 seg, luego arrastrar*</string>
+    <string name="error_marker">Error al obtener coordenada!!</string>
+    <string name="without_direction">Sin dirección</string>
+
+    <string name="wrongSelect">La respuesta para <xliff:g id="variable">%1$s</xliff:g> es requerida</string>
+</resources>

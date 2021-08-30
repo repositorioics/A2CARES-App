@@ -1,0 +1,690 @@
+package ni.org.ics.a2cares.app.ui.task;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.HttpAuthentication;
+import org.springframework.http.HttpBasicAuthentication;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import android.content.Context;
+import android.util.Log;
+
+import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
+import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
+import ni.org.ics.a2cares.app.domain.core.CartaConsentimiento;
+import ni.org.ics.a2cares.app.domain.core.Casa;
+import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
+import ni.org.ics.a2cares.app.domain.core.Muestra;
+import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.core.Tamizaje;
+import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
+import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
+import ni.org.ics.a2cares.app.domain.survey.EncuestaParticipante;
+import ni.org.ics.a2cares.app.domain.survey.EncuestaPesoTalla;
+import ni.org.ics.a2cares.app.domain.visita.VisitaTerrenoParticipante;
+import ni.org.ics.a2cares.app.listeners.UploadListener;
+import ni.org.ics.a2cares.app.utils.Constants;
+
+public class UploadAllTask extends UploadTask {
+	
+	private final Context mContext;
+
+	public UploadAllTask(Context context) {
+		mContext = context;
+	}
+
+	protected static final String TAG = UploadAllTask.class.getSimpleName();
+    
+	private EstudioDBAdapter estudioAdapter = null;
+	private List<VisitaTerrenoParticipante> mVisitasTerreno = new ArrayList<VisitaTerrenoParticipante>();
+    private List<Tamizaje> mTamizajes = new ArrayList<Tamizaje>();
+    private List<Casa> mCasas = new ArrayList<Casa>();
+    private List<Participante> mParticipantes = new ArrayList<Participante>();
+    //private List<ParticipanteProcesos> mParticipantesProc = new ArrayList<ParticipanteProcesos>();
+    private List<CartaConsentimiento> mCartasConsent = new ArrayList<CartaConsentimiento>();
+    private List<EncuestaCasa> mEncuestasCasas = new ArrayList<EncuestaCasa>();
+    private List<EncuestaParticipante> mEncuestasParticipante = new ArrayList<EncuestaParticipante>();
+    private List<EncuestaPesoTalla> mEncuestasPesoTalla = new ArrayList<EncuestaPesoTalla>();
+    private List<Muestra> mMuestras = new ArrayList<Muestra>();
+    private List<TelefonoContacto> mTelefonos = new ArrayList<TelefonoContacto>();
+    private List<DatosCoordenadas> mCoordenadas = new ArrayList<DatosCoordenadas>();
+
+	private String url = null;
+	private String username = null;
+	private String password = null;
+	private String error = null;
+	protected UploadListener mStateListener;
+
+	public static final String VISITA = "1";
+    public static final String TAMIZAJE = "2";
+    public static final String CASA = "3";
+    public static final String PARTICIPANTE = "4";
+    public static final String CARTAS_CONSENT = "5";
+    public static final String TELEFONOS = "6";
+    public static final String COORDENADAS = "7";
+    //public static final String PARTICIPANTE_PRC = "6";
+    public static final String ENCUESTA_CASA = "8";
+    public static final String ENCUESTA_PARTICIPANTE = "9";
+    public static final String ENCUESTA_PESOTALLA = "10";
+    public static final String MUESTRAS = "11";
+
+    //public static final String RECEPCION_MUESTRA = "28";
+
+	private static final String TOTAL_TASK = "11";
+	
+
+	@Override
+	protected String doInBackground(String... values) {
+		url = values[0];
+		username = values[1];
+		password = values[2];
+
+		try {
+			publishProgress("Obteniendo registros de la base de datos", "1", "2");
+			estudioAdapter = new EstudioDBAdapter(mContext, password, false,false);
+			estudioAdapter.open();
+			String filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
+			mVisitasTerreno = estudioAdapter.getVisitasTerrenoParticipantes(filtro, null);
+			mTamizajes = estudioAdapter.getTamizajes(filtro, MainDBConstants.codigo);
+            mCasas = estudioAdapter.getCasas(filtro, MainDBConstants.codigo);
+            mParticipantes = estudioAdapter.getParticipantes(filtro, MainDBConstants.codigo);
+            mCartasConsent = estudioAdapter.getCartasConsentimientos(filtro, MainDBConstants.codigo);
+            mTelefonos = estudioAdapter.getTelefonosContacto(filtro, null);
+            mCoordenadas = estudioAdapter.getDatosCoordenadas(filtro, null);
+            mEncuestasCasas = estudioAdapter.getEncuestaCasas(filtro, null);
+            mEncuestasParticipante = estudioAdapter.getEncuestasParticipantes(filtro, null);
+            mEncuestasPesoTalla = estudioAdapter.getEncuestasPesoTallas(filtro, null);
+            mMuestras = estudioAdapter.getMuestras(filtro, null);
+
+			publishProgress("Datos completos!", "2", "2");
+			
+			//Enviando datos
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITA);
+            error = cargarVisitasTerreno(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITA);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, TAMIZAJE);
+            error = cargarTamizajes(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TAMIZAJE);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CASA);
+            error = cargarCasas(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CASA);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE);
+            error = cargarParticipantes(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CARTAS_CONSENT);
+            error = cargarCartasConsentimientos(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CARTAS_CONSENT);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, TELEFONOS);
+            error = cargarTelefonos(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TELEFONOS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, COORDENADAS);
+            error = cargarCoordenadas(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, COORDENADAS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_CASA);
+            error = cargarEncuestasCasa(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_CASA);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_PARTICIPANTE);
+            error = cargarEncuestasParticipantes(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PARTICIPANTE);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_PESOTALLA);
+            error = cargarEncuestasPesoTalla(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PESOTALLA);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS);
+            error = cargarMuestras(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS);
+                return error;
+            }
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			return e1.getLocalizedMessage();
+		}finally {
+            estudioAdapter.close();
+        }
+        return error;
+	}
+	
+	private void actualizarBaseDatos(char estado, String opcion) {
+		int c;
+        if(opcion.equalsIgnoreCase(VISITA)){
+            c = mVisitasTerreno.size();
+            if(c>0){
+                for (VisitaTerrenoParticipante visita : mVisitasTerreno) {
+                    visita.setEstado(estado);
+                    estudioAdapter.editarVisitaTerrenoParticipante(visita);
+                    publishProgress("Actualizando visitas en base de datos local", Integer.valueOf(mVisitasTerreno.indexOf(visita)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+		if(opcion.equalsIgnoreCase(CASA)){
+			c = mCasas.size();
+			if(c>0){
+				for (Casa casa : mCasas) {
+					casa.setEstado(estado);
+					estudioAdapter.editarCasa(casa);
+					publishProgress("Actualizando casas en base de datos local", Integer.valueOf(mCasas.indexOf(casa)).toString(), Integer
+							.valueOf(c).toString());
+				}
+			}
+		}
+        if(opcion.equalsIgnoreCase(TAMIZAJE)){
+            c = mTamizajes.size();
+            if(c>0){
+                for (Tamizaje tamizaje : mTamizajes) {
+                    tamizaje.setEstado(estado);
+                    estudioAdapter.editarTamizaje(tamizaje);
+                    publishProgress("Actualizando tamizajes en base de datos local", Integer.valueOf(mTamizajes.indexOf(tamizaje)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(PARTICIPANTE)){
+            c = mParticipantes.size();
+            if(c>0){
+                for (Participante participante : mParticipantes) {
+                    participante.setEstado(estado);
+                    estudioAdapter.editarParticipante(participante);
+                    publishProgress("Actualizando participantes en base de datos local", Integer.valueOf(mParticipantes.indexOf(participante)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(CARTAS_CONSENT)){
+            c = mCartasConsent.size();
+            if(c>0){
+                for (CartaConsentimiento consentimiento : mCartasConsent) {
+                    consentimiento.setEstado(estado);
+                    estudioAdapter.editarCartaConsentimiento(consentimiento);
+                    publishProgress("Actualizando cartas de consentimiento en base de datos local", Integer.valueOf(mCartasConsent.indexOf(consentimiento)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(TELEFONOS)){
+            c = mTelefonos.size();
+            if(c>0){
+                for (TelefonoContacto telef : mTelefonos) {
+                    telef.setEstado(estado);
+                    estudioAdapter.editarTelefonoContacto(telef);
+                    publishProgress("Actualizando telefonos en base de datos local", Integer.valueOf(mTelefonos.indexOf(telef)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(COORDENADAS)){
+            c = mCoordenadas.size();
+            if(c>0){
+                for (DatosCoordenadas coordenadas : mCoordenadas) {
+                    coordenadas.setEstado(estado);
+                    estudioAdapter.editarDatosCoordenadas(coordenadas);
+                    publishProgress("Actualizando coordenadas en base de datos local", Integer.valueOf(mCoordenadas.indexOf(coordenadas)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(ENCUESTA_CASA)){
+            c = mEncuestasCasas.size();
+            if(c>0){
+                for (EncuestaCasa encuestaCasa : mEncuestasCasas) {
+                    encuestaCasa.setEstado(estado);
+                    estudioAdapter.editarEncuestaCasa(encuestaCasa);
+                    publishProgress("Actualizando encuestas casa en base de datos local", Integer.valueOf(mEncuestasCasas.indexOf(encuestaCasa)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(ENCUESTA_PARTICIPANTE)){
+            c = mEncuestasParticipante.size();
+            if(c>0){
+                for (EncuestaParticipante encuestaParticipante : mEncuestasParticipante) {
+                    encuestaParticipante.setEstado(estado);
+                    estudioAdapter.editarEncuestasParticipante(encuestaParticipante);
+                    publishProgress("Actualizando encuestas participantes en base de datos local", Integer.valueOf(mEncuestasParticipante.indexOf(encuestaParticipante)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(ENCUESTA_PESOTALLA)){
+            c = mEncuestasPesoTalla.size();
+            if(c>0){
+                for (EncuestaPesoTalla encuestaPesoTalla : mEncuestasPesoTalla) {
+                    encuestaPesoTalla.setEstado(estado);
+                    estudioAdapter.editarEncuestasPesoTalla(encuestaPesoTalla);
+                    publishProgress("Actualizando encuestas Peso y Talla en base de datos local", Integer.valueOf(mEncuestasPesoTalla.indexOf(encuestaPesoTalla)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(MUESTRAS)){
+            c = mMuestras.size();
+            if(c>0){
+                for (Muestra muestra : mMuestras) {
+                    muestra.setEstado(estado);
+                    estudioAdapter.editarMuestras(muestra);
+                    publishProgress("Actualizando muestras en base de datos local", Integer.valueOf(mMuestras.indexOf(muestra)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+	}
+	
+	
+	/***************************************************/
+	/********************* Casas ************************/
+	/***************************************************/
+    // url, username, password
+    protected String cargarCasas(String url, String username,
+    		String password) throws Exception {
+    	try {
+    		if(mCasas.size()>0){
+    			// La URL de la solicitud POST
+    			publishProgress("Enviando casas!", CASA, TOTAL_TASK);
+    			final String urlRequest = url + "/movil/casas";
+                Casa[] envio = mCasas.toArray(new Casa[mCasas.size()]);
+    			HttpHeaders requestHeaders = new HttpHeaders();
+    			HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+    			requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+    			requestHeaders.setAuthorization(authHeader);
+    			HttpEntity<Casa[]> requestEntity =
+    					new HttpEntity<Casa[]>(envio, requestHeaders);
+    					RestTemplate restTemplate = new RestTemplate();
+    					restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+    					restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+    					// Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+    					ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+    							String.class);
+    					return response.getBody();
+    		}
+    		else{
+    			return Constants.DATOS_RECIBIDOS;
+    		}
+    	} catch (Exception e) {
+    		Log.e(TAG, e.getMessage(), e);
+    		return e.getMessage();
+    	}
+    }
+
+    /***************************************************/
+    /********************* Visitas de terreno de participantes ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarVisitasTerreno(String url, String username,
+                                     String password) throws Exception {
+        try {
+            if(mVisitasTerreno.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando tamizaje de personas!", VISITA, TOTAL_TASK);
+                final String urlRequest = url + "/movil/visitasterrenoparti";
+                VisitaTerrenoParticipante[] envio = mVisitasTerreno.toArray(new VisitaTerrenoParticipante[mVisitasTerreno.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<VisitaTerrenoParticipante[]> requestEntity =
+                        new HttpEntity<VisitaTerrenoParticipante[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+    
+    /***************************************************/
+    /********************* Tamizajes participantes ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarTamizajes(String url, String username,
+                                        String password) throws Exception {
+        try {
+            if(mTamizajes.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando tamizaje de personas!", TAMIZAJE, TOTAL_TASK);
+                final String urlRequest = url + "/movil/tamizajes";
+                Tamizaje[] envio = mTamizajes.toArray(new Tamizaje[mTamizajes.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Tamizaje[]> requestEntity =
+                        new HttpEntity<Tamizaje[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* Participantes ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarParticipantes(String url, String username,
+                                    String password) throws Exception {
+        try {
+            if(mParticipantes.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando participantes!", PARTICIPANTE, TOTAL_TASK);
+                final String urlRequest = url + "/movil/participantes";
+                Participante[] envio = mParticipantes.toArray(new Participante[mParticipantes.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Participante[]> requestEntity =
+                        new HttpEntity<Participante[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* Cartas de consentimiento ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarCartasConsentimientos(String url, String username,
+                                            String password) throws Exception {
+        try {
+            if(mCartasConsent.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando cartas de consentimiento!", CARTAS_CONSENT, TOTAL_TASK);
+                final String urlRequest = url + "/movil/cartasConsen";
+                CartaConsentimiento[] envio = mCartasConsent.toArray(new CartaConsentimiento[mCartasConsent.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<CartaConsentimiento[]> requestEntity =
+                        new HttpEntity<CartaConsentimiento[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+
+    /***************************************************/
+    /********************* Telefonos ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarTelefonos(String url, String username,String password) throws Exception {
+        try {
+            if(mTelefonos.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando telefonos!", TELEFONOS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/telefonos";
+                TelefonoContacto[] envio = mTelefonos.toArray(new TelefonoContacto[mTelefonos.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<TelefonoContacto[]> requestEntity =
+                        new HttpEntity<TelefonoContacto[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* DatosCoordenadas ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarCoordenadas(String url, String username,String password) throws Exception {
+        try {
+            if(mCoordenadas.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando coordenadas!", COORDENADAS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/datoscoordenadas";
+                DatosCoordenadas[] envio = mCoordenadas.toArray(new DatosCoordenadas[mCoordenadas.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<DatosCoordenadas[]> requestEntity =
+                        new HttpEntity<DatosCoordenadas[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* EncuestaCasa ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarEncuestasCasa(String url, String username,String password) throws Exception {
+        try {
+            if(mEncuestasCasas.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando Encuestas Casa!", ENCUESTA_CASA, TOTAL_TASK);
+                final String urlRequest = url + "/movil/encuestasCasa";
+                EncuestaCasa[] envio = mEncuestasCasas.toArray(new EncuestaCasa[mEncuestasCasas.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<EncuestaCasa[]> requestEntity =
+                        new HttpEntity<EncuestaCasa[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* EncuestaCasa ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarEncuestasParticipantes(String url, String username,String password) throws Exception {
+        try {
+            if(mEncuestasParticipante.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando Encuestas Participantes!", ENCUESTA_PARTICIPANTE, TOTAL_TASK);
+                final String urlRequest = url + "/movil/encuestasParticipante";
+                EncuestaParticipante[] envio = mEncuestasParticipante.toArray(new EncuestaParticipante[mEncuestasParticipante.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<EncuestaParticipante[]> requestEntity =
+                        new HttpEntity<EncuestaParticipante[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* EncuestaPesoTalla ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarEncuestasPesoTalla(String url, String username,String password) throws Exception {
+        try {
+            if(mEncuestasPesoTalla.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando Encuestas PesoTalla!", ENCUESTA_PESOTALLA, TOTAL_TASK);
+                final String urlRequest = url + "/movil/encuestasPesoTalla";
+                EncuestaPesoTalla[] envio = mEncuestasPesoTalla.toArray(new EncuestaPesoTalla[mEncuestasPesoTalla.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<EncuestaPesoTalla[]> requestEntity =
+                        new HttpEntity<EncuestaPesoTalla[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* Muestras ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarMuestras(String url, String username,String password) throws Exception {
+        try {
+            if(mMuestras.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando muestras!", MUESTRAS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/muestras";
+                Muestra[] envio = mMuestras.toArray(new Muestra[mMuestras.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Muestra[]> requestEntity =
+                        new HttpEntity<Muestra[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+}

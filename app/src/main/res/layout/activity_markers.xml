@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.maps.CoordenadasMapActivity" >
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment">
+    </fragment>
+    <LinearLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="6dip"
+            android:paddingRight="6dip"
+            android:paddingTop="8dip"
+            android:paddingBottom="2dip">
+            <EditText android:id="@+id/latlong"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:focusable="false"
+                android:inputType="text" />
+            <ImageButton
+                android:id="@+id/saveLatLong"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:src="@mipmap/ic_goto"
+                android:contentDescription="@string/submit_confirm_button"
+                />
+        </LinearLayout>
+        <TextView android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:textColor="@color/solid_red"
+            android:textStyle="bold"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:text="@string/latlngHelp" />
+    </LinearLayout>
+</FrameLayout>

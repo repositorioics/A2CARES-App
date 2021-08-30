@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_house_survey">Nuevo Encuesta Casa</string>
+    <string name="confirm_house_survey">¿Desea agregar encuesta de casa a esta casa? </string>
+    <string name="confirm_house_survey_edit">¿Desea editar encuesta de casa? </string>
+
+    <string name="cuantasPersonas">1. ¿Cuántas personas viven en la casa?</string>
+    <string name="cuantasMujeres">2. ¿Cuántas mujeres y niñas/personas femeninas?</string>
+    <string name="edadMujer1">2.1 Edad</string>
+    <string name="edadMujer2">2.2 Edad</string>
+    <string name="edadMujer3">2.3 Edad</string>
+    <string name="edadMujer4">2.4 Edad</string>
+    <string name="edadMujer5">2.5 Edad</string>
+    <string name="edadMujer6">2.6 Edad</string>
+    <string name="edadMujer7">2.7 Edad</string>
+    <string name="edadMujer8">2.8 Edad</string>
+    <string name="edadMujer9">2.9 Edad</string>
+    <string name="edadMujer10">2.10 Edad</string>
+    <string name="edadMujer1Hint">Edad persona femenina 1</string>
+    <string name="edadMujer2Hint">Edad persona femenina 2</string>
+    <string name="edadMujer3Hint">Edad persona femenina 3</string>
+    <string name="edadMujer4Hint">Edad persona femenina 4</string>
+    <string name="edadMujer5Hint">Edad persona femenina 5</string>
+    <string name="edadMujer6Hint">Edad persona femenina 6</string>
+    <string name="edadMujer7Hint">Edad persona femenina 7</string>
+    <string name="edadMujer8Hint">Edad persona femenina 8</string>
+    <string name="edadMujer9Hint">Edad persona femenina 9</string>
+    <string name="edadMujer10Hint">Edad persona femenina 10</string>
+    <string name="cuantosHombres">3. ¿Cuantos hombres y niños/personas masculinas?</string>
+    <string name="edadHombre1">3.1 Edad</string>
+    <string name="edadHombre2">3.2 Edad</string>
+    <string name="edadHombre3">3.3 Edad</string>
+    <string name="edadHombre4">3.4 Edad</string>
+    <string name="edadHombre5">3.5 Edad</string>
+    <string name="edadHombre6">3.6 Edad</string>
+    <string name="edadHombre7">3.7 Edad</string>
+    <string name="edadHombre8">3.8 Edad</string>
+    <string name="edadHombre9">3.9 Edad</string>
+    <string name="edadHombre10">3.10 Edad</string>
+    <string name="edadHombre1Hint">Edad persona masculina 1</string>
+    <string name="edadHombre2Hint">Edad persona masculina 2</string>
+    <string name="edadHombre3Hint">Edad persona masculina 3</string>
+    <string name="edadHombre4Hint">Edad persona masculina 4</string>
+    <string name="edadHombre5Hint">Edad persona masculina 5</string>
+    <string name="edadHombre6Hint">Edad persona masculina 6</string>
+    <string name="edadHombre7Hint">Edad persona masculina 7</string>
+    <string name="edadHombre8Hint">Edad persona masculina 8</string>
+    <string name="edadHombre9Hint">Edad persona masculina 9</string>
+    <string name="edadHombre10Hint">Edad persona masculina 10</string>
+
+    <string name="cuantoCuartos">4. ¿Cuántos cuartos hay en la casa?</string>
+    <string name="cuartosDormir">5. ¿Cuántos cuartos de la casa son utilizados para dormir?</string>
+
+    <string name="problemaAgua">6. ¿Hay problemas de agua en este barrio?</string>
+
+    <string name="horasSinAgua">6.a ¿Cuántas horas por día  no tiene servicio de agua?</string>
+    <string name="frecuenciaSeVaAgua">6.b. ¿Cada cuánto se va el agua?</string>
+    <string name="frecuenciaSeVaAguaHint">Dias</string>
+
+    <string name="tienePozo">7. ¿Tiene pozo?</string>
+    <string name="tieneMedidorAgua">8. ¿Tiene medidor de agua?</string>
+    <string name="tieneTanque">10. ¿Tiene tanque de agua?</string>
+
+    <string name="llaveAgua">11. ¿La llave del agua se encuentra dentro de la casa o fuera?</string>
+    <string name="llaveCompartida">11.¿Es compartido?</string>
+    <string name="llaveCompartidaHint">Indicar si la llave que esta fuera de la casa es de uso compartido</string>
+    <string name="almacenaAgua">12 ¿Ud. almacena agua  en recipientes como barriles, tanques u otros recipientes?</string>
+    <string name="almacenaEnBarriles">¿Ud. Utiliza barriles?</string>
+    <string name="almacenaEnBarrilesHint">Indicar si utiliza barriles para almacenar agua</string>
+    <string name="almacenaEnTanques">¿Ud. Utiliza Tanques?</string>
+    <string name="almacenaEnTanquesHint">Indicar si utiliza tanques para almacenar agua</string>
+    <string name="almacenaEnPilas">¿Ud. Utiliza Pilas?</string>
+    <string name="almacenaEnPilasHint">Indicar si utiliza Pilas para almacenar agua</string>
+    <string name="almacenaOtrosRecipientes">¿Ud. Utiliza Otros Recipientes?</string>
+    <string name="almacenaOtrosRecipientesHint">Indicar si utiliza otros recipientes que no sean barriles, tanques o pilas para almacenar agua</string>
+    <string name="otrosRecipientes">Otros recipientes</string>
+    <string name="otrosRecipientesHint">Especificar que otros recipientes utiliza</string>
+    <string name="numBarriles">¿Cuántos barriles tiene?</string>
+    <string name="numBarrilesHint">Indicar la cantidad de barriles que tiene en casa</string>
+    <string name="numPilas">¿Cuántas pilas tiene?</string>
+    <string name="numPilasHint">Indicar la cantidad de pilas que tiene en casa</string>
+    <string name="numTanques">¿Cuántos tanques tiene?</string>
+    <string name="numTanquesHint">Indicar la cantidad de tanques que tiene en casa</string>
+    <string name="numOtrosRecipientes">¿Cuántos otros recipientes tiene?</string>
+    <string name="numOtrosRecipientesHint">Indicar la cantidad de otros recipientes que tiene en casa</string>
+    <string name="barrilesTapados">¿Barriles tapados?</string>
+    <string name="barrilesTapadosHint">Ud. mantiene los barriles tapados</string>
+    <string name="tanquesTapados">¿Tanques tapados?</string>
+    <string name="tanquesTapadosHint">Ud. mantiene los tanques tapados</string>
+    <string name="pilasTapadas">¿Pilas tapadas?</string>
+    <string name="pilasTapadasHint">Ud. mantiene las pilas tapadas</string>
+    <string name="otrosRecipientesTapados">Otros recipientes tapados?</string>
+    <string name="otrosRecipientesTapadosHint">Ud. mantiene los otros recipientes tapados</string>
+
+    <string name="cambiadoCasa">13. ¿Han cambiado de casa?</string>
+    <string name="remodeladoCasa">14. ¿Han realizado remodelación o ampliación de su casa en el último año?</string>
+
+    <string name="ubicacionLavandero">15. ¿El lavandero de su casa queda dentro o fuera de la casa?</string>
+    <string name="materialParedes">16. Material de construcción de las paredes de la casa</string>
+    <string name="materialPiso">17. ¿De qué está hecho el piso?</string>
+    <string name="materialTecho">18. ¿De qué material es el techo?</string>
+    <string name="otroMaterialParedes">Especifique otro material de las paredes</string>
+    <string name="otroMaterialPiso">Especifique otro material del piso</string>
+    <string name="otroMaterialTecho">Especifique otro material del techo</string>
+    <string name="casaPropia">19. ¿Casa propia?</string>
+    <!--20 -->
+    <string name="tieneAbanico">¿Tiene abanicos en casa?</string>
+    <string name="tieneTelevisor">¿Tiene televisor en casa?</string>
+    <string name="tieneRefrigerador">¿Tiene refrigerador/freezer en casa?</string>
+    <string name="tieneAireAcondicionado">¿Tiene aire acondicionando en casa?</string>
+    <string name="tieneLavadora">¿Tiene lavadora?</string>
+    <string name="aireAcondicionadoFuncionando">Funcionamiento del aire</string>
+    <string name="aireAcondicionadoFuncionandoHint">Indicar si el aire acondicionado lo usa de dia o de noche</string>
+    <string name="numAbanicos">¿Cuántos abanicos tiene?</string>
+    <string name="numTelevisores">¿Cuántos televisores tiene?</string>
+    <string name="numRefrigeradores">¿Cuántos refrigeradores/freezer tiene?</string>
+    <string name="numAireAcondicionado">¿Cuántos aires acondicionandos tiene?</string>
+    <string name="lavadoraFuncionando">¿Lavadora funcionando?</string>
+    <string name="lavadoraFuncionandoHint">Indicar si la lavadora se encuentra funcionando</string>
+    <!--20 -->
+    <string name="tieneMuro">21. ¿Tiene muro/cerco?</string>
+    <string name="tieneInternet">22.	¿Tiene internet en la casa?</string>
+    <string name="tieneInodoro">23. ¿Tiene inodoro o letrina?</string>
+    <string name="tieneServicioEnergia">24.	¿Tiene servicio de energía eléctrica?</string>
+    <string name="tieneMedidorEnergia">24.a. ¿Tiene medidor?</string>
+    <string name="casaDosPisos">25. ¿Casa de 2 pisos?</string>
+    <string name="tieneOtrosServicios">26. ¿Tiene alguno de los siguientes servicios?</string>
+    <string name="tieneVehiculo">27. ¿Tiene vehículo en su casa?</string>
+    <!--28 -->
+    <string name="tieneMoto">¿Tiene moto?</string>
+    <string name="tieneCarro">¿Tiene carro?</string>
+    <string name="tieneMicrobus">¿Tiene microbús?</string>
+    <string name="tieneCamioneta">¿Tiene camioneta?</string>
+    <string name="tieneCamion">¿Tiene camión?</string>
+    <string name="tieneOtroMedioTransAuto">¿Tiene otro medio de transporte automotriz?</string>
+    <string name="otroMedioTransAuto">Especifique que otro medio de transporte</string>
+    <string name="anioFabMoto">Año de fabricacion de la moto</string>
+    <string name="anioFabCarro">Año de fabricacion del carro</string>
+    <string name="anioFabMicrobus">Año de fabricación del microbus</string>
+    <string name="anioFabCamioneta">Año de fabricación de la camioneta</string>
+    <string name="anioFabCamion">Año de fabricación del camión</string>
+    <string name="anioFabOtroMedioTrans">Año de fabricación del otro medio de transporte</string>
+    <string name="marcaMoto">Marca de la moto</string>
+    <string name="marcaCarro">Marca del carro</string>
+    <string name="marcaMicrobus">Marca del microbus</string>
+    <string name="marcaCamioneta">Marca de la camioneta</string>
+    <string name="marcaCamion">Marca del camión</string>
+    <string name="marcaOtroMedioTrans">Marca del otro medio de transporte</string>
+    <!--28 -->
+
+    <string name="tipoCocina">29. ¿Qué tipo de cocina tiene?</string>
+    <string name="cuantosQuemadores">29. a.	¿Cuantos quemadores?</string>
+    <string name="tieneHorno">30. ¿Tiene horno?</string>
+    <string name="cocinaConLenia">31. ¿Cocina con leña en la casa?</string>
+    <string name="ubicacionCocinaLenia">Ubicacición de la cocina</string>
+    <string name="ubicacionCocinaLeniaHint">Indicar si cocina con leña dentro o fuera de la casa</string>
+    <string name="periodicidadCocinaLenia">¿Con que frecuencia cocina con leña en la casa?</string>
+    <string name="numDiarioCocinaLenia">Diario</string>
+    <string name="numSemanalCocinaLenia">Semanal</string>
+    <string name="numQuincenalCocinaLenia">Quincenal</string>
+    <string name="numMensualCocinaLenia">Mensual</string>
+    <string name="numDiarioCocinaLeniaHint"># de veces que cocina al dia</string>
+    <string name="numSemanalCocinaLeniaHint"># de veces que cocina semanalmente</string>
+    <string name="numQuincenalCocinaLeniaHint"># de veces que cocina quincenalmente</string>
+    <string name="numMensualCocinaLeniaHint"># de veces que cocina al mes</string>
+    <string name="tieneAnimales">32. ¿Tiene animales en la casa?</string>
+    <string name="tieneGallinas">¿Tiene pollos, gallinas y gallos en la casa?</string>
+    <string name="tienePatos">¿Tiene patos en la casa?</string>
+    <string name="tienePerros">¿Tiene perros en la casa?</string>
+    <string name="tieneGatos">¿Tiene gatos en la casa?</string>
+    <string name="tieneCerdos">¿Tiene cerdos en la casa?</string>
+    <string name="tieneVacas">¿Tiene vacas en la casa?</string>
+    <string name="tieneCabras">¿Tiene cabras en la casa?</string>
+    <string name="tieneCaballos">¿Tiene caballos en la casa?</string>
+    <string name="tienePelibueys">¿Tiene pelibueys en la casa?</string>
+    <string name="tieneAves">¿Tiene otras aves en la casa?</string>
+    <string name="tieneOtrosAnimales">¿Tiene otros animales en la casa?</string>
+
+    <string name="cantidadGallinas">¿Cuántos pollos, gallinas y gallos tiene en la casa?</string>
+    <string name="cantidadPatos">¿Cuántos patos tiene en la casa?</string>
+    <string name="cantidadPerros">¿Cuántos perros tiene en la casa?</string>
+    <string name="cantidadGatos">¿Cuántos gatos tiene en la casa?</string>
+    <string name="cantidadCerdos">¿Cuántos cerdos tiene en la casa?</string>
+    <string name="cantidadVacas">¿Cuántas vacas tiene en la casa?</string>
+    <string name="cantidadCabras">¿Cuántas cabras tiene en la casa?</string>
+    <string name="cantidadCaballos">¿Cuántos caballos tiene en la casa?</string>
+    <string name="cantidadPelibueys">¿Cuántos pelibueys tiene en la casa?</string>
+    <string name="cantidadAves">¿Cuántas aves tiene en la casa?</string>
+    <string name="cantidadOtrosAnimales">¿Cuántos de otros animales tiene en la casa?</string>
+
+    <string name="gallinasDentroCasa">¿Algunas veces están los pollos, gallinas y gallos dentro de la casa?</string>
+    <string name="patosDentroCasa">¿Algunas veces están los patos dentro de la casa?</string>
+    <string name="perrosDentroCasa">¿Algunas veces están los perros dentro de la casa?</string>
+    <string name="gatosDentroCasa">¿Algunas veces están los gatos dentro de la casa?</string>
+    <string name="cerdosDentroCasa">¿Algunas veces están los cerdos dentro de la casa?</string>
+    <string name="vacasDentroCasa">¿Algunas veces están las vacas dentro de la casa?</string>
+    <string name="cabrasDentroCasa">¿Algunas veces están las cabras dentro de la casa?</string>
+    <string name="caballosDentroCasa">¿Algunas veces están los caballos dentro de la casa?</string>
+    <string name="pelibueysDentroCasa">¿Algunas veces están los pelibueys dentro de la casa?</string>
+    <string name="avesDentroCasa">¿Algunas veces están las aves dentro de la casa?</string>
+    <string name="otrosAnimalesDentroCasa">¿Algunas veces están los otros animales dentro de la casa?</string>
+
+    <string name="personaFumaDentroCasa">35. ¿Alguna persona fuma dentro de la casa?</string>
+    <string name="tieneRecoleccionBasura">36. ¿Tiene servicio de recolección de basura?</string>
+    <string name="cuantasVecesRecBasura">37. ¿Cuantas veces a la semana tiene servicio de recolección de basura?  </string>
+    <string name="dondePasaRecBasura">38. ¿Dónde pasa? </string>
+
+    <string name="horasSinAguaHint">(0–24h)</string>
+</resources>

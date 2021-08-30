@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fechaNacimiento">Fecha de Nacimiento</string>
+    <string name="fechaNacimientoHint">.</string>
+    <string name="sexo">Género</string>
+    <string name="sexoHint">Anote el género de la persona que esta tamizando.</string>
+    <string name="aceptaTamizaje">Acepta realizar tamizaje?</string>
+    <string name="aceptaTamizajeHint">Pregunte si está de acuerdo en realizar el tamizaje.</string>
+    <string name="razonNoAceptaTamizaje">Porque no acepta tamizaje?</string>
+    <string name="razonNoAceptaTamizajeHint">Pregunte porque no está de acuerdo en realizar el tamizaje.</string>
+    <string name="otraRazonNoAceptaTamizaje">Otra razón desacuerdo tamizaje</string>
+    <string name="otraRazonNoAceptaTamizajeHint">Indicar porque otra razón no esta de acuerdo en realizar tamisaje</string>
+    <string name="tiempoResidencia">Tiempo de residencia</string>
+    <string name="tipoVivienda">Tipo de Vivienda</string>
+    <string name="planesMudarse">¿Tiene planes de mover fuera de esta comunidad en los próximos 5 años?</string>
+
+    <string name="aceptaParticipar">Acepta participar en el estudio?</string>
+    <string name="aceptaParticiparHint">Estudio de vigilancia basada en la población para la aparición y transmisión de Arbovirus</string>
+    <string name="razonNoAceptaParticipar">Porque no acepta participar en el estudio?</string>
+    <string name="razonNoAceptaParticiparHint">Indicar porque razón no acepta participar en el estudio</string>
+    <string name="otraRazonNoAceptaParticipar">Otra razón</string>
+    <string name="otraRazonNoAceptaParticiparHint">Indicar porque otra razón no acepta participar en el estudio</string>
+
+    <string name="asentimientoVerbal">Dió el niño Asentimiento verbal</string>
+    <string name="asentimientoVerbalHint">(Para Niños de 6 a 14 años)</string>
+
+    <string name="aceptaContactoFuturo">Contacto en el futuro</string>
+    <string name="aceptaContactoFuturoHint">¿Alguien puede contactarle en el futuro para proponerle participar en investigaciones adicionales?</string>
+    <string name="aceptaParteB">Acepta Parte B</string>
+    <string name="aceptaParteBHint">¿Acepta Parte B Consentimiento para enviar muestras fuera de Nicaragua?</string>
+    <string name="aceptaParteC">Acepta Parte C</string>
+    <string name="aceptaParteCHint">¿Acepta Parte C Consentimiento para uso futuro?</string>
+
+    <string name="casaPerteneceCohorte">¿Casa ya pertenece a la cohorte?</string>
+    <string name="codigoCasaCohorte">Código de Casa</string>
+    <string name="codigoCasaCohorteHint">Código de casa en la cohorte</string>
+    <string name="codigoNuevaCasaCohorte">Código de Nueva Casa</string>
+    <string name="nombre1JefeFamilia">Primer nombre</string>
+    <string name="nombre2JefeFamilia">Segundo nombre</string>
+    <string name="apellido1JefeFamilia">Primer apellido</string>
+    <string name="apellido2JefeFamilia">Segundo apellido</string>
+    <string name="jefeFamiliaHint">Nombres y apellidos del jefe de la casa</string>
+    <string name="direccion">Dirección</string>
+    <string name="direccionHint">Dirección de la casa</string>
+    <string name="barrio">Barrio</string>
+    <string name="coordenadas">Ubicación</string>
+    <string name="manzana">Manzana</string>
+    <string name="participanteOTutorAlfabeto">Alfabeto</string>
+    <string name="participanteOTutorAlfabetoHint">¿El participante o Tutor es Alfabeto?</string>
+    <string name="testigoPresente">Testigo presente</string>
+    <string name="testigoPresenteHint">¿Un testigo está presente para explicar los procedimientos del estudio al participante potencial (o tutor) y asegurar que su participación es voluntaria?</string>
+    <string name="nombre1Testigo">1er Nombre Testigo</string>
+    <string name="nombre1TestigoHint">Nombre completo del Testigo</string>
+    <string name="nombre2Testigo">2do Nombre Testigo</string>
+    <string name="nombre2TestigoHint">Nombre completo del Testigo</string>
+    <string name="apellido1Testigo">1er Apellido Testigo</string>
+    <string name="apellido1TestigoHint">Nombre completo del Testigo</string>
+    <string name="apellido2Testigo">2do Apellido Testigo</string>
+    <string name="apellido2TestigoHint">Nombre completo del Testigo</string>
+
+    <string name="codigoNuevoParticipante">Código para el nuevo Participante</string>
+
+    <string name="nombre1">1er Nombre</string>
+    <string name="nombre1Hint">Nombre completo del participante</string>
+    <string name="nombre2">2do Nombre</string>
+    <string name="nombre2Hint">Nombre completo del participante</string>
+    <string name="apellido1">1er Apellido</string>
+    <string name="apellido1Hint">Nombre completo del participante</string>
+    <string name="apellido2">2do Apellido</string>
+    <string name="apellido2Hint">Nombre completo del participante</string>
+
+    <string name="nombre1Padre">1er Nombre Padre</string>
+    <string name="nombre1PadreHint">Nombre completo del padre</string>
+    <string name="nombre2Padre">2do Nombre Padre</string>
+    <string name="nombre2PadreHint">Nombre completo del Padre</string>
+    <string name="apellido1Padre">1er Apellido Padre</string>
+    <string name="apellido1PadreHint">Nombre completo del Padre</string>
+    <string name="apellido2Padre">2do Apellido Padre</string>
+    <string name="apellido2PadreHint">Nombre completo del Padre</string>
+
+    <string name="nombre1Madre">1er Nombre Madre</string>
+    <string name="nombre1MadreHint">Nombre completo de la madre</string>
+    <string name="nombre2Madre">2do Nombre Madre</string>
+    <string name="nombre2MadreHint">Nombre completo de la madre</string>
+    <string name="apellido1Madre">1er Apellido Madre</string>
+    <string name="apellido1MadreHint">Nombre completo de la madre</string>
+    <string name="apellido2Madre">2do Apellido Madre</string>
+    <string name="apellido2MadreHint">Nombre completo de la madre</string>
+
+    <string name="nombre1Tutor">1er Nombre Tutor</string>
+    <string name="nombre1TutorHint">Nombre completo del Tutor</string>
+    <string name="nombre2Tutor">2do Nombre Tutor</string>
+    <string name="nombre2TutorHint">Nombre completo del Tutor</string>
+    <string name="apellido1Tutor">1er Apellido Tutor</string>
+    <string name="apellido1TutorHint">Nombre completo del Tutor</string>
+    <string name="apellido2Tutor">2do Apellido Tutor</string>
+    <string name="apellido2TutorHint">Nombre completo del Tutor</string>
+    <string name="relacionFamiliarTutor">Relación Familiar</string>
+
+    <string name="numTelefono1">Número Teléfono 1</string>
+    <string name="numTelefono1Hint">Primer Num. teléfono</string>
+    <string name="operadoraTelefono1">Operadora Teléfono 1</string>
+    <string name="operadoraTelefono1Hint">Indicar compañia operadora del primer número</string>
+    <string name="numTelefono2">Número Teléfono 2</string>
+    <string name="numTelefono2Hint">Segundo Num.</string>
+    <string name="operadoraTelefono2">Operadora Teléfono 2</string>
+    <string name="operadoraTelefono2Hint">Indicar compañia operadora del segundo número</string>
+    <string name="numTelefono3">Número Teléfono 3</string>
+    <string name="numTelefono3Hint">Num. convencianal</string>
+    <string name="operadoraTelefono3">Operadora Teléfono 3</string>
+    <string name="operadoraTelefono3Hint">Indicar compañia operadora convencional</string>
+
+    <string name="tieneTelefonoCel">¿Tiene teléfono celular?</string>
+    <string name="tieneOtroTelefonoCel">¿Tiene otro teléfono celular?</string>
+    <string name="tieneTelefonoConv">¿Tiene teléfono convencional?</string>
+
+    <string name="verifTutor">Verifique que el Tutor</string>
+    <string name="finTamizajeLabel">Finaliza el formulario. Revise sus respuestas y haga clic en guardar en la próxima página</string>
+
+    <string name="noAceptaTamizajePersona">No acepta tamizaje!</string>
+    <string name="noCumpleCriteriosInclusion">No cumple los criterios de inclusión!</string>
+    <string name="noEsElegible">No es elegible para el estudio!</string>
+    <string name="noAceptaParticipar">No acepta participar el estudio!</string>
+    <string name="noDaAsentimiento">No da asentimiento!</string>
+    <string name="participanteExiste">Código de participante ya está registrado</string>
+    <string name="noRegistraIngreso">No acepta participar o no es elegible. No se realazará el ingreso</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="muestras">Lista de Muestras</string>
+    <string name="fechaMuestra">Fecha toma muestra</string>
+    <string name="tuboRojo">¿Tomó tubo rojo?</string>
+    <string name="codigoRojo">Código Muestra Rojo</string>
+    <string name="razonNoRojo">¿Porqué razón no se tomó muestra en Tubo Rojo?</string>
+    <string name="otraRazonNoRojo">Escriba por que razón no se tomó la muestra  en Tubo Rojo</string>
+    <string name="horaRojo">Hora Rojo</string>
+    <string name="tuboBHC">¿Tomó BHC?</string>
+    <string name="codigoBHC">Código Muestra BHC</string>
+    <string name="razonNoBHC">¿Porqué razón no se tomó muestra de BHC?</string>
+    <string name="otraRazonNoBHC">Escriba por qué razón no se tomó la muestra de BHC</string>
+    <string name="horaBHC">Hora BHC</string>
+    <string name="pinchazos">¿Número de pinchazos?</string>
+    <string name="volumenRojo">Volumen tubo Rojo</string>
+    <string name="volumenBHC">Volumen BHC</string>
+    <string name="volumenRojoSugerido">Tomar 6ml tubo Rojo</string>
+    <string name="volumenBHCSugerido">Tomar 2ml tubo morado</string>
+    <string name="tipoTubo">Tubo: </string>
+    <string name="hora">Hora de toma</string>
+    <string name="volumen">Volumen</string>
+    <string name="ml"> (ml)</string>
+    <string name="agregarMuestra">Agregar Muestra</string>
+
+    <string name="error1CodigoMx">Código de muestra no válido</string>
+    <string name="error2CodigoMx">Código de muestra no pertenece al participante: <xliff:g id="codigo">%1$s</xliff:g></string>
+</resources>

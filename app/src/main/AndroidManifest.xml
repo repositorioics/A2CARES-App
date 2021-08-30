@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    package="ni.org.ics.a2cares.app">
+
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage"/>
+
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true" />
+
+    <application
+        android:name=".MyIcsApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.A2CARESApp">
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateVisible">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="ni.org.ics.a2cares.app.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".preferences.PreferencesActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activities.BuscarParticipanteActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.BuscarCasaActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.menu.MenuParticipanteActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.menu.MenuCasaActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.list.ListaParticipantesCasaActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.list.ListaTelefonosActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.list.ListaMuestrasParticipanteActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.server.DownloadBaseActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.server.UploadAllActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.enterdata.NuevoTamizajeActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.enterdata.NuevaVisitaTerrenoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.enterdata.NuevaEncuestaPesoTallaActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.enterdata.NuevaEncuestaCasaActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.enterdata.NuevaEncuestaParticipanteActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.enterdata.NuevaMuestraActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".bluetooth.activity.ChatActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".bluetooth.activity.DeviceListActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.maps.CoordenadasMapActivity" android:screenOrientation="portrait"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+    </application>
+
+</manifest>
