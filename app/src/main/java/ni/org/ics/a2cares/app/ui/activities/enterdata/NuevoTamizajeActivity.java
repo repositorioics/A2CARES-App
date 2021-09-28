@@ -23,6 +23,7 @@ import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.domain.core.*;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
+import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
 import ni.org.ics.a2cares.app.domain.users.UserPermissions;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.adapters.ParticipanteListAdapter;
@@ -84,7 +85,7 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!FileUtils.storageReady()) {
-            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.error, R.string.storage_error),Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.error, getString(R.string.storage_error)),Toast.LENGTH_LONG);
             toast.show();
             finish();
         }
@@ -859,7 +860,7 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                         //Creamos un nuevo participante
                         participante = new Participante();
                         String estudios = "";
-                        //ParticipanteProcesos procesos;
+                        ParticipanteProcesos procesos = new ParticipanteProcesos();
                         String na = "NA";
                         CartaConsentimiento cc = new CartaConsentimiento();
                         cc.setRecordDate(new Date());
@@ -1022,11 +1023,6 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                             if (catSexo != null) participante.setSexo(catSexo.getCatKey());
                         }
                         participante.setFechaNac(fechaNacimiento);
-                        participante.setRecordDate(new Date());
-                        participante.setRecordUser(username);
-                        participante.setDeviceid(infoMovil.getDeviceId());
-                        participante.setEstado('0');
-                        participante.setPasive('0');
                         //ahora datos de tutor en tabla participante
                         if (tieneValor(nombre1Tutor)) {
                             participante.setNombre1Tutor(nombre1Tutor);
@@ -1051,6 +1047,12 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                             participante.setApellido1Tutor(participante.getApellido1());
                             participante.setApellido2Tutor(participante.getApellido2());
                         }
+                        //meta data
+                        participante.setRecordDate(new Date());
+                        participante.setRecordUser(username);
+                        participante.setDeviceid(infoMovil.getDeviceId());
+                        participante.setEstado('0');
+                        participante.setPasive('0');
                         //Guarda nuevo participante
                         estudiosAdapter.crearParticipante(participante);
                         cc.setParticipante(participante);
@@ -1068,40 +1070,28 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                             guardarDatosCoordenadas(coordenadas);
                         }
 
-
-                        /*
                         procesos.setCodigo(participante.getCodigo());
-                        procesos.setEstPart(1);
-                        procesos.setPosZika(Constants.NO);
-                        procesos.setDatosVisita(Constants.YES);//siempre pedir datos de contacto
-                        procesos.setConsCovid19(Constants.NO);
-                        procesos.setSubEstudios(Constants.SUB_ESTUDIO_NA);//NA
+                        procesos.setRetirado(0);
                         //aca siempre va a marcar si, porque no hay registro de encuestas, ya que no se descargan del server
-                        ArrayList<EncuestaCasa> mEncuestasCasas = estudiosAdapter.getListaEncuestaCasas(casaCohorte.getCodigo());
+                        List<EncuestaCasa> mEncuestasCasas = estudiosAdapter.getEncuestaCasas(MainDBConstants.casa + "=" + casa.getCodigo(), null);
                         if (mEncuestasCasas.size() <= 0) {
-                            procesos.setEnCasa(Constants.YES);
+                            procesos.setPendienteEnCasa(Constants.YESKEYSND);
                         } else {
-                            procesos.setEnCasa(Constants.NO);
+                            procesos.setPendienteEnCasa(Constants.NOKEYSND);
                         }
 
-                        if (participante.getEdadMeses() <= 36)
-                            procesos.setEncLacMat(Constants.YES);
-                        else
-                            procesos.setEncLacMat(Constants.NO);
+                        procesos.setPendienteEncPart(Constants.YESKEYSND);
+                        procesos.setPendientePyT(Constants.YESKEYSND);
+                        procesos.setPendienteMxMA(Constants.YESKEYSND);
+                        procesos.setPendienteMxTx(Constants.NOKEYSND);
 
-                        procesos.setEncPart(Constants.YES);
-                        procesos.setPesoTalla(Constants.YES);
-                        procesos.setDatosParto(Constants.YES);
-
-
-                        procesos.setEstudio(estudios);
-                        procesos.setCoordenadas("1");
-                        procesos.setSubEstudios("0");
-                        if (tipoIngreso.equalsIgnoreCase(TIPO_INFLUENZA_UO1))//nuevos ingresos UO1 activar cuestionario covid19.Brenda MA2021 04/03/2021
-                            procesos.setCuestCovid("1a");
-
+                        //meta data
+                        procesos.setRecordDate(new Date());
+                        procesos.setRecordUser(username);
+                        procesos.setDeviceid(infoMovil.getDeviceId());
+                        procesos.setEstado('0');
+                        procesos.setPasive('0');
                         estudiosAdapter.crearParticipanteProcesos(procesos);
-*/
 
                         Intent i = new Intent(getApplicationContext(),
                                 MenuParticipanteActivity.class);

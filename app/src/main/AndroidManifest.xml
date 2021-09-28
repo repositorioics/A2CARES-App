@@ -70,6 +70,11 @@
         <activity android:name=".bluetooth.activity.ChatActivity" android:screenOrientation="portrait"/>
         <activity android:name=".bluetooth.activity.DeviceListActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.maps.CoordenadasMapActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.menu.MenuSupervisorActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.enterdata.RecepcionBhcActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.enterdata.RecepcionRojoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.list.ListaRecepcionesActivity" android:screenOrientation="portrait"/>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

@@ -4,9 +4,11 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,10 +17,12 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import ni.org.ics.a2cares.app.bluetooth.activity.ChatActivity;
+import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.activities.BuscarCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.BuscarParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoTamizajeActivity;
+import ni.org.ics.a2cares.app.ui.activities.menu.MenuSupervisorActivity;
 import ni.org.ics.a2cares.app.ui.activities.server.DownloadBaseActivity;
 import ni.org.ics.a2cares.app.ui.activities.server.UploadAllActivity;
 import ni.org.ics.a2cares.app.ui.adapters.MainActivityAdapter;
@@ -36,6 +40,10 @@ public class MainActivity extends AbstractAsyncActivity {
 
     private AlertDialog alertDialog;
 
+    private SharedPreferences settings;
+    private EstudioDBAdapter estudiosAdapter;
+    private String username;
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +53,15 @@ public class MainActivity extends AbstractAsyncActivity {
         textView = (TextView) findViewById(R.id.label);
         gridView = (GridView) findViewById(R.id.gridView1);
         menu_principal = getResources().getStringArray(R.array.menu_principal);
+
+        settings =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        username =
+                settings.getString(PreferencesActivity.KEY_USERNAME,
+                        null);
+
+        String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
+        estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(), mPass, false, false);
 
         textView.setText("");
         textView.setTextColor(Color.BLACK);
@@ -85,6 +102,19 @@ public class MainActivity extends AbstractAsyncActivity {
                     case 5:
                         i = new Intent(getApplicationContext(), UploadAllActivity.class);
                         startActivityForResult(i, UPDATE_SERVER);
+                        break;
+                    case 6:
+                        estudiosAdapter.open();
+                        Boolean esSuperV = estudiosAdapter.buscarRol(username, "ROLE_SUPER");
+                        estudiosAdapter.close();
+                        if (esSuperV){
+                            i = new Intent(getApplicationContext(), MenuSupervisorActivity.class);
+                            startActivity(i);
+                        }
+                        else{
+                            showToast(getApplicationContext().getString(R.string.perm_error));
+                        }
+                        break;
                     default:
                         break;
                 }

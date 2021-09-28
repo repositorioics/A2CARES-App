@@ -104,7 +104,7 @@ public class TamizajeForm extends AbstractWizardModel {
         Page direccion = new TextPage(this,labels.getDireccion(),labels.getDireccionHint(), Constants.WIZARD, false).setRequired(true);
         Page ubicacion = new MapaBarriosPage(this, labels.getCoordenadas(), "", Constants.WIZARD, true).setRequired(true);
 
-        Page codigoNuevoParticipante = new BarcodePage(this,labels.getCodigoNuevoParticipante(),"",Constants.WIZARD, false).setRangeValidation(true, 1, 10000).setRequired(true);
+        Page codigoNuevoParticipante = new BarcodePage(this,labels.getCodigoNuevoParticipante(),"",Constants.WIZARD, false).setRangeValidation(true, 80000, 90000).setRequired(true);
         Page nombre1 = new TextPage(this,labels.getNombre1(),labels.getNombre1Hint(),Constants.WIZARD, false).setRequired(true);
         Page nombre2 = new TextPage(this,labels.getNombre2(),labels.getNombre1Hint(),Constants.WIZARD, false).setRequired(false);
         Page apellido1 = new TextPage(this,labels.getApellido1(),labels.getApellido1Hint(),Constants.WIZARD, false).setRequired(true);

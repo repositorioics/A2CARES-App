@@ -7,10 +7,11 @@
         <item>@string/main_4</item>
         <item>@string/main_5</item>
         <item>@string/main_6</item>
+        <item>@string/main_7</item>
     </string-array>
 
     <string-array name="menu_participante">
-        <item>@string/new_consultation</item>
+        <!--<item>@string/new_consultation</item>-->
         <item>@string/new_visit</item>
         <item>@string/new_survey_1</item>
         <item>@string/new_survey_2</item>
@@ -23,5 +24,10 @@
         <item>@string/participants</item>
         <item>@string/phones</item>
         <item>@string/send_house</item>
+    </string-array>
+
+    <string-array name="menu_supervisor">
+        <item>@string/super_1</item>
+        <item>@string/super_2</item>
     </string-array>
 </resources>

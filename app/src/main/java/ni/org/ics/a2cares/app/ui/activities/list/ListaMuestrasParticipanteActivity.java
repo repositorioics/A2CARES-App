@@ -24,8 +24,10 @@ import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.Muestra;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.dto.MuestraDTO;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaMuestraActivity;
+import ni.org.ics.a2cares.app.ui.activities.menu.MenuParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.adapters.MuestraListAdapter;
 import ni.org.ics.a2cares.app.utils.Constants;
 
@@ -109,6 +111,21 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 		}
 	}
 
+	@Override
+	public void onBackPressed () {
+		Bundle arguments = new Bundle();
+		Intent i;
+		arguments.putSerializable(Constants.PARTICIPANTE, participante);
+		i = new Intent(getApplicationContext(),
+				MenuParticipanteActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		i.putExtra(Constants.VISITA_EXITOSA, visitaExitosa);
+		i.putExtras(arguments);
+		startActivity(i);
+
+		finish();
+	}
+
 	private void refreshView() {
 		adapter.notifyDataSetChanged();
 		if (mMuestrasDTO.isEmpty()) showToast(getString(R.string.no_items));
@@ -129,6 +146,7 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 				estudiosAdapter.open();
 				mMuestrasDTO.clear();
 				mMuestras = estudiosAdapter.getMuestras(MainDBConstants.participante +" = " + codigoParticipante, MainDBConstants.fechaMuestra);
+				List<MessageResource> catSinMuestra = estudiosAdapter.getMessageResources(MainDBConstants.catRoot + "='CAT_RAZON_NO_MX'", null);
 				estudiosAdapter.close();
 
 				for(Muestra muestra : mMuestras) {
@@ -140,7 +158,17 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 					muestraDTO.setCodigoMx(muestra.getCodigoRojo());
 					muestraDTO.setVolumen(muestra.getVolumenRojo());
 					muestraDTO.setFechaMuestra(muestra.getFechaMuestra());
-					muestraDTO.setRazonNoToma(muestra.getRazonNoRojo());
+					if (muestra.getTuboRojo().equalsIgnoreCase(Constants.NOKEYSND)){
+						for (MessageResource messageResource : catSinMuestra) {
+							if (messageResource.getCatKey().equalsIgnoreCase(muestra.getRazonNoRojo())){
+								muestraDTO.setRazonNoToma(messageResource.getSpanish());
+								break;
+							}
+						}
+					} else {
+						muestraDTO.setRazonNoToma(muestra.getRazonNoRojo());
+					}
+
 					muestraDTO.setOtraRazonNoToma(muestra.getOtraRazonNoRojo());
 					muestraDTO.setParticipante(muestra.getParticipante());
 					muestraDTO.setProposito(muestra.getProposito());
@@ -153,7 +181,16 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 					muestraDTO.setCodigoMx(muestra.getCodigoBHC());
 					muestraDTO.setVolumen(muestra.getVolumenBHC());
 					muestraDTO.setFechaMuestra(muestra.getFechaMuestra());
-					muestraDTO.setRazonNoToma(muestra.getRazonNoBHC());
+					if (muestra.getTuboBHC().equalsIgnoreCase(Constants.NOKEYSND)){
+						for (MessageResource messageResource : catSinMuestra) {
+							if (messageResource.getCatKey().equalsIgnoreCase(muestra.getRazonNoBHC())){
+								muestraDTO.setRazonNoToma(getString(R.string.noSample) + " : " + messageResource.getSpanish());
+								break;
+							}
+						}
+					} else {
+						muestraDTO.setRazonNoToma(muestra.getRazonNoBHC());
+					}
 					muestraDTO.setOtraRazonNoToma(muestra.getOtraRazonNoBHC());
 					muestraDTO.setParticipante(muestra.getParticipante());
 					muestraDTO.setProposito(muestra.getProposito());

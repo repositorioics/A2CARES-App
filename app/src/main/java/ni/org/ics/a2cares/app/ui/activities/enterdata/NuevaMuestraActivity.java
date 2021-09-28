@@ -30,6 +30,7 @@ import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.Muestra;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaPesoTalla;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
@@ -321,7 +322,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                         break;
                     } else {
                         String codigoTmp = valor;
-                        if (tp.getTitle().equals(labels.getTuboRojo())) {
+                        if (tp.getTitle().equals(labels.getCodigoRojo())) {
                             String[] partes = valor.split("\\."); //A2.80001.21SER
                             codigoTmp = partes[1];
                         }//la bhc solo lleva el codigo del participante
@@ -355,7 +356,6 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoRojo()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getVolumenRojo()), visible, null);
-                changeStatus(mWizardModel.findByKey(labels.getHoraRojo()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoRojo()), !visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoRojo()), false, null);
 
@@ -370,7 +370,6 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoBHC()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getVolumenBHC()), visible, null);
-                changeStatus(mWizardModel.findByKey(labels.getHoraBHC()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoBHC()), !visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoBHC()), false, null);
 
@@ -485,7 +484,15 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
             muestra.setEstado('0');
             muestra.setPasive('0');
             estudiosAdapter.crearMuestras(muestra);
-            estudiosAdapter.close();
+
+            participante.getProcesos().setPendienteMxMA(Constants.NOKEYSND);
+            participante.getProcesos().setRecordDate(new Date());
+            participante.getProcesos().setRecordUser(username);
+            participante.getProcesos().setDeviceid(infoMovil.getDeviceId());
+            participante.getProcesos().setEstado('0');
+            participante.getProcesos().setPasive('0');
+            estudiosAdapter.editarParticipanteProcesos(participante.getProcesos());
+
             showToast(getString(R.string.success));
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.PARTICIPANTE, participante);
@@ -499,6 +506,11 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
         } catch (Exception ex) {
             ex.printStackTrace();
             showToast(getString(R.string.error, ex.getLocalizedMessage()));
+        } finally {
+            //Cierra la base de datos
+            if (estudiosAdapter!=null)
+                estudiosAdapter.close();
+
         }
     }
 

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="6dip"
+        android:paddingRight="6dip"
+        android:paddingTop="8dip"
+        android:paddingBottom="2dip">
+    
+        <EditText
+            android:id="@+id/search_text"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:singleLine="true"
+            android:hint="@string/search_hint"
+            android:ellipsize="end"
+            android:textSize="18sp"
+             
+        />
+            
+        <ImageButton
+            android:id="@+id/barcode_button"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@mipmap/ic_barcode"
+            android:contentDescription="@string/desc_barcode"
+        />
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:id="@+id/recycler_view"
+        tools:context=".ui.activities.list.ListaRecepcionesActivity">
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

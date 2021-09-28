@@ -17,6 +17,7 @@ import ni.org.ics.a2cares.app.domain.core.Barrio;
 import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.Estudio;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.domain.users.Authority;
@@ -42,7 +43,7 @@ public class DownloadBaseTask extends DownloadTask {
 	private List<Barrio> mBarrios = null;
 	private List<Casa> mCasas = null;
     private List<Participante> mParticipantes = null;
-    //private List<ParticipanteProcesos> mParticipantesProc = null;
+    private List<ParticipanteProcesos> mParticipantesProc = null;
     private List<MessageResource> mCatalogos = null;
     private List<TelefonoContacto> mContactosParticipante = null;
 
@@ -55,12 +56,8 @@ public class DownloadBaseTask extends DownloadTask {
 	public static final String CASA = "7";
 	public static final String PARTICIPANTE = "8";
     public static final String PARTICIPANTE_PROC = "9";
-    public static final String CASA_CHF = "10";
-    public static final String PARTICIPANTE_CHF = "11";
-    public static final String PARTICIPANTE_SA = "12";
-    public static final String CONTACTOS_PART = "13";
-    public static final String PARTICIPANTE_CV = "14";
-    private static final String TOTAL_TASK_GENERALES = "15";
+    public static final String CONTACTOS_PART = "10";
+    private static final String TOTAL_TASK_GENERALES = "10";
 	
 	private String error = null;
 	private String url = null;
@@ -101,6 +98,7 @@ public class DownloadBaseTask extends DownloadTask {
         estudioAdapter.borrarTamizajes();
         estudioAdapter.borrarCartasConsentimiento();
         estudioAdapter.borrarTelefonoContacto();
+        estudioAdapter.borrarParticipantesProcesos();
         try {
             if (mCatalogos != null){
                 publishProgress("Insertando catalogos", CATALOGOS, TOTAL_TASK_GENERALES);
@@ -132,12 +130,12 @@ public class DownloadBaseTask extends DownloadTask {
             }
             if (mParticipantes != null){
                 publishProgress("Insertando participantes", PARTICIPANTE, TOTAL_TASK_GENERALES);
-                estudioAdapter.bulkInsertParticipantesBySql(mParticipantes);
+                estudioAdapter.bulkInsertParticipantesBySql(MainDBConstants.PARTICIPANTE_TABLE, mParticipantes);
             }
-            /*if (mParticipantesProc != null){
+            if (mParticipantesProc != null){
                 publishProgress("Insertando procesos participantes", PARTICIPANTE_PROC, TOTAL_TASK_GENERALES);
-                estudioAdapter.bulkInsertParticipantesProcBySql(mParticipantesProc);
-            }*/
+                estudioAdapter.bulkInsertParticipantesBySql(MainDBConstants.PARTICIPANTE_PROC_TABLE, mParticipantesProc);
+            }
             if (mContactosParticipante != null){
                 publishProgress("Insertando contactos participantes", CONTACTOS_PART, TOTAL_TASK_GENERALES);
                 estudioAdapter.bulkInsertTelefonosBySql(mContactosParticipante);
@@ -310,7 +308,7 @@ public class DownloadBaseTask extends DownloadTask {
             mParticipantes = Arrays.asList(responseEntityParticipante.getBody());
             responseEntityParticipante = null;
             // The URL for making the GET request
-           /* urlRequest = url + "/movil/participantesprocesos";
+            urlRequest = url + "/movil/participantesprocesos";
             publishProgress("Solicitando procesos de participantes",PARTICIPANTE_PROC,TOTAL_TASK_GENERALES);
 
             // Perform the HTTP GET request
@@ -318,7 +316,7 @@ public class DownloadBaseTask extends DownloadTask {
                     ParticipanteProcesos[].class);
 
             // convert the array to a list and return it
-            mParticipantesProc = Arrays.asList(responseEntityPartProc.getBody());*/
+            mParticipantesProc = Arrays.asList(responseEntityPartProc.getBody());
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

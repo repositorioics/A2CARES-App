@@ -678,4 +678,33 @@ public class MainDBConstants {
             + deviceId + " text, "
             + estado + " text not null, "
             + "primary key (" + idMuestra + "));";
+
+    //Tabla Recepción de muestras
+    public static final String RECEPCION_MUESTRA_TABLE = "recepcion_muestras";
+
+    //campos recepcion de muestras
+    public static final String idRecepcion = "idRecepcion";
+    public static final String fechaRecepcion = "fechaRecepcion";
+    public static final String lugar = "lugar";
+    public static final String volumen  = "volumen";
+    public static final String tipoTubo  = "tipoTubo";
+    public static final String codigoMx  = "codigoMx";
+
+    //Crear tabla Recepción de muestra
+    public static final String CREATE_RECEPCION_MUESTRA_TABLE = "create table if not exists "
+            + RECEPCION_MUESTRA_TABLE + " ("
+            + idRecepcion + " text not null, "
+            + codigoMx + " text not null, "
+            + fechaRecepcion + " date not null, "
+            + volumen + " real null, "
+            + lugar + " text, "
+            + observacion + " text, "
+            + tipoTubo + " text, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + idRecepcion +"));";
+
 }

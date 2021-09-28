@@ -1,10 +1,7 @@
 package ni.org.ics.a2cares.app.ui.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,24 +11,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import ni.org.ics.a2cares.app.R;
-import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
+import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
 import ni.org.ics.a2cares.app.dto.MuestraDTO;
-import ni.org.ics.a2cares.app.ui.activities.menu.MenuParticipanteActivity;
 import ni.org.ics.a2cares.app.utils.Constants;
 
 /**
  * Created by Miguel Salinas on 9/7/2021.
  */
-public class MuestraListAdapter extends RecyclerView.Adapter<MuestraListAdapter.ViewHolder> {
+public class RecepcionListAdapter extends RecyclerView.Adapter<RecepcionListAdapter.ViewHolder> {
 
-    private List<MuestraDTO> listdata;
+    private List<RecepcionMuestra> listdata;
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
 
     // RecyclerView recyclerView;
-    public MuestraListAdapter(List<MuestraDTO> listdata) {
+    public RecepcionListAdapter(List<RecepcionMuestra> listdata) {
         this.listdata = listdata;
     }
 
@@ -44,25 +41,28 @@ public class MuestraListAdapter extends RecyclerView.Adapter<MuestraListAdapter.
         return viewHolder;
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final MuestraDTO muestraDTO = listdata.get(position);
-        holder.textViewIdent.setText(muestraDTO.getTipoTubo());
-        //holder.textViewIdent.setTextSize(18);
-        holder.textViewIdent.setTextColor(muestraDTO.getColor());
-        holder.textViewDer.setText(mDateFormat.format(listdata.get(position).getFechaMuestra()));
-        if (listdata.get(position).getTomoMuestra().equalsIgnoreCase(Constants.YESKEYSND)) {
-            holder.textViewName.setText(holder.context.getString(R.string.code) + ": " + muestraDTO.getCodigoMx() + " - " + holder.context.getString(R.string.volumen) + ": " + muestraDTO.getVolumen() + holder.context.getString(R.string.ml));
+        final RecepcionMuestra recepcionMuestra = listdata.get(position);
+        holder.textViewIdent.setText(recepcionMuestra.getTipoTubo());
+        holder.textViewIdent.setTextSize(20);
+        if (recepcionMuestra.getTipoTubo().equalsIgnoreCase(Constants.TIPO_TUBO_BHC)) {
+            holder.textViewIdent.setTextColor(Color.MAGENTA);
         } else {
-            holder.textViewName.setText(listdata.get(position).getRazonNoToma() + (listdata.get(position).getOtraRazonNoToma() != null ? "-"+listdata.get(position).getOtraRazonNoToma() : ""));
+            holder.textViewIdent.setTextColor(Color.RED);
         }
-
+        holder.textViewDer.setText(mDateFormat.format(listdata.get(position).getFechaRecepcion()));
+        holder.textViewName.setText(holder.context.getString(R.string.code) + ": " + recepcionMuestra.getCodigoMx() + " - " + holder.context.getString(R.string.volumen) + ": " + recepcionMuestra.getVolumen() + holder.context.getString(R.string.ml));
     }
 
     @Override
     public int getItemCount() {
         return listdata.size();
+    }
+
+    public void filterList(ArrayList<RecepcionMuestra> filteredList) {
+        listdata = filteredList;
+        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -71,6 +71,7 @@ public class MuestraListAdapter extends RecyclerView.Adapter<MuestraListAdapter.
         public TextView textViewIdent;
         public TextView textViewDer;
         public TextView textViewName;
+        public LinearLayout relativeLayout;
         public ViewHolder(View itemView) {
             super(itemView);
             context = itemView.getContext();
@@ -79,6 +80,7 @@ public class MuestraListAdapter extends RecyclerView.Adapter<MuestraListAdapter.
             this.textViewIdent = (TextView) itemView.findViewById(R.id.identifier_text);
             this.textViewDer = (TextView) itemView.findViewById(R.id.der_text);
             this.textViewName = (TextView) itemView.findViewById(R.id.name_text);
+            relativeLayout = (LinearLayout)itemView.findViewById(R.id.linearLayout);
         }
     }
 }

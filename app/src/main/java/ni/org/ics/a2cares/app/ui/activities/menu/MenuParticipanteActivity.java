@@ -23,6 +23,7 @@ import ni.org.ics.a2cares.app.MyIcsApplication;
 import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.EncuestasDBConstants;
+import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaParticipante;
@@ -43,22 +44,22 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private String[] menu_participante;
     private static Participante participante = new Participante();
     private EstudioDBAdapter estudiosAdapter;
-    private boolean existeEncuestaParticip = false;
-    private boolean existeEncuestaCasa = false;
-    private boolean existeencuestaPeso = false;
-    private boolean existenMuestras = false;
+    private boolean pendienteEncuestaParticip = false;
+    private boolean pendienteEncuestaCasa = false;
+    private boolean pendienteEncuestaPeso = false;
+    private boolean pendienteMuestras = false;
     private boolean visitaExitosa = false;
 
-    private final int OPCION_CONSULTA = 0;
-    private final int OPCION_VISITA = 1;
-    private final int OPCION_ENCUESTA_CASA = 2;
-    private final int OPCION_ENCUESTA_PARTICIPANTE = 3;
+    //private final int OPCION_CONSULTA = 0;
+    private final int OPCION_VISITA = 0;
+    private final int OPCION_ENCUESTA_CASA = 1;
+    private final int OPCION_ENCUESTA_PARTICIPANTE = 2;
     //private final int OPCION_ENCUESTA_DATOSPARTO = 2;
-    private final int OPCION_ENCUESTA_PESOTALLA = 4;
+    private final int OPCION_ENCUESTA_PESOTALLA = 3;
     //private final int OPCION_ENCUESTA_LACTANCIA = 3;
-    private final int OPCION_MUESTRAS = 5;
+    private final int OPCION_MUESTRAS = 4;
     //private final int OPCION_ENCUESTA_PARTICIPANTESA = 5;
-    private final int OPCION_IR_CASA = 6;
+    private final int OPCION_IR_CASA = 5;
 
     private AlertDialog alertDialog;
 
@@ -92,15 +93,15 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         break;
                     case OPCION_ENCUESTA_CASA:
                         tituloEncuesta = getString(R.string.new_survey_1);
-                        existeEncuesta = existeEncuestaParticip;
+                        existeEncuesta = pendienteEncuestaParticip;
                         break;
                     case OPCION_ENCUESTA_PARTICIPANTE:
                         tituloEncuesta = getString(R.string.new_survey_2);
-                        existeEncuesta = existeEncuestaParticip;
+                        existeEncuesta = pendienteEncuestaParticip;
                         break;
                     case OPCION_ENCUESTA_PESOTALLA:
                         tituloEncuesta = getString(R.string.new_survey_3);
-                        existeEncuesta = existeencuestaPeso;
+                        existeEncuesta = pendienteEncuestaPeso;
                         break;
                     case OPCION_MUESTRAS:
                         tituloEncuesta = getString(R.string.samples);
@@ -268,6 +269,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
+                        finish();
                         break;
                     case OPCION_ENCUESTA_CASA:
                         arguments.putSerializable(Constants.PARTICIPANTE, participante);
@@ -277,6 +279,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.putExtras(arguments);
                         i.putExtra(Constants.VISITA_EXITOSA, visitaExitosa);
                         startActivity(i);
+                        finish();
                         break;
                     case OPCION_ENCUESTA_PARTICIPANTE:
                         arguments.putSerializable(Constants.PARTICIPANTE, participante);
@@ -286,7 +289,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.putExtras(arguments);
                         i.putExtra(Constants.VISITA_EXITOSA, visitaExitosa);
                         startActivity(i);
-                        
+                        finish();
                         /*if (!existeencuestaParticip) {
                             if (participanteCHF != null)
                                 arguments.putSerializable(Constants.PARTICIPANTE, participanteCHF);
@@ -307,7 +310,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         }*/
                         break;
                     case OPCION_ENCUESTA_PESOTALLA:
-                        if (!existeencuestaPeso) {
+                        //if (!pendienteEncuestaPeso) {
                             if (participante != null)
                                 arguments.putSerializable(Constants.PARTICIPANTE, participante);
                             i = new Intent(getApplicationContext(),
@@ -316,7 +319,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             i.putExtras(arguments);
                             startActivity(i);
-                        }/*else{
+                            finish();
+                        /*}else{
                             EncuestaPesoTalla encuestaPesoTalla = estudiosAdapter.getEncuestasPesoTalla(filtro, EncuestasDBConstants.participante);
                             if (encuestaPesoTalla!=null)
                                 arguments.putSerializable(Constants.ENCUESTA, encuestaPesoTalla);
@@ -335,12 +339,14 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
+                        finish();
                         break;
                     case OPCION_IR_CASA:
                         arguments.putSerializable(Constants.CASA, participante.getCasa());
                         i = new Intent(getApplicationContext(),
                                 MenuCasaActivity.class);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtra(Constants.DESDE_PARTICIPANTE, true);
                         i.putExtras(arguments);
                         startActivity(i);
                     default:
@@ -375,19 +381,28 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         protected String doInBackground(String... values) {
             try {
                 estudiosAdapter.open();
-                EncuestaCasa encuesta = estudiosAdapter.getEncuestaCasa(EncuestasDBConstants.casa + "=" + participante.getCasa().getCodigo(), null);
+
+                /*EncuestaCasa encuesta = estudiosAdapter.getEncuestaCasa(EncuestasDBConstants.casa + "=" + participante.getCasa().getCodigo(), null);
                 if (encuesta!=null) {
-                    existeEncuestaCasa = true;
+                    pendienteEncuestaCasa = true;
                 }
                 EncuestaParticipante encuestap = estudiosAdapter.getEncuestasParticipante(EncuestasDBConstants.participante + "="+participante.getCodigo(), null);
                 if (encuestap!=null) {
-                    existeEncuestaParticip = true;
+                    pendienteEncuestaParticip = true;
                 }
                 EncuestaPesoTalla encuestaPesoTalla = estudiosAdapter.getEncuestasPesoTalla(EncuestasDBConstants.participante + "=" + participante.getCodigo(), null);
                 if (encuestaPesoTalla!=null) {
-                    existeencuestaPeso = true;
-                }
+                    pendienteEncuestaPeso = true;
+                }*/
+                //actualizar por cualquier cambio en la base
+                participante = estudiosAdapter.getParticipante(MainDBConstants.codigo + "=" + participante.getCodigo(), null);
                 estudiosAdapter.close();
+
+
+                pendienteEncuestaCasa = participante.getProcesos().getPendienteEnCasa().equalsIgnoreCase(Constants.YESKEYSND);
+                pendienteEncuestaParticip = participante.getProcesos().getPendienteEncPart().equalsIgnoreCase(Constants.YESKEYSND);
+                pendienteEncuestaPeso = participante.getProcesos().getPendientePyT().equalsIgnoreCase(Constants.YESKEYSND);
+                pendienteMuestras = participante.getProcesos().getPendienteMxMA().equalsIgnoreCase(Constants.YESKEYSND);
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
                 return "error";
@@ -412,7 +427,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
 
             textView.setText(Html.fromHtml(header));
 
-            gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, participante, existeEncuestaCasa, existeEncuestaParticip, existeencuestaPeso, existenMuestras, visitaExitosa));
+            gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, participante, pendienteEncuestaCasa, pendienteEncuestaParticip, pendienteEncuestaPeso, pendienteMuestras, visitaExitosa));
             dismissProgressDialog();
         }
     }

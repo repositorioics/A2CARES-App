@@ -34,6 +34,7 @@
     <string name="error_wipe_db_super">No tiene el rol necesario para limpiar base de datos</string>
     <string name="change_date">Seleccionar fecha</string>
     <string name="desc_barcode">Escanear código de barras</string>
+    <string name="perm_error">No tiene permiso en esta opción!</string>
     <!--Busquedas -->
     <string name="enter">Ingresar</string>
     <string name="barcode_error">Escaner de código de barras no disponible</string>
@@ -108,6 +109,8 @@
     <string name="send_request">Enviar solicitud</string>
     <string name="start_part">/*Enviar participante*/</string>
     <string name="finished_part">/*Terminado participantes*/</string>
+    <string name="start_partproc">/*Enviar participante procesos*/</string>
+    <string name="finished_partproc">/*Terminado procesos*/</string>
     <string name="start_phone">/*Enviar telefono*/</string>
     <string name="finished">/*Proceso finalizado*/</string>
     <!--  DeviceListActivity -->
@@ -145,4 +148,23 @@
     <string name="without_direction">Sin dirección</string>
 
     <string name="wrongSelect">La respuesta para <xliff:g id="variable">%1$s</xliff:g> es requerida</string>
+
+    <!-- Supervisor-->
+    <string name="super_1">Recepción BHC</string>
+    <string name="super_2">Recepción Rojo</string>
+    <!-- Recepcion de muestras-->
+    <string name="recepcionesHoy">Muestras recepcionas hoy</string>
+    <string name="codigoMxR">Escanee código de muestra</string>
+    <string name="volumenR">Volumen</string>
+    <string name="observacionR">Observaciones</string>
+    <string name="observacionHint">Observaciones de la recepción</string>
+    <string name="lugar">Lugar</string>
+    <string name="fechaRecepcion">Fecha de recepción</string>
+    <string name="error_volumen">Volumen inválido</string>
+    <string name="error_codigo">Código inválido</string>
+    <string name="error_lugar">Seleccione lugar donde se tomó la muestra</string>
+    <string name="error_codigoMx">Lectura Inválida!!!!</string>
+    <string name="list">Listar registros</string>
+    <string name="noSample">Sin muestra</string>
+
 </resources>

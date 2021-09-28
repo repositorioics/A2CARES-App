@@ -10,6 +10,7 @@ import net.sqlcipher.database.SQLiteQueryBuilder;
 import net.sqlcipher.database.SQLiteStatement;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ni.org.ics.a2cares.app.database.constants.EncuestasDBConstants;
@@ -25,6 +26,7 @@ import ni.org.ics.a2cares.app.database.helpers.EstudiosHelper;
 import ni.org.ics.a2cares.app.database.helpers.MessageResourceHelper;
 import ni.org.ics.a2cares.app.database.helpers.MuestraHelper;
 import ni.org.ics.a2cares.app.database.helpers.ParticipanteHelper;
+import ni.org.ics.a2cares.app.database.helpers.RecepcionMuestraHelper;
 import ni.org.ics.a2cares.app.database.helpers.TamizajeHelper;
 import ni.org.ics.a2cares.app.database.helpers.TelefonoContactoHelper;
 import ni.org.ics.a2cares.app.database.helpers.UserSistemaHelper;
@@ -40,6 +42,7 @@ import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
 import ni.org.ics.a2cares.app.domain.core.Tamizaje;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
+import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaParticipante;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaPesoTalla;
@@ -95,6 +98,8 @@ public class EstudioDBAdapter {
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_CASA_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_PART_TABLE);
             db.execSQL(MainDBConstants.CREATE_MUESTRAS_TABLE);
+            db.execSQL(MainDBConstants.CREATE_RECEPCION_MUESTRA_TABLE);
+            db.execSQL(MainDBConstants.CREATE_PARTICIPANTE_PROC_TALBE);
         }
 
         @Override
@@ -638,8 +643,8 @@ public class EstudioDBAdapter {
             mParticipante=ParticipanteHelper.crearParticipante(cursorParticipante);
             Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorParticipante.getInt(cursorParticipante.getColumnIndex(MainDBConstants.casa)), null);
 
-            //ParticipanteProcesos procesos = this.getParticipanteProcesos(ConstantsDB.CODIGO+"="+mParticipante.getCodigo().toString(), null);
-            //mParticipante.setProcesos(procesos);
+            ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"="+mParticipante.getCodigo().toString(), null);
+            mParticipante.setProcesos(procesos);
 
             mParticipante.setCasa(casa);
         }
@@ -659,8 +664,8 @@ public class EstudioDBAdapter {
                 Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorParticipante.getInt(cursorParticipante.getColumnIndex(MainDBConstants.casa)), null);
                 mParticipante.setCasa(casa);
 
-                //ParticipanteProcesos procesos = this.getParticipanteProcesos(ConstantsDB.CODIGO+"="+mParticipante.getCodigo().toString(), null);
-                //mParticipante.setProcesos(procesos);
+                ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"="+mParticipante.getCodigo().toString(), null);
+                mParticipante.setProcesos(procesos);
 
                 mParticipantes.add(mParticipante);
             } while (cursorParticipante.moveToNext());
@@ -682,11 +687,11 @@ public class EstudioDBAdapter {
                 Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorParticipante.getInt(cursorParticipante.getColumnIndex(MainDBConstants.casa)), null);
                 mParticipante.setCasa(casa);
 
-                /*ParticipanteProcesos procesos = this.getParticipanteProcesos(ConstantsDB.CODIGO+"="+mParticipante.getCodigo().toString(), null);
-                if (procesos != null && procesos.getEstPart()==1) {
+                ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"="+mParticipante.getCodigo().toString(), null);
+                if (procesos != null && procesos.getRetirado()==0) {
                     mParticipante.setProcesos(procesos);
                     mParticipantes.add(mParticipante);
-                }*/
+                }
             } while (cursorParticipante.moveToNext());
         }
         if (!cursorParticipante.isClosed()) cursorParticipante.close();
@@ -715,8 +720,8 @@ public class EstudioDBAdapter {
                 Casa casa = this.getCasa(MainDBConstants.codigo + "=" +participantes.getInt(participantes.getColumnIndex(MainDBConstants.casa)), null);
                 mParticipante.setCasa(casa);
 
-                //ParticipanteProcesos procesos = this.getParticipanteProcesos(ConstantsDB.CODIGO+"="+mParticipante.getCodigo().toString(), null);
-                //mParticipante.setProcesos(procesos);
+                ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"="+mParticipante.getCodigo().toString(), null);
+                mParticipante.setProcesos(procesos);
 
                 mParticipantes.add(mParticipante);
             } while (participantes.moveToNext());
@@ -747,8 +752,8 @@ public class EstudioDBAdapter {
                 Casa casa = this.getCasa(MainDBConstants.codigo + "=" +participantes.getInt(participantes.getColumnIndex(MainDBConstants.casa)), null);
                 mParticipante.setCasa(casa);
 
-                //ParticipanteProcesos procesos = this.getParticipanteProcesos(ConstantsDB.CODIGO+"="+mParticipante.getCodigo().toString(), null);
-                //mParticipante.setProcesos(procesos);
+                ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"="+mParticipante.getCodigo().toString(), null);
+                mParticipante.setProcesos(procesos);
 
                 mParticipantes.add(mParticipante);
             } while (participantes.moveToNext());
@@ -1183,7 +1188,7 @@ public class EstudioDBAdapter {
     }
 
     //Limpiar la tabla de Muestras de la base de datos
-    public boolean deleteParticipanteProcesos() {
+    public boolean borrarParticipantesProcesos() {
         return mDb.delete(MainDBConstants.PARTICIPANTE_PROC_TABLE, null, null) > 0;
     }
 
@@ -1214,6 +1219,64 @@ public class EstudioDBAdapter {
         }
         if (cursorParticipante!=null && !cursorParticipante.isClosed()) cursorParticipante.close();
         return mParticipantesProc;
+    }
+
+    //Crear nuevo recepcionMuestra en la base de datos
+    public void crearRecepcionMuestra(RecepcionMuestra recepcionMuestra) {
+        ContentValues cv = RecepcionMuestraHelper.crearRecepcionMuestraContentValues(recepcionMuestra);
+        mDb.insertOrThrow(MainDBConstants.RECEPCION_MUESTRA_TABLE, null, cv);
+    }
+
+    //Editar recepcionMuestra existente en la base de datos
+    public boolean editarRecepcionMuestra(RecepcionMuestra recepcionMuestra) {
+        ContentValues cv = RecepcionMuestraHelper.crearRecepcionMuestraContentValues(recepcionMuestra);
+        return mDb.update(MainDBConstants.RECEPCION_MUESTRA_TABLE , cv, MainDBConstants.idRecepcion + "='"
+                + recepcionMuestra.getIdRecepcion() + "'", null) > 0;
+    }
+    //Limpiar la tabla de recepción de muestras de la base de datos
+    public boolean borrarRecepcionMuestras() {
+        return mDb.delete(MainDBConstants.RECEPCION_MUESTRA_TABLE, null, null) > 0;
+    }
+    //Obtener un recepcionMuestra de la base de datos
+    public RecepcionMuestra getRecepcionMuestra(String filtro, String orden) throws SQLException {
+        RecepcionMuestra mRecepcion = null;
+        Cursor cursor = crearCursor(MainDBConstants.RECEPCION_MUESTRA_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mRecepcion= RecepcionMuestraHelper.crearRecepcionMuestra(cursor);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mRecepcion;
+    }
+    //Obtener una lista de recepción de muestras de la base de datos
+    public List<RecepcionMuestra> getRecepcionMuestras(String filtro, String orden) throws SQLException {
+        List<RecepcionMuestra> mRecepciones = new ArrayList<RecepcionMuestra>();
+        Cursor cursor = crearCursor(MainDBConstants.RECEPCION_MUESTRA_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mRecepciones.clear();
+            do{
+                RecepcionMuestra mRecepcion = null;
+                mRecepcion = RecepcionMuestraHelper.crearRecepcionMuestra(cursor);
+                mRecepciones.add(mRecepcion);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mRecepciones;
+    }
+
+    /**
+     * Busca una RecepcionBHC de la base de datos
+     *
+     * @return RecepcionBHC
+     */
+
+    public boolean recepcionRegistrada(String filtro) throws SQLException {
+        boolean registrada;
+        Cursor cursor = crearCursor(MainDBConstants.RECEPCION_MUESTRA_TABLE, filtro, null, null);
+        registrada = cursor != null && cursor.getCount() > 0;
+        if (!cursor.isClosed()) cursor.close();
+        return registrada;
     }
 
 
@@ -1383,17 +1446,32 @@ public class EstudioDBAdapter {
         return true;
     }
 
-    public boolean bulkInsertParticipantesBySql(List<Participante> list) throws Exception{
+    public boolean bulkInsertParticipantesBySql(String tabla, List<?> list) throws Exception{
         if (null == list || list.size() <= 0) {
             return false;
         }
         try {
-            SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_PARTICIPANTE_TABLE);
+            SQLiteStatement stat = null;
             mDb.beginTransaction();
-            for (Participante remoteAppInfo : list) {
-                ParticipanteHelper.fillParticipanteStatement(stat, remoteAppInfo);
-                long result = stat.executeInsert();
-                if (result < 0) return false;
+            switch (tabla) {
+                case MainDBConstants.PARTICIPANTE_TABLE:
+                    stat = mDb.compileStatement(MainDBConstants.INSERT_PARTICIPANTE_TABLE);
+                    for (Object remoteAppInfo : list) {
+                        ParticipanteHelper.fillParticipanteStatement(stat, (Participante) remoteAppInfo);
+                        long result = stat.executeInsert();
+                        if (result < 0) return false;
+                    }
+                    break;
+                case MainDBConstants.PARTICIPANTE_PROC_TABLE:
+                    stat = mDb.compileStatement(MainDBConstants.INSERT_PARTICIPANTE_PROC_TABLE);
+                    for (Object remoteAppInfo : list) {
+                        ParticipanteHelper.fillParticipanteProcesosStatement(stat, (ParticipanteProcesos) remoteAppInfo);
+                        long result = stat.executeInsert();
+                        if (result < 0) return false;
+                    }
+                    break;
+                default:
+                    break;
             }
             mDb.setTransactionSuccessful();
         } catch (Exception e) {

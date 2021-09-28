@@ -31,6 +31,7 @@ import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaParticipante;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
@@ -1516,6 +1517,14 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
             if (tieneValor(anioVacunaCovid)) encuestaParticipante.setAnioVacunaCovid(Integer.parseInt(anioVacunaCovid));
 
             estudiosAdapter.crearEncuestasParticipante(encuestaParticipante);
+
+            participante.getProcesos().setPendienteEncPart(Constants.NOKEYSND);
+            participante.getProcesos().setRecordDate(new Date());
+            participante.getProcesos().setRecordUser(username);
+            participante.getProcesos().setDeviceid(infoMovil.getDeviceId());
+            participante.getProcesos().setEstado('0');
+            participante.getProcesos().setPasive('0');
+            estudiosAdapter.editarParticipanteProcesos(participante.getProcesos());
 
             showToast(getString(R.string.success));
 

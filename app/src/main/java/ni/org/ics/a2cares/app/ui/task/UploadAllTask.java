@@ -24,8 +24,10 @@ import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
 import ni.org.ics.a2cares.app.domain.core.Muestra;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
 import ni.org.ics.a2cares.app.domain.core.Tamizaje;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
+import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaParticipante;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaPesoTalla;
@@ -48,7 +50,7 @@ public class UploadAllTask extends UploadTask {
     private List<Tamizaje> mTamizajes = new ArrayList<Tamizaje>();
     private List<Casa> mCasas = new ArrayList<Casa>();
     private List<Participante> mParticipantes = new ArrayList<Participante>();
-    //private List<ParticipanteProcesos> mParticipantesProc = new ArrayList<ParticipanteProcesos>();
+    private List<ParticipanteProcesos> mParticipantesProc = new ArrayList<ParticipanteProcesos>();
     private List<CartaConsentimiento> mCartasConsent = new ArrayList<CartaConsentimiento>();
     private List<EncuestaCasa> mEncuestasCasas = new ArrayList<EncuestaCasa>();
     private List<EncuestaParticipante> mEncuestasParticipante = new ArrayList<EncuestaParticipante>();
@@ -56,6 +58,7 @@ public class UploadAllTask extends UploadTask {
     private List<Muestra> mMuestras = new ArrayList<Muestra>();
     private List<TelefonoContacto> mTelefonos = new ArrayList<TelefonoContacto>();
     private List<DatosCoordenadas> mCoordenadas = new ArrayList<DatosCoordenadas>();
+    private List<RecepcionMuestra> mRecepcionMuestras = new ArrayList<RecepcionMuestra>();
 
 	private String url = null;
 	private String username = null;
@@ -67,18 +70,17 @@ public class UploadAllTask extends UploadTask {
     public static final String TAMIZAJE = "2";
     public static final String CASA = "3";
     public static final String PARTICIPANTE = "4";
-    public static final String CARTAS_CONSENT = "5";
-    public static final String TELEFONOS = "6";
-    public static final String COORDENADAS = "7";
-    //public static final String PARTICIPANTE_PRC = "6";
-    public static final String ENCUESTA_CASA = "8";
-    public static final String ENCUESTA_PARTICIPANTE = "9";
-    public static final String ENCUESTA_PESOTALLA = "10";
-    public static final String MUESTRAS = "11";
+    public static final String PARTICIPANTE_PRC = "5";
+    public static final String CARTAS_CONSENT = "6";
+    public static final String TELEFONOS = "7";
+    public static final String COORDENADAS = "8";
+    public static final String ENCUESTA_CASA = "9";
+    public static final String ENCUESTA_PARTICIPANTE = "10";
+    public static final String ENCUESTA_PESOTALLA = "11";
+    public static final String MUESTRAS = "12";
+    public static final String RECEPCION_MUESTRA = "13";
 
-    //public static final String RECEPCION_MUESTRA = "28";
-
-	private static final String TOTAL_TASK = "11";
+	private static final String TOTAL_TASK = "13";
 	
 
 	@Override
@@ -96,6 +98,7 @@ public class UploadAllTask extends UploadTask {
 			mTamizajes = estudioAdapter.getTamizajes(filtro, MainDBConstants.codigo);
             mCasas = estudioAdapter.getCasas(filtro, MainDBConstants.codigo);
             mParticipantes = estudioAdapter.getParticipantes(filtro, MainDBConstants.codigo);
+            mParticipantesProc = estudioAdapter.getParticipantesProc(filtro, MainDBConstants.codigo);
             mCartasConsent = estudioAdapter.getCartasConsentimientos(filtro, MainDBConstants.codigo);
             mTelefonos = estudioAdapter.getTelefonosContacto(filtro, null);
             mCoordenadas = estudioAdapter.getDatosCoordenadas(filtro, null);
@@ -103,6 +106,7 @@ public class UploadAllTask extends UploadTask {
             mEncuestasParticipante = estudioAdapter.getEncuestasParticipantes(filtro, null);
             mEncuestasPesoTalla = estudioAdapter.getEncuestasPesoTallas(filtro, null);
             mMuestras = estudioAdapter.getMuestras(filtro, null);
+            mRecepcionMuestras = estudioAdapter.getRecepcionMuestras(filtro, null);
 
 			publishProgress("Datos completos!", "2", "2");
 			
@@ -129,6 +133,12 @@ public class UploadAllTask extends UploadTask {
             error = cargarParticipantes(url, username, password);
             if (!error.matches(Constants.DATOS_RECIBIDOS)){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE_PRC);
+            error = cargarParticipantesProcesos(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE_PRC);
                 return error;
             }
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, CARTAS_CONSENT);
@@ -171,6 +181,12 @@ public class UploadAllTask extends UploadTask {
             error = cargarMuestras(url, username, password);
             if (!error.matches(Constants.DATOS_RECIBIDOS)){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, RECEPCION_MUESTRA);
+            error = cargarRecepcionMuestras(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RECEPCION_MUESTRA);
                 return error;
             }
 		} catch (Exception e1) {
@@ -224,6 +240,17 @@ public class UploadAllTask extends UploadTask {
                     participante.setEstado(estado);
                     estudioAdapter.editarParticipante(participante);
                     publishProgress("Actualizando participantes en base de datos local", Integer.valueOf(mParticipantes.indexOf(participante)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(PARTICIPANTE_PRC)){
+            c = mParticipantesProc.size();
+            if(c>0){
+                for (ParticipanteProcesos participanteProcesos : mParticipantesProc) {
+                    participanteProcesos.setEstado(estado);
+                    estudioAdapter.editarParticipanteProcesos(participanteProcesos);
+                    publishProgress("Actualizando procesos participantes en base de datos local", Integer.valueOf(mParticipantesProc.indexOf(participanteProcesos)).toString(), Integer
                             .valueOf(c).toString());
                 }
             }
@@ -302,6 +329,17 @@ public class UploadAllTask extends UploadTask {
                     estudioAdapter.editarMuestras(muestra);
                     publishProgress("Actualizando muestras en base de datos local", Integer.valueOf(mMuestras.indexOf(muestra)).toString(), Integer
                             .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(RECEPCION_MUESTRA)){
+            c = mRecepcionMuestras.size();
+            if(c>0){
+                for (RecepcionMuestra recepcionMuestra : mRecepcionMuestras) {
+                    recepcionMuestra.setEstado(estado);
+                        estudioAdapter.editarRecepcionMuestra(recepcionMuestra);
+                        publishProgress("Actualizando recepciones de muestras en base de datos local", Integer.valueOf(mRecepcionMuestras.indexOf(recepcionMuestra)).toString(), Integer
+                                .valueOf(c).toString());
                 }
             }
         }
@@ -431,6 +469,41 @@ public class UploadAllTask extends UploadTask {
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<Participante[]> requestEntity =
                         new HttpEntity<Participante[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* ParticipanteProcesos ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarParticipantesProcesos(String url, String username,
+                                         String password) throws Exception {
+        try {
+            if(mParticipantesProc.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando procesos participantes!", PARTICIPANTE_PRC, TOTAL_TASK);
+                final String urlRequest = url + "/movil/participantesprocesos";
+                ParticipanteProcesos[] envio = mParticipantesProc.toArray(new ParticipanteProcesos[mParticipantesProc.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ParticipanteProcesos[]> requestEntity =
+                        new HttpEntity<ParticipanteProcesos[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
@@ -671,6 +744,40 @@ public class UploadAllTask extends UploadTask {
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<Muestra[]> requestEntity =
                         new HttpEntity<Muestra[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /*********************Recepcion Muestras ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarRecepcionMuestras(String url, String username,String password) throws Exception {
+        try {
+            if(mRecepcionMuestras.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando recepciones de muestras!", RECEPCION_MUESTRA, TOTAL_TASK);
+                final String urlRequest = url + "/movil/recepcionMuestras";
+                RecepcionMuestra[] envio = mRecepcionMuestras.toArray(new RecepcionMuestra[mRecepcionMuestras.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<RecepcionMuestra[]> requestEntity =
+                        new HttpEntity<RecepcionMuestra[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

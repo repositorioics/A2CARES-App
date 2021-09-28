@@ -19,6 +19,7 @@ import ni.org.ics.a2cares.app.MyIcsApplication;
 import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaPesoTalla;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
@@ -597,7 +598,15 @@ public class NuevaEncuestaPesoTallaActivity extends AbstractAsyncActivity implem
                 actualizada = estudiosAdapter.editarEncuestasPesoTalla(encuesta);
             else */
             estudiosAdapter.crearEncuestasPesoTalla(encuesta);
-            estudiosAdapter.close();
+
+            participante.getProcesos().setPendientePyT(Constants.NOKEYSND);
+            participante.getProcesos().setRecordDate(new Date());
+            participante.getProcesos().setRecordUser(username);
+            participante.getProcesos().setDeviceid(infoMovil.getDeviceId());
+            participante.getProcesos().setEstado('0');
+            participante.getProcesos().setPasive('0');
+            estudiosAdapter.editarParticipanteProcesos(participante.getProcesos());
+
             showToast(getString(R.string.success));
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.PARTICIPANTE, participante);
@@ -611,6 +620,11 @@ public class NuevaEncuestaPesoTallaActivity extends AbstractAsyncActivity implem
         } catch (Exception ex) {
             ex.printStackTrace();
             showToast(getString(R.string.error, ex.getLocalizedMessage()));
+        } finally {
+            //Cierra la base de datos
+            if (estudiosAdapter!=null)
+                estudiosAdapter.close();
+
         }
     }
 

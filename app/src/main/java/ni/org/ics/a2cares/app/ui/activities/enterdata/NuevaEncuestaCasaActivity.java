@@ -31,6 +31,7 @@ import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
 import ni.org.ics.a2cares.app.domain.visita.VisitaTerrenoParticipante;
@@ -1355,6 +1356,18 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             if (tieneValor(cuantasVecesRecBasura)) encuestaCasa.setCuantasVecesRecBasura(Integer.valueOf(cuantasVecesRecBasura));
 
             estudiosAdapter.crearEncuestaCasa(encuestaCasa);
+
+            List<Participante> participantes = estudiosAdapter.getParticipantes(MainDBConstants.casa + "=" + participante.getCasa().getCodigo(), null);
+            for (Participante part : participantes) {
+                ParticipanteProcesos procesos = part.getProcesos();
+                procesos.setPendienteEnCasa(Constants.NOKEYSND);
+                procesos.setRecordDate(new Date());
+                procesos.setRecordUser(username);
+                procesos.setDeviceid(infoMovil.getDeviceId());
+                procesos.setEstado('0');
+                procesos.setPasive('0');
+                estudiosAdapter.editarParticipanteProcesos(procesos);
+            }
 
             showToast(getString(R.string.success));
 

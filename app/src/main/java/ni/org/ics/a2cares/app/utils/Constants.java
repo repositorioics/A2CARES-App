@@ -53,4 +53,12 @@ public class Constants {
 
     //codigos
     public static final String ESTUDIO = "A2CARES";
+
+    //recepcion de muestras
+    public static final String TIPO_TUBO = "tipo_tubo";
+    public static final String TIPO_TUBO_BHC = "BHC";
+    public static final String TIPO_TUBO_ROJO= "ROJO";
+
+    //Navegacion
+    public static final String DESDE_PARTICIPANTE = "desde_participante";
 }

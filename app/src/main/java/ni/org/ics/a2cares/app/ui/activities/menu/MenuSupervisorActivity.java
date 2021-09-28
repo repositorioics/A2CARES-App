@@ -1,8 +1,5 @@
 package ni.org.ics.a2cares.app.ui.activities.menu;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -11,7 +8,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,35 +20,22 @@ import ni.org.ics.a2cares.app.AbstractAsyncActivity;
 import ni.org.ics.a2cares.app.MainActivity;
 import ni.org.ics.a2cares.app.MyIcsApplication;
 import ni.org.ics.a2cares.app.R;
-import ni.org.ics.a2cares.app.bluetooth.activity.ChatActivity;
-import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
-import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
-import ni.org.ics.a2cares.app.domain.core.Casa;
-import ni.org.ics.a2cares.app.domain.core.Participante;
-import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.RecepcionBhcActivity;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.RecepcionRojoActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaParticipantesCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaTelefonosActivity;
 import ni.org.ics.a2cares.app.ui.adapters.MenuCasaAdapter;
-import ni.org.ics.a2cares.app.utils.Constants;
+import ni.org.ics.a2cares.app.ui.adapters.MenuSupervisorAdapter;
 
-public class MenuCasaActivity extends AbstractAsyncActivity {
+public class MenuSupervisorActivity extends AbstractAsyncActivity {
 
 	private GridView gridView;
 	private TextView textView;
 	private String[] menu_casa;
-	private static Casa casa = new Casa();
-	private List<Participante> mParticipantes = new ArrayList<Participante>();
-	//private List<Cuarto> mCuartos = new ArrayList<Cuarto>();
-	//private List<AreaAmbiente> mAreas = new ArrayList<AreaAmbiente>();
-	private List<TelefonoContacto> mTelefonosContacto = new ArrayList<TelefonoContacto>();
     private AlertDialog alertDialog;
 
-    private final int OPCION_LISTA_PARTICIPANTES = 0;
-    private final int OPCION_LISTA_TELEFONOS = 1;
-    private final int OPCION_ENVIAR_CASA = 2;
-    private boolean desdeParticipante = false;
-
-	private EstudioDBAdapter estudiosAdapter;
+    private final int OPCION_RECEPCION_BHC = 0;
+    private final int OPCION_RECEPCION_ROJO = 1;
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
 	@Override
@@ -63,13 +46,10 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 
 		textView = (TextView) findViewById(R.id.label);
 		gridView = (GridView) findViewById(R.id.gridView1);
-		menu_casa = getResources().getStringArray(R.array.menu_casa);
-		casa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);
-		desdeParticipante = getIntent().getBooleanExtra(Constants.DESDE_PARTICIPANTE, false);
+		menu_casa = getResources().getStringArray(R.array.menu_supervisor);
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-		estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(),mPass,false,false);
-		new FetchDataCasaTask().execute(casa.getCodigo().toString());
-		
+		new FetchDataTask().execute();
+
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View v,
@@ -77,31 +57,20 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 				Bundle arguments = new Bundle();
 				Intent i;
 				switch (position){
-					case OPCION_LISTA_PARTICIPANTES:
-						if (casa!=null) arguments.putSerializable(Constants.CASA , casa);
+					case OPCION_RECEPCION_BHC:
 						i = new Intent(getApplicationContext(),
-								ListaParticipantesCasaActivity.class);
+								RecepcionBhcActivity.class);
 						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						i.putExtras(arguments);
 						startActivity(i);
 			        	break;
-                    case OPCION_LISTA_TELEFONOS:
-                    	if (casa!=null) arguments.putSerializable(Constants.CASA , casa);
-    					i = new Intent(getApplicationContext(),
-    							ListaTelefonosActivity.class);
+                    case OPCION_RECEPCION_ROJO:
+                    	i = new Intent(getApplicationContext(),
+								RecepcionRojoActivity.class);
     					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     					i.putExtras(arguments);
     					startActivity(i);
     					break;
-                    case OPCION_ENVIAR_CASA:
-            			i = new Intent(getApplicationContext(),
-            					ChatActivity.class);
-            			if (casa!=null) arguments.putSerializable(Constants.CASA , casa);
-            			i.putExtra(Constants.ACCION, Constants.SENDING);
-            			i.putExtras(arguments);
-            			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            			startActivity(i);
-            			break;
 				    default:
                         break;
 		        }
@@ -160,8 +129,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 		}
 	}
 
-    private class FetchDataCasaTask extends AsyncTask<String, Void, String> {
-		private String codigoCasaCHF = null;
+	private class FetchDataTask extends AsyncTask<String, Void, String> {
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -170,16 +138,6 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 
 		@Override
 		protected String doInBackground(String... values) {
-			codigoCasaCHF = values[0];
-			try {
-				estudiosAdapter.open();
-				mParticipantes = estudiosAdapter.getParticipantes(MainDBConstants.casa +" = " + codigoCasaCHF, MainDBConstants.codigo);
-				mTelefonosContacto = estudiosAdapter.getTelefonosContacto(MainDBConstants.casa +" = " + casa.getCodigo() + " and " + MainDBConstants.pasive + " ='0'", MainDBConstants.numero);
-				estudiosAdapter.close();
-			} catch (Exception e) {
-				Log.e(TAG, e.getLocalizedMessage(), e);
-				return "error";
-			}
 			return "exito";
 		}
 
@@ -187,12 +145,11 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
 			// after the request completes, hide the progress indicator
 			textView.setText("");
 			textView.setTextColor(Color.BLACK);
-			textView.setText(getString(R.string.menu_house) +"\n"+ getString(R.string.code)+ " "+ getString(R.string.casa)+ ": "+ casa.getCodigo());
-			gridView.setAdapter(new MenuCasaAdapter(getApplicationContext(), R.layout.menu_item_2, menu_casa, mParticipantes.size(), mTelefonosContacto.size()));
+			textView.setText(getString(R.string.main_7));
+			gridView.setAdapter(new MenuSupervisorAdapter(getApplicationContext(), R.layout.menu_item_2, menu_casa));
 			dismissProgressDialog();
 		}
 
-	}	
-		
+	}
 }
 	

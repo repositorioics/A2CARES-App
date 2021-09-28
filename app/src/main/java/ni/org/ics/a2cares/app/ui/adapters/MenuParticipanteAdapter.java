@@ -17,35 +17,35 @@ import ni.org.ics.a2cares.app.domain.core.Participante;
 public class MenuParticipanteAdapter extends ArrayAdapter<String> {
 
 	private final String[] values;
-    private boolean existeEncuestaCasa = false;
-    private boolean existeEncuestaPeso = false;
-    private boolean existeEncuestaParticipante = false;
-    private boolean existenMuestras = false;
+    private boolean pendienteEncuestaCasa = false;
+    private boolean pendienteEncuestaPeso = false;
+    private boolean pendienteEncuestaParticipante = false;
+    private boolean pendientenMuestras = false;
     private boolean visitaExitosa = false;
 
-    private final int OPCION_CONSULTA = 0;
-    private final int OPCION_VISITA = 1;
-    private final int OPCION_ENCUESTA_CASA = 2;
-    private final int OPCION_ENCUESTA_PARTICIPANTE = 3;
+    //private final int OPCION_CONSULTA = 0;
+    private final int OPCION_VISITA = 0;
+    private final int OPCION_ENCUESTA_CASA = 1;
+    private final int OPCION_ENCUESTA_PARTICIPANTE = 2;
     //private final int OPCION_ENCUESTA_DATOSPARTO = 2;
-    private final int OPCION_ENCUESTA_PESOTALLA = 4;
+    private final int OPCION_ENCUESTA_PESOTALLA = 3;
     //private final int OPCION_ENCUESTA_LACTANCIA = 3;
-    private final int OPCION_ENCUESTA_MUESTRAS = 5;
+    private final int OPCION_ENCUESTA_MUESTRAS = 4;
     //private final int OPCION_ENCUESTA_PARTICIPANTESA = 5;
-    private final int OPCION_IR_CASA = 6;
+    private final int OPCION_IR_CASA = 5;
 
     private final Context context;
     private final Participante participante;
 	public MenuParticipanteAdapter(Context context, int textViewResourceId,
-                                   String[] values, Participante participante,  boolean existeEncuestaCasa, boolean existeEncuestaParticipante, boolean existeEncuestaPeso, boolean existenMuestras, boolean visitaExitosa) {
+                                   String[] values, Participante participante,  boolean pendienteEncuestaCasa, boolean pendienteEncuestaParticipante, boolean pendienteEncuestaPeso, boolean pendientenMuestras, boolean visitaExitosa) {
 		super(context, textViewResourceId, values);
         this.context = context;
 		this.values = values;
         this.participante = participante;
-        this.existeEncuestaCasa = existeEncuestaCasa;
-        this.existeEncuestaParticipante = existeEncuestaParticipante;
-        this.existeEncuestaPeso = existeEncuestaPeso;
-        this.existenMuestras = existenMuestras;
+        this.pendienteEncuestaCasa = pendienteEncuestaCasa;
+        this.pendienteEncuestaParticipante = pendienteEncuestaParticipante;
+        this.pendienteEncuestaPeso = pendienteEncuestaPeso;
+        this.pendientenMuestras = pendientenMuestras;
         this.visitaExitosa = visitaExitosa;
 	}
 
@@ -56,9 +56,9 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
         //a partir del MA2018 no se deberia ingresar información en la pantalla de Familia
         boolean habilitado = true;
         switch (position){
-            case OPCION_CONSULTA:
+            /*case OPCION_CONSULTA:
                 habilitado = true;
-                break;
+                break;*/
             case OPCION_VISITA:
                 habilitado = !visitaExitosa;
                 break;
@@ -98,10 +98,12 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
 		// Change icon based on position
 		Drawable img = null;
 		switch (position){
-            case OPCION_CONSULTA:
+            /*// se va a ocultar mientras no se desarrolla esta funcionalidad
+		    case OPCION_CONSULTA:
                 img=getContext().getResources().getDrawable(R.mipmap.ic_clinical);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-                break;
+
+                break;*/
             case OPCION_VISITA:
                 if (visitaExitosa) {
                     textView.setTextColor(Color.GRAY);
@@ -113,7 +115,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 break;
             case OPCION_ENCUESTA_CASA:
                 if (visitaExitosa) {
-                    if (existeEncuestaCasa) {
+                    if (!pendienteEncuestaCasa) {
                         textView.setTextColor(Color.BLUE);
                         //textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
                     } else {
@@ -131,7 +133,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 //textView.setTextColor(Color.GRAY);
                 //textView.setText(textView.getText()+"\n"+ context.getResources().getString(R.string.notavailable));
                 if (visitaExitosa) {
-                    if (existeEncuestaParticipante) {
+                    if (!pendienteEncuestaParticipante) {
                         textView.setTextColor(Color.BLUE);
                         //textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
                     } else {
@@ -147,7 +149,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 break;
             case OPCION_ENCUESTA_PESOTALLA:
                 if (visitaExitosa) {
-                    if (existeEncuestaPeso) {
+                    if (!pendienteEncuestaPeso) {
                         textView.setTextColor(Color.BLUE);
                         //textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
                     } else {
@@ -168,7 +170,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 img=getContext().getResources().getDrawable(R.mipmap.ic_samples);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 if (visitaExitosa) {
-                    if (existenMuestras) {
+                    if (!pendientenMuestras) {
                         textView.setTextColor(Color.BLUE);
                         //textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
                     } else {

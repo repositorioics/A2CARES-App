@@ -17,7 +17,6 @@ import ni.org.ics.a2cares.app.wizard.model.Page;
 import ni.org.ics.a2cares.app.wizard.model.PageList;
 import ni.org.ics.a2cares.app.wizard.model.SingleFixedChoicePage;
 import ni.org.ics.a2cares.app.wizard.model.TextPage;
-import ni.org.ics.a2cares.app.wizard.model.TimePage;
 
 /**
  * Created by Miguel Salinas on 8/7/2021.
