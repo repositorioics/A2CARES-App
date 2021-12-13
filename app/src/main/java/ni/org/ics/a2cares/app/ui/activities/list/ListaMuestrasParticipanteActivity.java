@@ -161,7 +161,7 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 					if (muestra.getTuboRojo().equalsIgnoreCase(Constants.NOKEYSND)){
 						for (MessageResource messageResource : catSinMuestra) {
 							if (messageResource.getCatKey().equalsIgnoreCase(muestra.getRazonNoRojo())){
-								muestraDTO.setRazonNoToma(messageResource.getSpanish());
+								muestraDTO.setRazonNoToma(getString(R.string.noSample) + " : " + messageResource.getSpanish());
 								break;
 							}
 						}

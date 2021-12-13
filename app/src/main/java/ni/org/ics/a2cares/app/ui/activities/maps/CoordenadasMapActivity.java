@@ -228,7 +228,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
             // position on right bottom
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-            layoutParams.setMargins(0, 0, 30, 190);
+            layoutParams.setMargins(0, 0, 30, 300);
         }
 
         /*PolygonsHelper polygonsHelper = new PolygonsHelper();
@@ -312,6 +312,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
             // Controles UI
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
+                mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
                 mGoogleMap.setMyLocationEnabled(true);
             } else {
                 if (ActivityCompat.shouldShowRequestPermissionRationale(this,

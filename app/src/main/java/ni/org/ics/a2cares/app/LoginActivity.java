@@ -304,7 +304,7 @@ public class LoginActivity extends AppCompatActivity {
 				List<Authority> uroles = Arrays.asList(userRolesFromServer.getBody());
                 urlRequest = url + "/movil/permisos/{mUser}";
                 ResponseEntity<UserPermissions> permisosFromServer = restTemplate.exchange(urlRequest, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), UserPermissions.class, mUser);
-                if(!chkWipe.isChecked() || uroles.toString().contains("ROLE_SUPER")) {
+                //if(!chkWipe.isChecked() || uroles.toString().contains("ROLE_SUPER")) {
                     successLogin = true;
                     EstudioDBAdapter dbAdapter = new EstudioDBAdapter(getApplicationContext(), mPassword, true, chkWipe.isChecked());
                     dbAdapter.open();
@@ -320,11 +320,11 @@ public class LoginActivity extends AppCompatActivity {
                     dbAdapter.crearPermisosUsuario(permisosFromServer.getBody());
                     dbAdapter.close();
                     return getString(R.string.success);
-                }
+                /*}
                 else {
                     successLogin=false;
                     return getString(R.string.error_wipe_db_super);
-                }
+                }*/
 			} catch (Exception e) {
 				successLogin=false;
 				Log.e(TAG, e.getLocalizedMessage(), e);

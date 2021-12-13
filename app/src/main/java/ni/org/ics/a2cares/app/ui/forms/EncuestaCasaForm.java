@@ -130,7 +130,7 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         Page scTieneServicioEnergia = new SingleFixedChoicePage(this, labels.getTieneServicioEnergia(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scTieneMedidorEnergia = new SingleFixedChoicePage(this, labels.getTieneMedidorEnergia(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scCasaDosPisos = new SingleFixedChoicePage(this, labels.getCasaDosPisos(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-        Page scTieneOtrosServicios = new MultipleFixedChoicePage(this, labels.getTieneOtrosServicios(), "", Constants.WIZARD, true).setChoices(catServicios).setRequired(true);
+        Page scTieneOtrosServicios = new MultipleFixedChoicePage(this, labels.getTieneOtrosServicios(), "", Constants.WIZARD, true).setChoices(catServicios).setRequired(false);
 
         Page scTieneVehiculo = new SingleFixedChoicePage(this, labels.getTieneVehiculo(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scMoto = new SingleFixedChoicePage(this, labels.getTieneMoto(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);

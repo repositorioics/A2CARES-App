@@ -44,11 +44,11 @@ public class DeviceInfo {
 			deviceId = Settings.Secure.getString(mContext.getContentResolver(), Settings.Secure.ANDROID_ID);
 		} else {
 			final TelephonyManager mTelephony = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			/*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 				if (mContext.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
 					return "";
 				}
-			}
+			}*/
 			assert mTelephony != null;
 			if (mTelephony.getDeviceId() != null)
 			{

@@ -111,12 +111,6 @@ public class UploadAllTask extends UploadTask {
 			publishProgress("Datos completos!", "2", "2");
 			
 			//Enviando datos
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITA);
-            error = cargarVisitasTerreno(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITA);
-                return error;
-            }
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, TAMIZAJE);
             error = cargarTamizajes(url, username, password);
             if (!error.matches(Constants.DATOS_RECIBIDOS)){
@@ -157,6 +151,12 @@ public class UploadAllTask extends UploadTask {
             error = cargarCoordenadas(url, username, password);
             if (!error.matches(Constants.DATOS_RECIBIDOS)){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, COORDENADAS);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITA);
+            error = cargarVisitasTerreno(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITA);
                 return error;
             }
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_CASA);
