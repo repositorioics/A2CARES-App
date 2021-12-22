@@ -28,7 +28,7 @@ public class EncuestasDBConstants {
     public static final String CREATE_ENCUESTA_PESOTALLA_TABLE = "create table if not exists "
             + ENCUESTA_PESOTALLA_TABLE + " ("
             + codigo + " text not null, "
-            + participante + " integer not null, "
+            + participante + " text not null, "
             + tomoMedidaSn + " text, "
             + razonNoTomoMedidas + " text, "
             + peso1 + " real, "
@@ -83,6 +83,7 @@ public class EncuestasDBConstants {
     public static final String problemaAgua = "problemaAgua";
     public static final String hrsSinServicioAgua = "hrsSinServicioAgua";
     public static final String frecuenciaSeVaAgua = "frecuenciaSeVaAgua";
+    public static final String otraFrecuenciaSeVaAgua = "otraFrecuenciaSeVaAgua";
     public static final String tienePozo = "tienePozo";
     public static final String tieneMedidorAgua = "tieneMedidorAgua";
     public static final String tieneTanque = "tieneTanque";
@@ -102,6 +103,8 @@ public class EncuestasDBConstants {
     public static final String tanquesTapados = "tanquesTapados";
     public static final String pilasTapadas = "pilasTapadas";
     public static final String otrosRecipientesTapados = "otrosRecipientesTapados";
+    public static final String cepillaPilas = "cepillaPilas";
+    public static final String frecCepillaPilas = "frecCepillaPilas";
     public static final String cambiadoCasa = "cambiadoCasa";
     public static final String remodeladoCasa = "remodeladoCasa";
     public static final String ubicacionLavandero = "ubicacionLavandero";
@@ -125,6 +128,8 @@ public class EncuestasDBConstants {
     public static final String tieneMuro = "tieneMuro";
     public static final String tieneInternet = "tieneInternet";
     public static final String tieneInodoro = "tieneInodoro";
+    public static final String cantInodoro = "cantInodoro";
+    public static final String cantLetrina = "cantLetrina";
     public static final String tieneServicioEnergia = "tieneServicioEnergia";
     public static final String tieneMedidorEnergia = "tieneMedidorEnergia";
     public static final String casaDosPisos = "casaDosPisos";
@@ -203,7 +208,7 @@ public class EncuestasDBConstants {
             + ENCUESTA_CASA_TABLE + " ("
             + codigo + " text not null, "
             + casa + " integer not null, "
-            + participante + " integer not null, "
+            + participante + " text not null, "
             + cuantasPersonas + " integer, "
             + cuantasMujeres + " integer, "
             + edadMujer1 + " text, "
@@ -231,7 +236,8 @@ public class EncuestasDBConstants {
             + cantidadCuartosDormir + " integer, "
             + problemaAgua + " text, "
             + hrsSinServicioAgua + " integer, "
-            + frecuenciaSeVaAgua + " integer, "
+            + frecuenciaSeVaAgua + " text, "
+            + otraFrecuenciaSeVaAgua + " text, "
             + tienePozo + " text, "
             + tieneMedidorAgua + " text, "
             + tieneTanque + " text, "
@@ -251,6 +257,8 @@ public class EncuestasDBConstants {
             + tanquesTapados + " text, "
             + pilasTapadas + " text, "
             + otrosRecipientesTapados + " text, "
+            + cepillaPilas + " text, "
+            + frecCepillaPilas + " text, "
             + cambiadoCasa + " text, "
             + remodeladoCasa + " text, "
             + ubicacionLavandero + " text, "
@@ -274,6 +282,8 @@ public class EncuestasDBConstants {
             + tieneMuro + " text, "
             + tieneInternet + " text, "
             + tieneInodoro + " text, "
+            + cantInodoro + " integer, "
+            + cantLetrina + " integer, "
             + tieneServicioEnergia + " text, "
             + tieneMedidorEnergia + " text, "
             + casaDosPisos + " text, "
@@ -498,7 +508,7 @@ public class EncuestasDBConstants {
     public static final String CREATE_ENCUESTA_PART_TABLE = "create table if not exists "
             + ENCUESTA_PARTICIPANTE_TABLE + " ("
             + codigo + " text not null, "
-            + participante + " integer not null, "
+            + participante + " text not null, "
             + fechaEncuesta + " date, "
             + emancipado + " text, "
             + descEmancipado + " text, "

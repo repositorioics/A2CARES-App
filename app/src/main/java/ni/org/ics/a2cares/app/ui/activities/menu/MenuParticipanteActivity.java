@@ -395,7 +395,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     pendienteEncuestaPeso = true;
                 }*/
                 //actualizar por cualquier cambio en la base
-                participante = estudiosAdapter.getParticipante(MainDBConstants.codigo + "=" + participante.getCodigo(), null);
+                participante = estudiosAdapter.getParticipante(MainDBConstants.codigo + "='" + participante.getCodigo()+"'", null);
                 estudiosAdapter.close();
 
 

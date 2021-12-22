@@ -9,7 +9,7 @@ import ni.org.ics.a2cares.app.domain.BaseMetaData;
  */
 public class ParticipanteProcesos extends BaseMetaData implements Serializable {
 
-    private Integer codigo;
+    private String codigo;
     private Integer retirado;
     private String pendientePyT;
     private String pendienteEncPart;
@@ -17,11 +17,11 @@ public class ParticipanteProcesos extends BaseMetaData implements Serializable {
     private String pendienteMxMA;
     private String pendienteMxTx;
 
-    public Integer getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(Integer codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 

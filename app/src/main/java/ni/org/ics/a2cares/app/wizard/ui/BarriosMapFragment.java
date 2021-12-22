@@ -15,6 +15,7 @@ import android.widget.TextView;
 import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.ui.activities.maps.CoordenadasMapActivity;
 import ni.org.ics.a2cares.app.utils.Constants;
+import ni.org.ics.a2cares.app.wizard.model.MapaBarriosPage;
 import ni.org.ics.a2cares.app.wizard.model.Page;
 
 public class BarriosMapFragment extends Fragment {
@@ -72,6 +73,8 @@ public class BarriosMapFragment extends Fragment {
 				Intent i = new Intent(getActivity().getApplicationContext(),
 						CoordenadasMapActivity.class);
 				i.putExtra(Constants.COD_PARTICIPANTE, mPage.getCodigoParticipante());
+				MapaBarriosPage page = (MapaBarriosPage) mPage;
+				i.putExtra(Constants.UBICACION, page.getmUnidadSalud());
 				startActivityForResult(i, PART_CAPTURE);
 			}
 		});

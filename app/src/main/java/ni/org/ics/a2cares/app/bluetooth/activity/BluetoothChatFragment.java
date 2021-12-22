@@ -477,7 +477,7 @@ public class BluetoothChatFragment extends Fragment {
     private void enviarParticipante(int cuenta){
     	String insertParticipanteSQL;
     	
-    	Integer codigo = mParticipantes.get(cuenta).getCodigo();
+    	String codigo = mParticipantes.get(cuenta).getCodigo();
     	String nom1Part = "'"+ mParticipantes.get(cuenta).getNombre1()+"'";
     	String nom2Part = null;
     	if(mParticipantes.get(cuenta).getNombre2()!=null) nom2Part  = "'"+ mParticipantes.get(cuenta).getNombre2()+"'";
@@ -801,7 +801,7 @@ public class BluetoothChatFragment extends Fragment {
                         int codigoTermina = participantesSQL[i].indexOf(",",0);
                         String codigoParti = participantesSQL[i].substring(codigoComienza, codigoTermina);
                         codigosPartici[i] = codigoParti;
-                        if (estudiosAdapter.getParticipante(MainDBConstants.codigo + "="+ codigoParti, null)==null) {
+                        if (estudiosAdapter.getParticipante(MainDBConstants.codigo + "='"+ codigoParti+"'", null)==null) {
                             estudiosAdapter.insertarParticipante(participantesSQL[i]);
                             estudiosAdapter.insertarParticipanteProcesos(participantesProcSQL[i]);
                         }

@@ -15,7 +15,7 @@ public class EncuestaCasa extends BaseMetaData {
     private static final long serialVersionUID = 1L;
     private String codigo;
     private Casa casa;
-    private Integer participante; //participantes encuestado
+    private String participante; //participantes encuestado
     private int cuantasPersonas; //1
     private int cuantasMujeres; //2
     private String edadMujer1;
@@ -43,7 +43,8 @@ public class EncuestaCasa extends BaseMetaData {
     private int cantidadCuartosDormir;
     private String problemaAgua; //6
     private int hrsSinServicioAgua;
-    private int frecuenciaSeVaAgua;
+    private String frecuenciaSeVaAgua;
+    private String otraFrecuenciaSeVaAgua;
     private String tienePozo; //7
     private String tieneMedidorAgua; //8
     private String tieneTanque; //10
@@ -63,6 +64,8 @@ public class EncuestaCasa extends BaseMetaData {
     private String tanquesTapados;
     private String pilasTapadas;
     private String otrosRecipientesTapados;
+    private String cepillaPilas;
+    private String frecCepillaPilas;
     private String cambiadoCasa; //13
     private String remodeladoCasa; //14
     private String ubicacionLavandero;
@@ -86,6 +89,8 @@ public class EncuestaCasa extends BaseMetaData {
     private String tieneMuro; //21
     private String tieneInternet; //22
     private String tieneInodoro; //23
+    private Integer cantInodoro;
+    private Integer cantLetrina;
     private String tieneServicioEnergia; //24
     private String tieneMedidorEnergia; //24.a
     private String casaDosPisos; //25
@@ -175,11 +180,11 @@ public class EncuestaCasa extends BaseMetaData {
         this.casa = casa;
     }
 
-    public Integer getParticipante() {
+    public String getParticipante() {
         return participante;
     }
 
-    public void setParticipante(Integer participante) {
+    public void setParticipante(String participante) {
         this.participante = participante;
     }
 
@@ -399,12 +404,20 @@ public class EncuestaCasa extends BaseMetaData {
         this.hrsSinServicioAgua = hrsSinServicioAgua;
     }
 
-    public int getFrecuenciaSeVaAgua() {
+    public String getFrecuenciaSeVaAgua() {
         return frecuenciaSeVaAgua;
     }
 
-    public void setFrecuenciaSeVaAgua(int frecuenciaSeVaAgua) {
+    public void setFrecuenciaSeVaAgua(String frecuenciaSeVaAgua) {
         this.frecuenciaSeVaAgua = frecuenciaSeVaAgua;
+    }
+
+    public String getOtraFrecuenciaSeVaAgua() {
+        return otraFrecuenciaSeVaAgua;
+    }
+
+    public void setOtraFrecuenciaSeVaAgua(String otraFrecuenciaSeVaAgua) {
+        this.otraFrecuenciaSeVaAgua = otraFrecuenciaSeVaAgua;
     }
 
     public String getTienePozo() {
@@ -557,6 +570,22 @@ public class EncuestaCasa extends BaseMetaData {
 
     public void setOtrosRecipientesTapados(String otrosRecipientesTapados) {
         this.otrosRecipientesTapados = otrosRecipientesTapados;
+    }
+
+    public String getCepillaPilas() {
+        return cepillaPilas;
+    }
+
+    public void setCepillaPilas(String cepillaPilas) {
+        this.cepillaPilas = cepillaPilas;
+    }
+
+    public String getFrecCepillaPilas() {
+        return frecCepillaPilas;
+    }
+
+    public void setFrecCepillaPilas(String frecCepillaPilas) {
+        this.frecCepillaPilas = frecCepillaPilas;
     }
 
     public String getCambiadoCasa() {
@@ -741,6 +770,22 @@ public class EncuestaCasa extends BaseMetaData {
 
     public void setTieneInodoro(String tieneInodoro) {
         this.tieneInodoro = tieneInodoro;
+    }
+
+    public Integer getCantInodoro() {
+        return cantInodoro;
+    }
+
+    public void setCantInodoro(Integer cantInodoro) {
+        this.cantInodoro = cantInodoro;
+    }
+
+    public Integer getCantLetrina() {
+        return cantLetrina;
+    }
+
+    public void setCantLetrina(Integer cantLetrina) {
+        this.cantLetrina = cantLetrina;
     }
 
     public String getTieneServicioEnergia() {

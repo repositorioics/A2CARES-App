@@ -32,6 +32,7 @@ import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaParticipantesCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaTelefonosActivity;
+import ni.org.ics.a2cares.app.ui.activities.maps.CoordenadasMapActivity;
 import ni.org.ics.a2cares.app.ui.adapters.MenuCasaAdapter;
 import ni.org.ics.a2cares.app.utils.Constants;
 
@@ -50,6 +51,7 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
     private final int OPCION_LISTA_PARTICIPANTES = 0;
     private final int OPCION_LISTA_TELEFONOS = 1;
     private final int OPCION_ENVIAR_CASA = 2;
+	private final int OPCION_UBICAR_CASA = 3;
     private boolean desdeParticipante = false;
 
 	private EstudioDBAdapter estudiosAdapter;
@@ -102,6 +104,14 @@ public class MenuCasaActivity extends AbstractAsyncActivity {
             			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             			startActivity(i);
             			break;
+            		case OPCION_UBICAR_CASA:
+						i = new Intent(getApplicationContext(),
+								CoordenadasMapActivity.class);
+						if (casa!=null) arguments.putSerializable(Constants.CASA , casa);
+						i.putExtras(arguments);
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						startActivity(i);
+						break;
 				    default:
                         break;
 		        }

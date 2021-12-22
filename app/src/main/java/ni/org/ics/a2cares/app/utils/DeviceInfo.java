@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
@@ -38,6 +39,7 @@ public class DeviceInfo {
 	    return deviceId;
 	}*/
 
+	@SuppressLint("HardwareIds")
 	public String getDeviceId() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
 		{

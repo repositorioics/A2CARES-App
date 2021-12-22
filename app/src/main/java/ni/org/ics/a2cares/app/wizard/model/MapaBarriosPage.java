@@ -10,6 +10,7 @@ import ni.org.ics.a2cares.app.wizard.ui.BarriosMapFragment;
 
 public class MapaBarriosPage extends Page {
 
+	protected int mUnidadSalud;
 
 	public MapaBarriosPage(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean isVisible) {
 		super(callbacks, title, hintText, textColor, isVisible, true);
@@ -39,4 +40,11 @@ public class MapaBarriosPage extends Page {
 		return this;
 	}
 
+	public int getmUnidadSalud() {
+		return mUnidadSalud;
+	}
+
+	public void setmUnidadSalud(int mUnidadSalud) {
+		this.mUnidadSalud = mUnidadSalud;
+	}
 }

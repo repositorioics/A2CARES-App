@@ -59,7 +59,7 @@ public class TelefonoContactoHelper extends BindStatementHelper {
         bindString(stat,3, telefonoContacto.getOperadora());
         bindString(stat,4, telefonoContacto.getTipo());
         bindInteger(stat,5, telefonoContacto.getCasa().getCodigo());
-        if (telefonoContacto.getParticipante() != null) stat.bindLong(6, telefonoContacto.getParticipante().getCodigo()); else stat.bindNull(6);
+        if (telefonoContacto.getParticipante() != null) bindString(stat, 6, telefonoContacto.getParticipante().getCodigo()); else stat.bindNull(6);
         bindDate(stat,7, telefonoContacto.getRecordDate());
         bindString(stat,8, telefonoContacto.getRecordUser());
         stat.bindString(9, String.valueOf(telefonoContacto.getPasive()));

@@ -226,14 +226,13 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
 
             onPageTreeChanged();
 
+            /*
             changeStatus(mWizardModel.findByKey(labels.getVacunaCovid()), true);
             changeStatus(mWizardModel.findByKey(labels.getAnioVacunaCovid()), true);
             changeStatus(mWizardModel.findByKey(labels.getMesVacunaCovid()), true);
             changeStatus(mWizardModel.findByKey(labels.getTomarFotoTarjetaCovid()), true);
 
-            onPageTreeChanged();
-
-
+            onPageTreeChanged();*/
         }
         //Para mayores de 14 años
         if (anios >= 14 ) {
@@ -245,9 +244,9 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
         }
 
         //Solo para menores o igual de 6 años
-        if (anios >= 6 ) {
+        if (anios <= 6 ) {
             changeStatus(mWizardModel.findByKey(labels.getTieneTarjetaVacuna()), true);
-            changeStatus(mWizardModel.findByKey(labels.getTomarFotoTarjeta()), true);
+            changeStatus(mWizardModel.findByKey(labels.getTomarFotoTarjeta()), false);
 
             onPageTreeChanged();
         }
@@ -289,7 +288,7 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
         if (pageTmp!=null) pageTmp.setRangeValidation(true, anioNacimiento, anioActual);
 
         pageTmp = (NumberPage) mWizardModel.findByKey(labels.getAnioVacunaCovid());
-        if (pageTmp!=null) pageTmp.setRangeValidation(true, anioNacimiento, anioActual);
+        if (pageTmp!=null) pageTmp.setRangeValidation(true, 2020, anioActual);
 
         onPageTreeChanged();
         updateBottomBar();
@@ -364,6 +363,13 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                     public void onClick(DialogInterface dialog, int which) {
                         // Finish app
                         dialog.dismiss();
+                        Bundle arguments = new Bundle();
+                        arguments.putSerializable(Constants.PARTICIPANTE , participante);
+                        Intent i = new Intent(getApplicationContext(),
+                                MenuParticipanteActivity.class);
+                        i.putExtra(Constants.VISITA_EXITOSA, visitaExitosa);
+                        i.putExtras(arguments);
+                        startActivity(i);
                         finish();
                     }
                 });
@@ -498,6 +504,13 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                 changeStatus(mWizardModel.findByKey(labels.getNombreCDI()), !visible);
                 changeStatus(mWizardModel.findByKey(labels.getDireccionCDI()), !visible);
                 changeStatus(mWizardModel.findByKey(labels.getCuantosCuidan()), !visible);
+                onPageTreeChanged();
+            }
+
+            if(page.getTitle().equals(labels.getGradoEstudia())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null &&
+                        (page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Preescolar") || page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Primaria"));
+                changeStatus(mWizardModel.findByKey(labels.getAlfabeto()), visible);
                 onPageTreeChanged();
             }
 

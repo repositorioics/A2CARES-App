@@ -20,6 +20,7 @@
     <string name="phones">Teléfonos</string>
     <string name="send_house">Enviar casa</string>
     <string name="menu_house">Menu Casa</string>
+    <string name="locate_house">Ubicar Casa</string>
 
     <string name="exit">Salir</string>
     <string name="success">Operación exitosa!</string>
@@ -35,6 +36,8 @@
     <string name="change_date">Seleccionar fecha</string>
     <string name="desc_barcode">Escanear código de barras</string>
     <string name="perm_error">No tiene permiso en esta opción!</string>
+    <string name="data_not_sent">Hay datos sin enviar en el equipo, estos datos se borrarán si continúa. Aún desea descargar la información del servidor?</string>
+    <string name="downloading">Descargar toda la info del servidor? Esta operacion descarta toda la informacion actual en el dispositivo</string>
     <!--Busquedas -->
     <string name="enter">Ingresar</string>
     <string name="barcode_error">Escaner de código de barras no disponible</string>
@@ -166,5 +169,9 @@
     <string name="error_codigoMx">Lectura Inválida!!!!</string>
     <string name="list">Listar registros</string>
     <string name="noSample">Sin muestra</string>
-
+    <!--actualizar apk-->
+    <string name="apk_name">a2cares-app.apk</string>
+    <string name="url_apk">/resources/apk/a2cares-app.apk</string>
+    <string name="downloadingApp">Descargando..</string>
+    <string name="pleasewait">Por favor espere..</string>
 </resources>

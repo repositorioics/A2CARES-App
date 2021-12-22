@@ -13,6 +13,7 @@ public class EncuestaCasaFormLabels {
 
     protected String cuantasPersonas; //1
     protected String cuantasMujeres; //2
+    protected String cuantasMujeresHint; //2
     protected String edadMujer1;
     protected String edadMujer2;
     protected String edadMujer3;
@@ -24,6 +25,7 @@ public class EncuestaCasaFormLabels {
     protected String edadMujer9;
     protected String edadMujer10;
     protected String cuantosHombres; //3
+    protected String cuantosHombresHint; //3
     protected String edadHombre1;
     protected String edadHombre2;
     protected String edadHombre3;
@@ -39,6 +41,7 @@ public class EncuestaCasaFormLabels {
     protected String problemaAgua; //6
     protected String horasSinAgua; //6.a
     protected String frecuenciaSeVaAgua; //6.b
+    protected String otraFrecuenciaSeVaAgua;
     protected String tienePozo; //7
     protected String tieneMedidorAgua; //8
     protected String tieneTanque; //10
@@ -57,6 +60,8 @@ public class EncuestaCasaFormLabels {
     protected String barrilesTapados; //12.c
     protected String tanquesTapados; //12.c
     protected String pilasTapadas; //12.c
+    protected String cepillaPilas;
+    protected String frecCepillaPilas;
     protected String otrosRecipientesTapados; //12.c
     protected String cambiadoCasa; //13
     protected String remodeladoCasa; //14
@@ -82,6 +87,8 @@ public class EncuestaCasaFormLabels {
     protected String tieneMuro; //21
     protected String tieneInternet; //22
     protected String tieneInodoro; //23
+    protected String cantInodoro;
+    protected String cantLetrina;
     protected String tieneServicioEnergia; //24
     protected String tieneMedidorEnergia; //24.a
     protected String casaDosPisos; //25
@@ -198,6 +205,11 @@ public class EncuestaCasaFormLabels {
     protected String numQuincenalCocinaLeniaHint;
     protected String numMensualCocinaLeniaHint;
     protected String frecuenciaSeVaAguaHint;
+    protected String otraFrecuenciaSeVaAguaHint;
+    protected String cepillaPilasHint;
+    protected String frecCepillaPilasHint;
+    protected String cantInodoroHint;
+    protected String cantLetrinaHint;
 
     protected String finTamizajeLabel;
 
@@ -205,6 +217,7 @@ public class EncuestaCasaFormLabels {
         Resources res = MyIcsApplication.getContext().getResources();
         cuantasPersonas = res.getString(R.string.cuantasPersonas);
         cuantasMujeres = res.getString(R.string.cuantasMujeres);
+        cuantasMujeresHint = res.getString(R.string.cuantasMujeresHint);
         edadMujer1 = res.getString(R.string.edadMujer1);
         edadMujer2 = res.getString(R.string.edadMujer2);
         edadMujer3 = res.getString(R.string.edadMujer3);
@@ -216,6 +229,7 @@ public class EncuestaCasaFormLabels {
         edadMujer9 = res.getString(R.string.edadMujer9);
         edadMujer10 = res.getString(R.string.edadMujer10);
         cuantosHombres = res.getString(R.string.cuantosHombres);
+        cuantosHombresHint = res.getString(R.string.cuantosHombresHint);
         edadHombre1 = res.getString(R.string.edadHombre1);
         edadHombre2 = res.getString(R.string.edadHombre2);
         edadHombre3 = res.getString(R.string.edadHombre3);
@@ -231,6 +245,7 @@ public class EncuestaCasaFormLabels {
         problemaAgua = res.getString(R.string.problemaAgua);
         horasSinAgua = res.getString(R.string.horasSinAgua);
         frecuenciaSeVaAgua = res.getString(R.string.frecuenciaSeVaAgua);
+        otraFrecuenciaSeVaAgua = res.getString(R.string.otraFrecuenciaSeVaAgua);
         tienePozo = res.getString(R.string.tienePozo);
         tieneMedidorAgua = res.getString(R.string.tieneMedidorAgua);
         tieneTanque = res.getString(R.string.tieneTanque);
@@ -249,6 +264,8 @@ public class EncuestaCasaFormLabels {
         barrilesTapados = res.getString(R.string.barrilesTapados);
         tanquesTapados = res.getString(R.string.tanquesTapados);
         pilasTapadas = res.getString(R.string.pilasTapadas);
+        cepillaPilas = res.getString(R.string.cepillaPilas);
+        frecCepillaPilas = res.getString(R.string.frecCepillaPilas);
         otrosRecipientesTapados = res.getString(R.string.otrosRecipientesTapados);
         cambiadoCasa = res.getString(R.string.cambiadoCasa);
         remodeladoCasa = res.getString(R.string.remodeladoCasa);
@@ -274,6 +291,8 @@ public class EncuestaCasaFormLabels {
         tieneMuro = res.getString(R.string.tieneMuro);
         tieneInternet = res.getString(R.string.tieneInternet);
         tieneInodoro = res.getString(R.string.tieneInodoro);
+        cantInodoro = res.getString(R.string.cantInodoro);
+        cantLetrina = res.getString(R.string.cantLetrina);
         tieneServicioEnergia = res.getString(R.string.tieneServicioEnergia);
         tieneMedidorEnergia = res.getString(R.string.tieneMedidorEnergia);
         casaDosPisos = res.getString(R.string.casaDosPisos);
@@ -392,6 +411,11 @@ public class EncuestaCasaFormLabels {
         numQuincenalCocinaLeniaHint = res.getString(R.string.numQuincenalCocinaLeniaHint);
         numMensualCocinaLeniaHint = res.getString(R.string.numMensualCocinaLeniaHint);
         frecuenciaSeVaAguaHint = res.getString(R.string.frecuenciaSeVaAguaHint);
+        otraFrecuenciaSeVaAguaHint = res.getString(R.string.frecuenciaSeVaAguaHint);
+        cepillaPilasHint = res.getString(R.string.cepillaPilasHint);
+        frecCepillaPilasHint = res.getString(R.string.frecCepillaPilasHint);
+        cantInodoroHint = res.getString(R.string.cantInodoroHint);
+        cantLetrinaHint = res.getString(R.string.cantLetrinaHint);
 
         finTamizajeLabel = res.getString(R.string.finTamizajeLabel);
     }
@@ -506,6 +530,10 @@ public class EncuestaCasaFormLabels {
 
     public String getFrecuenciaSeVaAgua() {
         return frecuenciaSeVaAgua;
+    }
+
+    public String getOtraFrecuenciaSeVaAgua() {
+        return otraFrecuenciaSeVaAgua;
     }
 
     public String getTienePozo() {
@@ -1056,6 +1084,10 @@ public class EncuestaCasaFormLabels {
         return frecuenciaSeVaAguaHint;
     }
 
+    public String getOtraFrecuenciaSeVaAguaHint() {
+        return otraFrecuenciaSeVaAguaHint;
+    }
+
     public String getEdadMujer1Hint() {
         return edadMujer1Hint;
     }
@@ -1138,5 +1170,45 @@ public class EncuestaCasaFormLabels {
 
     public String getFinTamizajeLabel() {
         return finTamizajeLabel;
+    }
+
+    public String getCuantasMujeresHint() {
+        return cuantasMujeresHint;
+    }
+
+    public String getCuantosHombresHint() {
+        return cuantosHombresHint;
+    }
+
+    public String getCepillaPilas() {
+        return cepillaPilas;
+    }
+
+    public String getFrecCepillaPilas() {
+        return frecCepillaPilas;
+    }
+
+    public String getCepillaPilasHint() {
+        return cepillaPilasHint;
+    }
+
+    public String getFrecCepillaPilasHint() {
+        return frecCepillaPilasHint;
+    }
+
+    public String getCantInodoro() {
+        return cantInodoro;
+    }
+
+    public String getCantLetrina() {
+        return cantLetrina;
+    }
+
+    public String getCantInodoroHint() {
+        return cantInodoroHint;
+    }
+
+    public String getCantLetrinaHint() {
+        return cantLetrinaHint;
     }
 }

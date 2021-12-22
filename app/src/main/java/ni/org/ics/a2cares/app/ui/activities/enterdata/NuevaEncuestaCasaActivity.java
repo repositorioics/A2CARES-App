@@ -238,6 +238,13 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         // Finish app
                         dialog.dismiss();
+                        Bundle arguments = new Bundle();
+                        arguments.putSerializable(Constants.PARTICIPANTE , participante);
+                        Intent i = new Intent(getApplicationContext(),
+                                MenuParticipanteActivity.class);
+                        i.putExtra(Constants.VISITA_EXITOSA, visitaExitosa);
+                        i.putExtras(arguments);
+                        startActivity(i);
                         finish();
                     }
                 });
@@ -381,6 +388,12 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getHorasSinAgua()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getFrecuenciaSeVaAgua()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getOtraFrecuenciaSeVaAgua()), false);
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getFrecuenciaSeVaAgua())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros");
+                changeStatus(mWizardModel.findByKey(labels.getOtraFrecuenciaSeVaAgua()), visible);
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getLlaveAgua())) {
@@ -396,6 +409,8 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getAlmacenaEnPilas()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getNumPilas()), false);
                 changeStatus(mWizardModel.findByKey(labels.getPilasTapadas()), false);
+                changeStatus(mWizardModel.findByKey(labels.getCepillaPilas()), false);
+                changeStatus(mWizardModel.findByKey(labels.getFrecCepillaPilas()), false);
                 changeStatus(mWizardModel.findByKey(labels.getAlmacenaEnTanques()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getNumTanques()), false);
                 changeStatus(mWizardModel.findByKey(labels.getTanquesTapados()), false);
@@ -421,6 +436,13 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNumPilas()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getPilasTapadas()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getCepillaPilas()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getFrecCepillaPilas()), false);
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getCepillaPilas())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getFrecCepillaPilas()), visible);
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAlmacenaOtrosRecipientes())) {
@@ -465,6 +487,15 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNumAireAcondicionado()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getAireAcondicionadoFuncionando()), visible);
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getTieneInodoro())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && (page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Inodoro") || page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Ambos") );
+                changeStatus(mWizardModel.findByKey(labels.getCantInodoro()), visible);
+
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && (page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Letrina") || page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Ambos") );
+                changeStatus(mWizardModel.findByKey(labels.getCantLetrina()), visible);
+
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTieneServicioEnergia())) {
@@ -743,6 +774,7 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             String problemaAgua = datos.getString(this.getString(R.string.problemaAgua));
             String horasSinAgua = datos.getString(this.getString(R.string.horasSinAgua));
             String frecuenciaSeVaAgua = datos.getString(this.getString(R.string.frecuenciaSeVaAgua));
+            String otraFrecuenciaSeVaAgua = datos.getString(this.getString(R.string.otraFrecuenciaSeVaAgua));
             String tienePozo = datos.getString(this.getString(R.string.tienePozo));
             String tieneMedidorAgua = datos.getString(this.getString(R.string.tieneMedidorAgua));
             String tieneTanque = datos.getString(this.getString(R.string.tieneTanque));
@@ -762,6 +794,8 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             String tanquesTapados = datos.getString(this.getString(R.string.tanquesTapados));
             String pilasTapadas = datos.getString(this.getString(R.string.pilasTapadas));
             String otrosRecipientesTapados = datos.getString(this.getString(R.string.otrosRecipientesTapados));
+            String cepillaPilas = datos.getString(this.getString(R.string.cepillaPilas));
+            String frecCepillaPilas = datos.getString(this.getString(R.string.frecCepillaPilas));
             String cambiadoCasa = datos.getString(this.getString(R.string.cambiadoCasa));
             String remodeladoCasa = datos.getString(this.getString(R.string.remodeladoCasa));
             String ubicacionLavandero = datos.getString(this.getString(R.string.ubicacionLavandero));
@@ -785,6 +819,8 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             String tieneMuro = datos.getString(this.getString(R.string.tieneMuro));
             String tieneInternet = datos.getString(this.getString(R.string.tieneInternet));
             String tieneInodoro = datos.getString(this.getString(R.string.tieneInodoro));
+            String cantInodoro = datos.getString(this.getString(R.string.cantInodoro));
+            String cantLetrina = datos.getString(this.getString(R.string.cantLetrina));
             String tieneServicioEnergia = datos.getString(this.getString(R.string.tieneServicioEnergia));
             String tieneMedidorEnergia = datos.getString(this.getString(R.string.tieneMedidorEnergia));
             String casaDosPisos = datos.getString(this.getString(R.string.casaDosPisos));
@@ -933,6 +969,11 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                         + MainDBConstants.catRoot + "='CAT_SINO'", null);
                 if (msPilasTapadas != null) encuestaCasa.setPilasTapadas(msPilasTapadas.getCatKey());
             }
+            if (tieneValor(cepillaPilas)) {
+                MessageResource msCepillaPilas = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + pilasTapadas + "' and "
+                        + MainDBConstants.catRoot + "='CAT_SINO'", null);
+                if (msCepillaPilas != null) encuestaCasa.setCepillaPilas(msCepillaPilas.getCatKey());
+            }
             if (tieneValor(almacenaOtrosRecipientes)) {
                 MessageResource msEnOtrosRec = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + almacenaOtrosRecipientes + "' and "
                         + MainDBConstants.catRoot + "='CAT_SINO'", null);
@@ -1031,7 +1072,7 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             }
             if (tieneValor(tieneMuro)) {
                 MessageResource resource = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + tieneMuro + "' and "
-                        + MainDBConstants.catRoot + "='CAT_SINO'", null);
+                        + MainDBConstants.catRoot + "='CAT_MUROCERCO'", null);
                 if (resource != null)
                     encuestaCasa.setTieneMuro(resource.getCatKey());
             }
@@ -1043,7 +1084,7 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             }
             if (tieneValor(tieneInodoro)) {
                 MessageResource resource = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + tieneInodoro + "' and "
-                        + MainDBConstants.catRoot + "='CAT_SINO'", null);
+                        + MainDBConstants.catRoot + "='CAT_INODOROLET'", null);
                 if (resource != null)
                     encuestaCasa.setTieneInodoro(resource.getCatKey());
             }
@@ -1283,6 +1324,12 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                 if (resource != null) encuestaCasa.setTieneRecoleccionBasura(resource.getCatKey());
             }
 
+            if (tieneValor(frecuenciaSeVaAgua)) {
+                MessageResource resource = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + frecuenciaSeVaAgua + "' and "
+                        + MainDBConstants.catRoot + "='CAT_FREC_VA_AGUA'", null);
+                if (resource != null) encuestaCasa.setFrecuenciaSeVaAgua(resource.getCatKey());
+            }
+
             encuestaCasa.setEdadMujer1(edadMujer1);
             encuestaCasa.setEdadMujer2(edadMujer2);
             encuestaCasa.setEdadMujer3(edadMujer3);
@@ -1315,11 +1362,12 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             encuestaCasa.setMarcaCamion(marcaCamion);
             encuestaCasa.setMarcaOtroMedioTrans(marcaOtroMedioTrans);
             encuestaCasa.setDondePasaRecBasura(dondePasaRecBasura);
+            encuestaCasa.setFrecCepillaPilas(frecCepillaPilas);
+            encuestaCasa.setOtraFrecuenciaSeVaAgua(otraFrecuenciaSeVaAgua);
 
             if (tieneValor(cuantasPersonas)) encuestaCasa.setCuantasPersonas(Integer.parseInt(cuantasPersonas));
             if (tieneValor(cuantasMujeres)) encuestaCasa.setCuantasMujeres(Integer.parseInt(cuantasMujeres));
             if (tieneValor(cuantosHombres)) encuestaCasa.setCuantosHombres(Integer.parseInt(cuantosHombres));
-            if (tieneValor(frecuenciaSeVaAgua)) encuestaCasa.setFrecuenciaSeVaAgua(Integer.parseInt(frecuenciaSeVaAgua));
             if (tieneValor(cuantoCuartos)) encuestaCasa.setCantidadCuartos(Integer.parseInt(cuantoCuartos));
             if (tieneValor(cuartosDormir)) encuestaCasa.setCantidadCuartosDormir(Integer.parseInt(cuartosDormir));
             if (tieneValor(horasSinAgua)) encuestaCasa.setHrsSinServicioAgua(Integer.parseInt(horasSinAgua));
@@ -1354,6 +1402,8 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             if (tieneValor(cantidadAves)) encuestaCasa.setCantidadAves(Integer.valueOf(cantidadAves));
             if (tieneValor(cantidadOtrosAnimales)) encuestaCasa.setCantidadOtrosAnimales(Integer.valueOf(cantidadOtrosAnimales));
             if (tieneValor(cuantasVecesRecBasura)) encuestaCasa.setCuantasVecesRecBasura(Integer.valueOf(cuantasVecesRecBasura));
+            if (tieneValor(cantInodoro)) encuestaCasa.setCantInodoro(Integer.valueOf(cantInodoro));
+            if (tieneValor(cantLetrina)) encuestaCasa.setCantLetrina(Integer.valueOf(cantLetrina));
 
             estudiosAdapter.crearEncuestaCasa(encuestaCasa);
 

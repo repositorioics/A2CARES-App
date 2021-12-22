@@ -50,6 +50,7 @@ import ni.org.ics.a2cares.app.domain.users.Authority;
 import ni.org.ics.a2cares.app.domain.users.UserPermissions;
 import ni.org.ics.a2cares.app.domain.users.UserSistema;
 import ni.org.ics.a2cares.app.domain.visita.VisitaTerrenoParticipante;
+import ni.org.ics.a2cares.app.utils.Constants;
 import ni.org.ics.a2cares.app.utils.FileUtils;
 
 /**
@@ -521,7 +522,7 @@ public class EstudioDBAdapter {
         if (cursorCarta != null && cursorCarta.getCount() > 0) {
             cursorCarta.moveToFirst();
             cartaConsentimiento=CartaConsentimientoHelper.crearCartaConsentimiento(cursorCarta);
-            Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorCarta.getInt(cursorCarta.getColumnIndex(MainDBConstants.participante)), null);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "='" +cursorCarta.getString(cursorCarta.getColumnIndex(MainDBConstants.participante)) +"'", null);
             cartaConsentimiento.setParticipante(participante);
             Tamizaje tamizaje = this.getTamizaje(MainDBConstants.codigo + "='" +cursorCarta.getString(cursorCarta.getColumnIndex(MainDBConstants.tamizaje))+"'", null);
             cartaConsentimiento.setTamizaje(tamizaje);
@@ -539,7 +540,7 @@ public class EstudioDBAdapter {
             do{
                 CartaConsentimiento cartaConsentimiento = null;
                 cartaConsentimiento = CartaConsentimientoHelper.crearCartaConsentimiento(cursorCarta);
-                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorCarta.getInt(cursorCarta.getColumnIndex(MainDBConstants.participante)), null);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "='" +cursorCarta.getString(cursorCarta.getColumnIndex(MainDBConstants.participante)) +"'", null);
                 cartaConsentimiento.setParticipante(participante);
                 Tamizaje tamizaje = this.getTamizaje(MainDBConstants.codigo + "='" +cursorCarta.getString(cursorCarta.getColumnIndex(MainDBConstants.tamizaje))+"'", null);
                 cartaConsentimiento.setTamizaje(tamizaje);
@@ -643,7 +644,7 @@ public class EstudioDBAdapter {
             mParticipante=ParticipanteHelper.crearParticipante(cursorParticipante);
             Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorParticipante.getInt(cursorParticipante.getColumnIndex(MainDBConstants.casa)), null);
 
-            ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"="+mParticipante.getCodigo().toString(), null);
+            ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"='"+mParticipante.getCodigo()+"'", null);
             mParticipante.setProcesos(procesos);
 
             mParticipante.setCasa(casa);
@@ -664,7 +665,7 @@ public class EstudioDBAdapter {
                 Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorParticipante.getInt(cursorParticipante.getColumnIndex(MainDBConstants.casa)), null);
                 mParticipante.setCasa(casa);
 
-                ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"="+mParticipante.getCodigo().toString(), null);
+                ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"='"+mParticipante.getCodigo() +"'", null);
                 mParticipante.setProcesos(procesos);
 
                 mParticipantes.add(mParticipante);
@@ -687,7 +688,7 @@ public class EstudioDBAdapter {
                 Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorParticipante.getInt(cursorParticipante.getColumnIndex(MainDBConstants.casa)), null);
                 mParticipante.setCasa(casa);
 
-                ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"="+mParticipante.getCodigo().toString(), null);
+                ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"='"+mParticipante.getCodigo()+"'", null);
                 if (procesos != null && procesos.getRetirado()==0) {
                     mParticipante.setProcesos(procesos);
                     mParticipantes.add(mParticipante);
@@ -720,7 +721,7 @@ public class EstudioDBAdapter {
                 Casa casa = this.getCasa(MainDBConstants.codigo + "=" +participantes.getInt(participantes.getColumnIndex(MainDBConstants.casa)), null);
                 mParticipante.setCasa(casa);
 
-                ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"="+mParticipante.getCodigo().toString(), null);
+                ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"='"+mParticipante.getCodigo()+"'", null);
                 mParticipante.setProcesos(procesos);
 
                 mParticipantes.add(mParticipante);
@@ -752,7 +753,7 @@ public class EstudioDBAdapter {
                 Casa casa = this.getCasa(MainDBConstants.codigo + "=" +participantes.getInt(participantes.getColumnIndex(MainDBConstants.casa)), null);
                 mParticipante.setCasa(casa);
 
-                ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"="+mParticipante.getCodigo().toString(), null);
+                ParticipanteProcesos procesos = this.getParticipanteProcesos(MainDBConstants.codigo+"='"+mParticipante.getCodigo()+"'", null);
                 mParticipante.setProcesos(procesos);
 
                 mParticipantes.add(mParticipante);
@@ -815,7 +816,7 @@ public class EstudioDBAdapter {
                 mTelefonoContacto = TelefonoContactoHelper.crearTelefonoContacto(cursorTelefonosContacto);
                 Casa casa = this.getCasa(MainDBConstants.codigo + "=" +cursorTelefonosContacto.getInt(cursorTelefonosContacto.getColumnIndex(MainDBConstants.casa)), null);
                 mTelefonoContacto.setCasa(casa);
-                Participante part = this.getParticipante(MainDBConstants.codigo + "=" +cursorTelefonosContacto.getInt(cursorTelefonosContacto.getColumnIndex(MainDBConstants.participante)), null);
+                Participante part = this.getParticipante(MainDBConstants.codigo + "='" +cursorTelefonosContacto.getString(cursorTelefonosContacto.getColumnIndex(MainDBConstants.participante)) +"'", null);
                 mTelefonoContacto.setParticipante(part);
                 mTelefonosContacto.add(mTelefonoContacto);
             } while (cursorTelefonosContacto.moveToNext());
@@ -853,7 +854,7 @@ public class EstudioDBAdapter {
         if (cursorVisitaTerreno != null && cursorVisitaTerreno.getCount() > 0) {
             cursorVisitaTerreno.moveToFirst();
             mVisitaTerreno=VisitaTerrenoHelper.crearVisitaTerrenoPart(cursorVisitaTerreno);
-            Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursorVisitaTerreno.getInt(cursorVisitaTerreno.getColumnIndex(MainDBConstants.participante)), null);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "='" + cursorVisitaTerreno.getString(cursorVisitaTerreno.getColumnIndex(MainDBConstants.participante)) +"'", null);
             mVisitaTerreno.setParticipante(participante);
         }
         if (!cursorVisitaTerreno.isClosed()) cursorVisitaTerreno.close();
@@ -869,7 +870,7 @@ public class EstudioDBAdapter {
             do{
                 VisitaTerrenoParticipante mVisitaTerreno = null;
                 mVisitaTerreno = VisitaTerrenoHelper.crearVisitaTerrenoPart(cursorVisitasTerreno);
-                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursorVisitasTerreno.getInt(cursorVisitasTerreno.getColumnIndex(MainDBConstants.participante)), null);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "='" + cursorVisitasTerreno.getString(cursorVisitasTerreno.getColumnIndex(MainDBConstants.participante)) +"'", null);
                 mVisitaTerreno.setParticipante(participante);
                 mVisitasTerreno.add(mVisitaTerreno);
             } while (cursorVisitasTerreno.moveToNext());
@@ -907,7 +908,7 @@ public class EstudioDBAdapter {
         if (cursorCambioDomicilio != null && cursorCambioDomicilio.getCount() > 0) {
             cursorCambioDomicilio.moveToFirst();
             mDatosCoordenadas = DatosCoordenadasHelper.crearDatosCoordenada(cursorCambioDomicilio);
-            Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorCambioDomicilio.getInt(cursorCambioDomicilio.getColumnIndex(MainDBConstants.participante)), null);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "='" +cursorCambioDomicilio.getString(cursorCambioDomicilio.getColumnIndex(MainDBConstants.participante)) +"'", null);
             mDatosCoordenadas.setParticipante(participante);
             Barrio barrio = this.getBarrio(MainDBConstants.codigo+"="+cursorCambioDomicilio.getInt(cursorCambioDomicilio.getColumnIndex(MainDBConstants.barrio)), null);
             mDatosCoordenadas.setBarrio(barrio);
@@ -925,7 +926,7 @@ public class EstudioDBAdapter {
             do{
                 DatosCoordenadas mDatosCoordenadas = null;
                 mDatosCoordenadas = DatosCoordenadasHelper.crearDatosCoordenada(cursorCambiosDomicilio);
-                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" +cursorCambiosDomicilio.getInt(cursorCambiosDomicilio.getColumnIndex(MainDBConstants.participante)), null);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "='" +cursorCambiosDomicilio.getString(cursorCambiosDomicilio.getColumnIndex(MainDBConstants.participante)) +"'", null);
                 mDatosCoordenadas.setParticipante(participante);
                 Barrio barrio = this.getBarrio(MainDBConstants.codigo+"="+cursorCambiosDomicilio.getInt(cursorCambiosDomicilio.getColumnIndex(MainDBConstants.barrio)), null);
                 mDatosCoordenadas.setBarrio(barrio);
@@ -965,7 +966,7 @@ public class EstudioDBAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mEncuestasPesoTalla=EncuestaPesoTallaHelper.crearEncuestaPesoTalla(cursor);
-            Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)), null);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante))+"'", null);
             if (participante != null) mEncuestasPesoTalla.setParticipante(participante);
         }
         if (!cursor.isClosed()) cursor.close();
@@ -981,7 +982,7 @@ public class EstudioDBAdapter {
             do{
                 EncuestaPesoTalla mEncuesta = null;
                 mEncuesta = EncuestaPesoTallaHelper.crearEncuestaPesoTalla(cursor);
-                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)), null);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)) +"'", null);
                 if (participante != null) mEncuesta.setParticipante(participante);
                 mEncuestas.add(mEncuesta);
             } while (cursor.moveToNext());
@@ -1059,8 +1060,8 @@ public class EstudioDBAdapter {
     //Editar EncuestasParticipante existente en la base de datos
     public boolean editarEncuestasParticipante(EncuestaParticipante encuestaParticipante) {
         ContentValues cv = EncuestaParticipanteHelper.crearEncuestaParticipanteContentValues(encuestaParticipante);
-        return mDb.update(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, cv, EncuestasDBConstants.participante + "="
-                + encuestaParticipante.getParticipante().getCodigo(), null) > 0;
+        return mDb.update(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, cv, EncuestasDBConstants.participante + "='"
+                + encuestaParticipante.getParticipante().getCodigo()+"'", null) > 0;
     }
     //Limpiar la tabla de EncuestasParticipante de la base de datos
     public boolean borrarEncuestasParticipantes() {
@@ -1073,7 +1074,7 @@ public class EstudioDBAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mEncuestasParticipante=EncuestaParticipanteHelper.crearEncuestaParticipante(cursor);
-            Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)), null);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)) +"'", null);
             if (participante != null) mEncuestasParticipante.setParticipante(participante);
         }
         if (!cursor.isClosed()) cursor.close();
@@ -1089,7 +1090,7 @@ public class EstudioDBAdapter {
             do{
                 EncuestaParticipante mEncuesta = null;
                 mEncuesta = EncuestaParticipanteHelper.crearEncuestaParticipante(cursor);
-                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)), null);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "='" + cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)) +"'", null);
                 if (participante != null) mEncuesta.setParticipante(participante);
                 mEncuestas.add(mEncuesta);
             } while (cursor.moveToNext());
@@ -1131,7 +1132,7 @@ public class EstudioDBAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mMuestras=MuestraHelper.crearMuestra(cursor);
-            Participante participante = this.getParticipante(MainDBConstants.participante + "=" + cursor.getString(cursor.getColumnIndex(MainDBConstants.participante)), null);
+            Participante participante = this.getParticipante(MainDBConstants.participante + "='" + cursor.getString(cursor.getColumnIndex(MainDBConstants.participante)) +"'", null);
             if (participante != null) mMuestras.setParticipante(participante);
         }
         if (!cursor.isClosed()) cursor.close();
@@ -1147,7 +1148,7 @@ public class EstudioDBAdapter {
             do{
                 Muestra mMuestra = null;
                 mMuestra = MuestraHelper.crearMuestra(cursor);
-                Participante participante = this.getParticipante(MainDBConstants.codigo + "=" + cursor.getString(cursor.getColumnIndex(MainDBConstants.participante)), null);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "='" + cursor.getString(cursor.getColumnIndex(MainDBConstants.participante)) +"'", null);
                 if (participante != null) mMuestra.setParticipante(participante);
                 mMuestras.add(mMuestra);
             } while (cursor.moveToNext());
@@ -1183,8 +1184,8 @@ public class EstudioDBAdapter {
      */
     public boolean editarParticipanteProcesos(ParticipanteProcesos participante) {
         ContentValues cv = ParticipanteHelper.crearParticipanteProcesosContentValues(participante);
-        return mDb.update(MainDBConstants.PARTICIPANTE_PROC_TABLE, cv, MainDBConstants.codigo + "="
-                + participante.getCodigo(), null) > 0;
+        return mDb.update(MainDBConstants.PARTICIPANTE_PROC_TABLE, cv, MainDBConstants.codigo + "='"
+                + participante.getCodigo()+"'", null) > 0;
     }
 
     //Limpiar la tabla de Muestras de la base de datos
@@ -1515,6 +1516,51 @@ public class EstudioDBAdapter {
             }
         }
         return true;
+    }
+
+    public Boolean verificarData() throws SQLException{
+        Cursor c = null;
+
+        c = crearCursor(MainDBConstants.VISITA_PARTICIPANTE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.TAMIZAJE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.CASA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.PARTICIPANTE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.PARTICIPANTE_PROC_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.CARTA_CONSENTIMIENTO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.TELEFONO_CONTACTO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.DATOS_COORDENADAS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(EncuestasDBConstants.ENCUESTA_CASA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(EncuestasDBConstants.ENCUESTA_PARTICIPANTE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(EncuestasDBConstants.ENCUESTA_PESOTALLA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.MUESTRAS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.RECEPCION_MUESTRA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        return false;
     }
 
 }

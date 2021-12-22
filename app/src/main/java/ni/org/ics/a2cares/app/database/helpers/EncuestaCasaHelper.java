@@ -49,6 +49,7 @@ public class EncuestaCasaHelper {
         cv.put(EncuestasDBConstants.problemaAgua, encuesta.getProblemaAgua());
         cv.put(EncuestasDBConstants.hrsSinServicioAgua, encuesta.getHrsSinServicioAgua());
         cv.put(EncuestasDBConstants.frecuenciaSeVaAgua, encuesta.getFrecuenciaSeVaAgua());
+        cv.put(EncuestasDBConstants.otraFrecuenciaSeVaAgua, encuesta.getOtraFrecuenciaSeVaAgua());
         cv.put(EncuestasDBConstants.tienePozo, encuesta.getTienePozo());
         cv.put(EncuestasDBConstants.tieneMedidorAgua, encuesta.getTieneMedidorAgua());
         cv.put(EncuestasDBConstants.tieneTanque, encuesta.getTieneTanque());
@@ -68,6 +69,8 @@ public class EncuestaCasaHelper {
         cv.put(EncuestasDBConstants.tanquesTapados, encuesta.getTanquesTapados());
         cv.put(EncuestasDBConstants.pilasTapadas, encuesta.getPilasTapadas());
         cv.put(EncuestasDBConstants.otrosRecipientesTapados, encuesta.getOtrosRecipientesTapados());
+        cv.put(EncuestasDBConstants.cepillaPilas, encuesta.getCepillaPilas());
+        cv.put(EncuestasDBConstants.frecCepillaPilas, encuesta.getFrecCepillaPilas());
         cv.put(EncuestasDBConstants.cambiadoCasa, encuesta.getCambiadoCasa());
         cv.put(EncuestasDBConstants.remodeladoCasa, encuesta.getRemodeladoCasa());
         cv.put(EncuestasDBConstants.ubicacionLavandero, encuesta.getUbicacionLavandero());
@@ -91,6 +94,8 @@ public class EncuestaCasaHelper {
         cv.put(EncuestasDBConstants.tieneMuro, encuesta.getTieneMuro());
         cv.put(EncuestasDBConstants.tieneInternet, encuesta.getTieneInternet());
         cv.put(EncuestasDBConstants.tieneInodoro, encuesta.getTieneInodoro());
+        cv.put(EncuestasDBConstants.cantInodoro, encuesta.getCantInodoro());
+        cv.put(EncuestasDBConstants.cantLetrina, encuesta.getCantLetrina());
         cv.put(EncuestasDBConstants.tieneServicioEnergia, encuesta.getTieneServicioEnergia());
         cv.put(EncuestasDBConstants.tieneMedidorEnergia, encuesta.getTieneMedidorEnergia());
         cv.put(EncuestasDBConstants.casaDosPisos, encuesta.getCasaDosPisos());
@@ -178,7 +183,7 @@ public class EncuestaCasaHelper {
 
         mEncuesta.setCodigo(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.codigo)));
         mEncuesta.setCasa(null);
-        mEncuesta.setParticipante(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.participante)));
+        mEncuesta.setParticipante(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.participante)));
 
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cuantasPersonas)) > 0) mEncuesta.setCuantasPersonas(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cuantasPersonas)));
         mEncuesta.setCuantasMujeres(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cuantasMujeres)));
@@ -207,7 +212,8 @@ public class EncuestaCasaHelper {
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartosDormir)) > 0) mEncuesta.setCantidadCuartosDormir(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartosDormir)));
         mEncuesta.setProblemaAgua(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.problemaAgua)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.hrsSinServicioAgua)) > 0) mEncuesta.setHrsSinServicioAgua(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.hrsSinServicioAgua)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.frecuenciaSeVaAgua)) > 0) mEncuesta.setFrecuenciaSeVaAgua(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.frecuenciaSeVaAgua)));
+        mEncuesta.setFrecuenciaSeVaAgua(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.frecuenciaSeVaAgua)));
+        mEncuesta.setOtraFrecuenciaSeVaAgua(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otraFrecuenciaSeVaAgua)));
         mEncuesta.setTienePozo(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tienePozo)));
         mEncuesta.setTieneMedidorAgua(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneMedidorAgua)));
         mEncuesta.setTieneTanque(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneTanque)));
@@ -219,6 +225,8 @@ public class EncuestaCasaHelper {
         mEncuesta.setAlmacenaEnPilas(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaEnPilas)));
         mEncuesta.setAlmacenaOtrosRecipientes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.almacenaOtrosRecipientes)));
         mEncuesta.setOtrosRecipientes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrosRecipientes)));
+        mEncuesta.setCepillaPilas(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.cepillaPilas)));
+        mEncuesta.setFrecCepillaPilas(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.frecCepillaPilas)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numBarriles)) > 0) mEncuesta.setNumBarriles(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numBarriles)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numTanques)) > 0) mEncuesta.setNumTanques(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numTanques)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numPilas)) > 0) mEncuesta.setNumPilas(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.numPilas)));
@@ -250,6 +258,8 @@ public class EncuestaCasaHelper {
         mEncuesta.setTieneMuro(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneMuro)));
         mEncuesta.setTieneInternet(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneInternet)));
         mEncuesta.setTieneInodoro(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneInodoro)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantInodoro)) > 0) mEncuesta.setCantInodoro(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantInodoro)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantLetrina)) > 0) mEncuesta.setCantLetrina(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantLetrina)));
         mEncuesta.setTieneServicioEnergia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneServicioEnergia)));
         mEncuesta.setTieneMedidorEnergia(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneMedidorEnergia)));
         mEncuesta.setCasaDosPisos(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.casaDosPisos)));

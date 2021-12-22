@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -71,6 +72,7 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
     private String[] catRelFamMayorEdad; //relación familiar del tutor cuando es mayor de edad
     private String[] catVerifTutAlf; //cosas a verificar cuando tutor es alfabeto
     private String[] catVerifTutNoAlf; //cosas a verificar cuando tutor no es alfabeto
+    private int totalVerifTutor = 0; //total opciones a marcar requeridas
     private Date fechaNacimiento = null;
     private final int EDAD_MIN_ASENTIMIENTO = 6;
     private final int EDAD_MAX_ASENTIMIENTO = 14;
@@ -310,6 +312,14 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                     }
                 }
             }
+            if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.a2cares.app.wizard.model.MultipleFixedChoicePage")) {
+                ArrayList<String> test = page.getData().getStringArrayList(Page.SIMPLE_DATA_KEY);
+                //validación solo para la pregunta de verificación del tutor
+                if (page.getTitle().equalsIgnoreCase(this.getString(R.string.verifTutor)) && test.size() != totalVerifTutor) {
+                    cutOffPage = i;
+                    break;
+                }
+            }
             if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.a2cares.app.wizard.model.BarcodePage")) {
                 BarcodePage bp = (BarcodePage) page;
                 if (bp.ismValRange() || bp.ismValPattern()) {
@@ -365,6 +375,12 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                 }
                 SingleFixedChoicePage pagetmp = (SingleFixedChoicePage)mWizardModel.findByKey(labels.getRelacionFamiliarTutor());
                 pagetmp.setChoices(edadAnios<18?catRelFamMenorEdad:catRelFamMayorEdad);
+
+                LabelPage pageEdad = (LabelPage)mWizardModel.findByKey(labels.getEdad());
+                String edadFormateada = edad[0] + " años " + edad[1] + " meses " + edad[2] + " dias";
+                pageEdad.setHint(edadFormateada);
+                pageEdad.setmHintTextColor("#FFDC2D2D");
+
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getAceptaTamizaje())){
@@ -517,6 +533,13 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getCoordenadas()), visible);
                 onPageTreeChanged();
             }
+            if(page.getTitle().equals(labels.getBarrio())) {
+                MapaBarriosPage mapaPage = (MapaBarriosPage)mWizardModel.findByKey(labels.getCoordenadas());
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).contains("Nejapa");
+                if (visible) mapaPage.setmUnidadSalud(Constants.UBICACION_NJ);
+                else mapaPage.setmUnidadSalud(Constants.UBICACION_CO);
+                onPageTreeChanged();
+            }
             if(page.getTitle().equals(labels.getParticipanteOTutorAlfabeto())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.NO);
                 changeStatus(mWizardModel.findByKey(labels.getTestigoPresente()), visible);
@@ -526,6 +549,7 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), false);
                 MultipleFixedChoicePage pagetmp = (MultipleFixedChoicePage)mWizardModel.findByKey(labels.getVerifTutor());
                 pagetmp.setChoices(visible?catVerifTutNoAlf:catVerifTutAlf);
+                totalVerifTutor = visible?catVerifTutNoAlf.length:catVerifTutAlf.length;
                 //changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), !visible);
                 onPageTreeChanged();
             }
@@ -708,13 +732,9 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
             }
 
             String codigoNuevoParticipante = datos.getString(this.getString(R.string.codigoNuevoParticipante));
-            Integer codigo = 0;
             participante = null;
-            //procesos = new ParticipanteProcesos();
-            if (tieneValor(codigoNuevoParticipante))
-                codigo = Integer.parseInt(codigoNuevoParticipante);
 
-            Participante existeParti = estudiosAdapter.getParticipante(MainDBConstants.codigo + "=" + codigo, null);
+            Participante existeParti = estudiosAdapter.getParticipante(MainDBConstants.codigo + "='" + codigoNuevoParticipante + "'", null);
             if (existeParti == null || existeParti.getCodigo() == null) {
 
                 String aceptaTamizajePersona = datos.getString(this.getString(R.string.aceptaTamizaje));
@@ -982,7 +1002,7 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                         }
                         participante.setCasa(casa);
                         //crear participante
-                        participante.setCodigo(codigo);
+                        participante.setCodigo(codigoNuevoParticipante);
                         if (tieneValor(nombre1)) participante.setNombre1(nombre1);
                         if (tieneValor(nombre2)) participante.setNombre2(nombre2);
                         if (tieneValor(apellido1)) participante.setApellido1(apellido1);

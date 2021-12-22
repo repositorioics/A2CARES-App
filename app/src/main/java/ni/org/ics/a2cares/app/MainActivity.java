@@ -6,15 +6,29 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.springframework.http.HttpAuthentication;
+import org.springframework.http.HttpBasicAuthentication;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 import ni.org.ics.a2cares.app.bluetooth.activity.ChatActivity;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
@@ -31,6 +45,8 @@ import ni.org.ics.a2cares.app.utils.Constants;
 public class MainActivity extends AbstractAsyncActivity {
 
     private static final int EXIT = 1;
+    private static final int DOWNLOAD = 2;
+    private static final int VERIFY = 4;
     private static final int UPDATE_EQUIPO = 11;
     private static final int UPDATE_SERVER = 12;
 
@@ -96,8 +112,16 @@ public class MainActivity extends AbstractAsyncActivity {
                         startActivity(i);
                         break;
                     case 4:
-                        i = new Intent(getApplicationContext(), DownloadBaseActivity.class);
-                        startActivityForResult(i, UPDATE_EQUIPO);
+                        createDialog(DOWNLOAD);
+                        /*estudiosAdapter.open();
+                        boolean hayDatos = estudiosAdapter.verificarData();
+                        estudiosAdapter.close();
+                        if (hayDatos) {
+                        createDialog(VERIFY);
+                        } else {
+                            i = new Intent(getApplicationContext(), DownloadBaseActivity.class);
+                            startActivityForResult(i, UPDATE_EQUIPO);
+                        }*/
                         break;
                     case 5:
                         i = new Intent(getApplicationContext(), UploadAllActivity.class);
@@ -230,14 +254,15 @@ public class MainActivity extends AbstractAsyncActivity {
                     }
                 });
                 break;
-            /*case DOWNLOAD:
+            case DOWNLOAD:
+
                 builder.setTitle(this.getString(R.string.confirm));
                 builder.setMessage(this.getString(R.string.downloading));
                 builder.setIcon(android.R.drawable.ic_menu_help);
                 builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        estudiosAdapter.open();
+                       /* estudiosAdapter.open();
                         boolean hayDatos = estudiosAdapter.verificarData();
                         estudiosAdapter.close();
                         if (hayDatos) {
@@ -245,7 +270,8 @@ public class MainActivity extends AbstractAsyncActivity {
                         } else {
                             Intent ie = new Intent(getApplicationContext(), DownloadBaseActivity.class);
                             startActivityForResult(ie, UPDATE_EQUIPO);
-                        }
+                        }*/
+                        new DownLoadTask().execute();
                     }
                 });
                 builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -255,9 +281,6 @@ public class MainActivity extends AbstractAsyncActivity {
                         dialog.dismiss();
                     }
                 });
-                break;
-            case UPLOAD:
-
                 break;
             case VERIFY:
                 builder.setTitle(this.getString(R.string.confirm));
@@ -279,7 +302,7 @@ public class MainActivity extends AbstractAsyncActivity {
                 });
 
                 break;
-            case VERIFY_DOWNLOAD:
+            /*case VERIFY_DOWNLOAD:
                 builder.setTitle(this.getString(R.string.confirm));
                 builder.setMessage(getString(R.string.enter_pin_download));
                 builder.setIcon(R.drawable.ic_menu_login);
@@ -312,5 +335,37 @@ public class MainActivity extends AbstractAsyncActivity {
         }
         alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    public class DownLoadTask extends AsyncTask<String, Void, String> {
+        boolean hayDatos = false;
+        @Override
+        protected void onPreExecute() {
+            // before the request begins, show a progress indicator
+            showLoadingProgressDialog();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            estudiosAdapter.open();
+            hayDatos = estudiosAdapter.verificarData();
+            estudiosAdapter.close();
+            return "OK";
+        }
+
+        @Override
+        protected void onPostExecute(final String respuesta) {
+            dismissProgressDialog();
+            if (hayDatos) {
+                createDialog(VERIFY);
+            } else {
+                Intent ie = new Intent(getApplicationContext(), DownloadBaseActivity.class);
+                startActivityForResult(ie, UPDATE_EQUIPO);
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            dismissProgressDialog();        }
     }
 }

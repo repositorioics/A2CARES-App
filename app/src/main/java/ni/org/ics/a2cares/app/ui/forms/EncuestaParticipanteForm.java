@@ -103,7 +103,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         Page direccionCDI = new TextPage(this, labels.getDireccionCDI(), "", Constants.WIZARD, false).setRequired(true);
         Page otroLugarCuidan = new TextPage(this, labels.getOtroLugarCuidan(), "", Constants.WIZARD, false).setRequired(true);
 
-        Page alfabeto = new SingleFixedChoicePage(this, labels.getAlfabeto(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+        Page alfabeto = new SingleFixedChoicePage(this, labels.getAlfabeto(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page nivelEducacion = new SingleFixedChoicePage(this, labels.getNivelEducacion(), "", Constants.WIZARD, true).setChoices(catNivelEdu).setRequired(true);
 
         Page trabaja = new SingleFixedChoicePage(this, labels.getTrabaja(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
@@ -194,7 +194,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         Page vacunaFiebreAma = new SingleFixedChoicePage(this, labels.getVacunaFiebreAma(), "", Constants.WIZARD, true).setChoices(catSiNoDes).setRequired(true);
         Page anioVacunaFiebreAma = new NumberPage(this, labels.getAnioVacunaFiebreAma(), "", Constants.WIZARD, false).setRequired(true);
 
-        Page vacunaCovid = new SingleFixedChoicePage(this, labels.getVacunaCovid(), "", Constants.WIZARD, false).setChoices(catSiNoDes).setRequired(true);
+        Page vacunaCovid = new SingleFixedChoicePage(this, labels.getVacunaCovid(), "", Constants.WIZARD, true).setChoices(catSiNoDes).setRequired(true);
         Page anioVacunaCovid = new NumberPage(this, labels.getAnioVacunaCovid(), "", Constants.WIZARD, false).setRequired(true);
         Page mesVacunaCovid = new SingleFixedChoicePage(this, labels.getMesVacunaCovid(), "", Constants.WIZARD, false).setChoices(catMeses).setRequired(true);
         Page tomarFotoTarjetaCovid = new LabelPage(this, labels.getTomarFotoTarjetaCovid(), "", Constants.WIZARD, false).setRequired(true);

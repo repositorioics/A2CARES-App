@@ -22,7 +22,7 @@ public class TamizajeForm extends AbstractWizardModel {
 
     private String[] fillBarrios(boolean incluirFueraSector){
         String[] catalogo;
-        List<Barrio> barrios = estudiosAdapter.getBarrios(incluirFueraSector?null:MainDBConstants.nombre+" <> 'Fuera de Sector'", MainDBConstants.nombre);
+        List<Barrio> barrios = estudiosAdapter.getBarrios(incluirFueraSector?null:MainDBConstants.nombre+" <> 'Fuera de Sector'", MainDBConstants.codigo);
         catalogo = new String[barrios.size()];
         index = 0;
         for (Barrio message: barrios){
@@ -65,6 +65,7 @@ public class TamizajeForm extends AbstractWizardModel {
 
         Page sexo = new SingleFixedChoicePage(this,labels.getSexo(), labels.getSexoHint(), Constants.WIZARD, true).setChoices(catSexo).setRequired(true);
 		Page fechaNacimiento = new NewDatePage(this,labels.getFechaNacimiento(), labels.getFechaNacimientoHint(), Constants.WIZARD, true).setRangeValidation(true, dmDesde, dmHasta).setRequired(true);
+		Page edad = new LabelPage(this,labels.getEdad(),"", Constants.WIZARD, true).setRequired(false);
 
         Page aceptaTamizaje = new SingleFixedChoicePage(this,labels.getAceptaTamizaje(), labels.getAceptaTamizajeHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page razonNoAceptaTamizaje = new SingleFixedChoicePage(this,labels.getRazonNoAceptaTamizaje(), labels.getRazonNoAceptaTamizajeHint(), Constants.WIZARD, false).setChoices(catRazonNoParticipaPersona).setRequired(true);
@@ -104,7 +105,7 @@ public class TamizajeForm extends AbstractWizardModel {
         Page direccion = new TextPage(this,labels.getDireccion(),labels.getDireccionHint(), Constants.WIZARD, false).setRequired(true);
         Page ubicacion = new MapaBarriosPage(this, labels.getCoordenadas(), "", Constants.WIZARD, true).setRequired(true);
 
-        Page codigoNuevoParticipante = new BarcodePage(this,labels.getCodigoNuevoParticipante(),"",Constants.WIZARD, false).setRangeValidation(true, 80000, 90000).setRequired(true);
+        Page codigoNuevoParticipante = new BarcodePage(this,labels.getCodigoNuevoParticipante(),"",Constants.WIZARD, false).setPatternValidation(true, "^\\d{4}$").setRequired(true);
         Page nombre1 = new TextPage(this,labels.getNombre1(),labels.getNombre1Hint(),Constants.WIZARD, false).setRequired(true);
         Page nombre2 = new TextPage(this,labels.getNombre2(),labels.getNombre1Hint(),Constants.WIZARD, false).setRequired(false);
         Page apellido1 = new TextPage(this,labels.getApellido1(),labels.getApellido1Hint(),Constants.WIZARD, false).setRequired(true);
@@ -148,7 +149,7 @@ public class TamizajeForm extends AbstractWizardModel {
 
         Page finTamizajeLabel = new LabelPage(this,labels.getFinTamizajeLabel(),"", Constants.WIZARD, true).setRequired(false);
 
-		return new PageList(sexo, fechaNacimiento, aceptaTamizaje, razonNoAceptaTamizaje, otraRazonNoAceptaTamizaje,
+		return new PageList(sexo, fechaNacimiento, edad, aceptaTamizaje, razonNoAceptaTamizaje, otraRazonNoAceptaTamizaje,
                 vivienda, tiempoResidencia, planesMudarse, asentimientoVerbal, aceptaParticipar, razonNoAceptaParticipar, otraRazonNoAceptaParticipar,
                 casaPerteneceCohorte, codigoCasaCohorte, codigoNuevaCasaCohorte, nombre1JefeFamilia, nombre2JefeFamilia, apellido1JefeFamilia, apellido2JefeFamilia, barrio, direccion, ubicacion,
                 codigoNuevoParticipante, nombre1, nombre2, apellido1, apellido2,

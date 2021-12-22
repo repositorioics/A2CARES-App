@@ -322,7 +322,7 @@ public class MainDBConstants {
     //Crear tabla participantes
     public static final String CREATE_PARTICIPANTE_TALBE = "create table if not exists "
             + PARTICIPANTE_TABLE + " ("
-            + codigo + " integer not null, "
+            + codigo + " text not null, "
             + nombre1 + " text not null, "
             + nombre2 + " text, "
             + apellido1 + " text not null, "
@@ -394,7 +394,7 @@ public class MainDBConstants {
     //Crear tabla participantes
     public static final String CREATE_PARTICIPANTE_PROC_TALBE = "create table if not exists "
             + PARTICIPANTE_PROC_TABLE + " ("
-            + codigo + " integer not null, "
+            + codigo + " text not null, "
             + retirado + " text, "
             + pendientePyT + " text, "
             + pendienteEncPart + " text, "
@@ -494,7 +494,7 @@ public class MainDBConstants {
             + codigo + " text not null, "
             + fechaFirma + " date not null, "
             + tamizaje + " text not null, "
-            + participante + " integer, "
+            + participante + " text, "
             + nombre1Tutor + " text, "
             + nombre2Tutor + " text, "
             + apellido1Tutor + " text, "
@@ -539,7 +539,7 @@ public class MainDBConstants {
             + operadora + " text, "
             + tipotel + " text, "
             + casa + " integer, "
-            + participante + " integer, "
+            + participante + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
@@ -583,7 +583,7 @@ public class MainDBConstants {
             + codigo + " text not null, "
             + casa + " text, "
             + estudios + " text, "
-            + participante + " integer, "
+            + participante + " text, "
             + motivo + " text, "
             + barrio + " integer, "
             + otroBarrio + " text, "
@@ -620,7 +620,7 @@ public class MainDBConstants {
             + codigoVisita + " text not null, "
             + fechaVisita + " date not null, "
             + visitaExitosa + " text, "
-            + participante + " integer not null, "
+            + participante + " text not null, "
             + razonVisitaNoExitosa + " text, "
             + otraRazonVisitaNoExitosa + " text, "
             + recordDate + " date, "
@@ -656,7 +656,7 @@ public class MainDBConstants {
     public static final String CREATE_MUESTRAS_TABLE = "create table if not exists "
             + MUESTRAS_TABLE + " ("
             + idMuestra + " text not null, "
-            + participante + " integer not null, "
+            + participante + " text not null, "
             + fechaMuestra + " date not null, "
             + tuboBHC + " text, "
             + codigoBHC + " text, "
@@ -707,4 +707,68 @@ public class MainDBConstants {
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + idRecepcion +"));";
 
+
+    //Tabla puntos gps candidatos para ingresos
+    public static final String PUNTOS_CANDIDATOS_TABLE = "puntos_candidatos";
+
+    //Crear tabla untos gps candidatos para ingresos
+    public static final String CREATE_PUNTOS_CANDIDATOS_TABLE = "create table if not exists "
+            + PUNTOS_CANDIDATOS_TABLE + " ("
+            + codigo + " text not null, "
+            + barrio + " text not null, "
+            + latitud + " date not null, "
+            + longitud + " real null, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + codigo +"));";
+
+    public static final String INSERT_PUNTOS_CANDIDATOS_TABLE = "insert into "
+            + PUNTOS_CANDIDATOS_TABLE + " ("
+            + codigo + ","
+            + barrio + ","
+            + latitud + ","
+            + longitud + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?)";
+
+    //Tabla puntos gps descartados para ingresos
+    public static final String PUNTOS_DESCARTADOS_TABLE = "puntos_descartados";
+
+    //campos tabla puntos gps descartados para ingresos
+    public static final String codigoCandidato  = "codigoCandidato";
+    public static final String otroMotivo  = "otroMotivo";
+
+    //Crear tabla puntos gps descartados para ingresos
+    public static final String CREATE_PUNTOS_DESCARTADOS_TABLE = "create table if not exists "
+            + PUNTOS_DESCARTADOS_TABLE + " ("
+            + codigo + " text not null, "
+            + codigoCandidato + " text not null, "
+            + motivo + " text not null, "
+            + otroMotivo + " text not null, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + codigo +"));";
+
+    public static final String INSERT_PUNTOS_DESCARTADOS_TABLE = "insert into "
+            + PUNTOS_DESCARTADOS_TABLE + " ("
+            + codigo + ","
+            + codigoCandidato + ","
+            + motivo + ","
+            + otroMotivo + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?)";
 }

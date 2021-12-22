@@ -16,6 +16,7 @@ public class TamizajeFormLabels {
 
     protected String fechaNacimiento;
     protected String fechaNacimientoHint;
+    protected String edad;
     protected String sexo;
     protected String sexoHint;
 
@@ -159,6 +160,7 @@ public class TamizajeFormLabels {
 
         fechaNacimiento = res.getString(R.string.fechaNacimiento);
         fechaNacimientoHint = res.getString(R.string.fechaNacimientoHint);
+        edad = res.getString(R.string.edad);
         sexo = res.getString(R.string.sexo);
         sexoHint = res.getString(R.string.sexoHint);
 
@@ -709,5 +711,9 @@ public class TamizajeFormLabels {
 
     public String getFinTamizajeLabel() {
         return finTamizajeLabel;
+    }
+
+    public String getEdad() {
+        return edad;
     }
 }

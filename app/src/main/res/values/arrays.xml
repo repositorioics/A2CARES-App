@@ -24,6 +24,7 @@
         <item>@string/participants</item>
         <item>@string/phones</item>
         <item>@string/send_house</item>
+        <item>@string/locate_house</item>
     </string-array>
 
     <string-array name="menu_supervisor">

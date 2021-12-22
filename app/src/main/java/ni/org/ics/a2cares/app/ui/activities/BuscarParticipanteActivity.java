@@ -193,17 +193,15 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		Integer codigoScanned =0;
 		if (requestCode == BARCODE_CAPTURE && intent != null) {
-			String sb = intent.getStringExtra("SCAN_RESULT");
-			if (sb != null && sb.length() > 0) {
+			String codigoScanned = intent.getStringExtra("SCAN_RESULT");
+			if (codigoScanned != null && codigoScanned.length() > 0) {
 
 				try{
-					codigoScanned = Integer.parseInt(sb);
 					//CohorteAdapterGetObjects ca = new CohorteAdapterGetObjects();
 					//ca.open();
 					estudiosAdapter.open();
-					Participante mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo+ " = "+codigoScanned, null);
+					Participante mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo+ " = '"+codigoScanned+"'", null);
 
 					if (mParticipante!= null && mParticipante.getCodigo() != null){
 						//ParticipanteProcesos mParticipanteProc = mParticipante.getProcesos(); //ca.getParticipanteProceso(codigoScanned);
@@ -214,7 +212,7 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 						Intent i = new Intent(getApplicationContext(),
 								MenuParticipanteActivity.class);
 						//i.putExtra(Constants.CODIGO, codigo);
-						i.putExtra(Constants.VISITA_EXITOSA, mUser.getVisitas());
+						i.putExtra(Constants.VISITA_EXITOSA, !mUser.getVisitas());//si no tiene permiso de visita, se va a asumir la visita como exitosa para no solicitar visita al momento de ingresar informacion
 						i.putExtras(arguments);
 						startActivity(i);
 						finish();
@@ -244,10 +242,10 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 		String filtro = "";
 		switch (opcion) {
 			case 0:
-				filtro = MainDBConstants.codigo + "=" + parametro;
+				filtro = MainDBConstants.codigo + "='" + parametro +"'";
 				break;
 			case 1:
-				filtro = MainDBConstants.codigo + "=" + parametro;
+				filtro = MainDBConstants.codigo + "='" + parametro +"'";
 				break;
 			case 2:
 				filtro = MainDBConstants.nombre1 + " like '%" + parametro + "%' or " + MainDBConstants.nombre2 + " like '%" + parametro + "%'";

@@ -51,7 +51,7 @@ public class ParticipanteHelper extends BindStatementHelper {
 
     public static Participante crearParticipante(Cursor cursor){
         Participante mParticipante = new Participante();
-        mParticipante.setCodigo(cursor.getInt(cursor.getColumnIndex(MainDBConstants.codigo)));
+        mParticipante.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
         mParticipante.setNombre1(cursor.getString(cursor.getColumnIndex(MainDBConstants.nombre1)));
         mParticipante.setNombre2(cursor.getString(cursor.getColumnIndex(MainDBConstants.nombre2)));
         mParticipante.setApellido1(cursor.getString(cursor.getColumnIndex(MainDBConstants.apellido1)));
@@ -82,7 +82,7 @@ public class ParticipanteHelper extends BindStatementHelper {
     }
 
     public static void fillParticipanteStatement(SQLiteStatement stat, Participante participante){
-        stat.bindLong(1, participante.getCodigo());
+        bindString(stat,1, participante.getCodigo());
         bindString(stat,2, participante.getNombre1());
         bindString(stat, 3, participante.getNombre2()); //if (participante.getNombre2() != null)	stat.bindString(3, participante.getNombre2());
         bindString(stat,4, participante.getApellido1());
@@ -97,24 +97,24 @@ public class ParticipanteHelper extends BindStatementHelper {
         bindString(stat,13, participante.getNombre2Madre());
         bindString(stat,14, participante.getApellido1Madre());
         bindString(stat,15, participante.getApellido2Madre());
-        stat.bindLong(16, participante.getCasa().getCodigo());
+        bindInteger(stat,16, participante.getCasa().getCodigo());
         bindString(stat,17, participante.getNombre1Tutor());
         bindString(stat,18, participante.getNombre2Tutor());
         bindString(stat,19, participante.getApellido1Tutor());
         bindString(stat,20, participante.getApellido2Tutor());
         bindString(stat,21, participante.getRelacionFamiliarTutor());
 
-        stat.bindLong(22, participante.getRecordDate().getTime());
+        bindLong(stat,22, participante.getRecordDate().getTime());
         bindString(stat,23, participante.getRecordUser());
-        stat.bindString(24, String.valueOf(participante.getPasive()));
+        bindString(stat,24, String.valueOf(participante.getPasive()));
         bindString(stat,25, participante.getDeviceid());
-        stat.bindString(26, String.valueOf(participante.getEstado()));
+        bindString(stat,26, String.valueOf(participante.getEstado()));
     }
 
 
     public static ParticipanteProcesos crearParticipanteProcesos(Cursor cursor){
         ParticipanteProcesos procesos = new ParticipanteProcesos();
-        procesos.setCodigo(cursor.getInt(cursor.getColumnIndex(MainDBConstants.codigo)));
+        procesos.setCodigo(cursor.getString(cursor.getColumnIndex(MainDBConstants.codigo)));
         procesos.setPendienteEnCasa(cursor.getString(cursor.getColumnIndex(MainDBConstants.pendienteEnCasa)));
         procesos.setPendienteEncPart(cursor.getString(cursor.getColumnIndex(MainDBConstants.pendienteEncPart)));
         procesos.setPendientePyT(cursor.getString(cursor.getColumnIndex(MainDBConstants.pendientePyT)));
@@ -157,7 +157,7 @@ public class ParticipanteHelper extends BindStatementHelper {
     }
 
     public static void fillParticipanteProcesosStatement(SQLiteStatement stat, ParticipanteProcesos participante){
-        stat.bindLong(1, participante.getCodigo());
+        bindString(stat,1, participante.getCodigo());
         bindInteger(stat,2, participante.getRetirado());
         bindString(stat, 3, participante.getPendientePyT()); //if (participante.getNombre2() != null)	stat.bindString(3, participante.getNombre2());
         bindString(stat,4, participante.getPendienteEncPart());

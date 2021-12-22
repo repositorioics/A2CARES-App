@@ -42,8 +42,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -53,9 +55,11 @@ import ni.org.ics.a2cares.app.MyIcsApplication;
 import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
+import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
+import ni.org.ics.a2cares.app.ui.activities.menu.MenuCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuParticipanteActivity;
 import ni.org.ics.a2cares.app.utils.Constants;
 import ni.org.ics.a2cares.app.utils.DeviceInfo;
@@ -81,6 +85,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
     private View mapView;
 
     private static Participante mParticipante = new Participante();
+    private static Casa mCasa = null;
 
     private GoogleMap mGoogleMap;
 
@@ -95,7 +100,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
     private boolean visExitosa = false;
     private DatosCoordenadas mCoordenadas;
     private static String codigoParticipante; //cuando es desde el wizard solo viene el codigo del participante
-
+    private static int ubicacion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,9 +118,11 @@ public class CoordenadasMapActivity extends AppCompatActivity
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(),mPass,false,false);
         mParticipante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+        mCasa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);
         visExitosa = getIntent().getBooleanExtra(Constants.VISITA_EXITOSA,false);
 
         codigoParticipante = getIntent().getStringExtra(Constants.COD_PARTICIPANTE);
+        ubicacion = getIntent().getIntExtra(Constants.UBICACION, 0);
 
         inputLatlong = (EditText) findViewById(R.id.latlong);
         mButtonSave = (ImageButton) findViewById(R.id.saveLatLong);
@@ -125,6 +132,9 @@ public class CoordenadasMapActivity extends AppCompatActivity
                 createDialog(SAVE);
             }
         });
+        if (mCasa != null) {
+            mButtonSave.setVisibility(View.GONE);
+        }
         new CoordenadaActualTask().execute();
     }
 
@@ -166,10 +176,43 @@ public class CoordenadasMapActivity extends AppCompatActivity
             if (locationList.size() > 0) {
                 //The last location in the list is the newest
                 Location location = locationList.get(locationList.size() - 1);
-                //mLastLocation = location;
                 if (mLocationMarker != null) {
                     mLocationMarker.remove();
                 }
+/*
+                List<LatLng> puntos = new ArrayList<>();
+                puntos.add(new LatLng(	12.10038869	,	-86.30506825	));
+                puntos.add(new LatLng(	12.10632137	,	-86.30843245	));
+                puntos.add(new LatLng(	12.09282466	,	-86.30939737	));
+                puntos.add(new LatLng(	12.09740777	,	-86.3048513	));
+                puntos.add(new LatLng(	12.0909891	,	-86.30884128	));
+                puntos.add(new LatLng(	12.09875749	,	-86.3098385	));
+                puntos.add(new LatLng(	12.09322666	,	-86.30733557	));
+                puntos.add(new LatLng(	12.09459597	,	-86.31140236	));
+                puntos.add(new LatLng(	12.09916809	,	-86.30410595	));
+                puntos.add(new LatLng(	12.0901041	,	-86.3049512	));
+                puntos.add(new LatLng(	12.09446804	,	-86.30863072	));
+
+                List<String> idPuntos = new ArrayList<>();
+                idPuntos.add("1");
+                idPuntos.add("2");
+                idPuntos.add("3");
+                idPuntos.add("4");
+                idPuntos.add("5");
+                idPuntos.add("6");
+                idPuntos.add("7");
+                idPuntos.add("8");
+                idPuntos.add("9");
+                idPuntos.add("10");
+                idPuntos.add("11");
+
+                for(int i = 0; i < puntos.size(); i++){
+                   mGoogleMap.addMarker(new MarkerOptions()
+                            .position(puntos.get(i))
+                            .title(idPuntos.get(i))
+                            .draggable(false)
+                    );
+                }*/
 
                 //Place current location marker
                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -177,21 +220,34 @@ public class CoordenadasMapActivity extends AppCompatActivity
                 markerOptions.position(latLng);
                 markerOptions.title("Posicion actual");
                 markerOptions.draggable(true);
+
                 //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+
                 mLocationMarker = mGoogleMap.addMarker(markerOptions);
                 setLocationOnInputLatLong(mLocationMarker);
                 //mover la camara en el mGoogleMap para mostrar el punto
                 mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
             } else {
                 // Si no se encuentran datos de ubicacion en el movil, poner el punto del centro de salud por defecto
-                LatLng cssfv = new LatLng(12.154826, -86.291345);
-                mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
-                        .position(cssfv)
-                        .title("CSSFV")
-                        .draggable(true)
-                );
-                //setLocationOnInputLatLong(mLocationMarker);
-                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(12.154, -86.290), 15.0f));
+                if (ubicacion==Constants.UBICACION_NJ) {
+                    LatLng nejapa = new LatLng(12.112823, -86.324148);
+                    mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
+                            .position(nejapa)
+                            .title("Nejapa")
+                            .draggable(true)
+                    );
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nejapa, 15.0f));
+                } else if (ubicacion==Constants.UBICACION_CO) {
+                    LatLng camilo = new LatLng(12.096661142575222, -86.30627129226923);
+                    mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
+                            .position(camilo)
+                            .title("Camilo")
+                            .draggable(true)
+                    );
+                    mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(camilo, 15.0f));
+                }
+                setLocationOnInputLatLong(mLocationMarker);
+
             }
         }
     };
@@ -204,10 +260,14 @@ public class CoordenadasMapActivity extends AppCompatActivity
         mLocationRequest.setFastestInterval(300000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         //al cargar el mapa, carga en la posicion actual del dispositivo
-        if (mParticipante==null || (mParticipante.getCasa()!=null && (mParticipante.getCasa().getLatitud()==null || mParticipante.getCasa().getLatitud()<=0))){
+        if (mCasa != null && mCasa.getLatitud() != null && mCasa.getLongitud() != null && mCasa.getLatitud() > 0) {
+            setHouseLocation(mCasa);
+        } else if (mParticipante  != null && mParticipante.getCasa() != null
+                && mParticipante.getCasa().getLatitud() != null && mParticipante.getCasa().getLongitud() != null
+                && mParticipante.getCasa().getLatitud() > 0) {
+            setHouseLocation(mParticipante.getCasa());
+        } else {
             requestLocation();
-        }else{
-            setParticipantLocation();
         }
         mGoogleMap.getUiSettings().setZoomControlsEnabled(true);
         // Eventos
@@ -231,8 +291,29 @@ public class CoordenadasMapActivity extends AppCompatActivity
             layoutParams.setMargins(0, 0, 30, 300);
         }
 
-        /*PolygonsHelper polygonsHelper = new PolygonsHelper();
-        addPolygon(polygonsHelper.getPolygonBoer());*/
+        //Sector Camilo Ortega
+        PolygonsHelper polygonsHelper = new PolygonsHelper();
+        addPolygon(polygonsHelper.getPolygonAlexisArguello2());
+        /*addPolygon(polygonsHelper.getPolygonBerthildaOlegario());
+        addPolygon(polygonsHelper.getPolygonBloqueK());
+        addPolygon(polygonsHelper.getPolygonCamiloOrtega1());
+        addPolygon(polygonsHelper.getPolygonElLaurel());
+        addPolygon(polygonsHelper.getPolygonSanJoseDeLasColinas());
+        addPolygon(polygonsHelper.getPolygonSolidaridad());
+        addPolygon(polygonsHelper.getPolygonTangaraBuenaVista());
+        addPolygon(polygonsHelper.getPolygonVillaEsperanza());
+        addPolygon(polygonsHelper.getPolygonWilliamGaleano());
+        addPolygon(polygonsHelper.getPolygonLaZacatera());
+        addPolygon(polygonsHelper.getPolygonRaulCernaAnexo());
+        addPolygon(polygonsHelper.getPolygonVillaNueva());
+        addPolygon(polygonsHelper.getPolygonArgesSequeira());
+        //Sector Nejapa
+        addPolygon(polygonsHelper.getPolygonDivinoPastor());
+        addPolygon(polygonsHelper.getPolygonGermanPomares());
+        addPolygon(polygonsHelper.getPolygonMarthaAguilar());
+        addPolygon(polygonsHelper.getPolygonMartinLutero());
+        addPolygon(polygonsHelper.getPolygonVladirmirHernandez());
+        addPolygon(polygonsHelper.getPolygonMariaMora());*/
     }
 
     private void addPolygon(List<LatLng> vertices){
@@ -293,6 +374,19 @@ public class CoordenadasMapActivity extends AppCompatActivity
                 marker.getPosition().longitude);
         inputLatlong.setText(position);
     }
+    private void setHouseLocation(Casa casa){
+        //Si el participante tiene coordenadas, ponerlo en el mapa
+        LatLng puntoCasa = new LatLng(casa.getLatitud(), casa.getLongitud());
+        mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
+                .position(puntoCasa)
+                .title("Ubicacion casa")
+                .draggable(true)
+        );
+        setLocationOnInputLatLong(mLocationMarker);
+        //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(12.154, -86.290), 15.0f));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(puntoCasa, 15));
+        mGoogleMap.setMyLocationEnabled(true);
+    }
 
     private void setParticipantLocation(){
         //Si el participante tiene coordenadas, ponerlo en el mapa
@@ -341,7 +435,15 @@ public class CoordenadasMapActivity extends AppCompatActivity
                 builder.setMessage(this.getString(R.string.exiting));
                 builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        if (codigoParticipante!=null){
+                        if (mCasa != null) {
+                            Intent i = new Intent(getApplicationContext(),
+                                    MenuCasaActivity.class);
+                            i.putExtra(Constants.CASA, mCasa);
+                            i.putExtra(Constants.VISITA_EXITOSA, visExitosa);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i);
+                            finish();
+                        } else if (codigoParticipante!=null){
                             Intent intent1 = new Intent();
                             intent1.putExtra("CODE_RESULT", "");
                             setResult(RESULT_OK, intent1);
@@ -473,7 +575,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
             try {
                 estudiosAdapter.open();
                 if (codigoParticipante!=null && mParticipante == null)
-                    mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo + "=" + codigoParticipante, null);
+                    mParticipante = estudiosAdapter.getParticipante(MainDBConstants.codigo + "='" + codigoParticipante+"'", null);
                 if (mParticipante!=null)
                     mCoordenadas = estudiosAdapter.getDatosCoordenada(MainDBConstants.participante + "=" + mParticipante.getCodigo(), null);
                 return "exito";

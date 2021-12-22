@@ -12,7 +12,7 @@
     <string name="otraRazonNoAceptaTamizajeHint">Indicar porque otra razón no esta de acuerdo en realizar tamisaje</string>
     <string name="tiempoResidencia">Tiempo de residencia</string>
     <string name="tipoVivienda">Tipo de Vivienda</string>
-    <string name="planesMudarse">¿Tiene planes de mover fuera de esta comunidad en los próximos 5 años?</string>
+    <string name="planesMudarse">¿Tiene planes de mudarse de esta comunidad en los próximos 5 años?</string>
 
     <string name="aceptaParticipar">Acepta participar en el estudio?</string>
     <string name="aceptaParticiparHint">Estudio de vigilancia basada en la población para la aparición y transmisión de Arbovirus</string>

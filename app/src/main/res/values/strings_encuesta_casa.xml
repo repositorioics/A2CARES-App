@@ -5,7 +5,8 @@
     <string name="confirm_house_survey_edit">¿Desea editar encuesta de casa? </string>
 
     <string name="cuantasPersonas">1. ¿Cuántas personas viven en la casa?</string>
-    <string name="cuantasMujeres">2. ¿Cuántas mujeres y niñas/personas femeninas?</string>
+    <string name="cuantasMujeres">2. ¿Cuántas mujeres y niñas?</string>
+    <string name="cuantasMujeresHint">En las siguientes preguntas ingresar las edades de menor a mayor</string>
     <string name="edadMujer1">2.1 Edad</string>
     <string name="edadMujer2">2.2 Edad</string>
     <string name="edadMujer3">2.3 Edad</string>
@@ -26,7 +27,8 @@
     <string name="edadMujer8Hint">Edad persona femenina 8</string>
     <string name="edadMujer9Hint">Edad persona femenina 9</string>
     <string name="edadMujer10Hint">Edad persona femenina 10</string>
-    <string name="cuantosHombres">3. ¿Cuantos hombres y niños/personas masculinas?</string>
+    <string name="cuantosHombres">3. ¿Cuantos hombres y niños?</string>
+    <string name="cuantosHombresHint">En las siguientes preguntas ingresar las edades de menor a mayor</string>
     <string name="edadHombre1">3.1 Edad</string>
     <string name="edadHombre2">3.2 Edad</string>
     <string name="edadHombre3">3.3 Edad</string>
@@ -55,7 +57,8 @@
 
     <string name="horasSinAgua">6.a ¿Cuántas horas por día  no tiene servicio de agua?</string>
     <string name="frecuenciaSeVaAgua">6.b. ¿Cada cuánto se va el agua?</string>
-    <string name="frecuenciaSeVaAguaHint">Dias</string>
+    <string name="otraFrecuenciaSeVaAgua">¿Con que otra frecuencia se va el agua?</string>
+    <string name="frecuenciaSeVaAguaHint">Seleccionar una opción</string>
 
     <string name="tienePozo">7. ¿Tiene pozo?</string>
     <string name="tieneMedidorAgua">8. ¿Tiene medidor de agua?</string>
@@ -64,7 +67,7 @@
     <string name="llaveAgua">11. ¿La llave del agua se encuentra dentro de la casa o fuera?</string>
     <string name="llaveCompartida">11.¿Es compartido?</string>
     <string name="llaveCompartidaHint">Indicar si la llave que esta fuera de la casa es de uso compartido</string>
-    <string name="almacenaAgua">12 ¿Ud. almacena agua  en recipientes como barriles, tanques u otros recipientes?</string>
+    <string name="almacenaAgua">12 ¿Ud. almacena agua  en barriles, tanques u otros recipientes?</string>
     <string name="almacenaEnBarriles">¿Ud. Utiliza barriles?</string>
     <string name="almacenaEnBarrilesHint">Indicar si utiliza barriles para almacenar agua</string>
     <string name="almacenaEnTanques">¿Ud. Utiliza Tanques?</string>
@@ -92,6 +95,11 @@
     <string name="otrosRecipientesTapados">Otros recipientes tapados?</string>
     <string name="otrosRecipientesTapadosHint">Ud. mantiene los otros recipientes tapados</string>
 
+    <string name="cepillaPilas">¿Acostumbra a cepillar estas pilas?</string>
+    <string name="cepillaPilasHint">Indicar si acostumbra a cepillar las pilas</string>
+    <string name="frecCepillaPilas">¿Cada cuánto?</string>
+    <string name="frecCepillaPilasHint">Indicar con que frecuencia acostumbra a cepillar las pilas</string>
+
     <string name="cambiadoCasa">13. ¿Han cambiado de casa?</string>
     <string name="remodeladoCasa">14. ¿Han realizado remodelación o ampliación de su casa en el último año?</string>
 
@@ -104,35 +112,40 @@
     <string name="otroMaterialTecho">Especifique otro material del techo</string>
     <string name="casaPropia">19. ¿Casa propia?</string>
     <!--20 -->
-    <string name="tieneAbanico">¿Tiene abanicos en casa?</string>
-    <string name="tieneTelevisor">¿Tiene televisor en casa?</string>
-    <string name="tieneRefrigerador">¿Tiene refrigerador/freezer en casa?</string>
-    <string name="tieneAireAcondicionado">¿Tiene aire acondicionando en casa?</string>
-    <string name="tieneLavadora">¿Tiene lavadora?</string>
+    <string name="tieneAbanico">20.1 ¿Tiene abanicos en casa?</string>
+    <string name="tieneTelevisor">20.2 ¿Tiene televisor en casa?</string>
+    <string name="tieneRefrigerador">20.3 ¿Tiene refrigerador/freezer en casa?</string>
+    <string name="tieneAireAcondicionado">20.4 ¿Tiene aire acondicionando en casa?</string>
+    <string name="tieneLavadora">20.5 ¿Tiene lavadora?</string>
     <string name="aireAcondicionadoFuncionando">Funcionamiento del aire</string>
     <string name="aireAcondicionadoFuncionandoHint">Indicar si el aire acondicionado lo usa de dia o de noche</string>
     <string name="numAbanicos">¿Cuántos abanicos tiene?</string>
     <string name="numTelevisores">¿Cuántos televisores tiene?</string>
     <string name="numRefrigeradores">¿Cuántos refrigeradores/freezer tiene?</string>
     <string name="numAireAcondicionado">¿Cuántos aires acondicionandos tiene?</string>
-    <string name="lavadoraFuncionando">¿Lavadora funcionando?</string>
+    <string name="lavadoraFuncionando">20.5 ¿Lavadora funcionando?</string>
     <string name="lavadoraFuncionandoHint">Indicar si la lavadora se encuentra funcionando</string>
     <!--20 -->
     <string name="tieneMuro">21. ¿Tiene muro/cerco?</string>
-    <string name="tieneInternet">22.	¿Tiene internet en la casa?</string>
+    <string name="tieneInternet">22. ¿Tiene internet en la casa?</string>
     <string name="tieneInodoro">23. ¿Tiene inodoro o letrina?</string>
+    <string name="cantInodoro">23.1 ¿Cuántos inodoros tiene?</string>
+    <string name="cantLetrina">23.2 ¿Cuántas letrinas tiene?</string>
+    <string name="cantInodoroHint">Indicar cuántos inodoros tiene en la casa</string>
+    <string name="cantLetrinaHint">Indicar cuántas letrinas tiene en la casa</string>
+
     <string name="tieneServicioEnergia">24.	¿Tiene servicio de energía eléctrica?</string>
     <string name="tieneMedidorEnergia">24.a. ¿Tiene medidor?</string>
     <string name="casaDosPisos">25. ¿Casa de 2 pisos?</string>
     <string name="tieneOtrosServicios">26. ¿Tiene alguno de los siguientes servicios?</string>
     <string name="tieneVehiculo">27. ¿Tiene vehículo en su casa?</string>
     <!--28 -->
-    <string name="tieneMoto">¿Tiene moto?</string>
-    <string name="tieneCarro">¿Tiene carro?</string>
-    <string name="tieneMicrobus">¿Tiene microbús?</string>
-    <string name="tieneCamioneta">¿Tiene camioneta?</string>
-    <string name="tieneCamion">¿Tiene camión?</string>
-    <string name="tieneOtroMedioTransAuto">¿Tiene otro medio de transporte automotriz?</string>
+    <string name="tieneMoto">28.1 ¿Tiene moto?</string>
+    <string name="tieneCarro">28.2 ¿Tiene carro?</string>
+    <string name="tieneMicrobus">28.3 ¿Tiene microbús?</string>
+    <string name="tieneCamioneta">28.4 ¿Tiene camioneta?</string>
+    <string name="tieneCamion">28.5 ¿Tiene camión?</string>
+    <string name="tieneOtroMedioTransAuto">28.6 ¿Tiene otro medio de transporte automotriz?</string>
     <string name="otroMedioTransAuto">Especifique que otro medio de transporte</string>
     <string name="anioFabMoto">Año de fabricacion de la moto</string>
     <string name="anioFabCarro">Año de fabricacion del carro</string>

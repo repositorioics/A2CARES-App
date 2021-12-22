@@ -49,19 +49,21 @@ public class MuestraForm extends AbstractWizardModel {
         DateMidnight dmHasta = new DateMidnight(new Date().getTime());
 
         Page fechaMuestra = new NewDatePage(this, labels.getFechaMuestra(), "", Constants.WIZARD, true).setRangeValidation(true, dmHasta, dmHasta).setRequired(true);
-        Page volumen = new LabelPage(this, "<font color='red'>"+labels.getVolumenRojoSugerido()+ "</font><br/><font color='#B941E0'>"+labels.getVolumenBHCSugerido() + "</font>", "", Constants.WIZARD, true).setRequired(true);
+        //Page volumen = new LabelPage(this, "<font color='red'>"+labels.getVolumenRojoSugerido()+ "</font><br/><font color='#B941E0'>"+labels.getVolumenBHCSugerido() + "</font>", "", Constants.WIZARD, true).setRequired(true);
+        Page volumen = new LabelPage(this, "<font color='red'>"+labels.getVolumenRojoSugerido()+ "</font>", "", Constants.WIZARD, true).setRequired(true);
         Page tuboRojo = new SingleFixedChoicePage(this, labels.getTuboRojo(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page codigoRojo = new BarcodePage(this, labels.getCodigoRojo(), "", Constants.WIZARD, true).setRequired(true);
         Page volumenRojo = new NumberPage(this, labels.getVolumenRojo(), "", Constants.WIZARD, true).setRangeValidation(true, 5,7).setRequired(true);
         Page razonNoRojo = new SingleFixedChoicePage(this, labels.getRazonNoRojo(), "", Constants.WIZARD, true).setChoices(catSinMuestra).setRequired(true);
         Page otraRazonNoRojo = new TextPage(this,labels.getOtraRazonNoRojo(),"", Constants.WIZARD, true).setRequired(false);
-        Page tuboBHC = new SingleFixedChoicePage(this, labels.getTuboBHC(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+        /*Page tuboBHC = new SingleFixedChoicePage(this, labels.getTuboBHC(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page codigoBHC = new BarcodePage(this, labels.getCodigoBHC(), "", Constants.WIZARD, true).setRequired(true);
         Page volumenBHC = new NumberPage(this, labels.getVolumenBHC(), "", Constants.WIZARD, true).setRangeValidation(true, 1,3).setRequired(true);
         Page razonNoBHC = new SingleFixedChoicePage(this, labels.getRazonNoBHC(), "", Constants.WIZARD, true).setChoices(catSinMuestra).setRequired(true);
         Page otraRazonNoBHC = new TextPage(this,labels.getOtraRazonNoBHC(),"", Constants.WIZARD, true).setRequired(false);
+        */
         Page pinchazos = new SingleFixedChoicePage(this, labels.getPinchazos(), "", Constants.WIZARD, true).setChoices(catPinchazos).setRequired(true);
-
-        return new PageList(fechaMuestra, volumen, tuboRojo, codigoRojo, volumenRojo, razonNoRojo, otraRazonNoRojo, tuboBHC, codigoBHC, volumenBHC, razonNoBHC, otraRazonNoBHC, pinchazos);
+        //return new PageList(fechaMuestra, volumen, tuboRojo, codigoRojo, volumenRojo, razonNoRojo, otraRazonNoRojo, tuboBHC, codigoBHC, volumenBHC, razonNoBHC, otraRazonNoBHC, pinchazos);
+        return new PageList(fechaMuestra, volumen, tuboRojo, codigoRojo, volumenRojo, razonNoRojo, otraRazonNoRojo, pinchazos);
     }
 }

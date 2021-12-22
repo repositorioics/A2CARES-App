@@ -29,6 +29,9 @@ public class EncuestaCasaForm extends AbstractWizardModel {
     private String[] catServicios;
     private String[] catTipoCocina;
     private String[] catPeriodoCocina;
+    private String[] catMuroCerco;
+    private String[] catInodoroLetrina;
+    private String[] catFrecVaAgua;
     private EstudioDBAdapter estudiosAdapter;
     private EncuestaCasaFormLabels labels;
 
@@ -51,12 +54,15 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         catServicios = estudiosAdapter.getMessageResourcesForCatalog("CAT_OTROS_SERVICIOS");
         catTipoCocina = estudiosAdapter.getMessageResourcesForCatalog("CAT_TIPO_COCINA");
         catPeriodoCocina = estudiosAdapter.getMessageResourcesForCatalog("CAT_FREC_COCINA");
+        catMuroCerco = estudiosAdapter.getMessageResourcesForCatalog("CAT_MUROCERCO");
+        catInodoroLetrina = estudiosAdapter.getMessageResourcesForCatalog("CAT_INODOROLET");
+        catFrecVaAgua = estudiosAdapter.getMessageResourcesForCatalog("CAT_FREC_VA_AGUA");
         estudiosAdapter.close();
 
         Calendar calendar = Calendar.getInstance();
 
         Page npPersonas = new NumberPage(this, labels.getCuantasPersonas(), "", Constants.WIZARD, true).setRequired(true);
-        Page npMujeres = new NumberPage(this, labels.getCuantasMujeres(), "", Constants.WIZARD, true).setRequired(true);
+        Page npMujeres = new NumberPage(this, labels.getCuantasMujeres(), labels.getCuantasMujeresHint(), Constants.WIZARD, true).setRequired(true);
         Page tpEdadM1 = new TextPage(this, labels.getEdadMujer1(), labels.getEdadMujer1Hint(), Constants.WIZARD, false).setRequired(true);
         Page tpEdadM2 = new TextPage(this, labels.getEdadMujer2(), labels.getEdadMujer2Hint(), Constants.WIZARD, false).setRequired(true);
         Page tpEdadM3 = new TextPage(this, labels.getEdadMujer3(), labels.getEdadMujer3Hint(), Constants.WIZARD, false).setRequired(true);
@@ -67,7 +73,7 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         Page tpEdadM8 = new TextPage(this, labels.getEdadMujer8(), labels.getEdadMujer8Hint(), Constants.WIZARD, false).setRequired(true);
         Page tpEdadM9 = new TextPage(this, labels.getEdadMujer9(), labels.getEdadMujer9Hint(), Constants.WIZARD, false).setRequired(true);
         Page tpEdadM10 = new TextPage(this, labels.getEdadMujer10(), labels.getEdadMujer10Hint(), Constants.WIZARD, false).setRequired(true);
-        Page npHombres = new NumberPage(this, labels.getCuantosHombres(), "", Constants.WIZARD, true).setRequired(true);
+        Page npHombres = new NumberPage(this, labels.getCuantosHombres(), labels.getCuantosHombresHint(), Constants.WIZARD, true).setRequired(true);
         Page tpEdadH1 = new TextPage(this, labels.getEdadHombre1(), labels.getEdadHombre1Hint(), Constants.WIZARD, false).setRequired(true);
         Page tpEdadH2 = new TextPage(this, labels.getEdadHombre2(), labels.getEdadHombre2Hint(), Constants.WIZARD, false).setRequired(true);
         Page tpEdadH3 = new TextPage(this, labels.getEdadHombre3(), labels.getEdadHombre3Hint(), Constants.WIZARD, false).setRequired(true);
@@ -83,7 +89,8 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         Page npCuartosDormir = new NumberPage(this, labels.getCuartosDormir(), "", Constants.WIZARD, true).setRequired(true);
         Page scProblemaAgua = new SingleFixedChoicePage(this, labels.getProblemaAgua(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page npHorasSinAgua = new NumberPage(this, labels.getHorasSinAgua(), labels.getHorasSinAguaHint(), Constants.WIZARD, false).setRangeValidation(true, 0, 24).setRequired(true);
-        Page npFrecSinAgua = new NumberPage(this, labels.getFrecuenciaSeVaAgua(), labels.getFrecuenciaSeVaAguaHint(), Constants.WIZARD, false).setRangeValidation(true, 0, 30).setRequired(true);
+        Page scFrecSinAgua = new SingleFixedChoicePage(this, labels.getFrecuenciaSeVaAgua(), labels.getFrecuenciaSeVaAguaHint(), Constants.WIZARD, false).setChoices(catFrecVaAgua).setRequired(true);
+        Page tpOtraFrecSinAgua = new TextPage(this, labels.getOtraFrecuenciaSeVaAgua(), labels.getOtraFrecuenciaSeVaAguaHint(), Constants.WIZARD, false).setRequired(true);
         Page scPozo = new SingleFixedChoicePage(this, labels.getTienePozo(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scMedidorAgua = new SingleFixedChoicePage(this, labels.getTieneMedidorAgua(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scTanque = new SingleFixedChoicePage(this, labels.getTieneTanque(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
@@ -99,11 +106,13 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         Page scEnPilas = new SingleFixedChoicePage(this, labels.getAlmacenaEnPilas(), labels.getAlmacenaEnPilasHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page npNumPilas = new NumberPage(this, labels.getNumPilas(), labels.getNumPilasHint(), Constants.WIZARD, false).setRequired(true);
         Page scPilasTapadas = new SingleFixedChoicePage(this,labels.getPilasTapadas(),labels.getPilasTapadasHint(),Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page scCepillaPilas = new SingleFixedChoicePage(this,labels.getCepillaPilas(), labels.getCepillaPilasHint(),Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page tpFrecCepilla = new TextPage(this, labels.getFrecCepillaPilas(), labels.getFrecCepillaPilasHint(), Constants.WIZARD, false).setRequired(true);
         Page scEnOtrosRec = new SingleFixedChoicePage(this, labels.getAlmacenaOtrosRecipientes(), labels.getAlmacenaOtrosRecipientesHint(), Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page tpDescOtrosRec = new TextPage(this, labels.getOtrosRecipientes(), labels.getOtrosRecipientesHint(), Constants.WIZARD, false).setRequired(true);
         Page npNumOtrosRec = new NumberPage(this, labels.getNumOtrosRecipientes(), labels.getNumOtrosRecipientesHint(), Constants.WIZARD, false).setRequired(true);
         Page scOtrosRecTapados = new SingleFixedChoicePage(this,labels.getOtrosRecipientesTapados(),labels.getOtrosRecipientesTapadosHint(),Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page scCambiadoCasa = new SingleFixedChoicePage(this,labels.getCambiadoCasa(),"",Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+        Page scCambiadoCasa = new SingleFixedChoicePage(this,labels.getCambiadoCasa(),"",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);//en la primera encuesta no se va a mostrar esta pregunta
         Page scRemoCasa = new SingleFixedChoicePage(this,labels.getRemodeladoCasa(),"",Constants.WIZARD, false).setChoices(catSiNo).setRequired(true); //en la primera encuesta no se va a mostrar esta pregunta
         Page scLavandero = new SingleFixedChoicePage(this,labels.getUbicacionLavandero(),"",Constants.WIZARD, true).setChoices(catDentroFuera).setRequired(true);
         Page mcParedes = new MultipleFixedChoicePage(this,labels.getMaterialParedes(),"",Constants.WIZARD, true).setChoices(catMaterialParedes).setRequired(true);
@@ -124,12 +133,14 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         Page scAireAcondicionadoFun = new SingleFixedChoicePage(this, labels.getAireAcondicionadoFuncionando(), labels.getAireAcondicionadoFuncionandoHint(), Constants.WIZARD, false).setChoices(catDiaNoche).setRequired(true);
         Page scLavadora = new SingleFixedChoicePage(this, labels.getLavadoraFuncionando(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
 
-        Page scTieneMuro = new SingleFixedChoicePage(this, labels.getTieneMuro(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-        Page scTieneInternet = new SingleFixedChoicePage(this, labels.getTieneInternet(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-        Page scTieneInodoro = new SingleFixedChoicePage(this, labels.getTieneInodoro(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+        Page scTieneMuro = new SingleFixedChoicePage(this, labels.getTieneMuro(), "", Constants.WIZARD, true).setChoices(catMuroCerco).setRequired(true);
+        Page scTieneInodoro = new SingleFixedChoicePage(this, labels.getTieneInodoro(), "", Constants.WIZARD, true).setChoices(catInodoroLetrina).setRequired(true);
+        Page npACantInodoro = new NumberPage(this, labels.getCantInodoro(), labels.getCantInodoroHint(), Constants.WIZARD, false).setRangeValidation(true,1, 9).setRequired(true);
+        Page npCantLetrina = new NumberPage(this, labels.getCantLetrina(), labels.getCantLetrinaHint(), Constants.WIZARD, false).setRangeValidation(true,1, 9).setRequired(true);
         Page scTieneServicioEnergia = new SingleFixedChoicePage(this, labels.getTieneServicioEnergia(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scTieneMedidorEnergia = new SingleFixedChoicePage(this, labels.getTieneMedidorEnergia(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scCasaDosPisos = new SingleFixedChoicePage(this, labels.getCasaDosPisos(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+        Page scTieneInternet = new SingleFixedChoicePage(this, labels.getTieneInternet(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scTieneOtrosServicios = new MultipleFixedChoicePage(this, labels.getTieneOtrosServicios(), "", Constants.WIZARD, true).setChoices(catServicios).setRequired(false);
 
         Page scTieneVehiculo = new SingleFixedChoicePage(this, labels.getTieneVehiculo(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
@@ -209,11 +220,11 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         return new PageList(
                 npPersonas, npMujeres, tpEdadM1, tpEdadM2, tpEdadM3, tpEdadM4, tpEdadM5, tpEdadM6, tpEdadM7, tpEdadM8, tpEdadM9, tpEdadM10,
                 npHombres, tpEdadH1, tpEdadH2, tpEdadH3, tpEdadH4, tpEdadH5, tpEdadH6, tpEdadH7, tpEdadH8, tpEdadH9, tpEdadH10,
-                npCuartos, npCuartosDormir, scProblemaAgua, npHorasSinAgua, npFrecSinAgua, scPozo, scMedidorAgua, scTanque, scLlaveAgua, scLlaveCompartida, scAlmacenaAgua, scEnBarriles, npNumBarriles, scBarrilesTapados,
-                scEnTanques, npNumTanques, scTanquesTapados, scEnPilas, npNumPilas, scPilasTapadas, scEnOtrosRec, tpDescOtrosRec, npNumOtrosRec, scOtrosRecTapados,
+                npCuartos, npCuartosDormir, scProblemaAgua, npHorasSinAgua, scFrecSinAgua, tpOtraFrecSinAgua, scPozo, scMedidorAgua, scTanque, scLlaveAgua, scLlaveCompartida, scAlmacenaAgua, scEnBarriles, npNumBarriles, scBarrilesTapados,
+                scEnTanques, npNumTanques, scTanquesTapados, scEnPilas, npNumPilas, scPilasTapadas, scCepillaPilas, tpFrecCepilla, scEnOtrosRec, tpDescOtrosRec, npNumOtrosRec, scOtrosRecTapados,
                 scCambiadoCasa, scRemoCasa, scLavandero, mcParedes, tpParedesOtroDesc, mcPiso, tpPisoOtroDesc, scTecho, tpTechoOtroDesc, scCasaPropia, scAbanico, npAbanico,
-                scTelevisor, npNumTelevisor, scRefrigerador, npNumRefrigerador, scAireAcondicionado, npNumAire, scAireAcondicionadoFun, scLavadora, scTieneMuro, scTieneInternet, scTieneInodoro, scTieneServicioEnergia, scTieneMedidorEnergia,
-                scCasaDosPisos, scTieneOtrosServicios, scTieneVehiculo, scMoto, npAnioMoto, tpMarcaMoto, scMTCarro, npAnioFabCarro, tpMarcaCarro, scMTMicrobus, npAnioFabMicrobus, tpMarcaMicrobus,
+                scTelevisor, npNumTelevisor, scRefrigerador, npNumRefrigerador, scAireAcondicionado, npNumAire, scAireAcondicionadoFun, scLavadora, scTieneMuro, scTieneInodoro, npACantInodoro, npCantLetrina, scTieneServicioEnergia, scTieneMedidorEnergia,
+                scCasaDosPisos, scTieneInternet, scTieneOtrosServicios, scTieneVehiculo, scMoto, npAnioMoto, tpMarcaMoto, scMTCarro, npAnioFabCarro, tpMarcaCarro, scMTMicrobus, npAnioFabMicrobus, tpMarcaMicrobus,
                 scMTCamioneta, npAnioFabCamioneta, tpMarcaCamioneta, scMTCamion, npAnioFabCamion, tpMarcaCamion, scMTOtro, tpMTOtroDesc, npAnioFabOtroMedioTrans, tpMarcaOtroMedioTrans,
                 scTipoCocina, npQuemadores, scHorno, scCocina, scCocinaUbicacion, scCocinaPeriodicidad, npNumCocinaD, npNumCocinaS, npNumCocinaQ, npNumCocinaM,
                 scAnimales, scAnimalesGallinas, npCantGallinas, scGallinasDC, scAnimalesPatos, npCantPatos, scPatosDC, scAnimalesPerros, npCantPerros, scPerrosDC, scAnimalesGatos, npCantGatos, scGatosDC,

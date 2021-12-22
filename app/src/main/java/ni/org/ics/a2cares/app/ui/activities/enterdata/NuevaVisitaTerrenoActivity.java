@@ -233,6 +233,13 @@ public class NuevaVisitaTerrenoActivity extends AbstractAsyncActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         // Finish app
                         dialog.dismiss();
+                        Bundle arguments = new Bundle();
+                        arguments.putSerializable(Constants.PARTICIPANTE , participante);
+                        Intent i = new Intent(getApplicationContext(),
+                                MenuParticipanteActivity.class);
+                        i.putExtra(Constants.VISITA_EXITOSA, visitaExitosa);
+                        i.putExtras(arguments);
+                        startActivity(i);
                         finish();
                     }
                 });

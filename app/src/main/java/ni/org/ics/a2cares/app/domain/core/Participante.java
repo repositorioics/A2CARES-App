@@ -23,7 +23,7 @@ public class Participante extends BaseMetaData implements Serializable{
 	/**
 	 * 
 	 */
-	private Integer codigo;
+	private String codigo;
 	private String nombre1;
 	private String nombre2;
 	private String apellido1;
@@ -48,11 +48,11 @@ public class Participante extends BaseMetaData implements Serializable{
 
     private ParticipanteProcesos procesos;
 
-	public Integer getCodigo() {
+	public String getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(Integer codigo) {
+	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
 

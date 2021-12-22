@@ -164,11 +164,11 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
             }
         });
 
-        BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoBHC());
-        pagetmp.setPatternValidation(true, "^8\\d{4}$");
+       /* BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoBHC());
+        pagetmp.setPatternValidation(true, "^\\d{4}$");*/
 
-        pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoRojo());
-        pagetmp.setPatternValidation(true, "^A2.8\\d{4}.\\d{2}SER$");
+        BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoRojo());
+        pagetmp.setPatternValidation(true, "^\\d{4}$");
 
         onPageTreeChanged();
         updateBottomBar();
@@ -243,6 +243,14 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         // Finish app
                         dialog.dismiss();
+                        Bundle arguments = new Bundle();
+                        arguments.putSerializable(Constants.PARTICIPANTE , participante);
+                        Intent i = new Intent(getApplicationContext(),
+                                ListaMuestrasParticipanteActivity.class);
+                        i.putExtra(Constants.VISITA_EXITOSA, visitaExitosa);
+                        i.putExtras(arguments);
+                        startActivity(i);
+
                         finish();
                     }
                 });
@@ -322,11 +330,11 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                         break;
                     } else {
                         String codigoTmp = valor;
-                        if (tp.getTitle().equals(labels.getCodigoRojo())) {
+                        /*if (tp.getTitle().equals(labels.getCodigoRojo())) {
                             String[] partes = valor.split("\\."); //A2.80001.21SER
                             codigoTmp = partes[1];
                         }//la bhc solo lleva el codigo del participante
-
+*/
                         if (!codigoTmp.equalsIgnoreCase(participante.getCodigo().toString())){
                             showToast(this.getString(R.string.error2CodigoMx, participante.getCodigo().toString()));
                             cutOffPage = i;
@@ -359,14 +367,15 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoRojo()), !visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoRojo()), false, null);
 
-                Page tmp = mWizardModel.findByKey(labels.getTuboBHC());
+                /*Page tmp = mWizardModel.findByKey(labels.getTuboBHC());
                 boolean tomoBHC = tmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && tmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
-
                 changeStatus(mWizardModel.findByKey(labels.getPinchazos()), visible || tomoBHC, null);
+                */
+                changeStatus(mWizardModel.findByKey(labels.getPinchazos()), visible, null);
 
                 onPageTreeChanged();
             }
-            if (page.getTitle().equals(labels.getTuboBHC())) {
+            /*if (page.getTitle().equals(labels.getTuboBHC())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoBHC()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getVolumenBHC()), visible, null);
@@ -379,7 +388,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getPinchazos()), visible || tomoRojo, null);
 
                 onPageTreeChanged();
-            }
+            }*/
 
         }catch (Exception ex){
             ex.printStackTrace();

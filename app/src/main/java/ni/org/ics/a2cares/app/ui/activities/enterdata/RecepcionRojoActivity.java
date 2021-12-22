@@ -46,7 +46,7 @@ import ni.org.ics.a2cares.app.utils.DeviceInfo;
 public class RecepcionRojoActivity extends AbstractAsyncActivity {
 
     protected static final String TAG = RecepcionRojoActivity.class.getSimpleName();
-    private Integer codigo;
+    private String codigo;
     private Double volumen;
     private String observacion;
     private String lugarText;
@@ -108,7 +108,7 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
                 mAlertExitShowing = savedInstanceState.getBoolean(ALERT_EXIT_SHOWING, false);
             }
             if (savedInstanceState.containsKey(KEEP_CODIGO)) {
-                codigo = savedInstanceState.getInt(KEEP_CODIGO, -1);
+                codigo = savedInstanceState.getString(KEEP_CODIGO);
             }
         }
 
@@ -176,7 +176,7 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
                 {
                     try{
                         if (!editCodigo.getText().toString().isEmpty())
-                            codigo = Integer.valueOf(editCodigo.getText().toString());
+                            codigo = editCodigo.getText().toString();
                     }
                     catch(Exception e){
                         codigo = null;
@@ -185,7 +185,7 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
                         return;
                     }
 
-                    if (codigo != null && codigo >= 80000){
+                    if (codigo != null && codigo.matches("^\\d{4}$")){
                         estudiosAdapter.open();
                         if (estudiosAdapter.recepcionRegistrada(MainDBConstants.codigoMx + "='" + codigo + "' and " + MainDBConstants.tipoTubo + "='" + Constants.TIPO_TUBO_ROJO + "' and " +
                                 MainDBConstants.fechaRecepcion + "=" + todayWithZeroTime.getTime())) {
@@ -308,7 +308,7 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
         super.onSaveInstanceState(outState);
         outState.putBoolean(ALERT_SHOWING, mAlertShowing);
         outState.putBoolean(ALERT_EXIT_SHOWING, mAlertExitShowing);
-        if (codigo!=null) outState.putInt(KEEP_CODIGO, codigo);
+        if (codigo!=null) outState.putString(KEEP_CODIGO, codigo);
     }
 
     @Override
@@ -354,14 +354,14 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
             String sb = intent.getStringExtra("SCAN_RESULT");
             if (sb != null && sb.length() > 0) {
                 try{
-                    codigo = Integer.parseInt(sb);
+                    codigo = sb;
                 }
                 catch(Exception e){
                     showToast("Lectura Inválida!!!!");
                     return;
                 }
             }
-            if (codigo != null && codigo >= 80000){
+            if (codigo != null && codigo.matches("^\\d{4}$")){
                 estudiosAdapter.open();
                 if (estudiosAdapter.recepcionRegistrada(MainDBConstants.codigoMx + "='" + codigo + "' and " + MainDBConstants.tipoTubo + "='" + Constants.TIPO_TUBO_ROJO + "' and " +
                         MainDBConstants.fechaRecepcion + "=" + todayWithZeroTime.getTime())) {
@@ -397,7 +397,7 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
             showToast(this.getString( R.string.error_volumen));
             return false;
         }
-        else if (codigo < 80000){
+        else if (!codigo.matches("^\\d{4}$")){
             showToast(this.getString( R.string.error_codigo));
             return false;
         }

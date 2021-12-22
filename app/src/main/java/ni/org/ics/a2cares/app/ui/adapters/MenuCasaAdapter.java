@@ -64,6 +64,11 @@ public class MenuCasaAdapter extends ArrayAdapter<String> {
                 img=getContext().getResources().getDrawable(R.mipmap.ic_share);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
+            case 3:
+                textView.setText(values[position]);
+                img=getContext().getResources().getDrawable(R.mipmap.ic_gps);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
             default:
                 img=getContext().getResources().getDrawable(R.mipmap.ic_help);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
