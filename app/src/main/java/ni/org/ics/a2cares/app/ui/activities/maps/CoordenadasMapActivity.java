@@ -294,7 +294,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
         //Sector Camilo Ortega
         PolygonsHelper polygonsHelper = new PolygonsHelper();
         addPolygon(polygonsHelper.getPolygonAlexisArguello2());
-        /*addPolygon(polygonsHelper.getPolygonBerthildaOlegario());
+        addPolygon(polygonsHelper.getPolygonBerthildaOlegario());
         addPolygon(polygonsHelper.getPolygonBloqueK());
         addPolygon(polygonsHelper.getPolygonCamiloOrtega1());
         addPolygon(polygonsHelper.getPolygonElLaurel());
@@ -313,7 +313,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
         addPolygon(polygonsHelper.getPolygonMarthaAguilar());
         addPolygon(polygonsHelper.getPolygonMartinLutero());
         addPolygon(polygonsHelper.getPolygonVladirmirHernandez());
-        addPolygon(polygonsHelper.getPolygonMariaMora());*/
+        addPolygon(polygonsHelper.getPolygonMariaMora());
     }
 
     private void addPolygon(List<LatLng> vertices){

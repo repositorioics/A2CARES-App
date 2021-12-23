@@ -106,7 +106,7 @@
     <string name="operadoraTelefono2">Operadora Teléfono 2</string>
     <string name="operadoraTelefono2Hint">Indicar compañia operadora del segundo número</string>
     <string name="numTelefono3">Número Teléfono 3</string>
-    <string name="numTelefono3Hint">Num. convencianal</string>
+    <string name="numTelefono3Hint">Num. convencional</string>
     <string name="operadoraTelefono3">Operadora Teléfono 3</string>
     <string name="operadoraTelefono3Hint">Indicar compañia operadora convencional</string>
 
