@@ -36,6 +36,7 @@ import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.activities.BuscarCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.BuscarParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoTamizajeActivity;
+import ni.org.ics.a2cares.app.ui.activities.menu.MenuLaboratorioActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuSupervisorActivity;
 import ni.org.ics.a2cares.app.ui.activities.server.DownloadBaseActivity;
 import ni.org.ics.a2cares.app.ui.activities.server.UploadAllActivity;
@@ -133,6 +134,18 @@ public class MainActivity extends AbstractAsyncActivity {
                         estudiosAdapter.close();
                         if (esSuperV){
                             i = new Intent(getApplicationContext(), MenuSupervisorActivity.class);
+                            startActivity(i);
+                        }
+                        else{
+                            showToast(getApplicationContext().getString(R.string.perm_error));
+                        }
+                        break;
+                    case 7:
+                        estudiosAdapter.open();
+                        Boolean esLaboratorista = estudiosAdapter.buscarRol(username, "ROLE_LABO");
+                        estudiosAdapter.close();
+                        if (esLaboratorista){
+                            i = new Intent(getApplicationContext(), MenuLaboratorioActivity.class);
                             startActivity(i);
                         }
                         else{

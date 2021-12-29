@@ -25,8 +25,10 @@ import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
 import ni.org.ics.a2cares.app.domain.core.Muestra;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
+import ni.org.ics.a2cares.app.domain.core.RazonNoData;
 import ni.org.ics.a2cares.app.domain.core.Tamizaje;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
+import ni.org.ics.a2cares.app.domain.laboratorio.Serologia;
 import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaParticipante;
@@ -59,6 +61,8 @@ public class UploadAllTask extends UploadTask {
     private List<TelefonoContacto> mTelefonos = new ArrayList<TelefonoContacto>();
     private List<DatosCoordenadas> mCoordenadas = new ArrayList<DatosCoordenadas>();
     private List<RecepcionMuestra> mRecepcionMuestras = new ArrayList<RecepcionMuestra>();
+    private List<Serologia> mSerologiasLab = new ArrayList<Serologia>();
+    private List<RazonNoData> mNoData = new ArrayList<RazonNoData>();
 
 	private String url = null;
 	private String username = null;
@@ -79,8 +83,10 @@ public class UploadAllTask extends UploadTask {
     public static final String ENCUESTA_PESOTALLA = "11";
     public static final String MUESTRAS = "12";
     public static final String RECEPCION_MUESTRA = "13";
+    public static final String RECEPCION_SERO_LAB = "14";
+    public static final String RAZON_NO_DATA = "15";
 
-	private static final String TOTAL_TASK = "13";
+	private static final String TOTAL_TASK = "15";
 	
 
 	@Override
@@ -107,6 +113,8 @@ public class UploadAllTask extends UploadTask {
             mEncuestasPesoTalla = estudioAdapter.getEncuestasPesoTallas(filtro, null);
             mMuestras = estudioAdapter.getMuestras(filtro, null);
             mRecepcionMuestras = estudioAdapter.getRecepcionMuestras(filtro, null);
+            mSerologiasLab = estudioAdapter.getSerologias(filtro, null);
+            mNoData = estudioAdapter.getRazonNoDatas(filtro, null);
 
 			publishProgress("Datos completos!", "2", "2");
 			
@@ -187,6 +195,18 @@ public class UploadAllTask extends UploadTask {
             error = cargarRecepcionMuestras(url, username, password);
             if (!error.matches(Constants.DATOS_RECIBIDOS)){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RECEPCION_MUESTRA);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, RECEPCION_SERO_LAB);
+            error = cargarSerologiasLab(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RECEPCION_SERO_LAB);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, RAZON_NO_DATA);
+            error = cargarRazonesNoData(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RAZON_NO_DATA);
                 return error;
             }
 		} catch (Exception e1) {
@@ -340,6 +360,28 @@ public class UploadAllTask extends UploadTask {
                         estudioAdapter.editarRecepcionMuestra(recepcionMuestra);
                         publishProgress("Actualizando recepciones de muestras en base de datos local", Integer.valueOf(mRecepcionMuestras.indexOf(recepcionMuestra)).toString(), Integer
                                 .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(RECEPCION_SERO_LAB)){
+            c = mSerologiasLab.size();
+            if(c>0){
+                for (Serologia serologia : mSerologiasLab) {
+                    serologia.setEstado(estado);
+                    estudioAdapter.editarSerologia(serologia);
+                    publishProgress("Actualizando recepciones de Serologias laboratorio en base de datos local", Integer.valueOf(mSerologiasLab.indexOf(serologia)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(RAZON_NO_DATA)){
+            c = mNoData.size();
+            if(c>0){
+                for (RazonNoData razonNoData : mNoData) {
+                    razonNoData.setEstado(estado);
+                    estudioAdapter.editarRazonNoDatas(razonNoData);
+                    publishProgress("Actualizando razones datos pendientes en base de datos local", Integer.valueOf(mNoData.indexOf(razonNoData)).toString(), Integer
+                            .valueOf(c).toString());
                 }
             }
         }
@@ -762,7 +804,7 @@ public class UploadAllTask extends UploadTask {
     }
 
     /***************************************************/
-    /*********************Recepcion Muestras ************************/
+    /*********************Recepcion Muestras Supervisor ************************/
     /***************************************************/
     // url, username, password
     protected String cargarRecepcionMuestras(String url, String username,String password) throws Exception {
@@ -778,6 +820,74 @@ public class UploadAllTask extends UploadTask {
                 requestHeaders.setAuthorization(authHeader);
                 HttpEntity<RecepcionMuestra[]> requestEntity =
                         new HttpEntity<RecepcionMuestra[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /**********Recepcion Muestras Laboratorio **********/
+    /***************************************************/
+    // url, username, password
+    protected String cargarSerologiasLab(String url, String username,String password) throws Exception {
+        try {
+            if(mSerologiasLab.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando recepciones de muestras laboratorio!", RECEPCION_SERO_LAB, TOTAL_TASK);
+                final String urlRequest = url + "/movil/serologiasLab";
+                Serologia[] envio = mSerologiasLab.toArray(new Serologia[mSerologiasLab.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<Serologia[]> requestEntity =
+                        new HttpEntity<Serologia[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /**********Recepcion Muestras Laboratorio **********/
+    /***************************************************/
+    // url, username, password
+    protected String cargarRazonesNoData(String url, String username,String password) throws Exception {
+        try {
+            if(mNoData.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando razones datos pendientes!", RAZON_NO_DATA, TOTAL_TASK);
+                final String urlRequest = url + "/movil/razonesDatosPendientes";
+                RazonNoData[] envio = mNoData.toArray(new RazonNoData[mNoData.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<RazonNoData[]> requestEntity =
+                        new HttpEntity<RazonNoData[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());

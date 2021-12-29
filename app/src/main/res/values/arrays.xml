@@ -8,6 +8,8 @@
         <item>@string/main_5</item>
         <item>@string/main_6</item>
         <item>@string/main_7</item>
+        <item>@string/main_8</item>
+        <item>@string/main_9</item>
     </string-array>
 
     <string-array name="menu_participante">
@@ -30,5 +32,8 @@
     <string-array name="menu_supervisor">
         <item>@string/super_1</item>
         <item>@string/super_2</item>
+    </string-array>
+    <string-array name="menu_laboratorio">
+        <item>@string/lab_1</item>
     </string-array>
 </resources>

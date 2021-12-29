@@ -2,6 +2,7 @@ package ni.org.ics.a2cares.app.ui.activities.menu;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -32,6 +33,7 @@ import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaPesoTallaActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaVisitaTerrenoActivity;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.RazonNoDataActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaMuestrasParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.adapters.MenuParticipanteAdapter;
 import ni.org.ics.a2cares.app.utils.Constants;
@@ -60,6 +62,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private final int OPCION_MUESTRAS = 4;
     //private final int OPCION_ENCUESTA_PARTICIPANTESA = 5;
     private final int OPCION_IR_CASA = 5;
+
+    private static final int EXIT = 1;
 
     private AlertDialog alertDialog;
 
@@ -154,13 +158,19 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     
 	@Override
 	public void onBackPressed (){
-		Bundle arguments = new Bundle();
-		Intent i = new Intent(getApplicationContext(),
-				MainActivity.class);
-		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		i.putExtras(arguments);
-		startActivity(i);
-		finish();
+        if (datosPendintes()){
+            createDialog(EXIT);
+        }
+        else {
+
+            Bundle arguments = new Bundle();
+            Intent i = new Intent(getApplicationContext(),
+                    MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.putExtras(arguments);
+            startActivity(i);
+            finish();
+        }
 	}
 
     @Override
@@ -168,21 +178,40 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         Intent i;
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                if (datosPendintes()){
+                    createDialog(EXIT);
+                }
+                else{
+                    finish();
+                }
                 return true;
             case R.id.MENU_BACK:
-                finish();
+                if (datosPendintes()){
+                    createDialog(EXIT);
+                }
+                else{
+                    finish();
+                }
                 return true;
             case R.id.MENU_HOME:
-                i = new Intent(getApplicationContext(),
-                        MainActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                finish();
+                if (datosPendintes()){
+                    createDialog(EXIT);
+                }
+                else{
+                    i = new Intent(getApplicationContext(),
+                            MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                    finish();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private boolean datosPendintes() {
+        return pendienteMuestras || pendienteEncuestaPeso || pendienteEncuestaParticip || pendienteEncuestaCasa;
     }
 /*
     private void createDialog(final int opcion, final String mensaje) {
@@ -241,6 +270,42 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         }else {*/
             new OpenDataEnterActivityTask().execute(String.valueOf(position));
         //}
+    }
+
+    private void createDialog(int dialog) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        switch(dialog){
+            case EXIT:
+                builder.setTitle(this.getString(R.string.confirm));
+                builder.setMessage(this.getString(R.string.confirm_pendiente));
+                builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Finish app
+                        dialog.dismiss();
+                        Intent i = new Intent(getApplicationContext(),
+                                RazonNoDataActivity.class);
+                        i.putExtra(Constants.PARTICIPANTE, participante.getCodigo());
+                        startActivity(i);
+                        finish();
+                        //mExitShowing=false;
+                    }
+
+                });
+                builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                        //mExitShowing=false;
+                    }
+                });
+                //mExitShowing=true;
+                break;
+            default:
+                break;
+        }
+        alertDialog = builder.create();
+        alertDialog.show();
     }
     // ***************************************
     // Private classes

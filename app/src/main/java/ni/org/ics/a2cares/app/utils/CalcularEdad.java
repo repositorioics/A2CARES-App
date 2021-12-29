@@ -10,16 +10,13 @@ import java.util.Date;
 /**
  * Constantes usadas en multiples clases de la aplicacion
  * 
- * @author William Aviles
+ * @author Miguel Salinas
  * 
  */
 public class CalcularEdad {
 	
 	private Date fechaNac;
-	
-	
-	
-	
+
 	public CalcularEdad(Date fechaNac) {
 		super();
 		this.fechaNac = fechaNac;

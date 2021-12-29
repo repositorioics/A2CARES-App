@@ -679,7 +679,7 @@ public class MainDBConstants {
             + estado + " text not null, "
             + "primary key (" + idMuestra + "));";
 
-    //Tabla Recepción de muestras
+    //Tabla Recepción de muestras supervisor
     public static final String RECEPCION_MUESTRA_TABLE = "recepcion_muestras";
 
     //campos recepcion de muestras
@@ -707,6 +707,54 @@ public class MainDBConstants {
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + idRecepcion +"));";
 
+    //Tabla Recepción de muestras laboratorio
+    public static final String SEROLOGIA_TABLE = "serologia";
+
+    public static final String idSerologia = "idSerologia";
+    public static final String fecha = "fecha";
+    public static final String enviado = "enviado";
+    public static final String codigoCasa = "codigoCasa";
+    public static final String edadMeses = "edadMeses";
+    public static final String descripcion = "descripcion";
+
+    //Crear tabla Recepción de muestra
+    public static final String CREATE_SEROLOGIA_TABLE = "create table if not exists "
+            + SEROLOGIA_TABLE + " ("
+            + idSerologia + " integer null, "
+            + participante + " text not null, "
+            + fecha + " date not null, "
+            + volumen + " real null, "
+            + observacion + " text, "
+            + enviado + " text, "
+            + codigoCasa + " integer, "
+            + edadMeses + " integer, "
+            + descripcion + " text, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + participante + ","+ fecha +"));";
+
+    //Tabla Recepción de muestras laboratorio
+    public static final String RAZON_NODATA_TABLE = "razones_datos_pendientes";
+
+    public static final String razon = "razon";
+    public static final String otraRazon = "otraRazon";
+
+    //Crear tabla Recepción de muestra
+    public static final String CREATE_RAZON_NODATA_TABLE = "create table if not exists "
+            + RAZON_NODATA_TABLE + " ("
+            + id + " integer, "
+            + codigo + " text not null, "
+            + razon + " text, "
+            + otraRazon + " text, "
+            + MainDBConstants.recordDate + " date, "
+            + MainDBConstants.recordUser + " text, "
+            + MainDBConstants.pasive + " text, "
+            + MainDBConstants.deviceId + " text, "
+            + MainDBConstants.estado + " text not null, "
+            + "primary key (" + codigo + ","+ recordDate +"));";
 
     //Tabla puntos gps candidatos para ingresos
     public static final String PUNTOS_CANDIDATOS_TABLE = "puntos_candidatos";

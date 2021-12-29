@@ -63,16 +63,16 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 habilitado = !visitaExitosa;
                 break;
             case OPCION_ENCUESTA_CASA:
-                habilitado = visitaExitosa;
+                habilitado = visitaExitosa && pendienteEncuestaCasa;
                 break;
             case OPCION_ENCUESTA_PARTICIPANTE:
-                habilitado = visitaExitosa;
+                habilitado = visitaExitosa && pendienteEncuestaParticipante;
                 break;
             case OPCION_ENCUESTA_PESOTALLA:
-                habilitado = visitaExitosa;
+                habilitado = visitaExitosa && pendienteEncuestaPeso;
                 break;
-            case OPCION_ENCUESTA_MUESTRAS :
-                habilitado = visitaExitosa;
+            case OPCION_ENCUESTA_MUESTRAS:
+                habilitado = visitaExitosa && pendientenMuestras;
                 break;
             case OPCION_IR_CASA:
                 habilitado = true;
@@ -117,10 +117,10 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 if (visitaExitosa) {
                     if (!pendienteEncuestaCasa) {
                         textView.setTextColor(Color.BLUE);
-                        //textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
+                        textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
                     } else {
                         textView.setTextColor(Color.RED);
-                        //textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
+                        textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
                     }
                 } else {
                     textView.setTextColor(Color.GRAY);
@@ -135,9 +135,9 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 if (visitaExitosa) {
                     if (!pendienteEncuestaParticipante) {
                         textView.setTextColor(Color.BLUE);
-                        //textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
+                        textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
                     } else {
-                        //textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
+                        textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
                         textView.setTextColor(Color.RED);
                     }
                 } else {
@@ -151,9 +151,9 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 if (visitaExitosa) {
                     if (!pendienteEncuestaPeso) {
                         textView.setTextColor(Color.BLUE);
-                        //textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
+                        textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
                     } else {
-                        //textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
+                        textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
                         textView.setTextColor(Color.RED);
                     }
                 } else {
@@ -172,9 +172,9 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 if (visitaExitosa) {
                     if (!pendientenMuestras) {
                         textView.setTextColor(Color.BLUE);
-                        //textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
+                        textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
                     } else {
-                        //textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
+                        textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
                         textView.setTextColor(Color.RED);
                     }
                 } else {

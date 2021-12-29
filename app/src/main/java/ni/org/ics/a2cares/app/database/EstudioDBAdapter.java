@@ -10,7 +10,6 @@ import net.sqlcipher.database.SQLiteQueryBuilder;
 import net.sqlcipher.database.SQLiteStatement;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import ni.org.ics.a2cares.app.database.constants.EncuestasDBConstants;
@@ -26,7 +25,9 @@ import ni.org.ics.a2cares.app.database.helpers.EstudiosHelper;
 import ni.org.ics.a2cares.app.database.helpers.MessageResourceHelper;
 import ni.org.ics.a2cares.app.database.helpers.MuestraHelper;
 import ni.org.ics.a2cares.app.database.helpers.ParticipanteHelper;
+import ni.org.ics.a2cares.app.database.helpers.RazonNoDataHelper;
 import ni.org.ics.a2cares.app.database.helpers.RecepcionMuestraHelper;
+import ni.org.ics.a2cares.app.database.helpers.SerologiaHelper;
 import ni.org.ics.a2cares.app.database.helpers.TamizajeHelper;
 import ni.org.ics.a2cares.app.database.helpers.TelefonoContactoHelper;
 import ni.org.ics.a2cares.app.database.helpers.UserSistemaHelper;
@@ -39,8 +40,10 @@ import ni.org.ics.a2cares.app.domain.core.Estudio;
 import ni.org.ics.a2cares.app.domain.core.Muestra;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
+import ni.org.ics.a2cares.app.domain.core.RazonNoData;
 import ni.org.ics.a2cares.app.domain.core.Tamizaje;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
+import ni.org.ics.a2cares.app.domain.laboratorio.Serologia;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
@@ -101,6 +104,8 @@ public class EstudioDBAdapter {
             db.execSQL(MainDBConstants.CREATE_MUESTRAS_TABLE);
             db.execSQL(MainDBConstants.CREATE_RECEPCION_MUESTRA_TABLE);
             db.execSQL(MainDBConstants.CREATE_PARTICIPANTE_PROC_TALBE);
+            db.execSQL(MainDBConstants.CREATE_SEROLOGIA_TABLE);
+            db.execSQL(MainDBConstants.CREATE_RAZON_NODATA_TABLE);
         }
 
         @Override
@@ -1222,6 +1227,9 @@ public class EstudioDBAdapter {
         return mParticipantesProc;
     }
 
+    /***
+     * Metodos para recepcion de muestras supervisor en la base de datos
+     * */
     //Crear nuevo recepcionMuestra en la base de datos
     public void crearRecepcionMuestra(RecepcionMuestra recepcionMuestra) {
         ContentValues cv = RecepcionMuestraHelper.crearRecepcionMuestraContentValues(recepcionMuestra);
@@ -1267,9 +1275,9 @@ public class EstudioDBAdapter {
     }
 
     /**
-     * Busca una RecepcionBHC de la base de datos
+     * Busca una Recepcion la base de datos
      *
-     * @return RecepcionBHC
+     * @return boolean
      */
 
     public boolean recepcionRegistrada(String filtro) throws SQLException {
@@ -1280,6 +1288,123 @@ public class EstudioDBAdapter {
         return registrada;
     }
 
+    /*****
+     *
+     * Metodos para recepcion serologias laboratorio en la base de datos
+     */
+
+    //Crear nueva recepcion serologia laboratorio en la base de datos
+    public void crearSerologia(Serologia serologia) {
+        ContentValues cv = SerologiaHelper.crearSerologiaLabContentValues(serologia);
+        mDb.insertOrThrow(MainDBConstants.SEROLOGIA_TABLE, null, cv);
+    }
+
+    //Editar serologia existente en la base de datos
+    public boolean editarSerologia(Serologia serologia) {
+        ContentValues cv = SerologiaHelper.crearSerologiaLabContentValues(serologia);
+        return mDb.update(MainDBConstants.SEROLOGIA_TABLE , cv, MainDBConstants.participante + "='"
+                + serologia.getParticipante() + "' and " + MainDBConstants.fecha + " = " + serologia.getFecha().getTime(), null) > 0;
+    }
+
+    //Limpiar la tabla de recepcion serologia laboratoriode la base de datos
+    public boolean borrarSerologias() {
+        return mDb.delete(MainDBConstants.SEROLOGIA_TABLE, null, null) > 0;
+    }
+    //Obtener un serologia de la base de datos
+    public Serologia getSerologia(String filtro, String orden) throws SQLException {
+        Serologia mRecepcion = null;
+        Cursor cursor = crearCursor(MainDBConstants.SEROLOGIA_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mRecepcion= SerologiaHelper.crearSerologiaLab(cursor);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mRecepcion;
+    }
+    //Obtener una lista de recepciones serologia laboratorio de la base de datos
+    public List<Serologia> getSerologias(String filtro, String orden) throws SQLException {
+        List<Serologia> mRecepciones = new ArrayList<Serologia>();
+        Cursor cursor = crearCursor(MainDBConstants.SEROLOGIA_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mRecepciones.clear();
+            do{
+                Serologia mRecepcion = null;
+                mRecepcion = SerologiaHelper.crearSerologiaLab(cursor);
+                mRecepciones.add(mRecepcion);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mRecepciones;
+    }
+
+    /**
+     * Busca una Serogolia de la base de datos
+     *
+     * @return boolean
+     */
+
+    public boolean serologiaRegistrada(String filtro) throws SQLException {
+        boolean registrada;
+        Cursor cursor = crearCursor(MainDBConstants.SEROLOGIA_TABLE, filtro, null, null);
+        registrada = cursor != null && cursor.getCount() > 0;
+        if (!cursor.isClosed()) cursor.close();
+        return registrada;
+    }
+
+    /**
+     * Metodos para RazonNoData en la base de datos
+     *
+     * @param razonNoData
+     *            Objeto RazonNoDatas que contiene la informacion
+     *
+     */
+    //Crear nuevo RazonNoDatas en la base de datos
+    public void crearRazonNoDatas(RazonNoData razonNoData) {
+        ContentValues cv = RazonNoDataHelper.crearRazonNoDataContentValues(razonNoData);
+        mDb.insertOrThrow(MainDBConstants.RAZON_NODATA_TABLE, null, cv);
+    }
+    //Editar RazonNoDatas existente en la base de datos
+    public boolean editarRazonNoDatas(RazonNoData razonNoData) {
+        ContentValues cv = RazonNoDataHelper.crearRazonNoDataContentValues(razonNoData);
+        return mDb.update(MainDBConstants.RAZON_NODATA_TABLE, cv, MainDBConstants.codigo + "='"
+                + razonNoData.getCodigoParticipante() + "' and "+ MainDBConstants.recordDate + " = " + razonNoData.getRecordDate().getTime() , null) > 0;
+    }
+    //Limpiar la tabla de RazonNoDatas de la base de datos
+    public boolean borrarRazonNoDatas() {
+        return mDb.delete(MainDBConstants.RAZON_NODATA_TABLE, null, null) > 0;
+    }
+    //Limpiar la tabla de RazonNoDatas Transmision de la base de datos
+    /*public boolean borrarRazonNoDatasTx() {
+        return mDb.delete(MainDBConstants.RAZON_NODATA_TABLE, MainDBConstants.proposito + "='3'" , null) > 0;
+    }*/
+    //Obtener una RazonNoData de la base de datos
+    public RazonNoData getRazonNoData(String filtro, String orden) throws SQLException {
+        RazonNoData mRazonNoDatas = null;
+        Cursor cursor = crearCursor(MainDBConstants.RAZON_NODATA_TABLE , filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mRazonNoDatas=RazonNoDataHelper.crearRazonNoData(cursor);
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mRazonNoDatas;
+    }
+    //Obtener una lista de RazonNoDatas de la base de datos
+    public List<RazonNoData> getRazonNoDatas(String filtro, String orden) throws SQLException {
+        List<RazonNoData> mRazonNoDatas = new ArrayList<RazonNoData>();
+        Cursor cursor = crearCursor(MainDBConstants.RAZON_NODATA_TABLE, filtro, null, orden);
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            mRazonNoDatas.clear();
+            do{
+                RazonNoData mRazonNoData = null;
+                mRazonNoData = RazonNoDataHelper.crearRazonNoData(cursor);
+                mRazonNoDatas.add(mRazonNoData);
+            } while (cursor.moveToNext());
+        }
+        if (!cursor.isClosed()) cursor.close();
+        return mRazonNoDatas;
+    }
 
     public boolean bulkInsertMessageResourceBySql(List<MessageResource> list) throws Exception {
         if (null == list || list.size() <= 0) {
@@ -1558,6 +1683,12 @@ public class EstudioDBAdapter {
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
         c = crearCursor(MainDBConstants.RECEPCION_MUESTRA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.SEROLOGIA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.RAZON_NODATA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
         return false;
