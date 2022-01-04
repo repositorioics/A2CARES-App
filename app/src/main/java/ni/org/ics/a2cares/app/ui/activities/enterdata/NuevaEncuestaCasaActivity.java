@@ -737,7 +737,6 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             //Guarda las respuestas en un bundle
             Map<String, String> mapa = mWizardModel.getAnswers();
             Bundle datos = new Bundle();
-            DateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             for (Map.Entry<String, String> entry : mapa.entrySet()) {
                 datos.putString(entry.getKey(), entry.getValue());
             }

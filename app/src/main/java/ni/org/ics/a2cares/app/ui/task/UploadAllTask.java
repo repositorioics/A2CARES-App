@@ -23,6 +23,7 @@ import ni.org.ics.a2cares.app.domain.core.CartaConsentimiento;
 import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
 import ni.org.ics.a2cares.app.domain.core.Muestra;
+import ni.org.ics.a2cares.app.domain.core.ObsequioGeneral;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
 import ni.org.ics.a2cares.app.domain.core.RazonNoData;
@@ -65,6 +66,7 @@ public class UploadAllTask extends UploadTask {
     private List<Serologia> mSerologiasLab = new ArrayList<Serologia>();
     private List<RazonNoData> mNoData = new ArrayList<RazonNoData>();
     private List<PuntoCandidato> mPuntos = new ArrayList<PuntoCandidato>();
+    private List<ObsequioGeneral> mObsequiosGeneral = new ArrayList<ObsequioGeneral>();
 
 	private String url = null;
 	private String username = null;
@@ -88,8 +90,9 @@ public class UploadAllTask extends UploadTask {
     public static final String RECEPCION_SERO_LAB = "14";
     public static final String RAZON_NO_DATA = "15";
     public static final String PUNTO_DESCARTADO = "16";
+    public static final String OBSEQUIOS = "17";
 
-	private static final String TOTAL_TASK = "16";
+	private static final String TOTAL_TASK = "17";
 	
 
 	@Override
@@ -119,6 +122,7 @@ public class UploadAllTask extends UploadTask {
             mSerologiasLab = estudioAdapter.getSerologias(filtro, null);
             mNoData = estudioAdapter.getRazonNoDatas(filtro, null);
             mPuntos = estudioAdapter.getPuntoCandidatos(filtro, null);
+            mObsequiosGeneral = estudioAdapter.getObsequiosGenerales(filtro, null);
 
 			publishProgress("Datos completos!", "2", "2");
 			
@@ -217,6 +221,12 @@ public class UploadAllTask extends UploadTask {
             error = cargarPuntosDescartados(url, username, password);
             if (!error.matches(Constants.DATOS_RECIBIDOS)){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RAZON_NO_DATA);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, OBSEQUIOS);
+            error = cargarObsequioGeneral(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, OBSEQUIOS);
                 return error;
             }
 		} catch (Exception e1) {
@@ -403,6 +413,21 @@ public class UploadAllTask extends UploadTask {
                     estudioAdapter.editarPuntoCandidato(puntoCandidato);
                     publishProgress("Actualizando puntos descartados en base de datos local", Integer.valueOf(mPuntos.indexOf(puntoCandidato)).toString(), Integer
                             .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(OBSEQUIOS)){
+            c = mObsequiosGeneral.size();
+            if(c>0){
+                for (ObsequioGeneral obsequio : mObsequiosGeneral) {
+                    obsequio.setEstado(estado);
+                    try {
+                        estudioAdapter.editarObsequioGeneral(obsequio);
+                        publishProgress("Actualizando obsequios en base de datos local", Integer.valueOf(mObsequiosGeneral.indexOf(obsequio)).toString(), Integer
+                                .valueOf(c).toString());
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
                 }
             }
         }
@@ -953,6 +978,41 @@ public class UploadAllTask extends UploadTask {
             }
             else{
                 return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /*************** ObsequioGeneral ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarObsequioGeneral(String url, String username,
+                                           String password) throws Exception {
+        try {
+            if(mObsequiosGeneral.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando obsequios!", OBSEQUIOS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/obsequios";
+                ObsequioGeneral[] envio = mObsequiosGeneral.toArray(new ObsequioGeneral[mObsequiosGeneral.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ObsequioGeneral[]> requestEntity =
+                        new HttpEntity<ObsequioGeneral[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
             }
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

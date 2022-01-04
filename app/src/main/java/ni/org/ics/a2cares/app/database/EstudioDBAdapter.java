@@ -24,6 +24,7 @@ import ni.org.ics.a2cares.app.database.helpers.EncuestaPesoTallaHelper;
 import ni.org.ics.a2cares.app.database.helpers.EstudiosHelper;
 import ni.org.ics.a2cares.app.database.helpers.MessageResourceHelper;
 import ni.org.ics.a2cares.app.database.helpers.MuestraHelper;
+import ni.org.ics.a2cares.app.database.helpers.ObsequioHelper;
 import ni.org.ics.a2cares.app.database.helpers.ParticipanteHelper;
 import ni.org.ics.a2cares.app.database.helpers.PuntoCandidatoHelper;
 import ni.org.ics.a2cares.app.database.helpers.RazonNoDataHelper;
@@ -39,6 +40,7 @@ import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
 import ni.org.ics.a2cares.app.domain.core.Estudio;
 import ni.org.ics.a2cares.app.domain.core.Muestra;
+import ni.org.ics.a2cares.app.domain.core.ObsequioGeneral;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
 import ni.org.ics.a2cares.app.domain.core.RazonNoData;
@@ -109,6 +111,7 @@ public class EstudioDBAdapter {
             db.execSQL(MainDBConstants.CREATE_SEROLOGIA_TABLE);
             db.execSQL(MainDBConstants.CREATE_RAZON_NODATA_TABLE);
             db.execSQL(MainDBConstants.CREATE_PUNTOS_CANDIDATOS_TABLE);
+            db.execSQL(MainDBConstants.CREATE_OBSEQUIOS_TABLE);
         }
 
         @Override
@@ -1459,6 +1462,57 @@ public class EstudioDBAdapter {
         return mPuntoCandidatos;
     }
 
+    /**
+     * Metodos para entrega de obsequios
+     *
+     * @param obsequioGeneral
+     *            Objeto ObsequioGeneral que contiene la informacion
+     *
+     */
+    //Crear nuevo ObsequioGeneral en la base de datos
+    public void crearObsequioGeneral(ObsequioGeneral obsequioGeneral) {
+        ContentValues cv = ObsequioHelper.crearObsequioContentValues(obsequioGeneral);
+        mDb.insertOrThrow(MainDBConstants.OBSEQUIOS_TABLE, null, cv);
+    }
+    //Editar ObsequioGeneral existente en la base de datos
+    public boolean editarObsequioGeneral(ObsequioGeneral obsequioGeneral) {
+        ContentValues cv = ObsequioHelper.crearObsequioContentValues(obsequioGeneral);
+        return mDb.update(MainDBConstants.OBSEQUIOS_TABLE , cv, MainDBConstants.id + "='"
+                + obsequioGeneral.getId()+ "'", null) > 0;
+    }
+    //Limpiar la tabla de ObsequioGeneral de la base de datos
+    public boolean borrarObsequiosGenerales() {
+        return mDb.delete(MainDBConstants.OBSEQUIOS_TABLE, null, null) > 0;
+    }
+    //Obtener un ObsequioGeneral de la base de datos
+    public ObsequioGeneral getObsequioGeneral(String filtro, String orden) throws SQLException {
+        ObsequioGeneral mObsequioGeneral = null;
+        Cursor cursorObsequio = crearCursor(MainDBConstants.OBSEQUIOS_TABLE , filtro, null, orden);
+        if (cursorObsequio != null && cursorObsequio.getCount() > 0) {
+            cursorObsequio.moveToFirst();
+            mObsequioGeneral= ObsequioHelper.crearObsequio(cursorObsequio);
+        }
+        if (!cursorObsequio.isClosed()) cursorObsequio.close();
+        return mObsequioGeneral;
+    }
+    //Obtener una lista de ObsequioGeneral de la base de datos
+    public List<ObsequioGeneral> getObsequiosGenerales(String filtro, String orden) throws SQLException {
+        List<ObsequioGeneral> mObsequios = new ArrayList<ObsequioGeneral>();
+        Cursor cursorObsequios = crearCursor(MainDBConstants.OBSEQUIOS_TABLE, filtro, null, orden);
+        if (cursorObsequios != null && cursorObsequios.getCount() > 0) {
+            cursorObsequios.moveToFirst();
+            mObsequios.clear();
+            do{
+                ObsequioGeneral mObsequioGeneral = null;
+                mObsequioGeneral = ObsequioHelper.crearObsequio(cursorObsequios);
+                mObsequios.add(mObsequioGeneral);
+            } while (cursorObsequios.moveToNext());
+        }
+        if (!cursorObsequios.isClosed()) cursorObsequios.close();
+        return mObsequios;
+    }
+
+
     public boolean bulkInsertMessageResourceBySql(List<MessageResource> list) throws Exception {
         if (null == list || list.size() <= 0) {
             return false;
@@ -1760,6 +1814,9 @@ public class EstudioDBAdapter {
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
         c = crearCursor(MainDBConstants.PUNTOS_CANDIDATOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.OBSEQUIOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
         return false;

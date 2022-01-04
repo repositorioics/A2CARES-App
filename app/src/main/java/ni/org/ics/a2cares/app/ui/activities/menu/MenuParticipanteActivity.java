@@ -33,6 +33,7 @@ import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaPesoTallaActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaVisitaTerrenoActivity;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoObsequioActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.RazonNoDataActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaMuestrasParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.adapters.MenuParticipanteAdapter;
@@ -50,6 +51,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private boolean pendienteEncuestaCasa = false;
     private boolean pendienteEncuestaPeso = false;
     private boolean pendienteMuestras = false;
+    private boolean pendienteObseq = false;
     private boolean visitaExitosa = false;
 
     //private final int OPCION_CONSULTA = 0;
@@ -61,7 +63,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     //private final int OPCION_ENCUESTA_LACTANCIA = 3;
     private final int OPCION_MUESTRAS = 4;
     //private final int OPCION_ENCUESTA_PARTICIPANTESA = 5;
-    private final int OPCION_IR_CASA = 5;
+    private final int OPCION_OBSEQUIO = 5;
+    private final int OPCION_IR_CASA = 6;
 
     private static final int EXIT = 1;
 
@@ -109,6 +112,9 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         break;
                     case OPCION_MUESTRAS:
                         tituloEncuesta = getString(R.string.samples);
+                        break;
+                    case OPCION_OBSEQUIO:
+                        tituloEncuesta = getString(R.string.gift);
                         break;
                     case OPCION_IR_CASA:
                         tituloEncuesta = getString(R.string.go_home);
@@ -406,6 +412,16 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         startActivity(i);
                         finish();
                         break;
+                    case OPCION_OBSEQUIO:
+                        arguments.putSerializable(Constants.PARTICIPANTE, participante);
+                        i = new Intent(getApplicationContext(),
+                                NuevoObsequioActivity.class);
+                        i.putExtra(Constants.VISITA_EXITOSA, visitaExitosa);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        finish();
+                        break;
                     case OPCION_IR_CASA:
                         arguments.putSerializable(Constants.CASA, participante.getCasa());
                         i = new Intent(getApplicationContext(),
@@ -468,6 +484,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                 pendienteEncuestaParticip = participante.getProcesos().getPendienteEncPart().equalsIgnoreCase(Constants.YESKEYSND);
                 pendienteEncuestaPeso = participante.getProcesos().getPendientePyT().equalsIgnoreCase(Constants.YESKEYSND);
                 pendienteMuestras = participante.getProcesos().getPendienteMxMA().equalsIgnoreCase(Constants.YESKEYSND);
+                pendienteObseq = participante.getProcesos().getPendienteObseq().equalsIgnoreCase(Constants.YESKEYSND);
+
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
                 return "error";
@@ -492,7 +510,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
 
             textView.setText(Html.fromHtml(header));
 
-            gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, participante, pendienteEncuestaCasa, pendienteEncuestaParticip, pendienteEncuestaPeso, pendienteMuestras, visitaExitosa));
+            gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, participante, pendienteEncuestaCasa, pendienteEncuestaParticip,
+                    pendienteEncuestaPeso, pendienteMuestras, pendienteObseq, visitaExitosa));
             dismissProgressDialog();
         }
     }

@@ -390,6 +390,7 @@ public class MainDBConstants {
     public static final String pendienteEnCasa = "pendienteEnCasa";
     public static final String pendienteMxMA = "pendienteMxMA";
     public static final String pendienteMxTx = "pendienteMxTx";
+    public static final String pendienteObseq = "pendienteObseq";
 
     //Crear tabla participantes
     public static final String CREATE_PARTICIPANTE_PROC_TALBE = "create table if not exists "
@@ -401,6 +402,7 @@ public class MainDBConstants {
             + pendienteEnCasa + " text, "
             + pendienteMxMA + " text, "
             + pendienteMxTx + " text, "
+            + pendienteObseq + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
@@ -416,12 +418,13 @@ public class MainDBConstants {
             + pendienteEnCasa + ","
             + pendienteMxMA + ","
             + pendienteMxTx + ","
+            + pendienteObseq + ","
             + recordDate + ","
             + recordUser + ","
             + pasive + ","
             + deviceId + ","
             + estado
-            + ") " + "values(?,?,?,?,?,?,?,?,?,?,?,?)";
+            + ") " + "values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     // Tabla Tamizaje
     public static final String TAMIZAJE_TABLE = "tamizajes";
@@ -801,4 +804,29 @@ public class MainDBConstants {
             + deviceId + ","
             + estado
             + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    public static final String seguimiento="seguimiento";
+    public static final String numVisitaSeguimiento="numVisitaSeguimiento";
+    public static final String entregoObsequio="entregoObsequio";
+    public static final String personaRecibe="personaRecibe";
+
+    public static final String OBSEQUIOS_TABLE = "obsequios";
+
+    public static final String CREATE_OBSEQUIOS_TABLE = "create table if not exists "
+            + OBSEQUIOS_TABLE + " ("
+            + id + " text not null, "
+            + participante + " text, "
+            + casa + " text, "
+            + motivo + " text, "
+            + entregoObsequio + " text, "
+            + personaRecibe + " text, "
+            + observacion + " text, "
+            + seguimiento + " text, "
+            + numVisitaSeguimiento + " text, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + id + "));";
 }

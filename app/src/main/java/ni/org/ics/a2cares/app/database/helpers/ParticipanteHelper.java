@@ -121,6 +121,7 @@ public class ParticipanteHelper extends BindStatementHelper {
         procesos.setPendienteMxMA(cursor.getString(cursor.getColumnIndex(MainDBConstants.pendienteMxMA)));
         procesos.setPendienteMxTx(cursor.getString(cursor.getColumnIndex(MainDBConstants.pendienteMxTx)));
         procesos.setRetirado(cursor.getInt(cursor.getColumnIndex(MainDBConstants.retirado)));
+        procesos.setPendienteObseq(cursor.getString(cursor.getColumnIndex(MainDBConstants.pendienteObseq)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) procesos.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         procesos.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
@@ -147,6 +148,7 @@ public class ParticipanteHelper extends BindStatementHelper {
         cv.put(MainDBConstants.pendienteMxMA, participante.getPendienteMxMA());
         cv.put(MainDBConstants.pendienteMxTx, participante.getPendienteMxTx());
         cv.put(MainDBConstants.retirado, participante.getRetirado());
+        cv.put(MainDBConstants.pendienteObseq, participante.getPendienteObseq());
 
         if (participante.getRecordDate() != null) cv.put(MainDBConstants.recordDate, participante.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, participante.getRecordUser());
@@ -164,12 +166,13 @@ public class ParticipanteHelper extends BindStatementHelper {
         bindString(stat, 5, participante.getPendienteEnCasa());//if (participante.getApellido2() != null) stat.bindString(5, participante.getApellido2());
         bindString(stat,6, participante.getPendienteMxMA());
         bindString(stat,7, participante.getPendienteMxTx());
+        bindString(stat,8, participante.getPendienteObseq());
 
-        stat.bindLong(8, participante.getRecordDate().getTime());
-        bindString(stat,9, participante.getRecordUser());
-        stat.bindString(10, String.valueOf(participante.getPasive()));
-        bindString(stat,11, participante.getDeviceid());
-        stat.bindString(12, String.valueOf(participante.getEstado()));
+        stat.bindLong(9, participante.getRecordDate().getTime());
+        bindString(stat,10, participante.getRecordUser());
+        stat.bindString(11, String.valueOf(participante.getPasive()));
+        bindString(stat,12, participante.getDeviceid());
+        stat.bindString(13, String.valueOf(participante.getEstado()));
     }
 
 }

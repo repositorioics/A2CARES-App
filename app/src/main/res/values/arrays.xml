@@ -19,6 +19,7 @@
         <item>@string/new_survey_2</item>
         <item>@string/new_survey_3</item>
         <item>@string/samples</item>
+        <item>@string/gift</item>
         <item>@string/go_home</item>
     </string-array>
 

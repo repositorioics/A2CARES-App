@@ -16,6 +16,7 @@ public class ParticipanteProcesos extends BaseMetaData implements Serializable {
     private String pendienteEnCasa;
     private String pendienteMxMA;
     private String pendienteMxTx;
+    private String pendienteObseq;
 
     public String getCodigo() {
         return codigo;
@@ -71,5 +72,13 @@ public class ParticipanteProcesos extends BaseMetaData implements Serializable {
 
     public void setPendienteMxTx(String pendienteMxTx) {
         this.pendienteMxTx = pendienteMxTx;
+    }
+
+    public String getPendienteObseq() {
+        return pendienteObseq;
+    }
+
+    public void setPendienteObseq(String pendienteObseq) {
+        this.pendienteObseq = pendienteObseq;
     }
 }

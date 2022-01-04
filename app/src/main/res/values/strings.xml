@@ -191,4 +191,10 @@
     <string name="discard">Descartar</string>
     <string name="locate_point">Ubicar en Mapa</string>
     <string name="reason_discard">Por favor ingrese porque razón se descarta el punto <xliff:g id="variable">%1$s</xliff:g></string>
+
+    <!-- Obsequio -->
+    <string name="gift">Obsequio</string>
+    <string name="entregoObsequio">¿Entregó Obsequio?</string>
+    <string name="personaRecibe">Nombre de la persona que recibe el obsequio</string>
+    <string name="observacion">Observación</string>
 </resources>
