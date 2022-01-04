@@ -39,6 +39,7 @@ public class Constants {
     public static final String PARTICIPANTE = "participante";
     public static final String CASA = "casa";
     public static final String NUEVO_INGRESO = "nuevo_ngreso";
+    public static final String PUNTO_GPS = "punto_gps";
 
     public static final String VISITA_EXITOSA = "visita_exitosa";
     public static final String COD_PARTICIPANTE = "codigo_participante";

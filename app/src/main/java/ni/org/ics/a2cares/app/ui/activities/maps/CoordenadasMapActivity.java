@@ -58,6 +58,7 @@ import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.puntos.PuntoCandidato;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuParticipanteActivity;
@@ -86,6 +87,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
 
     private static Participante mParticipante = new Participante();
     private static Casa mCasa = null;
+    private static PuntoCandidato mPunto = null;
 
     private GoogleMap mGoogleMap;
 
@@ -119,6 +121,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
         estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(),mPass,false,false);
         mParticipante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         mCasa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);
+        mPunto = (PuntoCandidato) getIntent().getExtras().getSerializable(Constants.PUNTO_GPS);
         visExitosa = getIntent().getBooleanExtra(Constants.VISITA_EXITOSA,false);
 
         codigoParticipante = getIntent().getStringExtra(Constants.COD_PARTICIPANTE);
@@ -132,7 +135,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
                 createDialog(SAVE);
             }
         });
-        if (mCasa != null) {
+        if (mCasa != null || mPunto != null) {
             mButtonSave.setVisibility(View.GONE);
         }
         new CoordenadaActualTask().execute();
@@ -266,6 +269,8 @@ public class CoordenadasMapActivity extends AppCompatActivity
                 && mParticipante.getCasa().getLatitud() != null && mParticipante.getCasa().getLongitud() != null
                 && mParticipante.getCasa().getLatitud() > 0) {
             setHouseLocation(mParticipante.getCasa());
+        } else if (mPunto != null) {
+            setPointLocation(mPunto);
         } else {
             requestLocation();
         }
@@ -374,12 +379,27 @@ public class CoordenadasMapActivity extends AppCompatActivity
                 marker.getPosition().longitude);
         inputLatlong.setText(position);
     }
+
     private void setHouseLocation(Casa casa){
         //Si el participante tiene coordenadas, ponerlo en el mapa
         LatLng puntoCasa = new LatLng(casa.getLatitud(), casa.getLongitud());
         mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
                 .position(puntoCasa)
                 .title("Ubicacion casa")
+                .draggable(true)
+        );
+        setLocationOnInputLatLong(mLocationMarker);
+        //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(12.154, -86.290), 15.0f));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(puntoCasa, 15));
+        mGoogleMap.setMyLocationEnabled(true);
+    }
+
+    private void setPointLocation(PuntoCandidato puntoCandidato){
+        //Si el participante tiene coordenadas, ponerlo en el mapa
+        LatLng puntoCasa = new LatLng(puntoCandidato.getLatitud(), puntoCandidato.getLongitud());
+        mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
+                .position(puntoCasa)
+                .title("Ubicacion punto candidato")
                 .draggable(true)
         );
         setLocationOnInputLatLong(mLocationMarker);
@@ -442,6 +462,8 @@ public class CoordenadasMapActivity extends AppCompatActivity
                             i.putExtra(Constants.VISITA_EXITOSA, visExitosa);
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
+                            finish();
+                        } else if (mPunto != null) {
                             finish();
                         } else if (codigoParticipante!=null){
                             Intent intent1 = new Intent();

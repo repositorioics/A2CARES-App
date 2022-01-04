@@ -759,13 +759,24 @@ public class MainDBConstants {
     //Tabla puntos gps candidatos para ingresos
     public static final String PUNTOS_CANDIDATOS_TABLE = "puntos_candidatos";
 
+    public static final String descartado = "descartado";
+    public static final String razonDescarte = "razonDescarte";
+    public static final String otraRazonDescarte = "otraRazonDescarte";
+    public static final String fechaDescarte = "fechaDescarte";
+    public static final String usuarioDescarte = "usuarioDescarte";
+
     //Crear tabla untos gps candidatos para ingresos
     public static final String CREATE_PUNTOS_CANDIDATOS_TABLE = "create table if not exists "
             + PUNTOS_CANDIDATOS_TABLE + " ("
-            + codigo + " text not null, "
-            + barrio + " text not null, "
-            + latitud + " date not null, "
-            + longitud + " real null, "
+            + codigo + " integer not null, "
+            + barrio + " text, "
+            + latitud + " real not null, "
+            + longitud + " real not null, "
+            + descartado + " text, "
+            + razonDescarte + " text, "
+            + otraRazonDescarte + " text, "
+            + fechaDescarte + " date, "
+            + usuarioDescarte + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
@@ -779,44 +790,15 @@ public class MainDBConstants {
             + barrio + ","
             + latitud + ","
             + longitud + ","
+            + descartado + ", "
+            + razonDescarte + ", "
+            + otraRazonDescarte + ", "
+            + fechaDescarte + ", "
+            + usuarioDescarte + ", "
             + recordDate + ","
             + recordUser + ","
             + pasive + ","
             + deviceId + ","
             + estado
-            + ") values (?,?,?,?,?,?,?,?,?)";
-
-    //Tabla puntos gps descartados para ingresos
-    public static final String PUNTOS_DESCARTADOS_TABLE = "puntos_descartados";
-
-    //campos tabla puntos gps descartados para ingresos
-    public static final String codigoCandidato  = "codigoCandidato";
-    public static final String otroMotivo  = "otroMotivo";
-
-    //Crear tabla puntos gps descartados para ingresos
-    public static final String CREATE_PUNTOS_DESCARTADOS_TABLE = "create table if not exists "
-            + PUNTOS_DESCARTADOS_TABLE + " ("
-            + codigo + " text not null, "
-            + codigoCandidato + " text not null, "
-            + motivo + " text not null, "
-            + otroMotivo + " text not null, "
-            + recordDate + " date, "
-            + recordUser + " text, "
-            + pasive + " text, "
-            + deviceId + " text, "
-            + estado + " text not null, "
-            + "primary key (" + codigo +"));";
-
-    public static final String INSERT_PUNTOS_DESCARTADOS_TABLE = "insert into "
-            + PUNTOS_DESCARTADOS_TABLE + " ("
-            + codigo + ","
-            + codigoCandidato + ","
-            + motivo + ","
-            + otroMotivo + ","
-            + recordDate + ","
-            + recordUser + ","
-            + pasive + ","
-            + deviceId + ","
-            + estado
-            + ") values (?,?,?,?,?,?,?,?,?)";
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 }

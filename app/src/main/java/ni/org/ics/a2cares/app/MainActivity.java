@@ -36,6 +36,7 @@ import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.activities.BuscarCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.BuscarParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoTamizajeActivity;
+import ni.org.ics.a2cares.app.ui.activities.list.ListaPuntosCandidatosActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuLaboratorioActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuSupervisorActivity;
 import ni.org.ics.a2cares.app.ui.activities.server.DownloadBaseActivity;
@@ -151,6 +152,10 @@ public class MainActivity extends AbstractAsyncActivity {
                         else{
                             showToast(getApplicationContext().getString(R.string.perm_error));
                         }
+                        break;
+                    case 8:
+                            i = new Intent(getApplicationContext(), ListaPuntosCandidatosActivity.class);
+                            startActivity(i);
                         break;
                     default:
                         break;
@@ -275,15 +280,6 @@ public class MainActivity extends AbstractAsyncActivity {
                 builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                       /* estudiosAdapter.open();
-                        boolean hayDatos = estudiosAdapter.verificarData();
-                        estudiosAdapter.close();
-                        if (hayDatos) {
-                            createDialog(VERIFY);
-                        } else {
-                            Intent ie = new Intent(getApplicationContext(), DownloadBaseActivity.class);
-                            startActivityForResult(ie, UPDATE_EQUIPO);
-                        }*/
                         new DownLoadTask().execute();
                     }
                 });
@@ -379,6 +375,7 @@ public class MainActivity extends AbstractAsyncActivity {
 
         @Override
         protected void onCancelled() {
-            dismissProgressDialog();        }
+            dismissProgressDialog();
+        }
     }
 }

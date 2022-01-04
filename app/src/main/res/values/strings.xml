@@ -185,4 +185,10 @@
     <string name="header_pending_data">Por favor ingrese porque razón no ingreso la información debida.</string>
     <string name="orazon_pending_data">Otra razón..</string>
 
+    <!--puntos candidatos-->
+    <string name="candidatePoints">Lista Puntos GPS Candidatos</string>
+    <string name="candidatePointsContextMenuTitle">Seleccione una acción en punto <xliff:g id="variable">%1$s</xliff:g></string>
+    <string name="discard">Descartar</string>
+    <string name="locate_point">Ubicar en Mapa</string>
+    <string name="reason_discard">Por favor ingrese porque razón se descarta el punto <xliff:g id="variable">%1$s</xliff:g></string>
 </resources>

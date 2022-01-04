@@ -25,6 +25,7 @@ import ni.org.ics.a2cares.app.database.helpers.EstudiosHelper;
 import ni.org.ics.a2cares.app.database.helpers.MessageResourceHelper;
 import ni.org.ics.a2cares.app.database.helpers.MuestraHelper;
 import ni.org.ics.a2cares.app.database.helpers.ParticipanteHelper;
+import ni.org.ics.a2cares.app.database.helpers.PuntoCandidatoHelper;
 import ni.org.ics.a2cares.app.database.helpers.RazonNoDataHelper;
 import ni.org.ics.a2cares.app.database.helpers.RecepcionMuestraHelper;
 import ni.org.ics.a2cares.app.database.helpers.SerologiaHelper;
@@ -45,6 +46,7 @@ import ni.org.ics.a2cares.app.domain.core.Tamizaje;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
 import ni.org.ics.a2cares.app.domain.laboratorio.Serologia;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
+import ni.org.ics.a2cares.app.domain.puntos.PuntoCandidato;
 import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaParticipante;
@@ -106,6 +108,7 @@ public class EstudioDBAdapter {
             db.execSQL(MainDBConstants.CREATE_PARTICIPANTE_PROC_TALBE);
             db.execSQL(MainDBConstants.CREATE_SEROLOGIA_TABLE);
             db.execSQL(MainDBConstants.CREATE_RAZON_NODATA_TABLE);
+            db.execSQL(MainDBConstants.CREATE_PUNTOS_CANDIDATOS_TABLE);
         }
 
         @Override
@@ -1406,6 +1409,56 @@ public class EstudioDBAdapter {
         return mRazonNoDatas;
     }
 
+    /**
+     * Metodos para puntoCandidatos en la base de datos
+     *
+     * @param puntoCandidato
+     *            Objeto PuntoCandidato que contiene la informacion
+     *
+     */
+    //Crear nuevo puntoCandidato en la base de datos
+    public void crearPuntoCandidato(PuntoCandidato puntoCandidato) {
+        ContentValues cv = PuntoCandidatoHelper.crearPuntosCandidatosContenValues(puntoCandidato);
+        mDb.insertOrThrow(MainDBConstants.PUNTOS_CANDIDATOS_TABLE, null, cv);
+    }
+    //Editar puntoCandidato existente en la base de datos
+    public boolean editarPuntoCandidato(PuntoCandidato puntoCandidato) {
+        ContentValues cv = PuntoCandidatoHelper.crearPuntosCandidatosContenValues(puntoCandidato);
+        return mDb.update(MainDBConstants.PUNTOS_CANDIDATOS_TABLE , cv, MainDBConstants.codigo + "='"
+                + puntoCandidato.getCodigo() + "'", null) > 0;
+    }
+    //Limpiar la tabla de puntoCandidatos de la base de datos
+    public boolean borrarPuntoCandidatos() {
+        return mDb.delete(MainDBConstants.PUNTOS_CANDIDATOS_TABLE, null, null) > 0;
+    }
+    //Obtener un puntoCandidato de la base de datos
+    public PuntoCandidato getPuntoCandidato(String filtro, String orden) throws SQLException {
+        PuntoCandidato mPuntoCandidato = null;
+        Cursor cursorPuntoCandidato = crearCursor(MainDBConstants.PUNTOS_CANDIDATOS_TABLE , filtro, null, orden);
+        if (cursorPuntoCandidato != null && cursorPuntoCandidato.getCount() > 0) {
+            cursorPuntoCandidato.moveToFirst();
+            mPuntoCandidato=PuntoCandidatoHelper.crearPuntoCandidato(cursorPuntoCandidato);
+        }
+        if (!cursorPuntoCandidato.isClosed()) cursorPuntoCandidato.close();
+        return mPuntoCandidato;
+    }
+    //Obtener una lista de puntoCandidatos de la base de datos
+    public List<PuntoCandidato> getPuntoCandidatos(String filtro, String orden) throws SQLException {
+        List<PuntoCandidato> mPuntoCandidatos = new ArrayList<PuntoCandidato>();
+        Cursor cursorPuntoCandidatos = crearCursor(MainDBConstants.PUNTOS_CANDIDATOS_TABLE, filtro, null, orden);
+        if (cursorPuntoCandidatos != null && cursorPuntoCandidatos.getCount() > 0) {
+            cursorPuntoCandidatos.moveToFirst();
+            mPuntoCandidatos.clear();
+            do{
+                PuntoCandidato mPuntoCandidato = null;
+                mPuntoCandidato = PuntoCandidatoHelper.crearPuntoCandidato(cursorPuntoCandidatos);
+                mPuntoCandidatos.add(mPuntoCandidato);
+            } while (cursorPuntoCandidatos.moveToNext());
+        }
+        if (!cursorPuntoCandidatos.isClosed()) cursorPuntoCandidatos.close();
+        return mPuntoCandidatos;
+    }
+
     public boolean bulkInsertMessageResourceBySql(List<MessageResource> list) throws Exception {
         if (null == list || list.size() <= 0) {
             return false;
@@ -1420,58 +1473,6 @@ public class EstudioDBAdapter {
                 long result = stat.executeInsert();
                 if (result < 0) return false;
             }
-            mDb.setTransactionSuccessful();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        } finally {
-            try {
-                if (null != mDb) {
-                    mDb.endTransaction();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return true;
-    }
-
-    public boolean bulkInsertUsuariosBySql(String tabla, List<?> list) throws Exception{
-        if (null == list || list.size() <= 0) {
-            return false;
-        }
-        try {
-            mDb.beginTransaction();
-            SQLiteStatement stat = null;
-            switch (tabla) {
-                case MainDBConstants.USER_TABLE:
-                    stat = mDb.compileStatement(MainDBConstants.INSERT_USER_TABLE);
-                    for (Object remoteAppInfo : list) {
-                        UserSistemaHelper.fillUserSistemaStatement(stat, (UserSistema) remoteAppInfo);
-                        long result = stat.executeInsert();
-                        if (result < 0) return false;
-                    }
-                    break;
-                case MainDBConstants.ROLE_TABLE:
-                    stat = mDb.compileStatement(MainDBConstants.INSERT_ROLE_TABLE);
-                    for (Object remoteAppInfo : list) {
-                        UserSistemaHelper.fillRoleStatement(stat, (Authority) remoteAppInfo);
-                        long result = stat.executeInsert();
-                        if (result < 0) return false;
-                    }
-                    break;
-                case MainDBConstants.USER_PERM_TABLE:
-                    stat = mDb.compileStatement(MainDBConstants.INSERT_USER_PERM_TABLE);
-                    for (Object remoteAppInfo : list) {
-                        UserSistemaHelper.fillUserPermissionStatement(stat, (UserPermissions) remoteAppInfo);
-                        long result = stat.executeInsert();
-                        if (result < 0) return false;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
             mDb.setTransactionSuccessful();
         } catch (Exception e) {
             e.printStackTrace();
@@ -1544,17 +1545,112 @@ public class EstudioDBAdapter {
         return true;
     }
 
-    public boolean bulkInsertCasasBySql(List<Casa> list) throws Exception{
+    public boolean bulkInsertPuntosCandidatosBySql(List<PuntoCandidato> list) throws Exception {
         if (null == list || list.size() <= 0) {
             return false;
         }
         try {
-            SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_CASA_TABLE);
+            SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_PUNTOS_CANDIDATOS_TABLE);
             mDb.beginTransaction();
-            for (Casa remoteAppInfo : list) {
-                CasaHelper.fillCasaStatement(stat, remoteAppInfo);
+            for (PuntoCandidato remoteAppInfo : list) {
+                PuntoCandidatoHelper.fillPuntoCandidatoStatement(stat, remoteAppInfo);
                 long result = stat.executeInsert();
                 if (result < 0) return false;
+            }
+            mDb.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                if (null != mDb) {
+                    mDb.endTransaction();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    public boolean bulkInsertUsuariosBySql(String tabla, List<?> list) throws Exception{
+        if (null == list || list.size() <= 0) {
+            return false;
+        }
+        try {
+            mDb.beginTransaction();
+            SQLiteStatement stat = null;
+            switch (tabla) {
+                case MainDBConstants.USER_TABLE:
+                    stat = mDb.compileStatement(MainDBConstants.INSERT_USER_TABLE);
+                    for (Object remoteAppInfo : list) {
+                        UserSistemaHelper.fillUserSistemaStatement(stat, (UserSistema) remoteAppInfo);
+                        long result = stat.executeInsert();
+                        if (result < 0) return false;
+                    }
+                    break;
+                case MainDBConstants.ROLE_TABLE:
+                    stat = mDb.compileStatement(MainDBConstants.INSERT_ROLE_TABLE);
+                    for (Object remoteAppInfo : list) {
+                        UserSistemaHelper.fillRoleStatement(stat, (Authority) remoteAppInfo);
+                        long result = stat.executeInsert();
+                        if (result < 0) return false;
+                    }
+                    break;
+                case MainDBConstants.USER_PERM_TABLE:
+                    stat = mDb.compileStatement(MainDBConstants.INSERT_USER_PERM_TABLE);
+                    for (Object remoteAppInfo : list) {
+                        UserSistemaHelper.fillUserPermissionStatement(stat, (UserPermissions) remoteAppInfo);
+                        long result = stat.executeInsert();
+                        if (result < 0) return false;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            mDb.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                if (null != mDb) {
+                    mDb.endTransaction();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    public boolean bulkInsertCasasBySql(String tabla, List<?> list) throws Exception{
+        if (null == list || list.size() <= 0) {
+            return false;
+        }
+        try {
+            SQLiteStatement stat = null;
+            mDb.beginTransaction();
+            switch (tabla) {
+                case MainDBConstants.CASA_TABLE:
+                    stat = mDb.compileStatement(MainDBConstants.INSERT_CASA_TABLE);
+                    for (Object remoteAppInfo : list) {
+                        CasaHelper.fillCasaStatement(stat, (Casa) remoteAppInfo);
+                        long result = stat.executeInsert();
+                        if (result < 0) return false;
+                    }
+
+                    break;
+                case MainDBConstants.TELEFONO_CONTACTO_TABLE:
+                    stat = mDb.compileStatement(MainDBConstants.INSERT_TELEFONO_CONTACTO_TABLE);
+                    for (Object remoteAppInfo : list) {
+                        TelefonoContactoHelper.fillTelefContactoStatement(stat, (TelefonoContacto) remoteAppInfo);
+                        long result = stat.executeInsert();
+                        if (result < 0) return false;
+                    }
+                    break;
+                default: break;
             }
             mDb.setTransactionSuccessful();
         } catch (Exception e) {
@@ -1598,34 +1694,6 @@ public class EstudioDBAdapter {
                     break;
                 default:
                     break;
-            }
-            mDb.setTransactionSuccessful();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        } finally {
-            try {
-                if (null != mDb) {
-                    mDb.endTransaction();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return true;
-    }
-
-    public boolean bulkInsertTelefonosBySql(List<TelefonoContacto> list) throws Exception{
-        if (null == list || list.size() <= 0) {
-            return false;
-        }
-        try {
-            SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_TELEFONO_CONTACTO_TABLE);
-            mDb.beginTransaction();
-            for (TelefonoContacto remoteAppInfo : list) {
-                TelefonoContactoHelper.fillTelefContactoStatement(stat, remoteAppInfo);
-                long result = stat.executeInsert();
-                if (result < 0) return false;
             }
             mDb.setTransactionSuccessful();
         } catch (Exception e) {
@@ -1689,6 +1757,9 @@ public class EstudioDBAdapter {
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
         c = crearCursor(MainDBConstants.RAZON_NODATA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.PUNTOS_CANDIDATOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
         return false;

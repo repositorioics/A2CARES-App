@@ -29,6 +29,7 @@ import ni.org.ics.a2cares.app.domain.core.RazonNoData;
 import ni.org.ics.a2cares.app.domain.core.Tamizaje;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
 import ni.org.ics.a2cares.app.domain.laboratorio.Serologia;
+import ni.org.ics.a2cares.app.domain.puntos.PuntoCandidato;
 import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaParticipante;
@@ -63,6 +64,7 @@ public class UploadAllTask extends UploadTask {
     private List<RecepcionMuestra> mRecepcionMuestras = new ArrayList<RecepcionMuestra>();
     private List<Serologia> mSerologiasLab = new ArrayList<Serologia>();
     private List<RazonNoData> mNoData = new ArrayList<RazonNoData>();
+    private List<PuntoCandidato> mPuntos = new ArrayList<PuntoCandidato>();
 
 	private String url = null;
 	private String username = null;
@@ -85,8 +87,9 @@ public class UploadAllTask extends UploadTask {
     public static final String RECEPCION_MUESTRA = "13";
     public static final String RECEPCION_SERO_LAB = "14";
     public static final String RAZON_NO_DATA = "15";
+    public static final String PUNTO_DESCARTADO = "16";
 
-	private static final String TOTAL_TASK = "15";
+	private static final String TOTAL_TASK = "16";
 	
 
 	@Override
@@ -115,6 +118,7 @@ public class UploadAllTask extends UploadTask {
             mRecepcionMuestras = estudioAdapter.getRecepcionMuestras(filtro, null);
             mSerologiasLab = estudioAdapter.getSerologias(filtro, null);
             mNoData = estudioAdapter.getRazonNoDatas(filtro, null);
+            mPuntos = estudioAdapter.getPuntoCandidatos(filtro, null);
 
 			publishProgress("Datos completos!", "2", "2");
 			
@@ -205,6 +209,12 @@ public class UploadAllTask extends UploadTask {
             }
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, RAZON_NO_DATA);
             error = cargarRazonesNoData(url, username, password);
+            if (!error.matches(Constants.DATOS_RECIBIDOS)){
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RAZON_NO_DATA);
+                return error;
+            }
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, RAZON_NO_DATA);
+            error = cargarPuntosDescartados(url, username, password);
             if (!error.matches(Constants.DATOS_RECIBIDOS)){
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RAZON_NO_DATA);
                 return error;
@@ -381,6 +391,17 @@ public class UploadAllTask extends UploadTask {
                     razonNoData.setEstado(estado);
                     estudioAdapter.editarRazonNoDatas(razonNoData);
                     publishProgress("Actualizando razones datos pendientes en base de datos local", Integer.valueOf(mNoData.indexOf(razonNoData)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(PUNTO_DESCARTADO)){
+            c = mPuntos.size();
+            if(c>0){
+                for (PuntoCandidato puntoCandidato : mPuntos) {
+                    puntoCandidato.setEstado(estado);
+                    estudioAdapter.editarPuntoCandidato(puntoCandidato);
+                    publishProgress("Actualizando puntos descartados en base de datos local", Integer.valueOf(mPuntos.indexOf(puntoCandidato)).toString(), Integer
                             .valueOf(c).toString());
                 }
             }
@@ -904,4 +925,39 @@ public class UploadAllTask extends UploadTask {
             return e.getMessage();
         }
     }
+
+    /***************************************************/
+    /**********Puntos Candidatos Descartados **********/
+    /***************************************************/
+    // url, username, password
+    protected String cargarPuntosDescartados(String url, String username,String password) throws Exception {
+        try {
+            if(mPuntos.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando puntos descartados pendientes!", PUNTO_DESCARTADO, TOTAL_TASK);
+                final String urlRequest = url + "/movil/puntosCandidatos";
+                PuntoCandidato[] envio = mPuntos.toArray(new PuntoCandidato[mPuntos.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<PuntoCandidato[]> requestEntity =
+                        new HttpEntity<PuntoCandidato[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
 }
