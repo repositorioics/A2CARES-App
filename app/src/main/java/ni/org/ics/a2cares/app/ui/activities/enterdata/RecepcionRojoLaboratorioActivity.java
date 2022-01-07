@@ -35,6 +35,7 @@ import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.laboratorio.Serologia;
+import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaRecepcionesActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaRecepcionesLaboratorioActivity;
@@ -75,6 +76,7 @@ public class RecepcionRojoLaboratorioActivity extends AbstractAsyncActivity {
     private static final String KEEP_CODIGO = "keepcodigo";
 
     private EstudioDBAdapter estudiosAdapter = null;
+
     // ***************************************
     // Activity methods
     // ***************************************

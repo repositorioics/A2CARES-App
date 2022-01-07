@@ -104,6 +104,16 @@ public class DownloadBaseTask extends DownloadTask {
         estudioAdapter.borrarTelefonoContacto();
         estudioAdapter.borrarParticipantesProcesos();
         estudioAdapter.borrarPuntoCandidatos();
+        estudioAdapter.borrarRecepcionMuestras();
+        estudioAdapter.borrarSerologias();
+        estudioAdapter.borrarMuestras();
+        estudioAdapter.borrarObsequiosGenerales();
+        estudioAdapter.borrarEncuestaCasas();
+        estudioAdapter.borrarEncuestasPesoTallas();
+        estudioAdapter.borrarEncuestasParticipantes();
+        estudioAdapter.borrarVisitasTerrenoParticipante();
+        estudioAdapter.borrarRazonNoDatas();
+        estudioAdapter.borrarDatosCoordenadas();
         try {
             if (mCatalogos != null){
                 publishProgress("Insertando catalogos", CATALOGOS, TOTAL_TASK_GENERALES);

@@ -25,6 +25,7 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +34,7 @@ import ni.org.ics.a2cares.app.MyIcsApplication;
 import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
+import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaRecepcionesActivity;
@@ -73,6 +75,7 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
     private static final String KEEP_CODIGO = "keepcodigo";
 
     private EstudioDBAdapter estudiosAdapter = null;
+    private List<MessageResource> mLugares;
     // ***************************************
     // Activity methods
     // ***************************************
@@ -235,12 +238,13 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
         });
         editObs = ((EditText) findViewById(R.id.obs));
         lugar = (Spinner) findViewById(R.id.lugar);
-        List<String> list2 = new ArrayList<String>();
-        list2.add("Seleccionar..");
-        list2.add("CS");
-        list2.add("Terreno");
-        ArrayAdapter<String> dataAdapterLugar = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, list2);
+
+        getData();
+        mLugares.add(new MessageResource("",0,this.getString(R.string.select)));
+        Collections.sort(mLugares);
+
+        ArrayAdapter<MessageResource> dataAdapterLugar = new ArrayAdapter<MessageResource>(this,
+                android.R.layout.simple_spinner_item, mLugares);
         dataAdapterLugar.setDropDownViewResource(R.layout.spinner_item);
         lugar.setAdapter(dataAdapterLugar);
 
@@ -257,7 +261,8 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
                     return;
                 }
                 observacion = editObs.getText().toString();
-                lugarText = lugar.getSelectedItem().toString();
+                MessageResource lugarSelec = (MessageResource) lugar.getSelectedItem();
+                lugarText = lugarSelec.getSpanish(); //lugar.getSelectedItem().toString();
 
                 if(validarEntrada()){
                     RecepcionMuestra recepcionMuestra = new RecepcionMuestra();
@@ -325,7 +330,7 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
         Intent i;
         switch (item.getItemId()) {
             case R.id.MENU_BACK:
-                finish();
+                createExitDialog();
                 return true;
             case R.id.MENU_HOME:
                 i = new Intent(getApplicationContext(),
@@ -389,7 +394,7 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
             showToast(this.getString( R.string.error_volumen));
             return false;
         }
-        else if (lugarText.matches("Seleccionar..")){
+        else if (lugarText.matches(this.getString(R.string.select))){
             showToast(this.getString( R.string.error_lugar));
             return false;
         }
@@ -447,6 +452,12 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
         mAlertDialog.setButton2(getString(R.string.no), uploadDialogListener);
         mAlertExitShowing = true;
         mAlertDialog.show();
+    }
+
+    private void getData() {
+        estudiosAdapter.open();
+        mLugares = estudiosAdapter.getMessageResources(MainDBConstants.catRoot + "='CAT_LUGAR_RECEP_MX'", MainDBConstants.order);
+        estudiosAdapter.close();
     }
 
 }

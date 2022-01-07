@@ -639,8 +639,8 @@ public class EstudioDBAdapter {
     //Editar Participante existente en la base de datos
     public boolean editarParticipante(Participante participante) {
         ContentValues cv = ParticipanteHelper.crearParticipanteContentValues(participante);
-        return mDb.update(MainDBConstants.PARTICIPANTE_TABLE , cv, MainDBConstants.codigo + "="
-                + participante.getCodigo(), null) > 0;
+        return mDb.update(MainDBConstants.PARTICIPANTE_TABLE , cv, MainDBConstants.codigo + "='"
+                + participante.getCodigo() + "'", null) > 0;
     }
     //Limpiar la tabla de Participante de la base de datos
     public boolean borrarParticipantes() {

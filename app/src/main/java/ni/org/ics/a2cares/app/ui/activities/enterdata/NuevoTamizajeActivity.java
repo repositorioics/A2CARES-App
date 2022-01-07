@@ -881,7 +881,6 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                         participante = new Participante();
                         String estudios = "";
                         ParticipanteProcesos procesos = new ParticipanteProcesos();
-                        String na = "NA";
                         CartaConsentimiento cc = new CartaConsentimiento();
                         cc.setRecordDate(new Date());
                         cc.setRecordUser(username);
@@ -891,20 +890,31 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                         cc.setFechaFirma(new Date());
                         if (tieneValor(nombre1Tutor)) {
                             cc.setNombre1Tutor(nombre1Tutor);
+                        } else if (edadAnios >= 18) { //si es mayor de edad, seteas los datos del propio participante como tutor
+                            cc.setNombre1Tutor(nombre1);
                         }
                         if (tieneValor(nombre2Tutor)) {
                             cc.setNombre2Tutor(nombre2Tutor);
+                        } else if (edadAnios >= 18) { //si es mayor de edad, seteas los datos del propio participante como tutor
+                            cc.setNombre2Tutor(nombre2);
                         }
                         if (tieneValor(apellido1Tutor)) {
                             cc.setApellido1Tutor(apellido1Tutor);
+                        } else if (edadAnios >= 18) { //si es mayor de edad, seteas los datos del propio participante como tutor
+                            cc.setApellido1Tutor(apellido1);
                         }
                         if (tieneValor(apellido2Tutor)) {
                             cc.setApellido2Tutor(apellido2Tutor);
+                        } else if (edadAnios >= 18) { //si es mayor de edad, seteas los datos del propio participante como tutor
+                            cc.setApellido2Tutor(apellido2);
                         }
+
                         if (tieneValor(relacionFamiliarTutor)) {
                             MessageResource catRelacionFamiliarTutor = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + relacionFamiliarTutor + "' and " + MainDBConstants.catRoot + "='CAT_RF_TUTOR'", null);
                             if (catRelacionFamiliarTutor != null)
                                 cc.setRelacionFamiliarTutor(catRelacionFamiliarTutor.getCatKey());
+                        } else if (edadAnios >= 18) { //si es mayor de edad, seteas el propio participante como tutor
+                            cc.setApellido2Tutor(Constants.REL_FAM_MISMO_PART);
                         }
 
                         if (tieneValor(participanteOTutorAlfabeto)) {
@@ -1017,10 +1027,10 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                             if (tieneValor(apellido2Padre))
                                 participante.setApellido2Padre(apellido2Padre);
                         } else {
-                            participante.setNombre1Padre(na);
-                            participante.setNombre2Padre(na);
-                            participante.setApellido1Padre(na);
-                            participante.setApellido2Padre(na);
+                            participante.setNombre1Padre(Constants.NA);
+                            participante.setNombre2Padre(Constants.NA);
+                            participante.setApellido1Padre(Constants.NA);
+                            participante.setApellido2Padre(Constants.NA);
                         }
                         if (tieneValor(nombre1Madre)) {
                             if (tieneValor(nombre1Madre))
@@ -1032,10 +1042,10 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                             if (tieneValor(apellido2Madre))
                                 participante.setApellido2Madre(apellido2Madre);
                         } else {
-                            participante.setNombre1Madre(na);
-                            participante.setNombre2Madre(na);
-                            participante.setApellido1Madre(na);
-                            participante.setApellido2Madre(na);
+                            participante.setNombre1Madre(Constants.NA);
+                            participante.setNombre2Madre(Constants.NA);
+                            participante.setApellido1Madre(Constants.NA);
+                            participante.setApellido2Madre(Constants.NA);
                         }
 
                         if (tieneValor(sexo)) {
@@ -1098,6 +1108,12 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                             procesos.setPendienteEnCasa(Constants.YESKEYSND);
                         } else {
                             procesos.setPendienteEnCasa(Constants.NOKEYSND);
+                        }
+                        List<ObsequioGeneral> mObsequios = estudiosAdapter.getObsequiosGenerales(MainDBConstants.casa + "='" + casa.getCodigo() + "'", null);
+                        if (mObsequios.size() <= 0) {
+                            procesos.setPendienteObseq(Constants.YESKEYSND);
+                        } else {
+                            procesos.setPendienteObseq(Constants.NOKEYSND);
                         }
 
                         procesos.setPendienteEncPart(Constants.YESKEYSND);

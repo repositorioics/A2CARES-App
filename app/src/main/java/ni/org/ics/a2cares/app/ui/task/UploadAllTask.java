@@ -217,10 +217,10 @@ public class UploadAllTask extends UploadTask {
                 actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RAZON_NO_DATA);
                 return error;
             }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, RAZON_NO_DATA);
+            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PUNTO_DESCARTADO);
             error = cargarPuntosDescartados(url, username, password);
             if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RAZON_NO_DATA);
+                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PUNTO_DESCARTADO);
                 return error;
             }
             actualizarBaseDatos(Constants.STATUS_SUBMITTED, OBSEQUIOS);

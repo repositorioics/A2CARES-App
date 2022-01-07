@@ -24,6 +24,7 @@ import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 import ni.org.ics.a2cares.app.AbstractAsyncActivity;
+import ni.org.ics.a2cares.app.MainActivity;
 import ni.org.ics.a2cares.app.MyIcsApplication;
 import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
@@ -131,7 +132,7 @@ public class RazonNoDataActivity extends AbstractAsyncActivity {
 					Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_LONG).show();
 					Intent i;
 					i = new Intent(getApplicationContext(),
-							BuscarParticipanteActivity.class);
+							MainActivity.class);
 					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					startActivity(i);
 					finish();
