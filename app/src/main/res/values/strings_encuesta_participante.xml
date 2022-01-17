@@ -12,7 +12,7 @@
     <string name="nombreEscuela">Nombre de la escuela</string>
     <string name="turno">Turno en el que asiste a clase</string>
     <string name="cuidan">Si el participante no va a la escuela, ¿Dónde lo cuidan?</string>
-    <string name="cuantosCuidan">¿Cuántos niños aproximadamente hay en el lugar que cuidan al participante?</string>
+    <string name="cuantosCuidan">¿Cuántos niños aproximadamente hay en el lugar dónde cuidan al participante?</string>
     <string name="nombreCDI">Nombre del CDI</string>
     <string name="direccionCDI">Dirección del CDI</string>
     <string name="otroLugarCuidan">Indique otro lugar cuidan</string>

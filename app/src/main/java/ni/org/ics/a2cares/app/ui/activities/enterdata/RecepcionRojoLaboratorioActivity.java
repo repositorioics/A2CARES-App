@@ -35,12 +35,9 @@ import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.laboratorio.Serologia;
-import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
-import ni.org.ics.a2cares.app.ui.activities.list.ListaRecepcionesActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaRecepcionesLaboratorioActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuLaboratorioActivity;
-import ni.org.ics.a2cares.app.ui.activities.menu.MenuSupervisorActivity;
 import ni.org.ics.a2cares.app.utils.Constants;
 import ni.org.ics.a2cares.app.utils.DeviceInfo;
 
@@ -228,7 +225,7 @@ public class RecepcionRojoLaboratorioActivity extends AbstractAsyncActivity {
                         return;
                     }
 
-                    if (!(volumen>=5 && volumen<=7)){
+                    if (!(volumen>= Constants.VOLUMEN_MIN_ROJO && volumen<=Constants.VOLUMEN_MAX_ROJO)){
                         labelVolumen.setText("Volumen Inválido");
                         labelVolumen.setTextColor(Color.RED);
                     }
@@ -387,7 +384,7 @@ public class RecepcionRojoLaboratorioActivity extends AbstractAsyncActivity {
             showToast(this.getString( R.string.error_volumen));
             return false;
         }
-        else if (!(volumen>=5 && volumen<=7)){
+        else if (!(volumen>=Constants.VOLUMEN_MIN_ROJO && volumen<=Constants.VOLUMEN_MAX_ROJO)){
             showToast(this.getString( R.string.error_volumen));
             return false;
         }

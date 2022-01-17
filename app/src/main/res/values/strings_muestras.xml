@@ -13,6 +13,9 @@
     <string name="otraRazonNoBHC">Escriba por qué razón no se tomó la muestra de BHC</string>
     <string name="horaBHC">Hora BHC</string>
     <string name="pinchazos">¿Número de pinchazos?</string>
+    <string name="observacionMx">Observación de la muestra</string>
+    <string name="descOtraObservacion">Otra observación</string>
+    <string name="descOtraObservacionHint">Escriba la descripcion de otra observación para la muestra</string>
     <string name="volumenRojo">Volumen tubo Rojo</string>
     <string name="volumenBHC">Volumen BHC</string>
     <string name="volumenRojoSugerido">Tomar 6ml tubo Rojo</string>

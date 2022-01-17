@@ -40,6 +40,8 @@ public class Muestra extends BaseMetaData implements Serializable {
 	private String pinchazos;
     private String estudiosAct;
     private String proposito;
+	private String observacion;
+	private String descOtraObservacion;
 
 	public String getIdMuestra() {
 		return idMuestra;
@@ -175,5 +177,21 @@ public class Muestra extends BaseMetaData implements Serializable {
 
 	public void setProposito(String proposito) {
 		this.proposito = proposito;
+	}
+
+	public String getObservacion() {
+		return observacion;
+	}
+
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
+	}
+
+	public String getDescOtraObservacion() {
+		return descOtraObservacion;
+	}
+
+	public void setDescOtraObservacion(String descOtraObservacion) {
+		this.descOtraObservacion = descOtraObservacion;
 	}
 }

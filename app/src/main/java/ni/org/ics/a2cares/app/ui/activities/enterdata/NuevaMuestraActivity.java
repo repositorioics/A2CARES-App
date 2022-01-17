@@ -372,7 +372,13 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getPinchazos()), visible || tomoBHC, null);
                 */
                 changeStatus(mWizardModel.findByKey(labels.getPinchazos()), visible, null);
+                changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible, null);
 
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getObservacion())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY)!=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).equalsIgnoreCase("Otra observación");
+                changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), visible, null);
                 onPageTreeChanged();
             }
             /*if (page.getTitle().equals(labels.getTuboBHC())) {
@@ -449,6 +455,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
             String catSiNo = "CAT_SINO";
             String catSinMuestra = "CAT_RAZON_NO_MX";
             String catPinchazos = "CAT_PINCHAZOS";
+            String catObservacion = "CAT_OBSERV_MX";
 
             String fechaMuestra = datos.getString(this.getString(R.string.fechaMuestra));
             String tuboRojo = datos.getString(this.getString(R.string.tuboRojo));
@@ -462,7 +469,8 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
             String razonNoBHC = datos.getString(this.getString(R.string.razonNoBHC));
             String otraRazonNoBHC = datos.getString(this.getString(R.string.otraRazonNoBHC));
             String pinchazos = datos.getString(this.getString(R.string.pinchazos));
-
+            String observacion = datos.getString(this.getString(R.string.observacionMx));
+            String descOtraObservacion = datos.getString(this.getString(R.string.descOtraObservacion));
 
             String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
             estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(), mPass, false, false);
@@ -481,6 +489,8 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
             if (tieneValor(volumenBHC)) muestra.setVolumenBHC(Double.valueOf(volumenBHC));
             if (tieneValor(volumenRojo)) muestra.setVolumenRojo(Double.valueOf(volumenRojo));
             muestra.setPinchazos(getKeyFromCatalog(pinchazos, catPinchazos));
+            muestra.setObservacion(getKeyFromCatalog(observacion, catObservacion));
+            muestra.setDescOtraObservacion(descOtraObservacion);
             muestra.setProposito("MA");
             muestra.setEstudiosAct(Constants.ESTUDIO);
             muestra.setTerreno("1");

@@ -320,7 +320,7 @@ public class MainDBConstants {
     public static final String relacionFamiliarTutor = "relacionFamiliarTutor";
 
     //Crear tabla participantes
-    public static final String CREATE_PARTICIPANTE_TALBE = "create table if not exists "
+    public static final String CREATE_PARTICIPANTE_TABLE = "create table if not exists "
             + PARTICIPANTE_TABLE + " ("
             + codigo + " text not null, "
             + nombre1 + " text not null, "
@@ -654,6 +654,7 @@ public class MainDBConstants {
     public static final String pinchazos  = "pinchazos";
     public static final String estudiosAct  = "estudiosAct";
     public static final String proposito  = "proposito";
+    public static final String descOtraObservacion = "descOtraObservacion";
 
     //crear tabla Visitas
     public static final String CREATE_MUESTRAS_TABLE = "create table if not exists "
@@ -673,6 +674,8 @@ public class MainDBConstants {
             + otraRazonNoRojo + " text, "
             + terreno + " text, "
             + pinchazos + " text, "
+            + observacion + " text, "
+            + descOtraObservacion + " text, "
             + estudiosAct + " text, "
             + proposito + " text, "
             + recordDate + " date, "

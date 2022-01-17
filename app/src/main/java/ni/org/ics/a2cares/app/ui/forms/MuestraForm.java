@@ -29,7 +29,7 @@ public class MuestraForm extends AbstractWizardModel {
     private String[] catSiNo;
     private String[] catSinMuestra;
     private String[] catPinchazos;
-
+    private String[] catObservacion;
 
     public MuestraForm(Context context, String pass) {
         super(context, pass);
@@ -44,6 +44,7 @@ public class MuestraForm extends AbstractWizardModel {
         catSiNo = estudiosAdapter.getMessageResourcesForCatalog("CAT_SINO");
         catSinMuestra = estudiosAdapter.getMessageResourcesForCatalog("CAT_RAZON_NO_MX");
         catPinchazos = estudiosAdapter.getMessageResourcesForCatalog("CAT_PINCHAZOS");
+        catObservacion = estudiosAdapter.getMessageResourcesForCatalog("CAT_OBSERV_MX");
         estudiosAdapter.close();
 
         DateMidnight dmHasta = new DateMidnight(new Date().getTime());
@@ -53,7 +54,7 @@ public class MuestraForm extends AbstractWizardModel {
         Page volumen = new LabelPage(this, "<font color='red'>"+labels.getVolumenRojoSugerido()+ "</font>", "", Constants.WIZARD, true).setRequired(true);
         Page tuboRojo = new SingleFixedChoicePage(this, labels.getTuboRojo(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page codigoRojo = new BarcodePage(this, labels.getCodigoRojo(), "", Constants.WIZARD, true).setRequired(true);
-        Page volumenRojo = new NumberPage(this, labels.getVolumenRojo(), "", Constants.WIZARD, true).setRangeValidation(true, 5,7).setRequired(true);
+        Page volumenRojo = new NumberPage(this, labels.getVolumenRojo(), "", Constants.WIZARD, true).setRangeValidation(true, Constants.VOLUMEN_MIN_ROJO,Constants.VOLUMEN_MAX_ROJO).setRequired(true);
         Page razonNoRojo = new SingleFixedChoicePage(this, labels.getRazonNoRojo(), "", Constants.WIZARD, true).setChoices(catSinMuestra).setRequired(true);
         Page otraRazonNoRojo = new TextPage(this,labels.getOtraRazonNoRojo(),"", Constants.WIZARD, true).setRequired(false);
         /*Page tuboBHC = new SingleFixedChoicePage(this, labels.getTuboBHC(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
@@ -63,7 +64,9 @@ public class MuestraForm extends AbstractWizardModel {
         Page otraRazonNoBHC = new TextPage(this,labels.getOtraRazonNoBHC(),"", Constants.WIZARD, true).setRequired(false);
         */
         Page pinchazos = new SingleFixedChoicePage(this, labels.getPinchazos(), "", Constants.WIZARD, true).setChoices(catPinchazos).setRequired(true);
+        Page observacion = new SingleFixedChoicePage(this, labels.getObservacion(), "", Constants.WIZARD, false).setChoices(catObservacion).setRequired(true);
+        Page descOtraObservacion = new TextPage(this, labels.getDescOtraObservacion(), labels.getDescOtraObservacionHint(), Constants.WIZARD, false).setRequired(true);
         //return new PageList(fechaMuestra, volumen, tuboRojo, codigoRojo, volumenRojo, razonNoRojo, otraRazonNoRojo, tuboBHC, codigoBHC, volumenBHC, razonNoBHC, otraRazonNoBHC, pinchazos);
-        return new PageList(fechaMuestra, volumen, tuboRojo, codigoRojo, volumenRojo, razonNoRojo, otraRazonNoRojo, pinchazos);
+        return new PageList(fechaMuestra, volumen, tuboRojo, codigoRojo, volumenRojo, razonNoRojo, otraRazonNoRojo, pinchazos, observacion, descOtraObservacion);
     }
 }

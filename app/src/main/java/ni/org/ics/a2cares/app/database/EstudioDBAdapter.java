@@ -98,7 +98,7 @@ public class EstudioDBAdapter {
             db.execSQL(MainDBConstants.CREATE_TAMIZAJE_TABLE);
             db.execSQL(MainDBConstants.CREATE_CARTACONSENTIMIENTO_TABLE);
             db.execSQL(MainDBConstants.CREATE_CASA_TABLE);
-            db.execSQL(MainDBConstants.CREATE_PARTICIPANTE_TALBE);
+            db.execSQL(MainDBConstants.CREATE_PARTICIPANTE_TABLE);
             db.execSQL(MainDBConstants.CREATE_DATOS_COORDENADAS_TABLE);
             db.execSQL(MainDBConstants.CREATE_TELEFONO_CONTACTO_TABLE);
             db.execSQL(MainDBConstants.CREATE_VISITA_TABLE);

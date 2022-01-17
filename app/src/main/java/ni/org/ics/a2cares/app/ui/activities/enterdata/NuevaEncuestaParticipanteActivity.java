@@ -756,7 +756,14 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                 changeStatus(mWizardModel.findByKey(labels.getTiempoFiebre()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getLugarConsFiebre()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getAutomedicoFiebre()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getNoAcudioCs()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getNoAcudioCs()), false);
+                onPageTreeChanged();
+            }
+            //31.1.1	¿Dónde acudió a consulta el participante cuándo tuvo fiebre?
+            if(page.getTitle().equals(labels.getLugarConsFiebre())){
+                boolean cs = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("CS Edgar Lang");
+                boolean ps = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Puesto Médico");
+                changeStatus(mWizardModel.findByKey(labels.getNoAcudioCs()), !cs && !ps);
                 onPageTreeChanged();
             }
             //32.	¿El participante ha tenido dengue durante el último año?
@@ -820,6 +827,22 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                 changeStatus(mWizardModel.findByKey(labels.getRashDias()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getConsultaRashUA()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getUnidadSaludRash()), false);
+                changeStatus(mWizardModel.findByKey(labels.getCentroSaludRash()), false);
+                changeStatus(mWizardModel.findByKey(labels.getOtroCentroSaludRash()), false);
+                changeStatus(mWizardModel.findByKey(labels.getPuestoSaludRash()), false);
+                changeStatus(mWizardModel.findByKey(labels.getOtroPuestoSaludRash()), false);
+                changeStatus(mWizardModel.findByKey(labels.getDiagnosticoRash()), false);
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getRecuerdaMesRash())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getRashMes()), visible);
+                onPageTreeChanged();
+            }
+
+            if(page.getTitle().equals(labels.getConsultaRashUA())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getUnidadSaludRash()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getCentroSaludRash()), false);
                 changeStatus(mWizardModel.findByKey(labels.getOtroCentroSaludRash()), false);
                 changeStatus(mWizardModel.findByKey(labels.getPuestoSaludRash()), false);

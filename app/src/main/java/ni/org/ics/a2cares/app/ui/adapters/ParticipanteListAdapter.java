@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
         holder.textViewIdent.setText(holder.context.getString(R.string.code) + ": " + listdata.get(position).getCodigo());
         holder.textViewDer.setText(mDateFormat.format(listdata.get(position).getFechaNac()));
         holder.textViewName.setText(listdata.get(position).getNombreCompleto());
+        holder.textViewName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         if (participante.getSexo().equalsIgnoreCase("F")) {
             holder.imageView.setImageResource(R.mipmap.ic_female);
         } else {

@@ -83,6 +83,7 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
     private boolean notificarCambios = true;
     private Participante participante;
     private boolean visitaExitosa = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -563,6 +564,12 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getMarcaOtroMedioTrans()), visible);
                 onPageTreeChanged();
             }
+            if (page.getTitle().equals(labels.getTipoCocina())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Ninguna");
+                changeStatus(mWizardModel.findByKey(labels.getCuantosQuemadores()), !visible);
+                onPageTreeChanged();
+            }
+
             if (page.getTitle().equals(labels.getCocinaConLenia())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getUbicacionCocinaLenia()), visible);

@@ -75,7 +75,7 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
     private int totalVerifTutor = 0; //total opciones a marcar requeridas
     private Date fechaNacimiento = null;
     private final int EDAD_MIN_ASENTIMIENTO = 6;
-    private final int EDAD_MAX_ASENTIMIENTO = 14;
+    private final int EDAD_MAX_ASENTIMIENTO = 17;
     private final int EDAD_LIMITE_INGRESO = 80; //justo antes de cumplir 11 anios
     private final int EDAD_MINIMA_INGRESO = 2; //ANIOS
     private Participante participante;
@@ -550,7 +550,12 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                 MultipleFixedChoicePage pagetmp = (MultipleFixedChoicePage)mWizardModel.findByKey(labels.getVerifTutor());
                 pagetmp.setChoices(visible?catVerifTutNoAlf:catVerifTutAlf);
                 totalVerifTutor = visible?catVerifTutNoAlf.length:catVerifTutAlf.length;
-                //changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getTieneTelefonoCel()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getTieneTelefonoConv()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), !visible);
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getTestigoPresente())){
@@ -559,9 +564,13 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getNombre2Testigo()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getApellido1Testigo()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getApellido2Testigo()), visible);
-                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaContactoFuturo()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteB()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getAceptaParteC()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTieneTelefonoCel()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTieneTelefonoConv()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getVerifTutor()), visible);
+
                 if(!visible) {
                     resetForm(96);
                     Toast toast = Toast.makeText(getApplicationContext(),this.getString(R.string.noEsElegible),Toast.LENGTH_LONG);
@@ -914,7 +923,7 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                             if (catRelacionFamiliarTutor != null)
                                 cc.setRelacionFamiliarTutor(catRelacionFamiliarTutor.getCatKey());
                         } else if (edadAnios >= 18) { //si es mayor de edad, seteas el propio participante como tutor
-                            cc.setApellido2Tutor(Constants.REL_FAM_MISMO_PART);
+                            cc.setRelacionFamiliarTutor(Constants.REL_FAM_MISMO_PART);
                         }
 
                         if (tieneValor(participanteOTutorAlfabeto)) {

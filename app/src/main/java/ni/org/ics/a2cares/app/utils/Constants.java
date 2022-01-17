@@ -66,4 +66,8 @@ public class Constants {
     public static final String UBICACION = "ubicacion";
     public static final int UBICACION_NJ = 1;
     public static final int UBICACION_CO = 2;
+
+    //Rango de volumen muestra
+    public static final int VOLUMEN_MIN_ROJO = 4;
+    public static final int VOLUMEN_MAX_ROJO = 7;
 }

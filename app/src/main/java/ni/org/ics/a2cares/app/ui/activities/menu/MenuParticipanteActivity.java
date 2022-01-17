@@ -217,7 +217,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     }
 
     private boolean datosPendintes() {
-        return pendienteMuestras || pendienteEncuestaPeso || pendienteEncuestaParticip || pendienteEncuestaCasa;
+        return pendienteMuestras || pendienteEncuestaPeso || pendienteEncuestaParticip || pendienteEncuestaCasa || pendienteObseq;
     }
 /*
     private void createDialog(final int opcion, final String mensaje) {

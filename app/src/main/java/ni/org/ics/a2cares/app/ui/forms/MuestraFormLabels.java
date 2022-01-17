@@ -28,6 +28,9 @@ public class MuestraFormLabels {
     private String volumenBHC;
     private String volumenRojoSugerido;
     private String volumenBHCSugerido;
+    private String observacion;
+    private String descOtraObservacion;
+    private String descOtraObservacionHint;
 
     public MuestraFormLabels() {
         Resources res = MyIcsApplication.getContext().getResources();
@@ -44,6 +47,9 @@ public class MuestraFormLabels {
         otraRazonNoRojo = res.getString(R.string.otraRazonNoRojo);
         horaRojo = res.getString(R.string.horaRojo);
         pinchazos = res.getString(R.string.pinchazos);
+        observacion = res.getString(R.string.observacionMx);
+        descOtraObservacion = res.getString(R.string.descOtraObservacion);
+        descOtraObservacionHint = res.getString(R.string.descOtraObservacionHint);
         volumenRojo = res.getString(R.string.volumenRojo);
         volumenBHC = res.getString(R.string.volumenBHC);
         volumenRojoSugerido = res.getString(R.string.volumenRojoSugerido);
@@ -96,6 +102,18 @@ public class MuestraFormLabels {
 
     public String getPinchazos() {
         return pinchazos;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public String getDescOtraObservacion() {
+        return descOtraObservacion;
+    }
+
+    public String getDescOtraObservacionHint() {
+        return descOtraObservacionHint;
     }
 
     public String getVolumenRojo() {

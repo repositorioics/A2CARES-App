@@ -477,7 +477,7 @@ public class BluetoothChatFragment extends Fragment {
     private void enviarParticipante(int cuenta){
     	String insertParticipanteSQL;
     	
-    	String codigo = mParticipantes.get(cuenta).getCodigo();
+    	String codigo = "'"+mParticipantes.get(cuenta).getCodigo()+"'";
     	String nom1Part = "'"+ mParticipantes.get(cuenta).getNombre1()+"'";
     	String nom2Part = null;
     	if(mParticipantes.get(cuenta).getNombre2()!=null) nom2Part  = "'"+ mParticipantes.get(cuenta).getNombre2()+"'";
@@ -521,7 +521,7 @@ public class BluetoothChatFragment extends Fragment {
     	String enviado = null;
     	if(String.valueOf(mParticipantes.get(cuenta).getEstado())!=null) enviado  = "'"+ mParticipantes.get(cuenta).getEstado()+"'";
     	
-    	insertParticipanteSQL = "INSERT INTO participantes VALUES ("+ 
+    	insertParticipanteSQL = "INSERT INTO participantes VALUES ("+
 				codigo +","+
 				nom1Part +","+
 				nom2Part +","+
@@ -554,8 +554,8 @@ public class BluetoothChatFragment extends Fragment {
     private void enviarParticipanteProc(int cuenta){
         String insertParticipanteProcSQL;
         ParticipanteProcesos mParticipantesProc = mParticipantes.get(cuenta).getProcesos();
-        insertParticipanteProcSQL = "INSERT INTO participantes_procesos VALUES ("+
-                mParticipantesProc.getCodigo()+","+
+        insertParticipanteProcSQL = "INSERT INTO participantes_procesos VALUES ('"+
+                mParticipantesProc.getCodigo()+"',"+
                 mParticipantesProc.getRetirado()+",'"+
                 mParticipantesProc.getPendientePyT()+"','"+
                 mParticipantesProc.getPendienteEncPart()+"','"+
@@ -580,7 +580,7 @@ public class BluetoothChatFragment extends Fragment {
                 + "'" + telefonoContacto.getOperadora()+ "'" + ","
                 + "'" + telefonoContacto.getTipo()+ "'" + ","
                 + telefonoContacto.getCasa().getCodigo() + ","
-                + telefonoContacto.getParticipante().getCodigo() + ","
+                + "'" + telefonoContacto.getParticipante().getCodigo() + "',"
                 + telefonoContacto.getRecordDate().getTime() + ","
                 + (telefonoContacto.getRecordUser() != null ? "'" + telefonoContacto.getRecordUser() + "'" : null) + ","
                 + "'" + telefonoContacto.getPasive() + "'"  + ","
@@ -789,7 +789,7 @@ public class BluetoothChatFragment extends Fragment {
 					error = error + e.getMessage();
 				}
 				try {
-                    if (estudiosAdapter.getCasa(MainDBConstants.codigo + "='"+ codigoCasa +"'",null) == null)
+                    if (estudiosAdapter.getCasa(MainDBConstants.codigo + "="+ codigoCasa,null) == null)
                         estudiosAdapter.insertarCasa(casaSQL);
 				} catch (Exception e) {
 					Log.e(TAG, e.getLocalizedMessage(), e);
@@ -802,7 +802,7 @@ public class BluetoothChatFragment extends Fragment {
                         int codigoTermina = participantesSQL[i].indexOf(",",0);
                         String codigoParti = participantesSQL[i].substring(codigoComienza, codigoTermina);
                         codigosPartici[i] = codigoParti;
-                        if (estudiosAdapter.getParticipante(MainDBConstants.codigo + "='"+ codigoParti+"'", null)==null) {
+                        if (estudiosAdapter.getParticipante(MainDBConstants.codigo + "="+ codigoParti, null)==null) {
                             estudiosAdapter.insertarParticipante(participantesSQL[i]);
                             estudiosAdapter.insertarParticipanteProcesos(participantesProcSQL[i]);
                         }

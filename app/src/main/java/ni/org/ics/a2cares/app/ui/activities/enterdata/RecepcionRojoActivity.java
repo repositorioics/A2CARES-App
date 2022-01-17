@@ -225,7 +225,7 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
                         return;
                     }
 
-                    if (!(volumen>=5 && volumen<=7)){
+                    if (!(volumen>= Constants.VOLUMEN_MIN_ROJO && volumen<= Constants.VOLUMEN_MAX_ROJO)){
                         labelVolumen.setText("Volumen Inválido");
                         labelVolumen.setTextColor(Color.RED);
                     }
@@ -398,7 +398,7 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
             showToast(this.getString( R.string.error_lugar));
             return false;
         }
-        else if (!(volumen>=5 && volumen<=7)){
+        else if (!(volumen>=Constants.VOLUMEN_MIN_ROJO && volumen<=Constants.VOLUMEN_MAX_ROJO)){
             showToast(this.getString( R.string.error_volumen));
             return false;
         }

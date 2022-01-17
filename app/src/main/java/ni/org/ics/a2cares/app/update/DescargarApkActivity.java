@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Objects;
 
 import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
@@ -39,21 +40,9 @@ public class DescargarApkActivity extends Activity {
                 PreferenceManager.getDefaultSharedPreferences(this);
         strUrlContext =
                 settings.getString(PreferencesActivity.KEY_SERVER_URL, this.getString(R.string.default_server_url));
-        /*Intent i;
-        PackageManager manager = getPackageManager();
-        try {
-            i = manager.getLaunchIntentForPackage("ni.org.ics.estudios.appmovil");
-            if (i == null)
-                throw new PackageManager.NameNotFoundException();
-            i.addCategory(Intent.CATEGORY_LAUNCHER);
-            startActivity(i);
-        } catch (PackageManager.NameNotFoundException e) {*/
-            UpdateApk downloadAndInstall = new UpdateApk();
-            //progress.setCancelable(false);
-            //progress.setMessage("Downloading...");
-            downloadAndInstall.setContext(getApplicationContext());
-            downloadAndInstall.execute(getResources().getString(R.string.update_app_preferences));
-        //}
+        UpdateApk downloadAndInstall = new UpdateApk();
+        downloadAndInstall.setContext(getApplicationContext());
+        downloadAndInstall.execute(getResources().getString(R.string.update_app_preferences));
     }
 
     @Override
@@ -86,17 +75,14 @@ public class DescargarApkActivity extends Activity {
                 c.setRequestMethod("GET");
                 c.connect();
 
-                String sdcard = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/";
-                String fileName = context.getString(R.string.apk_name);
-                sdcard += fileName;
-                final Uri uri = Uri.parse("file://" + sdcard);
-
-                File myDir = new File(sdcard);
-                myDir.mkdirs();
-                if(myDir.exists()){
-                    myDir.delete();
+                String PATH = Objects.requireNonNull(context.getExternalFilesDir(null)).getAbsolutePath();
+                File file = new File(PATH);
+                boolean isCreate = file.mkdirs();
+                File outputFile = new File(file, context.getString(R.string.apk_name));
+                if (outputFile.exists()) {
+                    boolean isDelete = outputFile.delete();
                 }
-                FileOutputStream fos = new FileOutputStream(myDir);
+                FileOutputStream fos = new FileOutputStream(outputFile);
 
                 InputStream is = c.getInputStream();
 

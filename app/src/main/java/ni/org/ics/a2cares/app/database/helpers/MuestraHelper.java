@@ -34,6 +34,9 @@ public class MuestraHelper {
         cv.put(MainDBConstants.pinchazos, muestra.getPinchazos());
         cv.put(MainDBConstants.estudiosAct, muestra.getEstudiosAct());
         cv.put(MainDBConstants.proposito, muestra.getProposito());
+        cv.put(MainDBConstants.observacion, muestra.getObservacion());
+        cv.put(MainDBConstants.descOtraObservacion, muestra.getDescOtraObservacion());
+
 
         if (muestra.getRecordDate() != null) cv.put(MainDBConstants.recordDate, muestra.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, muestra.getRecordUser());
@@ -64,7 +67,8 @@ public class MuestraHelper {
         muestra.setPinchazos(cursor.getString(cursor.getColumnIndex(MainDBConstants.pinchazos)));
         muestra.setEstudiosAct(cursor.getString(cursor.getColumnIndex(MainDBConstants.estudiosAct)));
         muestra.setProposito(cursor.getString(cursor.getColumnIndex(MainDBConstants.proposito)));
-
+        muestra.setObservacion(cursor.getString(cursor.getColumnIndex(MainDBConstants.observacion)));
+        muestra.setDescOtraObservacion(cursor.getString(cursor.getColumnIndex(MainDBConstants.descOtraObservacion)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) muestra.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         muestra.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

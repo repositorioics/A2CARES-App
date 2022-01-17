@@ -15,12 +15,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
 import ni.org.ics.a2cares.app.domain.puntos.PuntoCandidato;
+import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.DescartarPuntoCandidatoActivity;
 import ni.org.ics.a2cares.app.ui.activities.maps.CoordenadasMapActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuParticipanteActivity;
@@ -52,10 +55,11 @@ public class PuntosCandidatosListAdapter extends RecyclerView.Adapter<PuntosCand
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        DecimalFormat df = new DecimalFormat("#.000000");
         final PuntoCandidato puntoCandidato = listdata.get(position);
-        holder.textViewIdent.setText(puntoCandidato.getCodigo().toString());
+        holder.textViewIdent.setText(puntoCandidato.getCodigo().toString() + " | "+ puntoCandidato.getBarrio());
         holder.textViewDer.setText(mDateFormat.format(puntoCandidato.getRecordDate()));
-        holder.textViewName.setText(listdata.get(position).getLatitud() + " , "+ listdata.get(position).getLongitud());
+        holder.textViewName.setText(df.format(listdata.get(position).getLatitud()) + " , "+ df.format(listdata.get(position).getLongitud()));
         holder.imageView.setImageResource(R.mipmap.ic_gps);
         holder.puntoCandidato = puntoCandidato;
     }
@@ -63,6 +67,11 @@ public class PuntosCandidatosListAdapter extends RecyclerView.Adapter<PuntosCand
     @Override
     public int getItemCount() {
         return listdata.size();
+    }
+
+    public void filterList(ArrayList<PuntoCandidato> filteredList) {
+        listdata = filteredList;
+        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{

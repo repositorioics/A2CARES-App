@@ -55,7 +55,7 @@ public class CasaListAdapter extends RecyclerView.Adapter<CasaListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Casa casa = listdata.get(position);
         holder.textViewIdent.setText(holder.context.getString(R.string.code) + ": " + casa.getCodigo());
-        holder.textViewDer.setText(holder.context.getString(R.string.barrio) + ": " + casa.getBarrio().getNombre() );
+        holder.textViewDer.setText(casa.getBarrio().getNombre() );
         holder.textViewName.setText(casa.getDireccion());
         holder.imageView.setImageResource(R.mipmap.ic_house);
 

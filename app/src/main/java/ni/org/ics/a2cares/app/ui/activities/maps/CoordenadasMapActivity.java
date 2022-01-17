@@ -69,7 +69,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
         implements OnMapReadyCallback,
         GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMarkerDragListener,
-        GoogleMap.OnInfoWindowClickListener{
+        GoogleMap.OnInfoWindowClickListener {
 
     public static final String EXTRA_LATITUD = "LATITUD";
     public static final String EXTRA_LONGITUD = "LONGITUD";
@@ -103,6 +103,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
     private DatosCoordenadas mCoordenadas;
     private static String codigoParticipante; //cuando es desde el wizard solo viene el codigo del participante
     private static int ubicacion;
+    private static final int REQUEST_PERMISSION_COARSE_LOCATION = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +111,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapView = mapFragment.getView();
         mapFragment.getMapAsync(this);
 
@@ -118,18 +119,18 @@ public class CoordenadasMapActivity extends AppCompatActivity
         settings = PreferenceManager.getDefaultSharedPreferences(this);
         username = settings.getString(PreferencesActivity.KEY_USERNAME, null);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(),mPass,false,false);
+        estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(), mPass, false, false);
         mParticipante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         mCasa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);
         mPunto = (PuntoCandidato) getIntent().getExtras().getSerializable(Constants.PUNTO_GPS);
-        visExitosa = getIntent().getBooleanExtra(Constants.VISITA_EXITOSA,false);
+        visExitosa = getIntent().getBooleanExtra(Constants.VISITA_EXITOSA, false);
 
         codigoParticipante = getIntent().getStringExtra(Constants.COD_PARTICIPANTE);
         ubicacion = getIntent().getIntExtra(Constants.UBICACION, 0);
 
         inputLatlong = (EditText) findViewById(R.id.latlong);
         mButtonSave = (ImageButton) findViewById(R.id.saveLatLong);
-        mButtonSave.setOnClickListener(new View.OnClickListener()  {
+        mButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createDialog(SAVE);
@@ -152,7 +153,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed (){
+    public void onBackPressed() {
         createDialog(EXIT);
     }
 
@@ -182,40 +183,6 @@ public class CoordenadasMapActivity extends AppCompatActivity
                 if (mLocationMarker != null) {
                     mLocationMarker.remove();
                 }
-/*
-                List<LatLng> puntos = new ArrayList<>();
-                puntos.add(new LatLng(	12.10038869	,	-86.30506825	));
-                puntos.add(new LatLng(	12.10632137	,	-86.30843245	));
-                puntos.add(new LatLng(	12.09282466	,	-86.30939737	));
-                puntos.add(new LatLng(	12.09740777	,	-86.3048513	));
-                puntos.add(new LatLng(	12.0909891	,	-86.30884128	));
-                puntos.add(new LatLng(	12.09875749	,	-86.3098385	));
-                puntos.add(new LatLng(	12.09322666	,	-86.30733557	));
-                puntos.add(new LatLng(	12.09459597	,	-86.31140236	));
-                puntos.add(new LatLng(	12.09916809	,	-86.30410595	));
-                puntos.add(new LatLng(	12.0901041	,	-86.3049512	));
-                puntos.add(new LatLng(	12.09446804	,	-86.30863072	));
-
-                List<String> idPuntos = new ArrayList<>();
-                idPuntos.add("1");
-                idPuntos.add("2");
-                idPuntos.add("3");
-                idPuntos.add("4");
-                idPuntos.add("5");
-                idPuntos.add("6");
-                idPuntos.add("7");
-                idPuntos.add("8");
-                idPuntos.add("9");
-                idPuntos.add("10");
-                idPuntos.add("11");
-
-                for(int i = 0; i < puntos.size(); i++){
-                   mGoogleMap.addMarker(new MarkerOptions()
-                            .position(puntos.get(i))
-                            .title(idPuntos.get(i))
-                            .draggable(false)
-                    );
-                }*/
 
                 //Place current location marker
                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -232,7 +199,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
                 mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
             } else {
                 // Si no se encuentran datos de ubicacion en el movil, poner el punto del centro de salud por defecto
-                if (ubicacion==Constants.UBICACION_NJ) {
+                if (ubicacion == Constants.UBICACION_NJ) {
                     LatLng nejapa = new LatLng(12.112823, -86.324148);
                     mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
                             .position(nejapa)
@@ -240,7 +207,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
                             .draggable(true)
                     );
                     mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nejapa, 15.0f));
-                } else if (ubicacion==Constants.UBICACION_CO) {
+                } else if (ubicacion == Constants.UBICACION_CO) {
                     LatLng camilo = new LatLng(12.096661142575222, -86.30627129226923);
                     mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
                             .position(camilo)
@@ -265,7 +232,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
         //al cargar el mapa, carga en la posicion actual del dispositivo
         if (mCasa != null && mCasa.getLatitud() != null && mCasa.getLongitud() != null && mCasa.getLatitud() > 0) {
             setHouseLocation(mCasa);
-        } else if (mParticipante  != null && mParticipante.getCasa() != null
+        } else if (mParticipante != null && mParticipante.getCasa() != null
                 && mParticipante.getCasa().getLatitud() != null && mParticipante.getCasa().getLongitud() != null
                 && mParticipante.getCasa().getLatitud() > 0) {
             setHouseLocation(mParticipante.getCasa());
@@ -321,7 +288,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
         addPolygon(polygonsHelper.getPolygonMariaMora());
     }
 
-    private void addPolygon(List<LatLng> vertices){
+    private void addPolygon(List<LatLng> vertices) {
         PolygonOptions polygonOptions = new PolygonOptions();
         polygonOptions.addAll(vertices);
         polygonOptions.strokeColor(Color.parseColor("#7B11A2"));
@@ -372,7 +339,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
         return super.onSupportNavigateUp();
     }
 
-    private void setLocationOnInputLatLong(Marker marker){
+    private void setLocationOnInputLatLong(Marker marker) {
         String position = String.format(Locale.getDefault(),
                 getString(R.string.marker_detail_latlng),
                 marker.getPosition().latitude,
@@ -380,45 +347,99 @@ public class CoordenadasMapActivity extends AppCompatActivity
         inputLatlong.setText(position);
     }
 
-    private void setHouseLocation(Casa casa){
+    private void setHouseLocation(Casa casa) {
         //Si el participante tiene coordenadas, ponerlo en el mapa
         LatLng puntoCasa = new LatLng(casa.getLatitud(), casa.getLongitud());
         mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
                 .position(puntoCasa)
-                .title("Ubicacion casa")
+                .title("Casa " + casa.getCodigo())
                 .draggable(true)
         );
         setLocationOnInputLatLong(mLocationMarker);
         //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(12.154, -86.290), 15.0f));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(puntoCasa, 15));
-        mGoogleMap.setMyLocationEnabled(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                mGoogleMap.setMyLocationEnabled(true);
+            } else {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    // Mostrar diálogo explicativo
+                } else {
+                    // Solicitar permiso
+                    ActivityCompat.requestPermissions(
+                            this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            LOCATION_REQUEST_CODE);
+                }
+            }
+        }else {
+            mGoogleMap.setMyLocationEnabled(true);
+        }
     }
 
-    private void setPointLocation(PuntoCandidato puntoCandidato){
+    private void setPointLocation(PuntoCandidato puntoCandidato) {
         //Si el participante tiene coordenadas, ponerlo en el mapa
         LatLng puntoCasa = new LatLng(puntoCandidato.getLatitud(), puntoCandidato.getLongitud());
-        mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
+        Marker mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
                 .position(puntoCasa)
-                .title("Ubicacion punto candidato")
+                .title("Punto " + puntoCandidato.getCodigo())
                 .draggable(true)
         );
         setLocationOnInputLatLong(mLocationMarker);
         //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(12.154, -86.290), 15.0f));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(puntoCasa, 15));
-        mGoogleMap.setMyLocationEnabled(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                mGoogleMap.setMyLocationEnabled(true);
+            } else {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    // Mostrar diálogo explicativo
+                } else {
+                    // Solicitar permiso
+                    ActivityCompat.requestPermissions(
+                            this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            LOCATION_REQUEST_CODE);
+                }
+            }
+        }else {
+            mGoogleMap.setMyLocationEnabled(true);
+        }
     }
 
-    private void setParticipantLocation(){
+    private void setParticipantLocation() {
         //Si el participante tiene coordenadas, ponerlo en el mapa
         LatLng cssfv = new LatLng(mParticipante.getCasa().getLatitud(), mParticipante.getCasa().getLongitud());
         mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
                 .position(cssfv)
-                .title("Ubicacion participante")
+                .title("Participante " + mParticipante.getCodigo())
                 .draggable(true)
         );
         setLocationOnInputLatLong(mLocationMarker);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(12.154, -86.290), 15.0f));
-        mGoogleMap.setMyLocationEnabled(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                mGoogleMap.setMyLocationEnabled(true);
+            } else {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    // Mostrar diálogo explicativo
+                } else {
+                    // Solicitar permiso
+                    ActivityCompat.requestPermissions(
+                            this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            LOCATION_REQUEST_CODE);
+                }
+            }
+        }else {
+            mGoogleMap.setMyLocationEnabled(true);
+        }
     }
 
     private void requestLocation(){
