@@ -396,6 +396,7 @@ public class NuevoObsequioActivity extends AbstractAsyncActivity implements
             obsequioGeneral.setEntregoObsequio(null);
         }
         obsequioGeneral.setCasa(mParticipante.getCasa().getCodigo().toString());
+        obsequioGeneral.setParticipante(mParticipante.getCodigo());
         obsequioGeneral.setMotivo("1");//MA
         obsequioGeneral.setPersonaRecibe(personaRecibe);
         obsequioGeneral.setObservacion(observaciones);

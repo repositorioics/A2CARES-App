@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,7 +38,7 @@ public class ListaRecepcionesLaboratorioActivity extends AbstractAsyncActivity {
 
 	private EstudioDBAdapter estudiosAdapter;
 	private RecyclerView recyclerView;
-	//private TextView textView;
+	private TextView textView;
 	private Integer opcion;
 	private List<Serologia> mRecepcionMuestras = new ArrayList<Serologia>();
 	private RecepcionLaboratorioListAdapter adapter;
@@ -57,7 +58,7 @@ public class ListaRecepcionesLaboratorioActivity extends AbstractAsyncActivity {
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(),mPass,false,false);
 
-		//textView = findViewById(R.id.label_logo);
+		textView = findViewById(R.id.total);
 		//textView.setText(getString(R.string.recepcionesHoy));
 
 		mSearchText = findViewById(R.id.search_text);
@@ -190,6 +191,7 @@ public class ListaRecepcionesLaboratorioActivity extends AbstractAsyncActivity {
 		}
 
 		protected void onPostExecute(String resultado) {
+			textView.setText(getString(R.string.total_recepciones, mRecepcionMuestras.size()));
 			adapter = new RecepcionLaboratorioListAdapter(mRecepcionMuestras);
 			recyclerView.setAdapter(adapter);
 			dismissProgressDialog();

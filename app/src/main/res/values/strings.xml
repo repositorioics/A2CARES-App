@@ -171,6 +171,7 @@
     <string name="error_codigoMx">Lectura Inválida!!!!</string>
     <string name="list">Listar registros</string>
     <string name="noSample">Sin muestra</string>
+    <string name="total_recepciones">Total recepciones del dia: <xliff:g id="variable">%1$d</xliff:g></string>
     <!--actualizar apk-->
     <string name="apk_name">a2cares-app.apk</string>
     <string name="url_apk">/resources/apk/a2cares-app.apk</string>

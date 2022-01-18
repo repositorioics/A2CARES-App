@@ -56,11 +56,13 @@ public class RecepcionRojoLaboratorioActivity extends AbstractAsyncActivity {
     private EditText editObs;
     private TextView labelVolumen;
     private Spinner mMetodoView;
+    private TextView total;
     private Date todayWithZeroTime = null;
     private String username;
     private SharedPreferences settings;
     private DeviceInfo infoMovil;
     private Participante participante = null;
+    private List<Serologia> mRecepcionMuestras = new ArrayList<Serologia>();
 
     public static final int BARCODE_CAPTURE = 2;
     private static final int MENU_VIEW = Menu.FIRST + 2;
@@ -237,6 +239,10 @@ public class RecepcionRojoLaboratorioActivity extends AbstractAsyncActivity {
             }
         });
         editObs = ((EditText) findViewById(R.id.obs));
+        total =  findViewById(R.id.total);
+        getData();
+
+        total.setText(getString(R.string.total_recepciones, mRecepcionMuestras.size()));
 
         final Button saveButton = (Button) findViewById(R.id.save);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -259,8 +265,8 @@ public class RecepcionRojoLaboratorioActivity extends AbstractAsyncActivity {
                     serologia.setFecha(todayWithZeroTime);
                     serologia.setVolumen(volumen);
                     serologia.setObservacion(observacion);
-                    serologia.setCodigo_casa(participante.getCasa().getCodigo());
-                    serologia.setEdadMeses(participante.getEdadMeses());
+                    //serologia.setCodigo_casa(participante.getCasa().getCodigo());
+                    //serologia.setEdadMeses(participante.getEdadMeses());
                     serologia.setRecordUser(username);
                     serologia.setEstado(Constants.STATUS_NOT_SUBMITTED);
                     serologia.setRecordDate(new Date());
@@ -269,6 +275,9 @@ public class RecepcionRojoLaboratorioActivity extends AbstractAsyncActivity {
                     try {
                         estudiosAdapter.open();
                         estudiosAdapter.crearSerologia(serologia);
+                        mRecepcionMuestras = estudiosAdapter.getSerologias(MainDBConstants.fecha +" = " + todayWithZeroTime.getTime() ,
+                                MainDBConstants.participante);
+                        total.setText(getString(R.string.total_recepciones, mRecepcionMuestras.size()));
                         showToast("Registro Guardado");
                         reiniciar();
                     }catch (Exception ex){
@@ -439,4 +448,10 @@ public class RecepcionRojoLaboratorioActivity extends AbstractAsyncActivity {
         mAlertDialog.show();
     }
 
+    private void getData() {
+        estudiosAdapter.open();
+        mRecepcionMuestras = estudiosAdapter.getSerologias(MainDBConstants.fecha +" = " + todayWithZeroTime.getTime() ,
+                MainDBConstants.participante);
+        estudiosAdapter.close();
+    }
 }

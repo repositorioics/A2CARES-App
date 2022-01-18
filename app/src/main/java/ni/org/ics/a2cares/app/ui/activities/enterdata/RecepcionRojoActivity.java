@@ -59,6 +59,7 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
     private TextView labelVolumen;
     private Spinner lugar;
     private Spinner mMetodoView;
+    private TextView total;
     private Date todayWithZeroTime = null;
     private String username;
     private SharedPreferences settings;
@@ -76,6 +77,7 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
 
     private EstudioDBAdapter estudiosAdapter = null;
     private List<MessageResource> mLugares;
+    private List<RecepcionMuestra> mRecepcionMuestras = new ArrayList<RecepcionMuestra>();
     // ***************************************
     // Activity methods
     // ***************************************
@@ -238,8 +240,10 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
         });
         editObs = ((EditText) findViewById(R.id.obs));
         lugar = (Spinner) findViewById(R.id.lugar);
-
+        total =  findViewById(R.id.total);
         getData();
+
+        total.setText(getString(R.string.total_recepciones, mRecepcionMuestras.size()));
         mLugares.add(new MessageResource("",0,this.getString(R.string.select)));
         Collections.sort(mLugares);
 
@@ -280,6 +284,9 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
                     try {
                         estudiosAdapter.open();
                         estudiosAdapter.crearRecepcionMuestra(recepcionMuestra);
+                        mRecepcionMuestras = estudiosAdapter.getRecepcionMuestras(MainDBConstants.fechaRecepcion +" = " + todayWithZeroTime.getTime() + " and "+ MainDBConstants.tipoTubo + " = '"+ Constants.TIPO_TUBO_ROJO + "'",
+                                MainDBConstants.codigoMx);
+                        total.setText(getString(R.string.total_recepciones, mRecepcionMuestras.size()));
                         showToast("Registro Guardado");
                         reiniciar();
                     }catch (Exception ex){
@@ -457,6 +464,8 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
     private void getData() {
         estudiosAdapter.open();
         mLugares = estudiosAdapter.getMessageResources(MainDBConstants.catRoot + "='CAT_LUGAR_RECEP_MX'", MainDBConstants.order);
+        mRecepcionMuestras = estudiosAdapter.getRecepcionMuestras(MainDBConstants.fechaRecepcion +" = " + todayWithZeroTime.getTime() + " and "+ MainDBConstants.tipoTubo + " = '"+ Constants.TIPO_TUBO_ROJO + "'",
+                MainDBConstants.codigoMx);
         estudiosAdapter.close();
     }
 
