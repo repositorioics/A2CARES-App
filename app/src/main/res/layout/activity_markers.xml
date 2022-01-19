@@ -36,7 +36,9 @@
                 android:contentDescription="@string/submit_confirm_button"
                 />
         </LinearLayout>
-        <TextView android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/pressLabel"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
             android:textColor="@color/solid_red"

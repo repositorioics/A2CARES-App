@@ -124,4 +124,7 @@
     <string name="noDaAsentimiento">No da asentimiento!</string>
     <string name="participanteExiste">Código de participante ya está registrado</string>
     <string name="noRegistraIngreso">No acepta participar o no es elegible. No se realazará el ingreso</string>
+
+    <string name="error1CodigoCasa">Código de casa no válido</string>
+    <string name="error2CodigoCasa">Código de casa ya fue registrado</string>
 </resources>

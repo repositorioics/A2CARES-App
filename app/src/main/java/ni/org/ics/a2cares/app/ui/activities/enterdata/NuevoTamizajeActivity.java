@@ -322,10 +322,19 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
             }
             if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.a2cares.app.wizard.model.BarcodePage")) {
                 BarcodePage bp = (BarcodePage) page;
+                String valor = "";
                 if (bp.ismValRange() || bp.ismValPattern()) {
-                    String valor = bp.getData().getString(TextPage.SIMPLE_DATA_KEY);
+                    valor = bp.getData().getString(TextPage.SIMPLE_DATA_KEY);
                     if ((bp.ismValRange() && (bp.getmGreaterOrEqualsThan() > Double.valueOf(valor) || bp.getmLowerOrEqualsThan() < Double.valueOf(valor)))
-                            || (bp.ismValPattern() && !valor.matches(bp.getmPattern()))){
+                            || (bp.ismValPattern() && !valor.matches(bp.getmPattern()))) {
+                        cutOffPage = i;
+                        break;
+                    }
+                }
+                if (bp.getTitle().equalsIgnoreCase(labels.getCodigoNuevaCasaCohorte())) {
+                    valor = bp.getData().getString(TextPage.SIMPLE_DATA_KEY);
+                    if (valor.matches("^\\d{4}$")) {
+                        showToast(this.getString(R.string.error1CodigoCasa));
                         cutOffPage = i;
                         break;
                     }
@@ -353,7 +362,6 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                 try {
                     fechaNacimiento = mDateFormat.parse(page.getData().getString(DatePage.SIMPLE_DATA_KEY));
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                     Toast toast = Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG);
                     toast.show();
@@ -733,11 +741,8 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
             try {
                 fechaNacimiento = mDateFormat.parse(datos.getString(this.getString(R.string.fechaNacimiento)));
             } catch (ParseException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
-                Toast toast = Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG);
-                toast.show();
-                finish();
+                showToast(e.getLocalizedMessage());
             }
 
             String codigoNuevoParticipante = datos.getString(this.getString(R.string.codigoNuevoParticipante));
@@ -992,6 +997,12 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                         if (tieneValor(codigoCasaCohorte)) {
                             casa = estudiosAdapter.getCasa(MainDBConstants.codigo + " = " +codigoCasaCohorte, null);
                         } else {
+                            //validar si ya existe la casa
+                            casa = estudiosAdapter.getCasa(MainDBConstants.codigo + " = " +codigoNuevaCasaCohorte, null);
+                            if (casa != null && casa.getCodigo() != null) {
+                                showToast(this.getString(R.string.error2CodigoCasa));
+                                return;
+                            }
                             //se creará casa
                             casa = new Casa();
                             casa.setCodigo(Integer.valueOf(codigoNuevaCasaCohorte));
@@ -1145,31 +1156,22 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                         i.putExtras(arguments);
                         i.putExtra(Constants.VISITA_EXITOSA, !mUser.getVisitas()); //si hay que pedir la visita, se envia que la visita no es exitosa
                         startActivity(i);
-                        Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_LONG);
-                        toast.show();
-
-
+                        showToast(getString(R.string.success));
                     } else {
-                        Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.noRegistraIngreso), Toast.LENGTH_LONG);
-                        toast.show();
+                        showToast(getString(R.string.noRegistraIngreso));
                     }
                     finish();
                 } else {
-                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.noRegistraIngreso), Toast.LENGTH_LONG);
-                    toast.show();
+                    showToast(getString(R.string.noRegistraIngreso));
                     finish();
                 }
             } else {
-                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.participanteExiste), Toast.LENGTH_LONG);
-                toast.show();
-                //finish();
+                showToast(getString(R.string.participanteExiste));
             }
 
         } catch (Exception ex){
             ex.printStackTrace();
-            Toast toast = Toast.makeText(getApplicationContext(), ex.getLocalizedMessage(), Toast.LENGTH_LONG);
-            toast.show();
-            //finish();
+            showToast(ex.getLocalizedMessage());
         }finally {
             //Cierra la base de datos
             if (estudiosAdapter!=null)
@@ -1250,7 +1252,6 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
 
         @Override
         public int getItemPosition(Object object) {
-            // TODO: be smarter about this
             if (object == mPrimaryItem) {
                 // Re-use the current fragment (its position never changes)
                 return POSITION_UNCHANGED;

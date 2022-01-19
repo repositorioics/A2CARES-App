@@ -80,6 +80,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
 
     private Marker mLocationMarker;
 
+    private TextView pressLabel;
     private EditText inputLatlong;
     private ImageButton mButtonSave;
     private AlertDialog alertDialog;
@@ -128,6 +129,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
         codigoParticipante = getIntent().getStringExtra(Constants.COD_PARTICIPANTE);
         ubicacion = getIntent().getIntExtra(Constants.UBICACION, 0);
 
+        pressLabel = (TextView) findViewById(R.id.pressLabel);
         inputLatlong = (EditText) findViewById(R.id.latlong);
         mButtonSave = (ImageButton) findViewById(R.id.saveLatLong);
         mButtonSave.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +139,9 @@ public class CoordenadasMapActivity extends AppCompatActivity
             }
         });
         if (mCasa != null || mPunto != null) {
+            pressLabel.setVisibility(View.GONE);
             mButtonSave.setVisibility(View.GONE);
+
         }
         new CoordenadaActualTask().execute();
     }
@@ -165,7 +169,25 @@ public class CoordenadasMapActivity extends AppCompatActivity
             if (permissions.length > 0 &&
                     permissions[0].equals(Manifest.permission.ACCESS_FINE_LOCATION) &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mGoogleMap.setMyLocationEnabled(true);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        mGoogleMap.setMyLocationEnabled(true);
+                    } else {
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                                Manifest.permission.ACCESS_FINE_LOCATION)) {
+                            // Mostrar diálogo explicativo
+                        } else {
+                            // Solicitar permiso
+                            ActivityCompat.requestPermissions(
+                                    this,
+                                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                    LOCATION_REQUEST_CODE);
+                        }
+                    }
+                }else {
+                    mGoogleMap.setMyLocationEnabled(true);
+                }
             } else {
                 Toast.makeText(this, "Error de permisos", Toast.LENGTH_LONG).show();
             }
@@ -385,7 +407,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
         Marker mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
                 .position(puntoCasa)
                 .title("Punto " + puntoCandidato.getCodigo())
-                .draggable(true)
+                .draggable(false)
         );
         setLocationOnInputLatLong(mLocationMarker);
         //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(12.154, -86.290), 15.0f));

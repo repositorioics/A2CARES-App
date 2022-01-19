@@ -299,7 +299,7 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.a2cares.app.wizard.model.NumberPage")) {
                 NumberPage np = (NumberPage) page;
                 String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-                if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Double.valueOf(valor) || np.getmLowerOrEqualsThan() < Double.valueOf(valor)))
+                if((np.ismValRange() && ((valor != null && !valor.isEmpty()) && (np.getmGreaterOrEqualsThan() > Double.parseDouble(valor) || np.getmLowerOrEqualsThan() < Double.parseDouble(valor))))
                         || (np.ismValPattern() && !valor.matches(np.getmPattern()))){
                     cutOffPage = i;
                     break;

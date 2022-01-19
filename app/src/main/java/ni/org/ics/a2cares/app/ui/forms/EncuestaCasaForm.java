@@ -145,23 +145,23 @@ public class EncuestaCasaForm extends AbstractWizardModel {
 
         Page scTieneVehiculo = new SingleFixedChoicePage(this, labels.getTieneVehiculo(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scMoto = new SingleFixedChoicePage(this, labels.getTieneMoto(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page npAnioMoto = new NumberPage(this, labels.getAnioFabMoto(), "", Constants.WIZARD, false).setRangeValidation(true,1960, calendar.get(Calendar.YEAR)).setRequired(true);
+        Page npAnioMoto = new NumberPage(this, labels.getAnioFabMoto(), "", Constants.WIZARD, false).setRangeValidation(true,1960, calendar.get(Calendar.YEAR)).setRequired(false);
         Page tpMarcaMoto =  new TextPage(this, labels.getMarcaMoto(), "", Constants.WIZARD, false).setRequired(true);
         Page scMTCarro = new SingleFixedChoicePage(this, labels.getTieneCarro(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page npAnioFabCarro = new NumberPage(this, labels.getAnioFabCarro(), "", Constants.WIZARD, false).setRangeValidation(true,1960, calendar.get(Calendar.YEAR)).setRequired(true);
+        Page npAnioFabCarro = new NumberPage(this, labels.getAnioFabCarro(), "", Constants.WIZARD, false).setRangeValidation(true,1960, calendar.get(Calendar.YEAR)).setRequired(false);
         Page tpMarcaCarro =  new TextPage(this, labels.getMarcaCarro(), "", Constants.WIZARD, false).setRequired(true);
         Page scMTMicrobus = new SingleFixedChoicePage(this, labels.getTieneMicrobus(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page npAnioFabMicrobus = new NumberPage(this, labels.getAnioFabMicrobus(), "", Constants.WIZARD, false).setRangeValidation(true,1960, calendar.get(Calendar.YEAR)).setRequired(true);
+        Page npAnioFabMicrobus = new NumberPage(this, labels.getAnioFabMicrobus(), "", Constants.WIZARD, false).setRangeValidation(true,1960, calendar.get(Calendar.YEAR)).setRequired(false);
         Page tpMarcaMicrobus =  new TextPage(this, labels.getMarcaMicrobus(), "", Constants.WIZARD, false).setRequired(true);
         Page scMTCamioneta = new SingleFixedChoicePage(this, labels.getTieneCamioneta(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page npAnioFabCamioneta = new NumberPage(this, labels.getAnioFabCamioneta(), "", Constants.WIZARD, false).setRangeValidation(true,1960, calendar.get(Calendar.YEAR)).setRequired(true);
+        Page npAnioFabCamioneta = new NumberPage(this, labels.getAnioFabCamioneta(), "", Constants.WIZARD, false).setRangeValidation(true,1960, calendar.get(Calendar.YEAR)).setRequired(false);
         Page tpMarcaCamioneta =  new TextPage(this, labels.getMarcaCamioneta(), "", Constants.WIZARD, false).setRequired(true);
         Page scMTCamion = new SingleFixedChoicePage(this, labels.getTieneCamion(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page npAnioFabCamion = new NumberPage(this, labels.getAnioFabCamion(), "", Constants.WIZARD, false).setRangeValidation(true,1960, calendar.get(Calendar.YEAR)).setRequired(true);
+        Page npAnioFabCamion = new NumberPage(this, labels.getAnioFabCamion(), "", Constants.WIZARD, false).setRangeValidation(true,1960, calendar.get(Calendar.YEAR)).setRequired(false);
         Page tpMarcaCamion =  new TextPage(this, labels.getMarcaCamion(), "", Constants.WIZARD, false).setRequired(true);
         Page scMTOtro = new SingleFixedChoicePage(this, labels.getTieneOtroMedioTransAuto(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page tpMTOtroDesc =  new TextPage(this, labels.getOtroMedioTransAuto(), "", Constants.WIZARD, false).setRequired(true);
-        Page npAnioFabOtroMedioTrans = new NumberPage(this, labels.getAnioFabOtroMedioTrans(), "", Constants.WIZARD, false).setRangeValidation(true,1960, calendar.get(Calendar.YEAR)).setRequired(true);
+        Page npAnioFabOtroMedioTrans = new NumberPage(this, labels.getAnioFabOtroMedioTrans(), "", Constants.WIZARD, false).setRangeValidation(true,1960, calendar.get(Calendar.YEAR)).setRequired(false);
         Page tpMarcaOtroMedioTrans =  new TextPage(this, labels.getMarcaOtroMedioTrans(), "", Constants.WIZARD, false).setRequired(true);
 
         Page scTipoCocina = new SingleFixedChoicePage(this, labels.getTipoCocina(), "", Constants.WIZARD, true).setChoices(catTipoCocina).setRequired(true);

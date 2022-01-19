@@ -61,7 +61,7 @@ public class RecepcionRojoLaboratorioActivity extends AbstractAsyncActivity {
     private String username;
     private SharedPreferences settings;
     private DeviceInfo infoMovil;
-    private Participante participante = null;
+    //private Participante participante = null;
     private List<Serologia> mRecepcionMuestras = new ArrayList<Serologia>();
 
     public static final int BARCODE_CAPTURE = 2;
@@ -189,16 +189,20 @@ public class RecepcionRojoLaboratorioActivity extends AbstractAsyncActivity {
                     }
 
                     if (codigo != null && codigo.matches("^\\d{4}$")){
-                        estudiosAdapter.open();
-                        if (estudiosAdapter.serologiaRegistrada(MainDBConstants.participante + "='" + codigo + "' and " + MainDBConstants.fecha + "=" + todayWithZeroTime.getTime())) {
-                            editCodigo.setText(null);
-                            codigo = null;
-                            participante = null;
-                            showToast("Ya ingresó este código!!!!");
-                        } else {
-                            participante = estudiosAdapter.getParticipante(MainDBConstants.codigo + "='" + codigo + "'", null);
+                        try {
+
+                            estudiosAdapter.open();
+                            if (estudiosAdapter.serologiaRegistrada(MainDBConstants.participante + "='" + codigo + "' and " + MainDBConstants.fecha + "=" + todayWithZeroTime.getTime())) {
+                                editCodigo.setText(null);
+                                codigo = null;
+                                showToast("Ya ingresó este código!!!!");
+                            }
+                        } catch (Exception e){
+                            showToast("Código Inválido!!!!");
+                            e.printStackTrace();
+                        }finally {
+                            estudiosAdapter.close();
                         }
-                        estudiosAdapter.close();
                     }
                     else
                     {
@@ -265,8 +269,6 @@ public class RecepcionRojoLaboratorioActivity extends AbstractAsyncActivity {
                     serologia.setFecha(todayWithZeroTime);
                     serologia.setVolumen(volumen);
                     serologia.setObservacion(observacion);
-                    //serologia.setCodigo_casa(participante.getCasa().getCodigo());
-                    //serologia.setEdadMeses(participante.getEdadMeses());
                     serologia.setRecordUser(username);
                     serologia.setEstado(Constants.STATUS_NOT_SUBMITTED);
                     serologia.setRecordDate(new Date());
@@ -365,15 +367,21 @@ public class RecepcionRojoLaboratorioActivity extends AbstractAsyncActivity {
                 }
             }
             if (codigo != null && codigo.matches("^\\d{4}$")){
-                estudiosAdapter.open();
-                if (estudiosAdapter.serologiaRegistrada(MainDBConstants.participante + "='" + codigo + "' and " + MainDBConstants.fecha + "=" + todayWithZeroTime.getTime())) {
-                    participante = null;
-                    showToast("Ya ingresó este código!!!!");
-                }else{
-                    participante = estudiosAdapter.getParticipante(MainDBConstants.codigo + "='" + codigo + "'", null);
-                    editCodigo.setText(codigo.toString());
+                try {
+                    estudiosAdapter.open();
+                    if (estudiosAdapter.serologiaRegistrada(MainDBConstants.participante + "='" + codigo + "' and " + MainDBConstants.fecha + "=" + todayWithZeroTime.getTime())) {
+                        editCodigo.setText(null);
+                        codigo = null;
+                        showToast("Ya ingresó este código!!!!");
+                    } else {
+                        editCodigo.setText(codigo.toString());
+                    }
+                } catch (Exception e){
+                    showToast("Lectura Inválida!!!!");
+                    e.printStackTrace();
+                }finally {
+                    estudiosAdapter.close();
                 }
-                estudiosAdapter.close();
             }
             else
             {
