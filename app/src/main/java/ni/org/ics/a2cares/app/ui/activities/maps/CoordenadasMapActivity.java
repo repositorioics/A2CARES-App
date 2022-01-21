@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -39,6 +42,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -89,6 +93,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
     private static Participante mParticipante = new Participante();
     private static Casa mCasa = null;
     private static PuntoCandidato mPunto = null;
+    private List<PuntoCandidato> mPuntos = new ArrayList<>();
 
     private GoogleMap mGoogleMap;
 
@@ -143,7 +148,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
             mButtonSave.setVisibility(View.GONE);
 
         }
-        new CoordenadaActualTask().execute();
+        //new CoordenadaActualTask().execute();
     }
 
     @Override
@@ -407,11 +412,17 @@ public class CoordenadasMapActivity extends AppCompatActivity
         Marker mLocationMarker = mGoogleMap.addMarker(new MarkerOptions()
                 .position(puntoCasa)
                 .title("Punto " + puntoCandidato.getCodigo())
+                .zIndex(1.0f)
+                .icon(BitmapDescriptorFactory.fromBitmap(resizeBitmap("ic_marker_main",120,105)))
                 .draggable(false)
         );
+
         setLocationOnInputLatLong(mLocationMarker);
         //mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(12.154, -86.290), 15.0f));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(puntoCasa, 15));
+
+        new CargarCandidatosBarrioPuntoTask().execute();
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
@@ -431,6 +442,24 @@ public class CoordenadasMapActivity extends AppCompatActivity
         }else {
             mGoogleMap.setMyLocationEnabled(true);
         }
+    }
+
+    private void setPointsBarrioLocation(){
+        for(PuntoCandidato punto : mPuntos){
+            mGoogleMap.addMarker(new MarkerOptions()
+                    //.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                    .icon(BitmapDescriptorFactory.fromBitmap(resizeBitmap("ic_marker_secondary",83,72)))
+                    .position(new LatLng(punto.getLatitud(), punto.getLongitud()))
+                    .title(punto.getCodigo().toString())
+                    //.alpha(0.7f) opacidad
+                    .draggable(false)
+            );
+        }
+    }
+
+    public Bitmap resizeBitmap(String drawableName, int width, int height){
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(drawableName, "mipmap", getPackageName()));
+        return Bitmap.createScaledBitmap(imageBitmap, width, height, false);
     }
 
     private void setParticipantLocation() {
@@ -655,6 +684,41 @@ public class CoordenadasMapActivity extends AppCompatActivity
         protected void onPostExecute(String resultado) {
             // after the request completes, hide the progress indicator
             nDialog.dismiss();
+        }
+    }
+
+    private class CargarCandidatosBarrioPuntoTask extends AsyncTask<String, Void, String> {
+
+        private ProgressDialog nDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            nDialog = new ProgressDialog(CoordenadasMapActivity.this);
+            nDialog.setMessage("....");
+            nDialog.setTitle("Cargando mapa");
+            nDialog.setIndeterminate(false);
+            nDialog.setCancelable(true);
+            nDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... arg0) {
+            try {
+                estudiosAdapter.open();
+                mPuntos = estudiosAdapter.getPuntoCandidatos(MainDBConstants.barrio + "='"+mPunto.getBarrio()+"' and "+MainDBConstants.codigo + " <> " + mPunto.getCodigo(), null);
+                return "exito";
+            } catch (Exception e) {
+                Log.e(this.getClass().getName(), e.getLocalizedMessage(), e);
+                return "error";
+            }finally {
+                estudiosAdapter.close();
+            }
+        }
+
+        protected void onPostExecute(String resultado) {
+            // after the request completes, hide the progress indicator
+            nDialog.dismiss();
+            setPointsBarrioLocation();
         }
     }
 

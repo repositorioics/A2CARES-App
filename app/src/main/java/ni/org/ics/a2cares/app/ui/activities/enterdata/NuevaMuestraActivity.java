@@ -475,6 +475,12 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
             String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
             estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(), mPass, false, false);
             estudiosAdapter.open();
+
+            Muestra muestraExiste = estudiosAdapter.getMuestra(MainDBConstants.tuboRojo + "='1' and "+MainDBConstants.codigoRojo + "='"+codigoRojo+"' and "+MainDBConstants.fechaMuestra + "="+DateUtil.getTodayWithZeroTime().getTime(), null);
+            if (muestraExiste!= null){
+                showToast(getString(R.string.errorMx));
+                return;
+            }
             Muestra muestra = new Muestra();
             muestra.setIdMuestra(infoMovil.getId());
             muestra.setParticipante(participante);
@@ -495,6 +501,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
             muestra.setEstudiosAct(Constants.ESTUDIO);
             muestra.setTerreno("1");
             muestra.setFechaMuestra(DateUtil.StringToDate(fechaMuestra, "dd/MM/yyyy"));
+
 
             //Metadata
             muestra.setRecordDate(new Date());

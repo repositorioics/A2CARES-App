@@ -102,4 +102,17 @@ public class DateUtil {
             return "ND";
         }
     }
+
+    public static Date getTodayWithZeroTime() {
+        Date todayWithZeroTime = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date today = new Date();
+        try {
+            todayWithZeroTime =formatter.parse(formatter.format(today));
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return todayWithZeroTime;
+    }
 }

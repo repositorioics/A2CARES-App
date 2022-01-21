@@ -1143,7 +1143,7 @@ public class EstudioDBAdapter {
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             mMuestras=MuestraHelper.crearMuestra(cursor);
-            Participante participante = this.getParticipante(MainDBConstants.participante + "='" + cursor.getString(cursor.getColumnIndex(MainDBConstants.participante)) +"'", null);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "='" + cursor.getString(cursor.getColumnIndex(MainDBConstants.participante)) +"'", null);
             if (participante != null) mMuestras.setParticipante(participante);
         }
         if (!cursor.isClosed()) cursor.close();
