@@ -17,6 +17,7 @@ import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.listeners.UploadListener;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.task.UploadAllTask;
+import ni.org.ics.a2cares.app.utils.Constants;
 import ni.org.ics.a2cares.app.utils.FileUtils;
 
 @SuppressWarnings("deprecation")
@@ -77,7 +78,10 @@ public class UploadAllActivity extends Activity implements UploadListener {
 		if(result!=null){
 			if (result.matches("Datos recibidos!")) {
 				setResult(RESULT_OK);
-			} else {
+			} else if (result.matches(Constants.NO_DATA)) {
+				setResult(Constants.RESULT_NO_DATA);
+			}
+			else {
 				Intent intent = new Intent();
 				intent.putExtra("resultado", result);
 				setResult(RESULT_CANCELED, intent);

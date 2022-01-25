@@ -124,110 +124,132 @@ public class UploadAllTask extends UploadTask {
             mPuntos = estudioAdapter.getPuntoCandidatos(filtro, null);
             mObsequiosGeneral = estudioAdapter.getObsequiosGenerales(filtro, null);
 
-			publishProgress("Datos completos!", "2", "2");
-			
-			//Enviando datos
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, TAMIZAJE);
-            error = cargarTamizajes(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TAMIZAJE);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CASA);
-            error = cargarCasas(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CASA);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE);
-            error = cargarParticipantes(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE_PRC);
-            error = cargarParticipantesProcesos(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE_PRC);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, CARTAS_CONSENT);
-            error = cargarCartasConsentimientos(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CARTAS_CONSENT);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, TELEFONOS);
-            error = cargarTelefonos(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TELEFONOS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, COORDENADAS);
-            error = cargarCoordenadas(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, COORDENADAS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITA);
-            error = cargarVisitasTerreno(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITA);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_CASA);
-            error = cargarEncuestasCasa(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_CASA);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_PARTICIPANTE);
-            error = cargarEncuestasParticipantes(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PARTICIPANTE);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_PESOTALLA);
-            error = cargarEncuestasPesoTalla(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PESOTALLA);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS);
-            error = cargarMuestras(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, RECEPCION_MUESTRA);
-            error = cargarRecepcionMuestras(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RECEPCION_MUESTRA);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, RECEPCION_SERO_LAB);
-            error = cargarSerologiasLab(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RECEPCION_SERO_LAB);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, RAZON_NO_DATA);
-            error = cargarRazonesNoData(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RAZON_NO_DATA);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, PUNTO_DESCARTADO);
-            error = cargarPuntosDescartados(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PUNTO_DESCARTADO);
-                return error;
-            }
-            actualizarBaseDatos(Constants.STATUS_SUBMITTED, OBSEQUIOS);
-            error = cargarObsequioGeneral(url, username, password);
-            if (!error.matches(Constants.DATOS_RECIBIDOS)){
-                actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, OBSEQUIOS);
-                return error;
+            if (mVisitasTerreno.size() <= 0 &&
+                    mTamizajes.size() <= 0 &&
+                    mCasas.size() <= 0 &&
+                    mParticipantes.size() <= 0 &&
+                    mParticipantesProc.size() <= 0 &&
+                    mCartasConsent.size() <= 0 &&
+                    mTelefonos.size() <= 0 &&
+                    mCoordenadas.size() <= 0 &&
+                    mEncuestasCasas.size() <= 0 &&
+                    mEncuestasParticipante.size() <= 0 &&
+                    mEncuestasPesoTalla.size() <= 0 &&
+                    mMuestras.size() <= 0 &&
+                    mRecepcionMuestras.size() <= 0 &&
+                    mSerologiasLab.size() <= 0 &&
+                    mNoData.size() <= 0 &&
+                    mPuntos.size() <= 0 &&
+                    mObsequiosGeneral.size() <= 0
+            ) {
+                error = Constants.NO_DATA;
+            } else {
+
+                publishProgress("Datos completos!", "2", "2");
+
+                //Enviando datos
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, TAMIZAJE);
+                error = cargarTamizajes(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TAMIZAJE);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CASA);
+                error = cargarCasas(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CASA);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE);
+                error = cargarParticipantes(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PARTICIPANTE_PRC);
+                error = cargarParticipantesProcesos(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PARTICIPANTE_PRC);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CARTAS_CONSENT);
+                error = cargarCartasConsentimientos(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CARTAS_CONSENT);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, TELEFONOS);
+                error = cargarTelefonos(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, TELEFONOS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, COORDENADAS);
+                error = cargarCoordenadas(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, COORDENADAS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, VISITA);
+                error = cargarVisitasTerreno(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, VISITA);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_CASA);
+                error = cargarEncuestasCasa(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_CASA);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_PARTICIPANTE);
+                error = cargarEncuestasParticipantes(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PARTICIPANTE);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_PESOTALLA);
+                error = cargarEncuestasPesoTalla(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_PESOTALLA);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS);
+                error = cargarMuestras(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, RECEPCION_MUESTRA);
+                error = cargarRecepcionMuestras(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RECEPCION_MUESTRA);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, RECEPCION_SERO_LAB);
+                error = cargarSerologiasLab(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RECEPCION_SERO_LAB);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, RAZON_NO_DATA);
+                error = cargarRazonesNoData(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RAZON_NO_DATA);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, PUNTO_DESCARTADO);
+                error = cargarPuntosDescartados(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, PUNTO_DESCARTADO);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, OBSEQUIOS);
+                error = cargarObsequioGeneral(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, OBSEQUIOS);
+                    return error;
+                }
             }
 		} catch (Exception e1) {
 			e1.printStackTrace();

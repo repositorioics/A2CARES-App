@@ -12,6 +12,8 @@ public class Constants {
 
     //upload
     public static final String DATOS_RECIBIDOS = "Datos recibidos!";
+    public static final String NO_DATA = "-1";
+    public static final int RESULT_NO_DATA = 999;
 
     //Form wizard
     public static final String ROJO = "#db0000";

@@ -26,6 +26,7 @@
 
     <string name="exit">Salir</string>
     <string name="success">Operación exitosa!</string>
+    <string name="no_data_to_send">No hay información a enviar!</string>
     <string name="error">Ha ocurrido un error! <xliff:g id="desc_error">%1$s</xliff:g></string>
     <string name="storage_error">Medio de almacenamiento no disponible!</string>
     <string name="yes">Si</string>

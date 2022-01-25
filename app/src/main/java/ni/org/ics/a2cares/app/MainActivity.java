@@ -48,9 +48,10 @@ public class MainActivity extends AbstractAsyncActivity {
 
     private static final int EXIT = 1;
     private static final int DOWNLOAD = 2;
-    private static final int VERIFY = 4;
-    private static final int UPDATE_EQUIPO = 11;
-    private static final int UPDATE_SERVER = 12;
+    private static final int VERIFY = 3;
+    private static final int UPDATE_EQUIPO = 4;
+    private static final int UPDATE_SERVER = 5;
+    private static final int NO_DATA_SEND = 6;
 
     private GridView gridView;
     private TextView textView;
@@ -228,8 +229,22 @@ public class MainActivity extends AbstractAsyncActivity {
                 alert.show();
                 return;
             }
-        }
-        else{
+        } else if (resultCode == Constants.RESULT_NO_DATA) {
+            if (requestCode == UPDATE_SERVER){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(getApplicationContext().getString(R.string.confirm));
+                builder.setIcon(android.R.drawable.ic_dialog_info);
+                builder.setMessage(getApplicationContext().getString(R.string.no_data_to_send))
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //do things
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        } else{
             if (requestCode == UPDATE_EQUIPO||requestCode == UPDATE_SERVER){
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getApplicationContext().getString(R.string.confirm));
@@ -309,36 +324,18 @@ public class MainActivity extends AbstractAsyncActivity {
                         dialog.dismiss();
                     }
                 });
-
                 break;
-            /*case VERIFY_DOWNLOAD:
-                builder.setTitle(this.getString(R.string.confirm));
-                builder.setMessage(getString(R.string.enter_pin_download));
-                builder.setIcon(R.drawable.ic_menu_login);
-                // Set an EditText view to get user input
-                final EditText input = new EditText(this);
-                input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                builder.setView(input);
-                builder.setPositiveButton(this.getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        if (input.getText().toString().length()>0) {
-                            String mPin = input.getText().toString();
-                            new VerificarPinTask().execute(mPin);
-                        }else{
-                            createDialog(VERIFY_DOWNLOAD);
-                            Toast.makeText(getApplicationContext(),	getString(R.string.pin_required), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-                builder.setNegativeButton(this.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing
-                        dialog.dismiss();
-                    }
-                });
-                break;*/
+            case NO_DATA_SEND:
+                builder.setTitle(getApplicationContext().getString(R.string.confirm));
+                builder.setIcon(android.R.drawable.ic_dialog_info);
+                builder.setMessage(getApplicationContext().getString(R.string.no_data_to_send))
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //do things
+                            }
+                        });
+                break;
             default:
                 break;
         }
