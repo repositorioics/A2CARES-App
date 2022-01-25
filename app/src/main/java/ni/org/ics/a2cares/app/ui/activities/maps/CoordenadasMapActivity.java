@@ -297,6 +297,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
         addPolygon(polygonsHelper.getPolygonBloqueK());
         addPolygon(polygonsHelper.getPolygonCamiloOrtega1());
         addPolygon(polygonsHelper.getPolygonElLaurel());
+        addPolygon(polygonsHelper.getPolygonGermanPomaresTicomo());
         addPolygon(polygonsHelper.getPolygonSanJoseDeLasColinas());
         addPolygon(polygonsHelper.getPolygonSolidaridad());
         addPolygon(polygonsHelper.getPolygonTangaraBuenaVista());

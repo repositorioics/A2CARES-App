@@ -15,14 +15,14 @@ public class PolygonsHelper {
 
     List<LatLng> getPolygonAlexisArguello2() {
         List<LatLng> vertices = new ArrayList<>();
-        vertices.add(new LatLng(-86.306039, 12.101318));
-        vertices.add(new LatLng(-86.305737, 12.10122));
-        vertices.add(new LatLng(-86.305776, 12.100193));
-        vertices.add(new LatLng(-86.307811, 12.100031));
-        vertices.add(new LatLng(-86.307773, 12.100973));
-        vertices.add(new LatLng(-86.307939, 12.101646));
-        vertices.add(new LatLng(-86.306072, 12.101627));
-        vertices.add(new LatLng(-86.306039, 12.101318));
+        vertices.add(new LatLng(12.101318, -86.306039));
+        vertices.add(new LatLng(12.10122, -86.305737));
+        vertices.add(new LatLng(12.100193, -86.305776));
+        vertices.add(new LatLng(12.100031, -86.307811));
+        vertices.add(new LatLng( 12.100973, -86.307773));
+        vertices.add(new LatLng(12.101646, -86.307939));
+        vertices.add(new LatLng(12.101627, -86.306072));
+        vertices.add(new LatLng(12.101318, -86.306039));
         return vertices;
     }
 
@@ -118,6 +118,21 @@ public class PolygonsHelper {
         vertices.add(new LatLng( 12.097727, -86.311678));
         vertices.add(new LatLng( 12.09745, -86.311524));
         vertices.add(new LatLng( 12.097261, -86.311138));
+        return vertices;
+    }
+
+    List<LatLng> getPolygonGermanPomaresTicomo() {
+        List<LatLng> vertices = new ArrayList<>();
+        vertices.add(new LatLng( 12.1085925, -86.3128164));
+        vertices.add(new LatLng( 12.1081584, -86.3126966));
+        vertices.add(new LatLng( 12.1084441, -86.3112984));
+        vertices.add(new LatLng( 12.1075957, -86.310648));
+        vertices.add(new LatLng( 12.1072696, -86.3104691));
+        vertices.add(new LatLng( 12.1071766, -86.3108142));
+        vertices.add(new LatLng( 12.1073012, -86.3136297));
+        vertices.add(new LatLng( 12.1079356, -86.3140412));
+        vertices.add(new LatLng( 12.108542, -86.3141101));
+        vertices.add(new LatLng( 12.1085925, -86.3128164));
         return vertices;
     }
 
@@ -348,9 +363,12 @@ public class PolygonsHelper {
         vertices.add(new LatLng( 12.1015928, -86.3079371));
         vertices.add(new LatLng( 12.100973, -86.307773));
         vertices.add(new LatLng( 12.100340957680141, -86.307801808430938));
-        vertices.add(new LatLng( 12.100299847743457, -86.308240314422235));
-        vertices.add(new LatLng( 12.100258737806772, -86.308719930350222));
-        vertices.add(new LatLng( 12.1023913, -86.3089879));
+
+        vertices.add(new LatLng( 12.09918744119444, -86.307879780040153));
+        vertices.add(new LatLng( 12.099209496283397, -86.308563487797826));
+        vertices.add(new LatLng( 12.100130296247352, -86.308800580004117));
+        vertices.add(new LatLng( 12.100243, -86.3089879));
+        vertices.add(new LatLng( 12.102330291370816, -86.309059727299356));
         vertices.add(new LatLng( 12.1021375, -86.3106357));
         vertices.add(new LatLng( 12.102595, -86.3109167));
         vertices.add(new LatLng( 12.1034526, -86.3109846));
@@ -362,8 +380,9 @@ public class PolygonsHelper {
         vertices.add(new LatLng( 12.1061131, -86.3103287));
         vertices.add(new LatLng( 12.1064705, -86.3103823));
         vertices.add(new LatLng( 12.1069115, -86.3103063));
-        vertices.add(new LatLng( 12.1072696, -86.3104691));
-        vertices.add(new LatLng( 12.1075957, -86.310648));
+        vertices.add(new LatLng( 1072696, -86.3104691));
+        vertices.add(new LatLng( 1075957, -86.310648));
+
         return vertices;
     }
 

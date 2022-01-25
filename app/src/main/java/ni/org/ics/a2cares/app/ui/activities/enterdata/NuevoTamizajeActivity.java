@@ -27,7 +27,6 @@ import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
 import ni.org.ics.a2cares.app.domain.users.UserPermissions;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuParticipanteActivity;
-import ni.org.ics.a2cares.app.ui.adapters.ParticipanteListAdapter;
 import ni.org.ics.a2cares.app.ui.forms.TamizajeForm;
 import ni.org.ics.a2cares.app.ui.forms.TamizajeFormLabels;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
@@ -68,8 +67,8 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
     private boolean notificarCambios = true;
     private Integer edadAnios = 0;
     private Integer edadSemanas = 0;
-    private String[] catRelFamMenorEdad; //relación familiar del tutor cuando es menor de edad
-    private String[] catRelFamMayorEdad; //relación familiar del tutor cuando es mayor de edad
+    //private String[] catRelFamMenorEdad; //relación familiar del tutor cuando es menor de edad
+    //private String[] catRelFamMayorEdad; //relación familiar del tutor cuando es mayor de edad
     private String[] catVerifTutAlf; //cosas a verificar cuando tutor es alfabeto
     private String[] catVerifTutNoAlf; //cosas a verificar cuando tutor no es alfabeto
     private int totalVerifTutor = 0; //total opciones a marcar requeridas
@@ -381,9 +380,10 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                     changeStatus(mWizardModel.findByKey(labels.getAceptaTamizaje()), true);
                     changeStatus(mWizardModel.findByKey(labels.getRazonNoAceptaTamizaje()), false);
                 }
+                /* Siempre poner todas las relaciones familiares
                 SingleFixedChoicePage pagetmp = (SingleFixedChoicePage)mWizardModel.findByKey(labels.getRelacionFamiliarTutor());
                 pagetmp.setChoices(edadAnios<18?catRelFamMenorEdad:catRelFamMayorEdad);
-
+*/
                 LabelPage pageEdad = (LabelPage)mWizardModel.findByKey(labels.getEdad());
                 String edadFormateada = edad[0] + " años " + edad[1] + " meses " + edad[2] + " dias";
                 pageEdad.setHint(edadFormateada);
@@ -1330,8 +1330,8 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
             try {
                 estudiosAdapter.open();
                 mUser = estudiosAdapter.getPermisosUsuario(MainDBConstants.USERNAME + "='" +username+"'", null);
-                catRelFamMayorEdad = estudiosAdapter.getSpanishMessageResources(MainDBConstants.catRoot + "='CAT_RF_TUTOR'", MainDBConstants.order);
-                catRelFamMenorEdad = estudiosAdapter.getSpanishMessageResources(MainDBConstants.catRoot + "='CAT_RF_TUTOR' and "+MainDBConstants.catKey + " != '8'", MainDBConstants.order);
+                //catRelFamMayorEdad = estudiosAdapter.getSpanishMessageResources(MainDBConstants.catRoot + "='CAT_RF_TUTOR'", MainDBConstants.order);
+                //catRelFamMenorEdad = estudiosAdapter.getSpanishMessageResources(MainDBConstants.catRoot + "='CAT_RF_TUTOR' and "+MainDBConstants.catKey + " != '8'", MainDBConstants.order);
                 catVerifTutNoAlf = estudiosAdapter.getSpanishMessageResources(MainDBConstants.catRoot + "='CAT_VERIFICA'", MainDBConstants.order);
                 catVerifTutAlf = estudiosAdapter.getSpanishMessageResources(MainDBConstants.catKey + " in ('1','2','3','6') and " + MainDBConstants.catRoot + "='CAT_VERIFICA'", MainDBConstants.order);
                 estudiosAdapter.close();
