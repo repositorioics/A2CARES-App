@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.list.ListaOrdenesLaboratorioActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/label_logo"
+        style="?android:textAppearanceLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@mipmap/ic_samples"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:text="@string/lab_orders"
+        android:textStyle="bold" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:id="@+id/recycler_view"
+        tools:context=".ui.activities.list.ListaOrdenesLaboratorioActivity">
+    </android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="?android:attr/buttonBarStyle">
+    <Button
+        android:id="@+id/add_order"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/agregarOrden"
+        android:contentDescription="@string/agregarOrden"
+        android:drawableStart="@mipmap/ic_add" />
+    </LinearLayout>
+</LinearLayout>

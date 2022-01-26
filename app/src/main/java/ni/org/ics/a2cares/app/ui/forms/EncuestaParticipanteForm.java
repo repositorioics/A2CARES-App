@@ -112,9 +112,9 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
 
         Page personaVive = new SingleFixedChoicePage(this, labels.getPersonaVive(), "", Constants.WIZARD, false).setChoices(catConQuien).setRequired(true);
         Page ordenNac = new NumberPage(this, labels.getOrdenNac(), "", Constants.WIZARD, false).setRangeValidation(true, 1, 14).setRequired(true);
-        Page padreAlfabeto = new SingleFixedChoicePage(this, labels.getPadreAlfabeto(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page padreAlfabeto = new SingleFixedChoicePage(this, labels.getPadreAlfabeto(), "", Constants.WIZARD, false).setChoices(catSiNoDes).setRequired(true);
         Page papaNivel = new SingleFixedChoicePage(this, labels.getNivelEscolarPadre(), "", Constants.WIZARD, false).setChoices(catNivelEdu).setRequired(true);
-        Page trabajaPadre = new SingleFixedChoicePage(this, labels.getTrabajaPadre(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
+        Page trabajaPadre = new SingleFixedChoicePage(this, labels.getTrabajaPadre(), "", Constants.WIZARD, false).setChoices(catSiNoDes).setRequired(true);
         Page papaTipoTra = new SingleFixedChoicePage(this, labels.getTipoTrabajoPadre(), "", Constants.WIZARD, false).setChoices(catTipoTrab).setRequired(true);
         Page madreAlfabeta = new SingleFixedChoicePage(this, labels.getMadreAlfabeta(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page mamaNivel = new SingleFixedChoicePage(this, labels.getNivelEscolarMadre(), "", Constants.WIZARD, false).setChoices(catNivelEdu).setRequired(true);

@@ -832,4 +832,38 @@ public class MainDBConstants {
             + deviceId + " text, "
             + estado + " text not null, "
             + "primary key (" + id + "));";
+
+    //Tabla puntos ordenes de laboratorio para muestras de enfermos
+    public static final String ORDEN_LAB_TABLE = "orden_laboratorio";
+
+    //Campos tabla puntos ordenes de laboratorio para muestras de enfermos
+    public static final String idOrden="idOrden";
+    public static final String fechaOrden="fechaOrden";
+    public static final String tipoOrden="tipoOrden";
+    public static final String fis="fis";
+    public static final String fif="fif";
+    public static final String categoria="categoria";
+    public static final String consulta="consulta";
+    public static final String tipoMuestra="tipoMuestra";
+
+    //Crear tabla puntos ordenes de laboratorio para muestras de enfermos
+    public static final String CREATE_ORDEN_LAB_TABLE = "create table if not exists "
+            + ORDEN_LAB_TABLE + " ("
+            + idOrden + " text not null, "
+            + participante + " text, "
+            + fechaOrden + " date, "
+            + tipoOrden + " text, "
+            + fis + " date, "
+            + fif + " date, "
+            + categoria + " text, "
+            + consulta + " text, "
+            + tipoMuestra + " text, "
+            + estudiosAct + " text, "
+            + observacion + " text, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + idOrden + "));";
 }

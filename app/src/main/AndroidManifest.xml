@@ -88,6 +88,8 @@
         <activity android:name=".ui.activities.list.ListaPuntosCandidatosActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.enterdata.DescartarPuntoCandidatoActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.enterdata.NuevoObsequioActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.menu.MenuMedicoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.list.ListaOrdenesLaboratorioActivity" android:screenOrientation="portrait"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

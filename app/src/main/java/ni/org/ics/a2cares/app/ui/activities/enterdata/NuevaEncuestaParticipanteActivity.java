@@ -1162,7 +1162,7 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
             }
 
             if (tieneValor(padreAlfabeto)) {
-                MessageResource messageResource = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + padreAlfabeto + "' and " + MainDBConstants.catRoot + "='"+ catSiNo +"'", null);
+                MessageResource messageResource = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + padreAlfabeto + "' and " + MainDBConstants.catRoot + "='"+ catSiNoDes +"'", null);
                 if (messageResource != null) encuestaParticipante.setPadreAlfabeto(messageResource.getCatKey());
             }
 
@@ -1172,7 +1172,7 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
             }
 
             if (tieneValor(trabajaPadre)) {
-                MessageResource messageResource = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + trabajaPadre + "' and " + MainDBConstants.catRoot + "='"+ catSiNo +"'", null);
+                MessageResource messageResource = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + trabajaPadre + "' and " + MainDBConstants.catRoot + "='"+ catSiNoDes +"'", null);
                 if (messageResource != null) encuestaParticipante.setTrabajaPadre(messageResource.getCatKey());
             }
 

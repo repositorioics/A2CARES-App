@@ -17,18 +17,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.springframework.http.HttpAuthentication;
-import org.springframework.http.HttpBasicAuthentication;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
 
 import ni.org.ics.a2cares.app.bluetooth.activity.ChatActivity;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
@@ -38,6 +26,7 @@ import ni.org.ics.a2cares.app.ui.activities.BuscarParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoTamizajeActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaPuntosCandidatosActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuLaboratorioActivity;
+import ni.org.ics.a2cares.app.ui.activities.menu.MenuMedicoActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuSupervisorActivity;
 import ni.org.ics.a2cares.app.ui.activities.server.DownloadBaseActivity;
 import ni.org.ics.a2cares.app.ui.activities.server.UploadAllActivity;
@@ -157,6 +146,18 @@ public class MainActivity extends AbstractAsyncActivity {
                     case 8:
                             i = new Intent(getApplicationContext(), ListaPuntosCandidatosActivity.class);
                             startActivity(i);
+                        break;
+                    case 9:
+                        estudiosAdapter.open();
+                        Boolean esMedico = estudiosAdapter.buscarRol(username, "ROLE_MED");
+                        estudiosAdapter.close();
+                        if (esMedico){
+                            i = new Intent(getApplicationContext(), MenuMedicoActivity.class);
+                            startActivity(i);
+                        }
+                        else{
+                            showToast(getApplicationContext().getString(R.string.perm_error));
+                        }
                         break;
                     default:
                         break;

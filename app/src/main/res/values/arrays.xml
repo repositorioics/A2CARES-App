@@ -38,6 +38,10 @@
         <item>@string/lab_1</item>
     </string-array>
 
+    <string-array name="menu_doctor">
+        <item>@string/lab_orders</item>
+    </string-array>
+
     <string-array name="autosize_text_sizes">
         <item>10sp</item>
         <item>12sp</item>

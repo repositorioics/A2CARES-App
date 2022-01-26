@@ -44,7 +44,6 @@ public class DescargarApkActivity extends Activity {
     private Context CONTEXT;
     private SharedPreferences settings;
     private String strUrlContext;
-    private final static int PROGRESS_DIALOG = 1;
     private String username;
     private String password;
     private String url;

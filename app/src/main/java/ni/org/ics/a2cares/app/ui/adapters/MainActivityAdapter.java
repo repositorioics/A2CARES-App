@@ -73,6 +73,10 @@ public class MainActivityAdapter extends ArrayAdapter<String> {
 				img=getContext().getResources().getDrawable(R.mipmap.ic_gps_candidates);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
+			case 9:
+				img=getContext().getResources().getDrawable(R.mipmap.ic_doctor);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				break;
 			default:
 				img=getContext().getResources().getDrawable(R.mipmap.ic_help);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);

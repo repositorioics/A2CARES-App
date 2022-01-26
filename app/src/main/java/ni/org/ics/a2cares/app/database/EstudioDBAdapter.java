@@ -25,6 +25,7 @@ import ni.org.ics.a2cares.app.database.helpers.EstudiosHelper;
 import ni.org.ics.a2cares.app.database.helpers.MessageResourceHelper;
 import ni.org.ics.a2cares.app.database.helpers.MuestraHelper;
 import ni.org.ics.a2cares.app.database.helpers.ObsequioHelper;
+import ni.org.ics.a2cares.app.database.helpers.OrdenLaboratorioHelper;
 import ni.org.ics.a2cares.app.database.helpers.ParticipanteHelper;
 import ni.org.ics.a2cares.app.database.helpers.PuntoCandidatoHelper;
 import ni.org.ics.a2cares.app.database.helpers.RazonNoDataHelper;
@@ -47,6 +48,7 @@ import ni.org.ics.a2cares.app.domain.core.RazonNoData;
 import ni.org.ics.a2cares.app.domain.core.Tamizaje;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
 import ni.org.ics.a2cares.app.domain.laboratorio.Serologia;
+import ni.org.ics.a2cares.app.domain.medico.OrdenLaboratorio;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.domain.puntos.PuntoCandidato;
 import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
@@ -112,12 +114,16 @@ public class EstudioDBAdapter {
             db.execSQL(MainDBConstants.CREATE_RAZON_NODATA_TABLE);
             db.execSQL(MainDBConstants.CREATE_PUNTOS_CANDIDATOS_TABLE);
             db.execSQL(MainDBConstants.CREATE_OBSEQUIOS_TABLE);
+            //db.execSQL(MainDBConstants.CREATE_ORDEN_LAB_TABLE);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             onCreate(db);
             if(oldVersion==0) return;
+            /*if(oldVersion==1){
+                db.execSQL(MainDBConstants.CREATE_ORDEN_LAB_TABLE);
+            }*/
         }
 
     }
@@ -1512,6 +1518,57 @@ public class EstudioDBAdapter {
         return mObsequios;
     }
 
+    /**
+     * Metodos para entrega de obsequios
+     *
+     * @param ordenLaboratorio
+     *            Objeto OrdenLaboratorio que contiene la informacion
+     *
+     */
+    //Crear nuevo OrdenLaboratorio en la base de datos
+    public void crearOrdenLaboratorio(OrdenLaboratorio ordenLaboratorio) {
+        ContentValues cv = OrdenLaboratorioHelper.crearOrdenLaboratorioContentValues(ordenLaboratorio);
+        mDb.insertOrThrow(MainDBConstants.ORDEN_LAB_TABLE, null, cv);
+    }
+    //Editar OrdenLaboratorio existente en la base de datos
+    public boolean editarOrdenLaboratorio(OrdenLaboratorio ordenLaboratorio) {
+        ContentValues cv = OrdenLaboratorioHelper.crearOrdenLaboratorioContentValues(ordenLaboratorio);
+        return mDb.update(MainDBConstants.ORDEN_LAB_TABLE , cv, MainDBConstants.id + "='"
+                + ordenLaboratorio.getIdOrden()+ "'", null) > 0;
+    }
+    //Limpiar la tabla de OrdenLaboratorio de la base de datos
+    public boolean borrarOrdenesLaboratorio() {
+        return mDb.delete(MainDBConstants.ORDEN_LAB_TABLE, null, null) > 0;
+    }
+    //Obtener un OrdenLaboratorio de la base de datos
+    public OrdenLaboratorio getOrdenLaboratorio(String filtro, String orden) throws SQLException {
+        OrdenLaboratorio mOrdenLaboratorio = null;
+        Cursor cursorOrdenLaboratorio = crearCursor(MainDBConstants.ORDEN_LAB_TABLE , filtro, null, orden);
+        if (cursorOrdenLaboratorio != null && cursorOrdenLaboratorio.getCount() > 0) {
+            cursorOrdenLaboratorio.moveToFirst();
+            mOrdenLaboratorio= OrdenLaboratorioHelper.crearOrdenLaboratorio(cursorOrdenLaboratorio);
+        }
+        if (!cursorOrdenLaboratorio.isClosed()) cursorOrdenLaboratorio.close();
+        return mOrdenLaboratorio;
+    }
+    //Obtener una lista de OrdenLaboratorio de la base de datos
+    public List<OrdenLaboratorio> getOrdenesLaboratorio(String filtro, String orden) throws SQLException {
+        List<OrdenLaboratorio> mOrdenLaboratorios = new ArrayList<OrdenLaboratorio>();
+        Cursor cursorOrdenLaboratorios = crearCursor(MainDBConstants.ORDEN_LAB_TABLE, filtro, null, orden);
+        if (cursorOrdenLaboratorios != null && cursorOrdenLaboratorios.getCount() > 0) {
+            cursorOrdenLaboratorios.moveToFirst();
+            mOrdenLaboratorios.clear();
+            do{
+                OrdenLaboratorio mOrdenLaboratorio = null;
+                mOrdenLaboratorio = OrdenLaboratorioHelper.crearOrdenLaboratorio(cursorOrdenLaboratorios);
+                mOrdenLaboratorios.add(mOrdenLaboratorio);
+            } while (cursorOrdenLaboratorios.moveToNext());
+        }
+        if (!cursorOrdenLaboratorios.isClosed()) cursorOrdenLaboratorios.close();
+        return mOrdenLaboratorios;
+    }
+
+
 
     public boolean bulkInsertMessageResourceBySql(List<MessageResource> list) throws Exception {
         if (null == list || list.size() <= 0) {
@@ -1819,6 +1876,9 @@ public class EstudioDBAdapter {
         c = crearCursor(MainDBConstants.OBSEQUIOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
+        /*c = crearCursor(MainDBConstants.ORDEN_LAB_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();*/
         return false;
     }
 

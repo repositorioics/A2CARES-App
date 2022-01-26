@@ -17,12 +17,15 @@
     <string name="main_7">Supervisor</string>
     <string name="main_8">Laboratorio</string>
     <string name="main_9">Candidatos</string>
+    <string name="main_10">Médicos</string>
     <string name="datos_part">Datos participante</string>
     <string name="participants">Lista Participantes</string>
     <string name="phones">Teléfonos</string>
     <string name="send_house">Enviar casa</string>
     <string name="menu_house">Menu Casa</string>
     <string name="locate_house">Ubicar Casa</string>
+    <string name="menu_doctor">Menu Médicos</string>
+    <string name="lab_orders">Ordenes Laboratorio</string>
 
     <string name="exit">Salir</string>
     <string name="success">Operación exitosa!</string>
@@ -199,4 +202,7 @@
     <string name="entregoObsequio">¿Entregó Obsequio?</string>
     <string name="personaRecibe">Nombre de la persona que recibe el obsequio</string>
     <string name="observacion">Observación</string>
+
+    <!-- medico -->
+    <string name="agregarOrden">Agregar Orden Laboratorio</string>
 </resources>
