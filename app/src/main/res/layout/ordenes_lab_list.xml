@@ -34,6 +34,9 @@
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@color/review_green"
         android:text="@string/agregarOrden"
         android:contentDescription="@string/agregarOrden"
         android:drawableStart="@mipmap/ic_add" />

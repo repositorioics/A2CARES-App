@@ -14,22 +14,21 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ni.org.ics.a2cares.app.R;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
 import ni.org.ics.a2cares.app.domain.medico.OrdenLaboratorio;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
-import ni.org.ics.a2cares.app.dto.MuestraDTO;
-import ni.org.ics.a2cares.app.utils.Constants;
 
 /**
  * Created by Miguel Salinas on 9/7/2021.
  */
-public class OrdenesLabListAdapter extends RecyclerView.Adapter<OrdenesLabListAdapter.ViewHolder> {
+public class RecepcionesEnfermoListAdapter extends RecyclerView.Adapter<RecepcionesEnfermoListAdapter.ViewHolder> {
 
-    private List<OrdenLaboratorio> listdata;
+    private List<RecepcionEnfermo> listdata;
     private List<MessageResource> catTipoMuestra;
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     // RecyclerView recyclerView;
-    public OrdenesLabListAdapter(List<OrdenLaboratorio> listdata, List<MessageResource> catTipoMuestra) {
+    public RecepcionesEnfermoListAdapter(List<RecepcionEnfermo> listdata, List<MessageResource> catTipoMuestra) {
         this.listdata = listdata;
         this.catTipoMuestra = catTipoMuestra;
     }
@@ -46,11 +45,11 @@ public class OrdenesLabListAdapter extends RecyclerView.Adapter<OrdenesLabListAd
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final OrdenLaboratorio ordenLaboratorio = listdata.get(position);
-        holder.textViewIdent.setText(ordenLaboratorio.getParticipante().getCodigoNombreCompleto());
+        final RecepcionEnfermo recepcionEnfermo = listdata.get(position);
+        holder.textViewIdent.setText(recepcionEnfermo.getParticipante().getCodigoNombreCompleto());
         holder.textViewName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         holder.textViewIdent.setTextColor(holder.context.getResources().getColor(R.color.blue_primary));
-        holder.textViewDer.setText(mDateFormat.format(listdata.get(position).getFechaOrden()));
+        holder.textViewDer.setText(mDateFormat.format(listdata.get(position).getFechaRecepcion()));
         holder.textViewName.setTextColor(holder.context.getResources().getColor(R.color.solid_red));
         holder.textViewName.setText(String.format(holder.context.getString(R.string.datos_orden), getCatDesc(listdata.get(position).getTipoMuestra()), mDateFormat.format(listdata.get(position).getFis()), mDateFormat.format(listdata.get(position).getFif())));
     }

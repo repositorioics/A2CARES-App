@@ -133,7 +133,7 @@ public class ListaParticipantesCasaActivity extends AbstractAsyncActivity {
 
 		protected void onPostExecute(String resultado) {
 			dismissProgressDialog();
-			adapter = new ParticipanteListAdapter(mParticipantes, mUser.getVisitas());
+			adapter = new ParticipanteListAdapter(mParticipantes, mUser.getVisitas(), false, false);
 			recyclerView.setAdapter(adapter);
 			refreshView();
 		}

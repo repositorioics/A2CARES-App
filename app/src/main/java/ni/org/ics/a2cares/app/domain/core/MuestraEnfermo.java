@@ -1,20 +1,19 @@
-package ni.org.ics.a2cares.app.domain.medico;
+package ni.org.ics.a2cares.app.domain.core;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import ni.org.ics.a2cares.app.domain.BaseMetaData;
-import ni.org.ics.a2cares.app.domain.core.Participante;
 
 
 /**
- * Simple objeto de dominio que representa los datos una orden de laboratorio del médico
+ * Simple objeto de dominio que representa los datos una toma de muestra de enfermo por el bioanalista
  * 
  * @author Miguel Salinas
  **/
 
 
-public class OrdenLaboratorio extends BaseMetaData implements Serializable {
+public class MuestraEnfermo extends BaseMetaData implements Serializable {
 
 	/**
 	 * 
@@ -24,24 +23,27 @@ public class OrdenLaboratorio extends BaseMetaData implements Serializable {
 	 * 
 	 */
 	
-	private String idOrden;
+	private String idMuestra;
 	private Participante participante;
-	private Date fechaOrden;
-	private String tipoOrden; //Serogologia, BHC, etc
+	private Date fechaMuestra;
+	private String horaMuestra;
+	private String tipoTubo; //Serogologia, BHC, etc
+	private Double volumen;
+	private String observacion;
 	private Date fis;
 	private Date fif;
 	private String categoria; //A,B,C
 	private String consulta; //Inicial, Seguimiento, Convaleciente
 	private String tipoMuestra; //Aguda, Convaleciente
 	private String estudiosAct;
-    private String observacion;
 
-	public String getIdOrden() {
-		return idOrden;
+
+	public String getIdMuestra() {
+		return idMuestra;
 	}
 
-	public void setIdOrden(String idOrden) {
-		this.idOrden = idOrden;
+	public void setIdMuestra(String idMuestra) {
+		this.idMuestra = idMuestra;
 	}
 
 	public Participante getParticipante() {
@@ -52,20 +54,36 @@ public class OrdenLaboratorio extends BaseMetaData implements Serializable {
 		this.participante = participante;
 	}
 
-	public Date getFechaOrden() {
-		return fechaOrden;
+	public Date getFechaMuestra() {
+		return fechaMuestra;
 	}
 
-	public void setFechaOrden(Date fechaOrden) {
-		this.fechaOrden = fechaOrden;
+	public void setFechaMuestra(Date fechaMuestra) {
+		this.fechaMuestra = fechaMuestra;
 	}
 
-	public String getTipoOrden() {
-		return tipoOrden;
+	public String getHoraMuestra() {
+		return horaMuestra;
 	}
 
-	public void setTipoOrden(String tipoOrden) {
-		this.tipoOrden = tipoOrden;
+	public void setHoraMuestra(String horaMuestra) {
+		this.horaMuestra = horaMuestra;
+	}
+
+	public String getTipoTubo() {
+		return tipoTubo;
+	}
+
+	public void setTipoTubo(String tipoTubo) {
+		this.tipoTubo = tipoTubo;
+	}
+
+	public Double getVolumen() {
+		return volumen;
+	}
+
+	public void setVolumen(Double volumen) {
+		this.volumen = volumen;
 	}
 
 	public Date getFis() {

@@ -21,25 +21,23 @@ import ni.org.ics.a2cares.app.MyIcsApplication;
 import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
-import ni.org.ics.a2cares.app.domain.medico.OrdenLaboratorio;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.ui.activities.BuscarParticipanteActivity;
-import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaMuestraActivity;
-import ni.org.ics.a2cares.app.ui.activities.menu.MenuMedicoActivity;
-import ni.org.ics.a2cares.app.ui.adapters.OrdenesLabListAdapter;
-import ni.org.ics.a2cares.app.ui.adapters.ParticipanteListAdapter;
+import ni.org.ics.a2cares.app.ui.activities.menu.MenuLaboratorioActivity;
+import ni.org.ics.a2cares.app.ui.adapters.RecepcionesEnfermoListAdapter;
 import ni.org.ics.a2cares.app.utils.Constants;
 import ni.org.ics.a2cares.app.utils.DateUtil;
 
-public class ListaOrdenesLaboratorioActivity extends AbstractAsyncActivity {
+public class ListaRecepcionesEnfermoActivity extends AbstractAsyncActivity {
 
 	private EstudioDBAdapter estudiosAdapter;
 	private RecyclerView recyclerView;
 	private TextView textView;
-	private Button mAddSample;
+	private Button mAddReception;
 	private Integer opcion;
-	private List<OrdenLaboratorio> mOrdenes = new ArrayList<OrdenLaboratorio>();
-	private OrdenesLabListAdapter adapter;
+	private List<RecepcionEnfermo> mRecepciones = new ArrayList<RecepcionEnfermo>();
+	private RecepcionesEnfermoListAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +48,22 @@ public class ListaOrdenesLaboratorioActivity extends AbstractAsyncActivity {
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(),mPass,false,false);
 
+		mAddReception = (Button) findViewById(R.id.add_order);
 		textView = findViewById(R.id.label_logo);
-		//textView.setText(getString(R.string.lab_orders));
-
 		recyclerView = findViewById(R.id.recycler_view);
+
+		textView.setText(getString(R.string.sick_receptions));
+		textView.setCompoundDrawablesWithIntrinsicBounds(
+				R.mipmap.ic_sick,
+				0, //top
+				0, //right
+				0);//bottom
+
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
+		mAddReception.setText(getString(R.string.agregarRecepcion));
 
-		new FetchDataTask().execute();
-
-		mAddSample = (Button) findViewById(R.id.add_order);
-		mAddSample.setOnClickListener(new View.OnClickListener() {
+		mAddReception.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Bundle arguments = new Bundle();
@@ -69,12 +72,14 @@ public class ListaOrdenesLaboratorioActivity extends AbstractAsyncActivity {
 				i = new Intent(getApplicationContext(),
 						BuscarParticipanteActivity.class);
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				i.putExtra(Constants.DESDE_MEDICO, true);
+				i.putExtra(Constants.DESDE_LABO, true);
 				i.putExtras(arguments);
 				startActivity(i);
 				finish();
 			}
 		});
+
+		new FetchDataTask().execute();
 	}
 
 	@Override
@@ -110,7 +115,7 @@ public class ListaOrdenesLaboratorioActivity extends AbstractAsyncActivity {
 		Bundle arguments = new Bundle();
 		Intent i;
 		i = new Intent(getApplicationContext(),
-				MenuMedicoActivity.class);
+				MenuLaboratorioActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.putExtras(arguments);
 		startActivity(i);
@@ -120,7 +125,7 @@ public class ListaOrdenesLaboratorioActivity extends AbstractAsyncActivity {
 
 	private void refreshView() {
 		adapter.notifyDataSetChanged();
-		if (mOrdenes.isEmpty()) showToast(getString(R.string.no_items));
+		if (mRecepciones.isEmpty()) showToast(getString(R.string.no_items));
 	}
 
 	private class FetchDataTask extends AsyncTask<String, Void, String> {
@@ -135,7 +140,7 @@ public class ListaOrdenesLaboratorioActivity extends AbstractAsyncActivity {
 		protected String doInBackground(String... values) {
 			try {
 				estudiosAdapter.open();
-				mOrdenes = estudiosAdapter.getOrdenesLaboratorio(MainDBConstants.recordDate +" >= " + DateUtil.getTodayWithZeroTime().getTime(), MainDBConstants.participante);
+				mRecepciones = estudiosAdapter.getRecepcionesEnfermo(MainDBConstants.recordDate +" >= " + DateUtil.getTodayWithZeroTime().getTime(), MainDBConstants.participante);
 				mCatTipoMuestra = estudiosAdapter.getMessageResources(MainDBConstants.catRoot + "='CAT_FASE_MX'", MainDBConstants.order);
 				estudiosAdapter.close();
 			} catch (Exception e) {
@@ -147,7 +152,7 @@ public class ListaOrdenesLaboratorioActivity extends AbstractAsyncActivity {
 
 		protected void onPostExecute(String resultado) {
 			dismissProgressDialog();
-			adapter = new OrdenesLabListAdapter(mOrdenes, mCatTipoMuestra);
+			adapter = new RecepcionesEnfermoListAdapter(mRecepciones, mCatTipoMuestra);
 			recyclerView.setAdapter(adapter);
 			refreshView();
 		}

@@ -1,0 +1,135 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/WizardPageContainer">
+
+    <TextView style="@style/WizardPageTitleVertical"
+		android:text="@string/sick_recep_title"/>
+
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView style="@style/WizardFormLabelPrincipal"
+                android:text="@string/participant" />
+
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/fechaRecepcion" />
+            <LinearLayout
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginBottom="20dp"
+	            android:orientation="horizontal">
+				<EditText android:id="@+id/inputFechaRecepcion"
+	                android:layout_width="0dip"
+	                android:layout_height="wrap_content"
+	                android:layout_weight="1.0"
+	                android:focusable="false"
+	                android:inputType="text" />
+				<ImageButton
+	                android:id="@+id/imageButtonFechaRecepcion"
+	                android:layout_width="wrap_content"
+	                android:layout_height="fill_parent"
+	                android:contentDescription="@string/app_name"
+	                android:src="@mipmap/ic_menu_month" />
+            </LinearLayout>
+
+			<TextView style="@style/WizardFormLabel"
+				android:text="@string/tipoTubo" />
+
+			<Spinner android:id="@+id/spinTipoTubo"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel"
+				android:text="@string/volumen" />
+
+			<EditText android:id="@+id/inputVolumen"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="20dp"
+				android:inputType="numberDecimal" />
+
+
+			<TextView style="@style/WizardFormLabel"
+				android:text="@string/fis" />
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="20dp"
+				android:orientation="horizontal">
+				<EditText android:id="@+id/inputFIS"
+					android:layout_width="0dip"
+					android:layout_height="wrap_content"
+					android:layout_weight="1.0"
+					android:focusable="false"
+					android:inputType="text" />
+				<ImageButton
+					android:id="@+id/imageButtonFis"
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:contentDescription="@string/app_name"
+					android:src="@mipmap/ic_menu_month" />
+			</LinearLayout>
+
+			<TextView style="@style/WizardFormLabel"
+				android:text="@string/fif" />
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="20dp"
+				android:orientation="horizontal">
+				<EditText android:id="@+id/inputFIF"
+					android:layout_width="0dip"
+					android:layout_height="wrap_content"
+					android:layout_weight="1.0"
+					android:focusable="false"
+					android:inputType="text" />
+				<ImageButton
+					android:id="@+id/imageButtonFif"
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:contentDescription="@string/app_name"
+					android:src="@mipmap/ic_menu_month" />
+			</LinearLayout>
+
+			<TextView style="@style/WizardFormLabel"
+				android:text="@string/tipoConsulta" />
+
+			<Spinner android:id="@+id/spinConsulta"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel"
+				android:text="@string/categoria" />
+
+			<Spinner android:id="@+id/spinCategoria"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel"
+				android:text="@string/tipoMuestra" />
+
+			<Spinner android:id="@+id/spinTipoMuestra"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="20dp"/>
+
+			<TextView style="@style/WizardFormLabel"
+				android:text="@string/observacion" />
+
+			<EditText android:id="@+id/inputObservacion"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="20dp"
+				android:inputType="text" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

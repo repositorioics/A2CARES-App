@@ -80,6 +80,8 @@
     <string name="new_survey_3">Peso y Talla</string>
     <string name="samples">Muestras</string>
     <string name="go_home">Ir Casa</string>
+    <string name="sick_samples">Muestras Enfermo</string>
+
     <string name="code">Código</string>
     <string name="casa">Casa</string>
     <string name="participant">Participante</string>
@@ -184,6 +186,7 @@
     <!-- Laboratorio-->
     <string name="lab_2">Recepción BHC Laboratorio</string>
     <string name="lab_1">Recepción Rojo Laboratorio</string>
+    <string name="lab_3">Recepción Enfermo Laboratorio</string>
 
     <!-- datos pendientes-->
     <string name="confirm_pendiente">Hay datos pendientes de ingreso, ¿Confirma que desea salir?</string>
@@ -205,4 +208,28 @@
 
     <!-- medico -->
     <string name="agregarOrden">Agregar Orden Laboratorio</string>
+    <string name="selec_part_order">Seleccionar participante de la orden</string>
+    <string name="fecha_order">Fecha orden</string>
+    <string name="fis">FIS</string>
+    <string name="fif">FIF</string>
+    <string name="tipoOrden">Tipo Examen</string>
+    <string name="tipoConsulta">Consulta</string>
+    <string name="categoria">Categoría</string>
+    <string name="tipoMuestra">Tipo Muestra</string>
+    <string name="order_title">Agregar orden de laboratorio</string>
+    <string name="wrong_fis">FIS es posterior a la fecha de la orden</string>
+    <string name="wrong_fif">FIF es posterior a la fecha de la orden</string>
+    <string name="wrong_fis_3">FIS es posterior a la FIF</string>
+    <string name="datos_orden">Muestra: <xliff:g id="variable">%1$s</xliff:g>. FIS <xliff:g id="variable2">%2$s</xliff:g>. FIF <xliff:g id="variable3">%3$s</xliff:g></string>
+
+    <!-- muestras de enfermo bioanalista-->
+    <string name="sick_sample_title">Agregar muestra de enfermo</string>
+    <string name="wrong_fis_2">FIS es posterior a la fecha de toma</string>
+    <string name="wrong_fif_3">FIF es posterior a la fecha de toma</string>
+    <!-- muestras de enfermo laboratorio-->
+    <string name="sick_recep_title">Recepción muestra de enfermo</string>
+    <string name="selec_part_recep">Seleccionar participante de la recepción</string>
+    <string name="sick_receptions">Recepciones Mx Enfermos</string>
+    <string name="agregarRecepcion">Agregar Recepción Mx Enfermo</string>
+
 </resources>

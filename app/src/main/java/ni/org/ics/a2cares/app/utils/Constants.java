@@ -64,6 +64,8 @@ public class Constants {
 
     //Navegacion
     public static final String DESDE_PARTICIPANTE = "desde_participante";
+    public static final String DESDE_MEDICO = "desde_medico";
+    public static final String DESDE_LABO = "desde_laboratorio";
 
     public static final String UBICACION = "ubicacion";
     public static final int UBICACION_NJ = 1;

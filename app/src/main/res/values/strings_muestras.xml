@@ -29,4 +29,7 @@
     <string name="error1CodigoMx">Código de muestra no válido</string>
     <string name="error2CodigoMx">Código de muestra no pertenece al participante: <xliff:g id="codigo">%1$s</xliff:g></string>
     <string name="errorMx">Muestra ya existe en la base de datos</string>
+
+    <!-- Muestras enfermo-->
+    <string name="horaToma">Hora toma muestra</string>
 </resources>

@@ -23,6 +23,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
     private boolean pendientenMuestras = false;
     private boolean pendienteObseq = false;
     private boolean visitaExitosa = false;
+    private int cantidadMxEnfermo = 0;
 
     //private final int OPCION_CONSULTA = 0;
     private final int OPCION_VISITA = 0;
@@ -35,12 +36,13 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
     //private final int OPCION_ENCUESTA_PARTICIPANTESA = 5;
     private final int OPCION_OBSEQUIO = 5;
     private final int OPCION_IR_CASA = 6;
+    private final int OPCION_MUESTRAS_ENF = 7;
 
     private final Context context;
     private final Participante participante;
 	public MenuParticipanteAdapter(Context context, int textViewResourceId,
                                    String[] values, Participante participante,  boolean pendienteEncuestaCasa, boolean pendienteEncuestaParticipante,
-                                   boolean pendienteEncuestaPeso, boolean pendientenMuestras, boolean pendienteObseq, boolean visitaExitosa) {
+                                   boolean pendienteEncuestaPeso, boolean pendientenMuestras, boolean pendienteObseq, boolean visitaExitosa, int cantidadMxEnfermo) {
 		super(context, textViewResourceId, values);
         this.context = context;
 		this.values = values;
@@ -51,6 +53,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
         this.pendientenMuestras = pendientenMuestras;
         this.visitaExitosa = visitaExitosa;
         this.pendienteObseq = pendienteObseq;
+        this.cantidadMxEnfermo = cantidadMxEnfermo;
 	}
 
 
@@ -82,6 +85,9 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 habilitado = visitaExitosa && pendienteObseq;
                 break;
             case OPCION_IR_CASA:
+                habilitado = true;
+                break;
+            case OPCION_MUESTRAS_ENF:
                 habilitado = true;
                 break;
             default: break;
@@ -208,6 +214,11 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 break;
              case OPCION_IR_CASA:
                 img=getContext().getResources().getDrawable(R.mipmap.ic_house);
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+            case OPCION_MUESTRAS_ENF:
+                img=getContext().getResources().getDrawable(R.mipmap.ic_sick);
+                textView.setText(textView.getText() + " ("+cantidadMxEnfermo+")");
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
 		default:

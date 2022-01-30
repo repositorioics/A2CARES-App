@@ -149,7 +149,7 @@ public class MenuMedicoActivity extends AbstractAsyncActivity {
 		protected String doInBackground(String... values) {
 			try {
 				estudiosAdapter.open();
-				mOrdenes = estudiosAdapter.getOrdenesLaboratorio(MainDBConstants.fechaOrden + "="+ DateUtil.getTodayWithZeroTime().getTime(),null);
+				mOrdenes = estudiosAdapter.getOrdenesLaboratorio(MainDBConstants.recordDate +" >= "+ DateUtil.getTodayWithZeroTime().getTime(),null);
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

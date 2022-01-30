@@ -308,6 +308,16 @@ public class Participante extends BaseMetaData implements Serializable{
     }
 
     @JsonIgnore
+    public String getCodigoNombreCompleto(){
+        String nombreCompleto = this.getNombre1();
+        if (this.getNombre2()!=null) nombreCompleto = nombreCompleto + " "+  this.getNombre2();
+        nombreCompleto = nombreCompleto +" "+ this.getApellido1();
+        if (this.getApellido2()!=null) nombreCompleto = nombreCompleto + " "+  this.getApellido2();
+
+        return this.getCodigo() + "-" + nombreCompleto;
+    }
+
+    @JsonIgnore
     public String getTutor(){
         String tutor = " ";
         if (this.getNombre1Tutor()!=null) tutor = this.getNombre1Tutor();

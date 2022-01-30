@@ -1,5 +1,6 @@
 package ni.org.ics.a2cares.app.ui.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,13 +13,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.message.MessageResource;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaOrdenLaboratorioActivity;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaRecepcionEnfermoActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuParticipanteActivity;
+import ni.org.ics.a2cares.app.ui.fragments.enterdata.NuevaRecepcionEnfermoFragment;
 import ni.org.ics.a2cares.app.utils.Constants;
 
 /**
@@ -28,12 +34,16 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
 
     private List<Participante> listdata;
     private boolean permisoVisita;
+    private boolean desdeMedico;
+    private boolean desdeLaboratorio;
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
 
     // RecyclerView recyclerView;
-    public ParticipanteListAdapter(List<Participante> listdata, boolean permisoVisita) {
+    public ParticipanteListAdapter(List<Participante> listdata, boolean permisoVisita, boolean desdeMedico, boolean desdeLaboratorio) {
         this.listdata = listdata;
         this.permisoVisita = permisoVisita;
+        this.desdeMedico = desdeMedico;
+        this.desdeLaboratorio = desdeLaboratorio;
     }
 
     @Override
@@ -61,13 +71,32 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(holder.context,
-                        MenuParticipanteActivity.class);
-                Bundle arguments = new Bundle();
-                arguments.putSerializable(Constants.PARTICIPANTE, participante);
-                i.putExtras(arguments);
-                i.putExtra(Constants.VISITA_EXITOSA, !permisoVisita); //si no tiene permiso de visita, se va a asumir la visita como exitosa para no solicitar visita al momento de ingresar informacion
-                holder.context.startActivity(i);
+                if (desdeMedico) {
+                    Intent i = new Intent(holder.context,
+                            NuevaOrdenLaboratorioActivity.class);
+                    Bundle arguments = new Bundle();
+                    arguments.putSerializable(Constants.PARTICIPANTE, participante);
+                    i.putExtras(arguments);
+                    holder.context.startActivity(i);
+                    ((Activity)holder.context).finish();
+                } if (desdeLaboratorio) {
+                    Intent i = new Intent(holder.context,
+                            NuevaRecepcionEnfermoActivity.class);
+                    Bundle arguments = new Bundle();
+                    arguments.putSerializable(Constants.PARTICIPANTE, participante);
+                    i.putExtras(arguments);
+                    holder.context.startActivity(i);
+                    ((Activity)holder.context).finish();
+                }
+                else {
+                    Intent i = new Intent(holder.context,
+                            MenuParticipanteActivity.class);
+                    Bundle arguments = new Bundle();
+                    arguments.putSerializable(Constants.PARTICIPANTE, participante);
+                    i.putExtras(arguments);
+                    i.putExtra(Constants.VISITA_EXITOSA, !permisoVisita); //si no tiene permiso de visita, se va a asumir la visita como exitosa para no solicitar visita al momento de ingresar informacion
+                    holder.context.startActivity(i);
+                }
             }
         });
     }

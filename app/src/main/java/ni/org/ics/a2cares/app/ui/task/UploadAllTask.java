@@ -23,13 +23,16 @@ import ni.org.ics.a2cares.app.domain.core.CartaConsentimiento;
 import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
 import ni.org.ics.a2cares.app.domain.core.Muestra;
+import ni.org.ics.a2cares.app.domain.core.MuestraEnfermo;
 import ni.org.ics.a2cares.app.domain.core.ObsequioGeneral;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
 import ni.org.ics.a2cares.app.domain.core.RazonNoData;
 import ni.org.ics.a2cares.app.domain.core.Tamizaje;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
 import ni.org.ics.a2cares.app.domain.laboratorio.Serologia;
+import ni.org.ics.a2cares.app.domain.medico.OrdenLaboratorio;
 import ni.org.ics.a2cares.app.domain.puntos.PuntoCandidato;
 import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
@@ -67,6 +70,9 @@ public class UploadAllTask extends UploadTask {
     private List<RazonNoData> mNoData = new ArrayList<RazonNoData>();
     private List<PuntoCandidato> mPuntos = new ArrayList<PuntoCandidato>();
     private List<ObsequioGeneral> mObsequiosGeneral = new ArrayList<ObsequioGeneral>();
+    private List<OrdenLaboratorio> mOrdenesLab = new ArrayList<OrdenLaboratorio>();
+    private List<MuestraEnfermo> mMuestrasEnf = new ArrayList<MuestraEnfermo>();
+    private List<RecepcionEnfermo> mRecepcionesEnf = new ArrayList<RecepcionEnfermo>();
 
 	private String url = null;
 	private String username = null;
@@ -91,8 +97,11 @@ public class UploadAllTask extends UploadTask {
     public static final String RAZON_NO_DATA = "15";
     public static final String PUNTO_DESCARTADO = "16";
     public static final String OBSEQUIOS = "17";
+    public static final String ORDENES_LAB = "18";
+    public static final String MUESTRAS_ENF = "19";
+    public static final String RECEPCIONES_ENF = "20";
 
-	private static final String TOTAL_TASK = "17";
+	private static final String TOTAL_TASK = "20";
 	
 
 	@Override
@@ -123,6 +132,9 @@ public class UploadAllTask extends UploadTask {
             mNoData = estudioAdapter.getRazonNoDatas(filtro, null);
             mPuntos = estudioAdapter.getPuntoCandidatos(filtro, null);
             mObsequiosGeneral = estudioAdapter.getObsequiosGenerales(filtro, null);
+            mOrdenesLab = estudioAdapter.getOrdenesLaboratorio(filtro, null);
+            mMuestrasEnf = estudioAdapter.getMuestrasEnfermo(filtro, null);
+            mRecepcionesEnf = estudioAdapter.getRecepcionesEnfermo(filtro, null);
 
             if (mVisitasTerreno.size() <= 0 &&
                     mTamizajes.size() <= 0 &&
@@ -140,7 +152,10 @@ public class UploadAllTask extends UploadTask {
                     mSerologiasLab.size() <= 0 &&
                     mNoData.size() <= 0 &&
                     mPuntos.size() <= 0 &&
-                    mObsequiosGeneral.size() <= 0
+                    mObsequiosGeneral.size() <= 0 &&
+                    mOrdenesLab.size() <= 0 &&
+                    mMuestrasEnf.size() <= 0 &&
+                    mRecepcionesEnf.size() <= 0
             ) {
                 error = Constants.NO_DATA;
             } else {
@@ -250,6 +265,24 @@ public class UploadAllTask extends UploadTask {
                     actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, OBSEQUIOS);
                     return error;
                 }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, ORDENES_LAB);
+                error = cargarOrdenesLab(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ORDENES_LAB);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, MUESTRAS_ENF);
+                error = cargarMuestrasEnfermo(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, MUESTRAS_ENF);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, RECEPCIONES_ENF);
+                error = cargarRecepcionesEnfermo(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RECEPCIONES_ENF);
+                    return error;
+                }
             }
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -262,6 +295,39 @@ public class UploadAllTask extends UploadTask {
 	
 	private void actualizarBaseDatos(char estado, String opcion) {
 		int c;
+        if(opcion.equalsIgnoreCase(RECEPCIONES_ENF)){
+            c = mRecepcionesEnf.size();
+            if(c>0){
+                for (RecepcionEnfermo recepcionEnfermo : mRecepcionesEnf) {
+                    recepcionEnfermo.setEstado(estado);
+                    estudioAdapter.editarRecepcionEnfermo(recepcionEnfermo);
+                    publishProgress("Actualizando recepciones mx enfermos en base de datos local", Integer.valueOf(mRecepcionesEnf.indexOf(recepcionEnfermo)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(MUESTRAS_ENF)){
+            c = mMuestrasEnf.size();
+            if(c>0){
+                for (MuestraEnfermo muestraEnfermo : mMuestrasEnf) {
+                    muestraEnfermo.setEstado(estado);
+                    estudioAdapter.editarMuestraEnfermo(muestraEnfermo);
+                    publishProgress("Actualizando muestras enfermos en base de datos local", Integer.valueOf(mMuestrasEnf.indexOf(muestraEnfermo)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(ORDENES_LAB)){
+            c = mOrdenesLab.size();
+            if(c>0){
+                for (OrdenLaboratorio ordenLaboratorio : mOrdenesLab) {
+                    ordenLaboratorio.setEstado(estado);
+                    estudioAdapter.editarOrdenLaboratorio(ordenLaboratorio);
+                    publishProgress("Actualizando ordenes laboratorio en base de datos local", Integer.valueOf(mOrdenesLab.indexOf(ordenLaboratorio)).toString(), Integer
+                            .valueOf(c).toString());
+                }
+            }
+        }
         if(opcion.equalsIgnoreCase(VISITA)){
             c = mVisitasTerreno.size();
             if(c>0){
@@ -1042,4 +1108,106 @@ public class UploadAllTask extends UploadTask {
         }
     }
 
+    /***************************************************/
+    /*************** ObsequioGeneral ************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarOrdenesLab(String url, String username,
+                                           String password) throws Exception {
+        try {
+            if(mOrdenesLab.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando ordenes laboratorio!", ORDENES_LAB, TOTAL_TASK);
+                final String urlRequest = url + "/movil/ordeneslab";
+                OrdenLaboratorio[] envio = mOrdenesLab.toArray(new OrdenLaboratorio[mOrdenesLab.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<OrdenLaboratorio[]> requestEntity =
+                        new HttpEntity<OrdenLaboratorio[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone la vivienda y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return "Datos recibidos!";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* Muestras de Enfermos************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarMuestrasEnfermo(String url, String username,String password) throws Exception {
+        try {
+            if(mMuestrasEnf.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando muestras enfermos!", MUESTRAS_ENF, TOTAL_TASK);
+                final String urlRequest = url + "/movil/muestrasenfermo";
+                MuestraEnfermo[] envio = mMuestrasEnf.toArray(new MuestraEnfermo[mMuestrasEnf.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<MuestraEnfermo[]> requestEntity =
+                        new HttpEntity<MuestraEnfermo[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+
+    /***************************************************/
+    /********************* Muestras de Enfermos************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarRecepcionesEnfermo(String url, String username,String password) throws Exception {
+        try {
+            if(mRecepcionesEnf.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando recepciones enfermos!", RECEPCIONES_ENF, TOTAL_TASK);
+                final String urlRequest = url + "/movil/recepcionessenfermo";
+                RecepcionEnfermo[] envio = mRecepcionesEnf.toArray(new RecepcionEnfermo[mRecepcionesEnf.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<RecepcionEnfermo[]> requestEntity =
+                        new HttpEntity<RecepcionEnfermo[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
 }

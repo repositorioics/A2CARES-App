@@ -23,12 +23,14 @@ import ni.org.ics.a2cares.app.database.helpers.EncuestaParticipanteHelper;
 import ni.org.ics.a2cares.app.database.helpers.EncuestaPesoTallaHelper;
 import ni.org.ics.a2cares.app.database.helpers.EstudiosHelper;
 import ni.org.ics.a2cares.app.database.helpers.MessageResourceHelper;
+import ni.org.ics.a2cares.app.database.helpers.MuestraEnfermoHelper;
 import ni.org.ics.a2cares.app.database.helpers.MuestraHelper;
 import ni.org.ics.a2cares.app.database.helpers.ObsequioHelper;
 import ni.org.ics.a2cares.app.database.helpers.OrdenLaboratorioHelper;
 import ni.org.ics.a2cares.app.database.helpers.ParticipanteHelper;
 import ni.org.ics.a2cares.app.database.helpers.PuntoCandidatoHelper;
 import ni.org.ics.a2cares.app.database.helpers.RazonNoDataHelper;
+import ni.org.ics.a2cares.app.database.helpers.RecepcionEnfermoHelper;
 import ni.org.ics.a2cares.app.database.helpers.RecepcionMuestraHelper;
 import ni.org.ics.a2cares.app.database.helpers.SerologiaHelper;
 import ni.org.ics.a2cares.app.database.helpers.TamizajeHelper;
@@ -41,12 +43,14 @@ import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
 import ni.org.ics.a2cares.app.domain.core.Estudio;
 import ni.org.ics.a2cares.app.domain.core.Muestra;
+import ni.org.ics.a2cares.app.domain.core.MuestraEnfermo;
 import ni.org.ics.a2cares.app.domain.core.ObsequioGeneral;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
 import ni.org.ics.a2cares.app.domain.core.RazonNoData;
 import ni.org.ics.a2cares.app.domain.core.Tamizaje;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
 import ni.org.ics.a2cares.app.domain.laboratorio.Serologia;
 import ni.org.ics.a2cares.app.domain.medico.OrdenLaboratorio;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
@@ -114,16 +118,20 @@ public class EstudioDBAdapter {
             db.execSQL(MainDBConstants.CREATE_RAZON_NODATA_TABLE);
             db.execSQL(MainDBConstants.CREATE_PUNTOS_CANDIDATOS_TABLE);
             db.execSQL(MainDBConstants.CREATE_OBSEQUIOS_TABLE);
-            //db.execSQL(MainDBConstants.CREATE_ORDEN_LAB_TABLE);
+            db.execSQL(MainDBConstants.CREATE_ORDEN_LAB_TABLE);
+            db.execSQL(MainDBConstants.CREATE_MUESTRAS_ENFERMO_TABLE);
+            db.execSQL(MainDBConstants.CREATE_RECEPCION_ENFERMO_TABLE);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             onCreate(db);
             if(oldVersion==0) return;
-            /*if(oldVersion==1){
-                db.execSQL(MainDBConstants.CREATE_ORDEN_LAB_TABLE);
-            }*/
+            if(oldVersion==1){
+                //db.execSQL(MainDBConstants.CREATE_ORDEN_LAB_TABLE);
+                //db.execSQL(MainDBConstants.CREATE_MUESTRAS_ENFERMO_TABLE);
+                db.execSQL(MainDBConstants.CREATE_RECEPCION_ENFERMO_TABLE);
+            }
         }
 
     }
@@ -1533,7 +1541,7 @@ public class EstudioDBAdapter {
     //Editar OrdenLaboratorio existente en la base de datos
     public boolean editarOrdenLaboratorio(OrdenLaboratorio ordenLaboratorio) {
         ContentValues cv = OrdenLaboratorioHelper.crearOrdenLaboratorioContentValues(ordenLaboratorio);
-        return mDb.update(MainDBConstants.ORDEN_LAB_TABLE , cv, MainDBConstants.id + "='"
+        return mDb.update(MainDBConstants.ORDEN_LAB_TABLE , cv, MainDBConstants.idOrden + "='"
                 + ordenLaboratorio.getIdOrden()+ "'", null) > 0;
     }
     //Limpiar la tabla de OrdenLaboratorio de la base de datos
@@ -1547,6 +1555,8 @@ public class EstudioDBAdapter {
         if (cursorOrdenLaboratorio != null && cursorOrdenLaboratorio.getCount() > 0) {
             cursorOrdenLaboratorio.moveToFirst();
             mOrdenLaboratorio= OrdenLaboratorioHelper.crearOrdenLaboratorio(cursorOrdenLaboratorio);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "='" +cursorOrdenLaboratorio.getString(cursorOrdenLaboratorio.getColumnIndex(MainDBConstants.participante)) +"'", null);
+            mOrdenLaboratorio.setParticipante(participante);
         }
         if (!cursorOrdenLaboratorio.isClosed()) cursorOrdenLaboratorio.close();
         return mOrdenLaboratorio;
@@ -1561,6 +1571,8 @@ public class EstudioDBAdapter {
             do{
                 OrdenLaboratorio mOrdenLaboratorio = null;
                 mOrdenLaboratorio = OrdenLaboratorioHelper.crearOrdenLaboratorio(cursorOrdenLaboratorios);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "='" +cursorOrdenLaboratorios.getString(cursorOrdenLaboratorios.getColumnIndex(MainDBConstants.participante)) +"'", null);
+                mOrdenLaboratorio.setParticipante(participante);
                 mOrdenLaboratorios.add(mOrdenLaboratorio);
             } while (cursorOrdenLaboratorios.moveToNext());
         }
@@ -1568,7 +1580,114 @@ public class EstudioDBAdapter {
         return mOrdenLaboratorios;
     }
 
+    /**
+     * Metodos para muestras de enfermo
+     *
+     * @param muestraEnfermo
+     *            Objeto MuestraEnfermo que contiene la informacion
+     *
+     */
+    //Crear nuevo MuestraEnfermo en la base de datos
+    public void crearMuestraEnfermo(MuestraEnfermo muestraEnfermo) {
+        ContentValues cv = MuestraEnfermoHelper.crearMuestraEnfermoContentValues(muestraEnfermo);
+        mDb.insertOrThrow(MainDBConstants.MUESTRAS_ENFERMO_TABLE, null, cv);
+    }
+    //Editar MuestraEnfermo existente en la base de datos
+    public boolean editarMuestraEnfermo(MuestraEnfermo muestraEnfermo) {
+        ContentValues cv = MuestraEnfermoHelper.crearMuestraEnfermoContentValues(muestraEnfermo);
+        return mDb.update(MainDBConstants.MUESTRAS_ENFERMO_TABLE , cv, MainDBConstants.idMuestra + "='"
+                + muestraEnfermo.getIdMuestra()+ "'", null) > 0;
+    }
+    //Limpiar la tabla de MuestraEnfermo de la base de datos
+    public boolean borrarMuestrasEnfermo() {
+        return mDb.delete(MainDBConstants.MUESTRAS_ENFERMO_TABLE, null, null) > 0;
+    }
+    //Obtener un MuestraEnfermo de la base de datos
+    public MuestraEnfermo getMuestraEnfermo(String filtro, String orden) throws SQLException {
+        MuestraEnfermo mMuestraEnfermo = null;
+        Cursor cursorMuestraEnfermo = crearCursor(MainDBConstants.MUESTRAS_ENFERMO_TABLE , filtro, null, orden);
+        if (cursorMuestraEnfermo != null && cursorMuestraEnfermo.getCount() > 0) {
+            cursorMuestraEnfermo.moveToFirst();
+            mMuestraEnfermo= MuestraEnfermoHelper.crearMuestraEnfermo(cursorMuestraEnfermo);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "='" +cursorMuestraEnfermo.getString(cursorMuestraEnfermo.getColumnIndex(MainDBConstants.participante)) +"'", null);
+            mMuestraEnfermo.setParticipante(participante);
+        }
+        if (!cursorMuestraEnfermo.isClosed()) cursorMuestraEnfermo.close();
+        return mMuestraEnfermo;
+    }
+    //Obtener una lista de MuestraEnfermo de la base de datos
+    public List<MuestraEnfermo> getMuestrasEnfermo(String filtro, String orden) throws SQLException {
+        List<MuestraEnfermo> mMuestraEnfermos = new ArrayList<MuestraEnfermo>();
+        Cursor cursorMuestraEnfermos = crearCursor(MainDBConstants.MUESTRAS_ENFERMO_TABLE, filtro, null, orden);
+        if (cursorMuestraEnfermos != null && cursorMuestraEnfermos.getCount() > 0) {
+            cursorMuestraEnfermos.moveToFirst();
+            mMuestraEnfermos.clear();
+            do{
+                MuestraEnfermo mMuestraEnfermo = null;
+                mMuestraEnfermo = MuestraEnfermoHelper.crearMuestraEnfermo(cursorMuestraEnfermos);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "='" +cursorMuestraEnfermos.getString(cursorMuestraEnfermos.getColumnIndex(MainDBConstants.participante)) +"'", null);
+                mMuestraEnfermo.setParticipante(participante);
+                mMuestraEnfermos.add(mMuestraEnfermo);
+            } while (cursorMuestraEnfermos.moveToNext());
+        }
+        if (!cursorMuestraEnfermos.isClosed()) cursorMuestraEnfermos.close();
+        return mMuestraEnfermos;
+    }
 
+
+    /**
+     * Metodos para recepcions de enfermo
+     *
+     * @param recepcionEnfermo
+     *            Objeto RecepcionEnfermo que contiene la informacion
+     *
+     */
+    //Crear nuevo RecepcionEnfermo en la base de datos
+    public void crearRecepcionEnfermo(RecepcionEnfermo recepcionEnfermo) {
+        ContentValues cv = RecepcionEnfermoHelper.crearRecepcionEnfermoContentValues(recepcionEnfermo);
+        mDb.insertOrThrow(MainDBConstants.RECEPCION_ENFERMO_TABLE, null, cv);
+    }
+    //Editar RecepcionEnfermo existente en la base de datos
+    public boolean editarRecepcionEnfermo(RecepcionEnfermo recepcionEnfermo) {
+        ContentValues cv = RecepcionEnfermoHelper.crearRecepcionEnfermoContentValues(recepcionEnfermo);
+        return mDb.update(MainDBConstants.RECEPCION_ENFERMO_TABLE , cv, MainDBConstants.idRecepcion + "='"
+                + recepcionEnfermo.getIdRecepcion()+ "'", null) > 0;
+    }
+    //Limpiar la tabla de RecepcionEnfermo de la base de datos
+    public boolean borrarRecepcionesEnfermo() {
+        return mDb.delete(MainDBConstants.RECEPCION_ENFERMO_TABLE, null, null) > 0;
+    }
+    //Obtener un RecepcionEnfermo de la base de datos
+    public RecepcionEnfermo getRecepcionEnfermo(String filtro, String orden) throws SQLException {
+        RecepcionEnfermo mRecepcionEnfermo = null;
+        Cursor cursorRecepcionEnfermo = crearCursor(MainDBConstants.RECEPCION_ENFERMO_TABLE , filtro, null, orden);
+        if (cursorRecepcionEnfermo != null && cursorRecepcionEnfermo.getCount() > 0) {
+            cursorRecepcionEnfermo.moveToFirst();
+            mRecepcionEnfermo= RecepcionEnfermoHelper.crearRecepcionEnfermo(cursorRecepcionEnfermo);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "='" +cursorRecepcionEnfermo.getString(cursorRecepcionEnfermo.getColumnIndex(MainDBConstants.participante)) +"'", null);
+            mRecepcionEnfermo.setParticipante(participante);
+        }
+        if (!cursorRecepcionEnfermo.isClosed()) cursorRecepcionEnfermo.close();
+        return mRecepcionEnfermo;
+    }
+    //Obtener una lista de RecepcionEnfermo de la base de datos
+    public List<RecepcionEnfermo> getRecepcionesEnfermo(String filtro, String orden) throws SQLException {
+        List<RecepcionEnfermo> mRecepcionEnfermos = new ArrayList<RecepcionEnfermo>();
+        Cursor cursorRecepcionEnfermos = crearCursor(MainDBConstants.RECEPCION_ENFERMO_TABLE, filtro, null, orden);
+        if (cursorRecepcionEnfermos != null && cursorRecepcionEnfermos.getCount() > 0) {
+            cursorRecepcionEnfermos.moveToFirst();
+            mRecepcionEnfermos.clear();
+            do{
+                RecepcionEnfermo mRecepcionEnfermo = null;
+                mRecepcionEnfermo = RecepcionEnfermoHelper.crearRecepcionEnfermo(cursorRecepcionEnfermos);
+                Participante participante = this.getParticipante(MainDBConstants.codigo + "='" +cursorRecepcionEnfermos.getString(cursorRecepcionEnfermos.getColumnIndex(MainDBConstants.participante)) +"'", null);
+                mRecepcionEnfermo.setParticipante(participante);
+                mRecepcionEnfermos.add(mRecepcionEnfermo);
+            } while (cursorRecepcionEnfermos.moveToNext());
+        }
+        if (!cursorRecepcionEnfermos.isClosed()) cursorRecepcionEnfermos.close();
+        return mRecepcionEnfermos;
+    }
 
     public boolean bulkInsertMessageResourceBySql(List<MessageResource> list) throws Exception {
         if (null == list || list.size() <= 0) {
@@ -1876,9 +1995,15 @@ public class EstudioDBAdapter {
         c = crearCursor(MainDBConstants.OBSEQUIOS_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
-        /*c = crearCursor(MainDBConstants.ORDEN_LAB_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        c = crearCursor(MainDBConstants.ORDEN_LAB_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
-        c.close();*/
+        c.close();
+        c = crearCursor(MainDBConstants.MUESTRAS_ENFERMO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
+        c = crearCursor(MainDBConstants.RECEPCION_ENFERMO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
+        c.close();
         return false;
     }
 

@@ -46,6 +46,7 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 
 	private EstudioDBAdapter estudiosAdapter;
 	private RecyclerView recyclerView;
+	private TextView textView;
 	private Spinner mMetodoView;
 	private EditText mCodigoView;
 	private ImageButton mFindButton;
@@ -57,6 +58,8 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 	private static UserPermissions mUser = new UserPermissions();
 	private SharedPreferences settings;
 	private String username;
+	private boolean desdeMedico = false;
+	private boolean desdeLaboratorio = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +72,17 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 						null);
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(),mPass,false,false);
+
+		desdeMedico = getIntent().getBooleanExtra(Constants.DESDE_MEDICO, false);
+		desdeLaboratorio = getIntent().getBooleanExtra(Constants.DESDE_LABO, false);
+
+		textView = findViewById(R.id.label_logo);
+		if (desdeMedico) {
+			textView.setText(getString(R.string.selec_part_order));
+		} else
+		if (desdeLaboratorio) {
+			textView.setText(getString(R.string.selec_part_recep));
+		}
 		mMetodoView = (Spinner) findViewById(R.id.metodo_busqueda);
 		mBarcodeButton = (ImageButton) findViewById(R.id.barcode_button);
 		mFindButton = (ImageButton) findViewById(R.id.find_button);
@@ -317,7 +331,7 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 		}
 
 		protected void onPostExecute(String resultado) {
-			adapter = new ParticipanteListAdapter(mParticipantes, mUser.getVisitas());
+			adapter = new ParticipanteListAdapter(mParticipantes, mUser.getVisitas(), desdeMedico, desdeLaboratorio);
 			recyclerView.setAdapter(adapter);
 			dismissProgressDialog();
 		}

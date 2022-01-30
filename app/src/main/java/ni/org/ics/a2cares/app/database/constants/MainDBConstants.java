@@ -833,10 +833,10 @@ public class MainDBConstants {
             + estado + " text not null, "
             + "primary key (" + id + "));";
 
-    //Tabla puntos ordenes de laboratorio para muestras de enfermos
+    //Tabla ordenes de laboratorio para muestras de enfermos
     public static final String ORDEN_LAB_TABLE = "orden_laboratorio";
 
-    //Campos tabla puntos ordenes de laboratorio para muestras de enfermos
+    //Campos tabla ordenes de laboratorio para muestras de enfermos
     public static final String idOrden="idOrden";
     public static final String fechaOrden="fechaOrden";
     public static final String tipoOrden="tipoOrden";
@@ -846,7 +846,7 @@ public class MainDBConstants {
     public static final String consulta="consulta";
     public static final String tipoMuestra="tipoMuestra";
 
-    //Crear tabla puntos ordenes de laboratorio para muestras de enfermos
+    //Crear tabla ordenes de laboratorio para muestras de enfermos
     public static final String CREATE_ORDEN_LAB_TABLE = "create table if not exists "
             + ORDEN_LAB_TABLE + " ("
             + idOrden + " text not null, "
@@ -866,4 +866,60 @@ public class MainDBConstants {
             + deviceId + " text, "
             + estado + " text not null, "
             + "primary key (" + idOrden + "));";
+
+    //Tabla muestras de enfermos
+    public static final String MUESTRAS_ENFERMO_TABLE = "muestras_enfermo";
+
+    //Campos tabla muestras de enfermoe
+    public static final String horaMuestra  = "horaMuestra";
+
+    //Crear tabla muestras de enfermos
+    public static final String CREATE_MUESTRAS_ENFERMO_TABLE = "create table if not exists "
+            + MUESTRAS_ENFERMO_TABLE + " ("
+            + idMuestra + " text not null, "
+            + participante + " text, "
+            + fechaMuestra + " date, "
+            + horaMuestra + " text, "
+            + tipoTubo + " text, "
+            + volumen + " real, "
+            + observacion + " text, "
+            + fis + " date, "
+            + fif + " date, "
+            + categoria + " text, "
+            + consulta + " text, "
+            + tipoMuestra + " text, "
+            + estudiosAct + " text, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + idMuestra + "));";
+
+    //Tabla muestras de enfermos
+    public static final String RECEPCION_ENFERMO_TABLE = "recepciones_enfermo";
+
+    //Crear tabla muestras de enfermos
+    public static final String CREATE_RECEPCION_ENFERMO_TABLE = "create table if not exists "
+            + RECEPCION_ENFERMO_TABLE + " ("
+            + idRecepcion + " text not null, "
+            + participante + " text, "
+            + fechaRecepcion + " date, "
+            + tipoTubo + " text, "
+            + volumen + " real, "
+            + observacion + " text, "
+            + fis + " date, "
+            + fif + " date, "
+            + categoria + " text, "
+            + consulta + " text, "
+            + tipoMuestra + " text, "
+            + estudiosAct + " text, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + idRecepcion + "));";
+
+
 }

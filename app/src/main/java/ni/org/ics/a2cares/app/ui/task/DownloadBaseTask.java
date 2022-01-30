@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ListIterator;
 
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
@@ -114,6 +113,9 @@ public class DownloadBaseTask extends DownloadTask {
         estudioAdapter.borrarVisitasTerrenoParticipante();
         estudioAdapter.borrarRazonNoDatas();
         estudioAdapter.borrarDatosCoordenadas();
+        estudioAdapter.borrarOrdenesLaboratorio();
+        estudioAdapter.borrarMuestrasEnfermo();
+        estudioAdapter.borrarRecepcionesEnfermo();
         try {
             if (mCatalogos != null){
                 publishProgress("Insertando catalogos", CATALOGOS, TOTAL_TASK_GENERALES);

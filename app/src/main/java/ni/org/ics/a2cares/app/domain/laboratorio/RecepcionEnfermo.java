@@ -1,4 +1,4 @@
-package ni.org.ics.a2cares.app.domain.medico;
+package ni.org.ics.a2cares.app.domain.laboratorio;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,13 +8,13 @@ import ni.org.ics.a2cares.app.domain.core.Participante;
 
 
 /**
- * Simple objeto de dominio que representa los datos una orden de laboratorio del médico
+ * Simple objeto de dominio que representa los datos una recepcion de muestra de enfermo en el laboratorio
  * 
  * @author Miguel Salinas
  **/
 
 
-public class OrdenLaboratorio extends BaseMetaData implements Serializable {
+public class RecepcionEnfermo extends BaseMetaData implements Serializable {
 
 	/**
 	 * 
@@ -24,24 +24,26 @@ public class OrdenLaboratorio extends BaseMetaData implements Serializable {
 	 * 
 	 */
 	
-	private String idOrden;
+	private String idRecepcion;
 	private Participante participante;
-	private Date fechaOrden;
-	private String tipoOrden; //Serogologia, BHC, etc
+	private Date fechaRecepcion;
+	private String tipoTubo; //Serogologia, BHC, etc
+	private Double volumen;
+	private String observacion;
 	private Date fis;
 	private Date fif;
 	private String categoria; //A,B,C
 	private String consulta; //Inicial, Seguimiento, Convaleciente
 	private String tipoMuestra; //Aguda, Convaleciente
 	private String estudiosAct;
-    private String observacion;
 
-	public String getIdOrden() {
-		return idOrden;
+
+	public String getIdRecepcion() {
+		return idRecepcion;
 	}
 
-	public void setIdOrden(String idOrden) {
-		this.idOrden = idOrden;
+	public void setIdRecepcion(String idRecepcion) {
+		this.idRecepcion = idRecepcion;
 	}
 
 	public Participante getParticipante() {
@@ -52,20 +54,28 @@ public class OrdenLaboratorio extends BaseMetaData implements Serializable {
 		this.participante = participante;
 	}
 
-	public Date getFechaOrden() {
-		return fechaOrden;
+	public Date getFechaRecepcion() {
+		return fechaRecepcion;
 	}
 
-	public void setFechaOrden(Date fechaOrden) {
-		this.fechaOrden = fechaOrden;
+	public void setFechaRecepcion(Date fechaRecepcion) {
+		this.fechaRecepcion = fechaRecepcion;
 	}
 
-	public String getTipoOrden() {
-		return tipoOrden;
+	public String getTipoTubo() {
+		return tipoTubo;
 	}
 
-	public void setTipoOrden(String tipoOrden) {
-		this.tipoOrden = tipoOrden;
+	public void setTipoTubo(String tipoTubo) {
+		this.tipoTubo = tipoTubo;
+	}
+
+	public Double getVolumen() {
+		return volumen;
+	}
+
+	public void setVolumen(Double volumen) {
+		this.volumen = volumen;
 	}
 
 	public Date getFis() {

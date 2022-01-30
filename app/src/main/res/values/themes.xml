@@ -32,9 +32,49 @@
         <item name="android:textColor">#ff0099cc</item>
         <item name="android:paddingLeft">?android:attr/listPreferredItemPaddingLeft</item>
     </style>
+
+    <style name="WizardPageTitleVertical">
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:id">@android:id/title</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">8dp</item>
+
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">#ff0099cc</item>
+        <item name="android:paddingLeft">?android:attr/listPreferredItemPaddingLeft</item>
+    </style>
     <!-- <item name="android:paddingLeft">?android:attr/listPreferredItemPaddingLeft</item> -->
 
+    <style name="WizardFormLabelPrincipal">
+        <item name="android:id">@android:id/primary</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">0dp</item>
+
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
     <style name="WizardFormLabel">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">0dp</item>
+
+        <item name="android:textColor">@color/text_light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
+
+    <style name="WizardFormLabelVertical">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">0dp</item>

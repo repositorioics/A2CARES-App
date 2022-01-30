@@ -36,24 +36,24 @@ public class OrdenLaboratorioHelper {
     }
 
     public static OrdenLaboratorio crearOrdenLaboratorio(Cursor cursor) {
-        OrdenLaboratorio mObsequio = new OrdenLaboratorio();
-        mObsequio.setIdOrden(cursor.getString(cursor.getColumnIndex(MainDBConstants.idOrden)));
-        mObsequio.setParticipante(null);
-        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaOrden))>0) mObsequio.setFechaOrden(new Date(cursor.getLong((cursor.getColumnIndex(MainDBConstants.fechaOrden)))));
-        mObsequio.setTipoOrden(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipoOrden)));
-        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fis))>0) mObsequio.setFis(new Date(cursor.getLong((cursor.getColumnIndex(MainDBConstants.fis)))));
-        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fif))>0) mObsequio.setFif(new Date(cursor.getLong((cursor.getColumnIndex(MainDBConstants.fif)))));
-        mObsequio.setCategoria(cursor.getString(cursor.getColumnIndex(MainDBConstants.categoria)));
-        mObsequio.setConsulta(cursor.getString(cursor.getColumnIndex(MainDBConstants.consulta)));
-        mObsequio.setTipoMuestra(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipoMuestra)));
-        mObsequio.setEstudiosAct(cursor.getString(cursor.getColumnIndex(MainDBConstants.estudiosAct)));
-        mObsequio.setObservacion(cursor.getString(cursor.getColumnIndex(MainDBConstants.observacion)));
+        OrdenLaboratorio mOrden = new OrdenLaboratorio();
+        mOrden.setIdOrden(cursor.getString(cursor.getColumnIndex(MainDBConstants.idOrden)));
+        mOrden.setParticipante(null);
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fechaOrden))>0) mOrden.setFechaOrden(new Date(cursor.getLong((cursor.getColumnIndex(MainDBConstants.fechaOrden)))));
+        mOrden.setTipoOrden(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipoOrden)));
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fis))>0) mOrden.setFis(new Date(cursor.getLong((cursor.getColumnIndex(MainDBConstants.fis)))));
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.fif))>0) mOrden.setFif(new Date(cursor.getLong((cursor.getColumnIndex(MainDBConstants.fif)))));
+        mOrden.setCategoria(cursor.getString(cursor.getColumnIndex(MainDBConstants.categoria)));
+        mOrden.setConsulta(cursor.getString(cursor.getColumnIndex(MainDBConstants.consulta)));
+        mOrden.setTipoMuestra(cursor.getString(cursor.getColumnIndex(MainDBConstants.tipoMuestra)));
+        mOrden.setEstudiosAct(cursor.getString(cursor.getColumnIndex(MainDBConstants.estudiosAct)));
+        mOrden.setObservacion(cursor.getString(cursor.getColumnIndex(MainDBConstants.observacion)));
 
-        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mObsequio.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
-        mObsequio.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
-        mObsequio.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
-        mObsequio.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
-        mObsequio.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
-        return mObsequio;
+        if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) mOrden.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
+        mOrden.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
+        mOrden.setPasive(cursor.getString(cursor.getColumnIndex(MainDBConstants.pasive)).charAt(0));
+        mOrden.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
+        mOrden.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
+        return mOrden;
     }
 }

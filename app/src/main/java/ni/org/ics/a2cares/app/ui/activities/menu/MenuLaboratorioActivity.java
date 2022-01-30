@@ -23,6 +23,7 @@ import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.RecepcionBhcActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.RecepcionRojoActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.RecepcionRojoLaboratorioActivity;
+import ni.org.ics.a2cares.app.ui.activities.list.ListaRecepcionesEnfermoActivity;
 import ni.org.ics.a2cares.app.ui.adapters.MenuLaboratorioAdapter;
 import ni.org.ics.a2cares.app.ui.adapters.MenuSupervisorAdapter;
 
@@ -35,6 +36,7 @@ public class MenuLaboratorioActivity extends AbstractAsyncActivity {
 
     //private final int OPCION_RECEPCION_BHC = 0;
     private final int OPCION_RECEPCION_ROJO = 0;
+	private final int OPCION_RECEPCION_ENFERMO = 1;
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
 	@Override
@@ -70,6 +72,13 @@ public class MenuLaboratorioActivity extends AbstractAsyncActivity {
     					i.putExtras(arguments);
     					startActivity(i);
     					break;
+					case OPCION_RECEPCION_ENFERMO:
+						i = new Intent(getApplicationContext(),
+								ListaRecepcionesEnfermoActivity.class);
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
 				    default:
                         break;
 		        }

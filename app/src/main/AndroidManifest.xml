@@ -90,6 +90,10 @@
         <activity android:name=".ui.activities.enterdata.NuevoObsequioActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.menu.MenuMedicoActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.list.ListaOrdenesLaboratorioActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.enterdata.NuevaOrdenLaboratorioActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.enterdata.NuevaMuestraEnfermoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.list.ListaRecepcionesEnfermoActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.enterdata.NuevaRecepcionEnfermoActivity" android:screenOrientation="portrait"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
