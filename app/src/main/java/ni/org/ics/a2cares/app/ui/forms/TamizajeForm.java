@@ -95,7 +95,7 @@ public class TamizajeForm extends AbstractWizardModel {
         Page casaPerteneceCohorte = new SingleFixedChoicePage(this,labels.getCasaPerteneceCohorte(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         //minimo al momento se hacer el cambio: 24092019
         Page codigoCasaCohorte = new SelectCasaPage(this,labels.getCodigoCasaCohorte(),labels.getCodigoCasaCohorteHint(),Constants.WIZARD, false).setRequired(true);
-        Page codigoNuevaCasaCohorte = new BarcodePage(this,labels.getCodigoNuevaCasaCohorte(),"",Constants.WIZARD, false).setRangeValidation(true, 1, 1000).setRequired(true);
+        Page codigoNuevaCasaCohorte = new BarcodePage(this,labels.getCodigoNuevaCasaCohorte(),"",Constants.WIZARD, false).setRangeValidation(true, 1, 2000).setRequired(true);
         Page nombre1JefeFamilia = new TextPage(this,labels.getNombre1JefeFamilia(), labels.getJefeFamiliaHint(), Constants.WIZARD, false).setRequired(true);
         Page nombre2JefeFamilia = new TextPage(this,labels.getNombre2JefeFamilia(),labels.getJefeFamiliaHint(), Constants.WIZARD, false).setRequired(false);
         Page apellido1JefeFamilia = new TextPage(this,labels.getApellido1JefeFamilia(),labels.getJefeFamiliaHint(), Constants.WIZARD, false).setRequired(true);

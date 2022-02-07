@@ -330,14 +330,14 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                         break;
                     }
                 }
-                if (bp.getTitle().equalsIgnoreCase(labels.getCodigoNuevaCasaCohorte())) {
+                /*if (bp.getTitle().equalsIgnoreCase(labels.getCodigoNuevaCasaCohorte())) {
                     valor = bp.getData().getString(TextPage.SIMPLE_DATA_KEY);
                     if (valor.matches("^\\d{4}$")) {
                         showToast(this.getString(R.string.error1CodigoCasa));
                         cutOffPage = i;
                         break;
                     }
-                }
+                }*/
             }
         }
 
