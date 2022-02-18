@@ -128,8 +128,8 @@ public class EstudioDBAdapter {
             onCreate(db);
             if(oldVersion==0) return;
             if(oldVersion==1){
-                //db.execSQL(MainDBConstants.CREATE_ORDEN_LAB_TABLE);
-                //db.execSQL(MainDBConstants.CREATE_MUESTRAS_ENFERMO_TABLE);
+                db.execSQL(MainDBConstants.CREATE_ORDEN_LAB_TABLE);
+                db.execSQL(MainDBConstants.CREATE_MUESTRAS_ENFERMO_TABLE);
                 db.execSQL(MainDBConstants.CREATE_RECEPCION_ENFERMO_TABLE);
             }
         }
