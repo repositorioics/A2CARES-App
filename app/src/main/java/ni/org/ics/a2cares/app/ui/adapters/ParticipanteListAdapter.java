@@ -79,7 +79,7 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
                     i.putExtras(arguments);
                     holder.context.startActivity(i);
                     ((Activity)holder.context).finish();
-                } if (desdeLaboratorio) {
+                } else if (desdeLaboratorio) {
                     Intent i = new Intent(holder.context,
                             NuevaRecepcionEnfermoActivity.class);
                     Bundle arguments = new Bundle();
