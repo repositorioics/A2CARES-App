@@ -54,6 +54,10 @@ dependencies {
     implementation 'joda-time:joda-time:2.10.9'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'joda-time:joda-time:2.10.9'
+    implementation 'org.simpleframework:simple-xml:2.7.1'
+//Thanks for using https://jar-download.com
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

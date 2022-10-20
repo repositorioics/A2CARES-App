@@ -285,7 +285,7 @@ public class NuevoObsequioActivity extends AbstractAsyncActivity implements
                 cutOffPage = i;
                 break;
             }     
-            if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.NumberPage")) {
+            if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.a2cares.app.wizard.model.NumberPage")) {
             	NumberPage np = (NumberPage) page;
             	String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
         		if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Double.valueOf(valor) || np.getmLowerOrEqualsThan() < Double.valueOf(valor)))
@@ -294,7 +294,7 @@ public class NuevoObsequioActivity extends AbstractAsyncActivity implements
         			break;
         		}
             }
-            if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.estudios.appmovil.wizard.model.TextPage")) {
+            if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.a2cares.app.wizard.model.TextPage")) {
             	TextPage tp = (TextPage) page;
             	if (tp.ismValPattern()) {
             		String valor = tp.getData().getString(TextPage.SIMPLE_DATA_KEY);

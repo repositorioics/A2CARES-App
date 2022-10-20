@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -15,10 +16,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,6 +38,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.sqlcipher.SQLException;
 
@@ -48,6 +57,7 @@ import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.users.Authority;
 import ni.org.ics.a2cares.app.domain.users.UserPermissions;
 import ni.org.ics.a2cares.app.domain.users.UserSistema;
+import ni.org.ics.a2cares.app.entomologia.activities.MenuEntomologiaActivity;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 
 
@@ -64,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
 	private String mUser;
 	private String mPassword;
 	private Boolean successLogin;
+	private Boolean entomologia = false;
 
 	// UI references.
 	private EditText mUserView;
@@ -147,8 +158,77 @@ public class LoginActivity extends AppCompatActivity {
 						attemptLogin();
 					}
 				});
+
+		takePermissions();
 	}
 
+	public void takePermissions() {
+		if (isPermissionGranted()) {
+			Toast.makeText(this, "Permisos otorgados", Toast.LENGTH_SHORT).show();
+		} else {
+			takePermission();
+		}
+	}
+
+	private boolean isPermissionGranted() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+			//Para android 11
+			return Environment.isExternalStorageManager();
+		} else {
+			//Menor que android 11
+			int readExternalStoragePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+			return readExternalStoragePermission == PackageManager.PERMISSION_GRANTED;
+		}
+	}
+
+	private void takePermission() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+			try {
+				Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+				intent.addCategory("android.intent.category.DEFAULT");
+				intent.setData(Uri.parse(String.format("package:%s", getApplicationContext().getPackageName())));
+				startActivityForResult(intent, 100);
+			} catch (Exception e) {
+				Intent intent = new Intent();
+				intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+				startActivityForResult(intent, 100);
+			}
+		} else {
+			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+					Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == RESULT_OK) {
+			if (requestCode == 100) {
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+					if (Environment.isExternalStorageManager()) {
+						Toast.makeText(this, "Permiso otorgados", Toast.LENGTH_SHORT).show();
+					} else {
+						takePermission();
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (grantResults.length > 0) {
+			if (requestCode == 101) {
+				boolean readExternalEstorage = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+				if (readExternalEstorage) {
+					Toast.makeText(this, "Permisos otorgados", Toast.LENGTH_SHORT).show();
+				} else {
+					takePermission();
+				}
+			}
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -304,6 +384,7 @@ public class LoginActivity extends AppCompatActivity {
 				List<Authority> uroles = Arrays.asList(userRolesFromServer.getBody());
                 urlRequest = url + "/movil/permisos/{mUser}";
                 ResponseEntity<UserPermissions> permisosFromServer = restTemplate.exchange(urlRequest, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), UserPermissions.class, mUser);
+				entomologia = uroles.toString().contains("ROLE_ENTO");
                 //if(!chkWipe.isChecked() || uroles.toString().contains("ROLE_SUPER")) {
                     successLogin = true;
                     EstudioDBAdapter dbAdapter = new EstudioDBAdapter(getApplicationContext(), mPassword, true, chkWipe.isChecked());
@@ -344,8 +425,13 @@ public class LoginActivity extends AppCompatActivity {
 				editor.putString(PreferencesActivity.KEY_SERVER_URL, url);
 				editor.commit();
 				finish();
-				Intent i = new Intent(getApplicationContext(),
-						MainActivity.class);
+				Intent i = null;
+				if (!entomologia)
+					i = new Intent(getApplicationContext(),
+							MainActivity.class);
+				else
+					i = new Intent(getApplicationContext(),
+							MenuEntomologiaActivity.class);
 				startActivity(i);
 			}
 			else if(respuesta.contains("I/O error: failed to connect to")){
@@ -392,8 +478,15 @@ public class LoginActivity extends AppCompatActivity {
 				editor.putString(PreferencesActivity.KEY_SERVER_URL, url);
 				editor.commit();
 				finish();
-				Intent i = new Intent(getApplicationContext(),
-						MainActivity.class);
+				Boolean entomologia = mDbAdapter.buscarRol(usuarioActual.getUsername(), "ROLE_ENTO");
+				Intent i = null;
+				if (!entomologia)
+					i = new Intent(getApplicationContext(),
+							MainActivity.class);
+				else
+					i = new Intent(getApplicationContext(),
+							MenuEntomologiaActivity.class);
+
 				startActivity(i);
 			}
 			else{

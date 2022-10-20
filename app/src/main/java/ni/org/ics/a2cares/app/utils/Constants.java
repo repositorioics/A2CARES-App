@@ -1,5 +1,7 @@
 package ni.org.ics.a2cares.app.utils;
 
+import android.net.Uri;
+
 /**
  * Created by Miguel Salinas on 13/5/2021.
  */
@@ -74,4 +76,13 @@ public class Constants {
     //Rango de volumen muestra
     public static final int VOLUMEN_MIN_ROJO = 4;
     public static final int VOLUMEN_MAX_ROJO = 7;
+
+    //Entomologia
+    public static final String MENU_ENTO = "menu_ento";
+    public static final String FEMENINO = "F";
+    public static final String MASCULINO = "M";
+    public static final String TITLE = "titulo";
+    public static final String OBJECTO = "objeto";
+    public static final String AUTHORITY = "org.odk.collect.android.provider.odk.forms";
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/forms");
 }

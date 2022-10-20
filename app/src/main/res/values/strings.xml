@@ -44,6 +44,7 @@
     <string name="perm_error">No tiene permiso en esta opción!</string>
     <string name="data_not_sent">Hay datos sin enviar en el equipo, estos datos se borrarán si continúa. Aún desea descargar la información del servidor?</string>
     <string name="downloading">Descargar toda la info del servidor? Esta operacion descarta toda la informacion actual en el dispositivo</string>
+    <string name="uploading">Enviar toda la info al servidor?</string>
     <!--Busquedas -->
     <string name="enter">Ingresar</string>
     <string name="barcode_error">Escaner de código de barras no disponible</string>
@@ -231,5 +232,7 @@
     <string name="selec_part_recep">Seleccionar participante de la recepción</string>
     <string name="sick_receptions">Recepciones Mx Enfermos</string>
     <string name="agregarRecepcion">Agregar Recepción Mx Enfermo</string>
+
+    <string name="err_not_completed">No ha completado el formulario</string>
 
 </resources>
