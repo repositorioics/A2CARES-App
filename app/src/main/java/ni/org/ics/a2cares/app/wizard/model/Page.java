@@ -46,6 +46,7 @@ public abstract class Page implements PageTreeNode {
     protected boolean mEnabled = true;
     private String codigoParticipante;
     private int mCodePosicion; //para el fragment de codigo de barra, si es -1 toma el codigo completo, sino toma el segmento de codigo indicado en la posicion
+    private boolean esEntomologia = false;
 
     protected Page(ModelCallbacks callbacks, String title, String hintText, String textColor, boolean visible, boolean enabled) {
         mCallbacks = callbacks;
@@ -164,5 +165,13 @@ public abstract class Page implements PageTreeNode {
 
     public void setmCodePosicion(int mCodePosicion) {
         this.mCodePosicion = mCodePosicion;
+    }
+
+    public boolean isEsEntomologia() {
+        return esEntomologia;
+    }
+
+    public void setEsEntomologia(boolean esEntomologia) {
+        this.esEntomologia = esEntomologia;
     }
 }

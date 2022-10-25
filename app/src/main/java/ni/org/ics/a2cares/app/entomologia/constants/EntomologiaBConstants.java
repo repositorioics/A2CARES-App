@@ -26,9 +26,10 @@ public class EntomologiaBConstants {
     public static final String ENTO_CUESTIONARIO_HOGAR_TABLE = "ento_cuestionario_hogar";
     //campos tabla CuestionarioHogar
     public static final String codigoEncuesta = "codigoEncuesta";
-
-    //00.	Código de la casa
-    public static final String codigoCasa = "codigoCasa";
+    public static final String direccion = "direccion";
+    public static final String tipoIngresoCodigo = "tipoIngresoCodigo";
+    public static final String codigoVivienda = "codigoVivienda";
+    public static final String tipoVivienda = "tipoVivienda";
 
     //01.	¿Quién está contestando éste cuestionario?
     public static final String quienContesta = "quienContesta";
@@ -138,11 +139,75 @@ public class EntomologiaBConstants {
     //33.	¿Cuál es el mayor criadero de Zancudos de este barrio?
     public static final String mayorCriaderoBarrio = "mayorCriaderoBarrio";
 
+    public static final String materialParedes = "materialParedes";
+    public static final String materialPiso = "materialPiso";
+    public static final String materialTecho = "materialTecho";
+    public static final String otroMaterialParedes = "otroMaterialParedes";
+    public static final String otroMaterialPiso = "otroMaterialPiso";
+    public static final String otroMaterialTecho = "otroMaterialTecho";
+
+
+    //tabla CuestionarioPuntoClave
+    public static final String ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE = "ento_cuestionario_punto_clave";
+    //campos tabla CuestionarioPuntoClave
+    public static final String codigoCuestionario = "codigoCuestionario";
+    public static final String fechaCuestionario = "fechaCuestionario";
+    public static final String barrio = "barrio";
+    public static final String nombrePuntoClave = "nombrePuntoClave";
+    public static final String direccionPuntoClave = "direccionPuntoClave";
+    public static final String tipoPuntoClave = "tipoPuntoClave";
+    public static final String tipoPuntoProductividad = "tipoPuntoProductividad";
+    public static final String tipoPuntoProductividadOtro = "tipoPuntoProductividadOtro";
+    public static final String tipoPuntoAglomeracion = "tipoPuntoAglomeracion";
+    public static final String tipoPuntoAglomeracionOtro = "tipoPuntoAglomeracionOtro";
+    public static final String cuantasPersonasReunen = "cuantasPersonasReunen";
+    public static final String cuantosDiasSemanaReunen = "cuantosDiasSemanaReunen";
+    public static final String horaInicioReunion = "horaInicioReunion";
+    public static final String horaFinReunion = "horaFinReunion";
+    public static final String puntoGps = "puntoGps";
+    public static final String latitud = "latitud";
+    public static final String longitud = "longitud";
+    public static final String tipoIngresoCodigoSitio = "tipoIngresoCodigoSitio";
+    public static final String codigoSitio = "codigoSitio";
+    public static final String hayAmbientePERI = "hayAmbientePERI";
+    public static final String horaCapturaPERI = "horaCapturaPERI";
+    public static final String humedadRelativaPERI = "humedadRelativaPERI";
+    public static final String temperaturaPERI = "temperaturaPERI";
+    public static final String tipoIngresoCodigoPERI = "tipoIngresoCodigoPERI";
+    public static final String codigoPERI = "codigoPERI";
+
+    public static final String hayAmbienteINTRA = "hayAmbienteINTRA";
+    public static final String horaCapturaINTRA = "horaCapturaINTRA";
+    public static final String humedadRelativaINTRA = "humedadRelativaINTRA";
+    public static final String temperaturaINTRA = "temperaturaINTRA";
+
+    public static final String tipoIngresoCodigoINTRA = "tipoIngresoCodigoINTRA";
+    public static final String codigoINTRA = "codigoINTRA";
+    public static final String nombrePersonaContesta = "nombrePersonaContesta";
     //crear tabla CuestionarioHogar
     public static final String CREATE_ENTO_CUESTIONARIO_HOGAR_TABLE = "create table if not exists "
             + ENTO_CUESTIONARIO_HOGAR_TABLE + " ("
             + codigoEncuesta + " text not null, "
-            + codigoCasa + " integer, "
+            + fechaCuestionario + " date, "
+            + barrio + " integer, "
+            + direccion + " text, "
+            + latitud + " double, "
+            + longitud + " double, "
+            + tipoIngresoCodigo + " text, "
+            + codigoVivienda + " text, "
+            + tipoVivienda + " text, "
+            + hayAmbientePERI + " text, "
+            + horaCapturaPERI + " text, "
+            + humedadRelativaPERI + " double, "
+            + temperaturaPERI + " double, "
+            + tipoIngresoCodigoPERI  + " text, "
+            + codigoPERI  + " text, "
+            + hayAmbienteINTRA + " text, "
+            + horaCapturaINTRA + " text, "
+            + humedadRelativaINTRA + " double, "
+            + temperaturaINTRA + " double, "
+            + tipoIngresoCodigoINTRA  + " text, "
+            + codigoINTRA  + " text, "
             + quienContesta + " text, "
             + quienContestaOtro + " text, "
             + edadContest + " text, "
@@ -185,6 +250,12 @@ public class EntomologiaBConstants {
             + edadesMasculino + " text, "
             + alguienParticipo + " text, "
             + quienParticipo + " text, "
+            + materialParedes  + " text, "
+            + materialPiso  + " text, "
+            + materialTecho  + " text, "
+            + otroMaterialParedes  + " text, "
+            + otroMaterialPiso  + " text, "
+            + otroMaterialTecho  + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "
@@ -197,7 +268,26 @@ public class EntomologiaBConstants {
     public static final String INSERT_ENTO_CUESTIONARIO_HOGAR_TABLE = "insert into "
             + ENTO_CUESTIONARIO_HOGAR_TABLE + " ("
             + codigoEncuesta + " , "
-            + codigoCasa + " , "
+            + fechaCuestionario + " , "
+            + barrio + " , "
+            + direccion + " , "
+            + latitud + " , "
+            + longitud + " , "
+            + tipoIngresoCodigo + " , "
+            + codigoVivienda + " , "
+            + tipoVivienda + " , "
+            + hayAmbientePERI + " , "
+            + horaCapturaPERI + " , "
+            + humedadRelativaPERI + " , "
+            + temperaturaPERI + " , "
+            + tipoIngresoCodigoPERI  + " , "
+            + codigoPERI  + " , "
+            + hayAmbienteINTRA + " , "
+            + horaCapturaINTRA + " , "
+            + humedadRelativaINTRA + " , "
+            + temperaturaINTRA + " , "
+            + tipoIngresoCodigoINTRA  + " , "
+            + codigoINTRA  + " , "
             + quienContesta + " , "
             + quienContestaOtro + " , "
             + edadContest + " , "
@@ -240,12 +330,18 @@ public class EntomologiaBConstants {
             + edadesMasculino + " , "
             + alguienParticipo + " , "
             + quienParticipo + " , "
+            + materialParedes  + " , "
+            + materialPiso  + " , "
+            + materialTecho  + " , "
+            + otroMaterialParedes  + " , "
+            + otroMaterialPiso  + " , "
+            + otroMaterialTecho  + " , "
             + MainDBConstants.recordDate + ","
             + MainDBConstants.recordUser + ","
             + MainDBConstants.pasive + ","
             + MainDBConstants.deviceId + ","
             + MainDBConstants.estado
-            + ") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + ") values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     //tabla CuestionarioHogarPoblacion
     public static final String ENTO_CUESTIONARIO_HOGAR_POB_TABLE = "ento_cuestionario_hogar_pob";
@@ -285,43 +381,6 @@ public class EntomologiaBConstants {
             + ") values(?,?,?,?,?,?,?,?,?,?)";
 
 
-    //tabla CuestionarioPuntoClave
-    public static final String ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE = "ento_cuestionario_punto_clave";
-    //campos tabla CuestionarioPuntoClave
-    public static final String codigoCuestionario = "codigoCuestionario";
-    public static final String fechaCuestionario = "fechaCuestionario";
-    public static final String barrio = "barrio";
-    public static final String nombrePuntoClave = "nombrePuntoClave";
-    public static final String direccionPuntoClave = "direccionPuntoClave";
-    public static final String tipoPuntoClave = "tipoPuntoClave";
-    public static final String tipoPuntoProductividad = "tipoPuntoProductividad";
-    public static final String tipoPuntoProductividadOtro = "tipoPuntoProductividadOtro";
-    public static final String tipoPuntoAglomeracion = "tipoPuntoAglomeracion";
-    public static final String tipoPuntoAglomeracionOtro = "tipoPuntoAglomeracionOtro";
-    public static final String cuantasPersonasReunen = "cuantasPersonasReunen";
-    public static final String cuantosDiasSemanaReunen = "cuantosDiasSemanaReunen";
-    public static final String horaInicioReunion = "horaInicioReunion";
-    public static final String horaFinReunion = "horaFinReunion";
-    public static final String puntoGps = "puntoGps";
-    public static final String latitud = "latitud";
-    public static final String longitud = "longitud";
-    public static final String tipoIngresoCodigoSitio = "tipoIngresoCodigoSitio";
-    public static final String codigoSitio = "codigoSitio";
-    public static final String hayAmbientePERI = "hayAmbientePERI";
-    public static final String horaCapturaPERI = "horaCapturaPERI";
-    public static final String humedadRelativaPERI = "humedadRelativaPERI";
-    public static final String temperaturaPERI = "temperaturaPERI";
-    public static final String tipoIngresoCodigoPERI = "tipoIngresoCodigoPERI";
-    public static final String codigoPERI = "codigoPERI";
-
-    public static final String hayAmbienteINTRA = "hayAmbienteINTRA";
-    public static final String horaCapturaINTRA = "horaCapturaINTRA";
-    public static final String humedadRelativaINTRA = "humedadRelativaINTRA";
-    public static final String temperaturaINTRA = "temperaturaINTRA";
-
-    public static final String tipoIngresoCodigoINTRA = "tipoIngresoCodigoINTRA";
-    public static final String codigoINTRA = "codigoINTRA";
-    public static final String nombrePersonaContesta = "nombrePersonaContesta";
 
     //crear tabla CuestionarioPuntoClave
     public static final String CREATE_ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE = "create table if not exists "

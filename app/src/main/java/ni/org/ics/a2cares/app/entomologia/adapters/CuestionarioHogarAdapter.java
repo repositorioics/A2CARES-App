@@ -36,8 +36,8 @@ public class CuestionarioHogarAdapter extends ArrayAdapter<CuestionarioHogar> {
 			TextView textView = (TextView) v.findViewById(R.id.name_text);
 			if (textView != null) {
                 String text = "";
-                if (encuesta.getCodigoCasa()>0)
-                    text = "Casa "+encuesta.getCodigoCasa();
+                if (encuesta.getCodigoVivienda()!= null)
+                    text = "Casa "+encuesta.getCodigoVivienda();
 
                 textView.setText(text);
 			}

@@ -52,8 +52,8 @@ public class UploadAllEntoTask extends UploadTask {
             estudioAdapter = new EstudioDBAdapter(mContext, password, false,false);
             estudioAdapter.open();
             String filtro = MainDBConstants.estado + "='" + Constants.STATUS_NOT_SUBMITTED + "'";
-            //mCuestHogar = estudioAdapter.getCuestionariosHogar(filtro, null);
-            //mCuestHogarPob = estudioAdapter.getCuestionariosHogarPoblacion(filtro, null);
+            mCuestHogar = estudioAdapter.getCuestionariosHogar(filtro, null);
+            mCuestHogarPob = estudioAdapter.getCuestionariosHogarPoblacion(filtro, null);
             mCuestPuntoClave = estudioAdapter.getCuestionariosPuntoClave(filtro, null);
 
             publishProgress("Datos completos!", "2", "2");

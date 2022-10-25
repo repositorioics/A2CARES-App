@@ -5,7 +5,6 @@ import android.database.Cursor;
 import net.sqlcipher.database.SQLiteStatement;
 
 import ni.org.ics.a2cares.app.database.helpers.BindStatementHelper;
-import ni.org.ics.a2cares.app.database.helpers.RecepcionEnfermoHelper;
 import ni.org.ics.a2cares.app.entomologia.constants.EntomologiaBConstants;
 import ni.org.ics.a2cares.app.entomologia.domain.CuestionarioHogar;
 import ni.org.ics.a2cares.app.entomologia.domain.CuestionarioHogarPoblacion;
@@ -24,7 +23,28 @@ public class EntomologiaHelper extends BindStatementHelper {
     public static ContentValues crearCuestionarioHogarContentValues(CuestionarioHogar cuest){
         ContentValues cv = new ContentValues();
         cv.put(EntomologiaBConstants.codigoEncuesta, cuest.getCodigoEncuesta());
-        cv.put(EntomologiaBConstants.codigoCasa, cuest.getCodigoCasa());
+
+        if (cuest.getFechaCuestionario() != null) cv.put(EntomologiaBConstants.fechaCuestionario, cuest.getFechaCuestionario().getTime());
+        cv.put(EntomologiaBConstants.barrio, cuest.getBarrio());
+        cv.put(EntomologiaBConstants.direccion, cuest.getDireccion());
+        cv.put(EntomologiaBConstants.latitud, cuest.getLatitud());
+        cv.put(EntomologiaBConstants.longitud, cuest.getLongitud());
+        cv.put(EntomologiaBConstants.tipoIngresoCodigo, cuest.getTipoIngresoCodigo());
+        cv.put(EntomologiaBConstants.codigoVivienda, cuest.getCodigoVivienda());
+        cv.put(EntomologiaBConstants.tipoVivienda, cuest.getTipoVivienda());
+        cv.put(EntomologiaBConstants.hayAmbientePERI, cuest.getHayAmbientePERI());
+        cv.put(EntomologiaBConstants.horaCapturaPERI, cuest.getHoraCapturaPERI());
+        cv.put(EntomologiaBConstants.humedadRelativaPERI, cuest.getHumedadRelativaPERI());
+        cv.put(EntomologiaBConstants.temperaturaPERI, cuest.getTemperaturaPERI());
+        cv.put(EntomologiaBConstants.tipoIngresoCodigoPERI, cuest.getTipoIngresoCodigoPERI());
+        cv.put(EntomologiaBConstants.codigoPERI, cuest.getCodigoPERI());
+        cv.put(EntomologiaBConstants.hayAmbienteINTRA, cuest.getHayAmbienteINTRA());
+        cv.put(EntomologiaBConstants.horaCapturaINTRA, cuest.getHoraCapturaINTRA());
+        cv.put(EntomologiaBConstants.humedadRelativaINTRA, cuest.getHumedadRelativaINTRA());
+        cv.put(EntomologiaBConstants.temperaturaINTRA, cuest.getTemperaturaINTRA());
+        cv.put(EntomologiaBConstants.tipoIngresoCodigoINTRA, cuest.getTipoIngresoCodigoINTRA());
+        cv.put(EntomologiaBConstants.codigoINTRA, cuest.getCodigoINTRA());
+
         cv.put(EntomologiaBConstants.quienContesta, cuest.getQuienContesta());
         cv.put(EntomologiaBConstants.quienContestaOtro, cuest.getQuienContestaOtro());
         cv.put(EntomologiaBConstants.edadContest, cuest.getEdadContest());
@@ -67,7 +87,12 @@ public class EntomologiaHelper extends BindStatementHelper {
         cv.put(EntomologiaBConstants.edadesMasculino, cuest.getEdadesMasculino());
         cv.put(EntomologiaBConstants.alguienParticipo, cuest.getAlguienParticipo());
         cv.put(EntomologiaBConstants.quienParticipo, cuest.getQuienParticipo());
-
+        cv.put(EntomologiaBConstants.materialParedes, cuest.getMaterialParedes());
+        cv.put(EntomologiaBConstants.materialPiso, cuest.getMaterialPiso());
+        cv.put(EntomologiaBConstants.materialTecho, cuest.getMaterialTecho());
+        cv.put(EntomologiaBConstants.otroMaterialParedes, cuest.getOtroMaterialParedes());
+        cv.put(EntomologiaBConstants.otroMaterialPiso, cuest.getOtroMaterialPiso());
+        cv.put(EntomologiaBConstants.otroMaterialTecho, cuest.getOtroMaterialTecho());
         if (cuest.getRecordDate() != null) cv.put(MainDBConstants.recordDate, cuest.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, cuest.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(cuest.getPasive()));
@@ -80,16 +105,32 @@ public class EntomologiaHelper extends BindStatementHelper {
         CuestionarioHogar cuest = new CuestionarioHogar();
         cuest.setCodigoEncuesta(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.codigoEncuesta)));
 
-        if(cursor.getInt(cursor.getColumnIndex(EntomologiaBConstants.codigoCasa))>0) cuest.setCodigoCasa(cursor.getInt(cursor.getColumnIndex(EntomologiaBConstants.codigoCasa)));
-
+        cuest.setFechaCuestionario(new Date(cursor.getLong(cursor.getColumnIndex(EntomologiaBConstants.fechaCuestionario))));
+        cuest.setBarrio(cursor.getInt(cursor.getColumnIndex(EntomologiaBConstants.barrio)));
+        cuest.setDireccion(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.direccion)));
+        cuest.setLatitud(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.latitud)));
+        cuest.setLongitud(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.longitud)));
+        cuest.setTipoIngresoCodigo(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoIngresoCodigo)));
+        cuest.setCodigoVivienda(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.codigoVivienda)));
+        cuest.setTipoVivienda(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoVivienda)));
+        cuest.setHayAmbientePERI(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.hayAmbientePERI)));
+        cuest.setHoraCapturaPERI(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.horaCapturaPERI)));
+        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.humedadRelativaPERI)) > 0) cuest.setHumedadRelativaPERI(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.humedadRelativaPERI)));
+        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.temperaturaPERI)) > 0) cuest.setTemperaturaPERI(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.temperaturaPERI)));
+        cuest.setTipoIngresoCodigoPERI(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoIngresoCodigoPERI)));
+        cuest.setCodigoPERI(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.codigoPERI)));
+        cuest.setHayAmbienteINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.hayAmbienteINTRA)));
+        cuest.setHoraCapturaINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.horaCapturaINTRA)));
+        cuest.setHumedadRelativaINTRA(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.humedadRelativaINTRA)));
+        cuest.setTemperaturaINTRA(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.temperaturaINTRA)));
+        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.tipoIngresoCodigoINTRA)) > 0) cuest.setTipoIngresoCodigoINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoIngresoCodigoINTRA)));
+        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.codigoINTRA)) > 0) cuest.setCodigoINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.codigoINTRA)));
         cuest.setQuienContesta(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.quienContesta)));
         cuest.setQuienContestaOtro(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.quienContestaOtro)));
         cuest.setEdadContest(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.edadContest)));
         cuest.setEscolaridadContesta(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.escolaridadContesta)));
         cuest.setTiempoVivirBarrio(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tiempoVivirBarrio)));
-
         if(cursor.getInt(cursor.getColumnIndex(EntomologiaBConstants.cuantasPersonasViven))>0) cuest.setCuantasPersonasViven(cursor.getInt(cursor.getColumnIndex(EntomologiaBConstants.cuantasPersonasViven)));
-
         cuest.setUsaronMosquitero(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.usaronMosquitero)));
         cuest.setQuienesUsaronMosquitero(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.quienesUsaronMosquitero)));
         cuest.setUsaronRepelente(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.usaronRepelente)));
@@ -114,9 +155,7 @@ public class EntomologiaHelper extends BindStatementHelper {
         cuest.setProblemasAbastecimiento(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.problemasAbastecimiento)));
         cuest.setCadaCuantoVaAgua(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.cadaCuantoVaAgua)));
         cuest.setCadaCuantoVaAguaOtro(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.cadaCuantoVaAguaOtro)));
-
         if(cursor.getInt(cursor.getColumnIndex(EntomologiaBConstants.horasSinAguaDia))>0) cuest.setHorasSinAguaDia(cursor.getInt(cursor.getColumnIndex(EntomologiaBConstants.horasSinAguaDia)));
-
         cuest.setQueHacenBasuraHogar(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.queHacenBasuraHogar)));
         cuest.setQueHacenBasuraHogarOtro(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.queHacenBasuraHogarOtro)));
         cuest.setRiesgoBarrioDengue(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.riesgoBarrioDengue)));
@@ -129,6 +168,12 @@ public class EntomologiaHelper extends BindStatementHelper {
         cuest.setAlguienParticipo(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.alguienParticipo)));
         cuest.setQuienParticipo(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.quienParticipo)));
 
+        cuest.setMaterialParedes(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.materialParedes)));
+        cuest.setMaterialPiso(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.materialPiso)));
+        cuest.setMaterialTecho(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.materialTecho)));
+        cuest.setOtroMaterialParedes(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.otroMaterialParedes)));
+        cuest.setOtroMaterialPiso(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.otroMaterialPiso)));
+        cuest.setOtroMaterialTecho(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.otroMaterialTecho)));
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) cuest.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         cuest.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));
@@ -140,56 +185,84 @@ public class EntomologiaHelper extends BindStatementHelper {
 
     public static void fillCuestionarioHogarStatement(SQLiteStatement stat, CuestionarioHogar part){
         bindString(stat,1, part.getCodigoEncuesta());
-        stat.bindLong(2, part.getCodigoCasa());
-        bindString(stat,3, part.getQuienContesta());
-        bindString(stat,4, part.getQuienContestaOtro());
-        bindString(stat,5, part.getEdadContest());
-        bindString(stat,6, part.getEscolaridadContesta());
-        bindString(stat,7, part.getTiempoVivirBarrio());
-        stat.bindLong(8, part.getCuantasPersonasViven());
-        bindString(stat,9, part.getUsaronMosquitero());
-        bindString(stat,10, part.getQuienesUsaronMosquitero());
-        bindString(stat,11, part.getUsaronRepelente());
-        bindString(stat,12, part.getQuienesUsaronRepelente());
-        bindString(stat,13, part.getConoceLarvas());
-        bindString(stat,14, part.getAlguienVisEliminarLarvas());
-        bindString(stat,15, part.getQuienVisEliminarLarvas());
-        bindString(stat,16, part.getQuienVisEliminarLarvasOtro());
-        bindString(stat,17, part.getAlguienDedicaElimLarvasCasa());
-        bindString(stat,18, part.getQuienDedicaElimLarvasCasa());
-        bindString(stat,19, part.getTiempoElimanCridaros());
-        bindString(stat,20, part.getHayBastanteZancudos());
-        bindString(stat,21, part.getQueFaltaCasaEvitarZancudos());
-        bindString(stat,22, part.getQueFaltaCasaEvitarZancudosOtros());
-        bindString(stat,23, part.getGastaronDineroProductos());
-        bindString(stat,24, part.getQueProductosCompraron());
-        bindString(stat,25, part.getQueProductosCompraronOtros());
-        bindString(stat,26, part.getCuantoGastaron());
-        bindString(stat,27, part.getUltimaVisitaMinsaBTI());
-        bindString(stat,28, part.getUltimaVezMinsaFumigo());
-        bindString(stat,29, part.getRiesgoCasaDengue());
-        bindString(stat,30, part.getProblemasAbastecimiento());
-        bindString(stat,31, part.getCadaCuantoVaAgua());
-        bindString(stat,32, part.getCadaCuantoVaAguaOtro());
-        stat.bindLong(33, part.getHorasSinAguaDia());
-        bindString(stat,34, part.getQueHacenBasuraHogar());
-        bindString(stat,35, part.getQueHacenBasuraHogarOtro());
-        bindString(stat,36, part.getRiesgoBarrioDengue());
-        bindString(stat,37, part.getAccionesCriaderosBarrio());
-        bindString(stat,38, part.getQueAcciones());
-        bindString(stat,39, part.getQueAccionesOtro());
-        bindString(stat,40, part.getMayorCriaderoBarrio());
 
-        bindString(stat,41, part.getEdadesFemenino());
-        bindString(stat,42, part.getEdadesMasculino());
-        bindString(stat,43, part.getAlguienParticipo());
-        bindString(stat,44, part.getQuienParticipo());
+        bindDate(stat, 2, part.getFechaCuestionario());
+        bindInteger(stat, 3, part.getBarrio());
+        bindString(stat, 4, part.getDireccion());
+        bindDouble(stat, 5, part.getLatitud());
+        bindDouble(stat, 6, part.getLongitud());
+        bindString(stat, 7, part.getTipoIngresoCodigo());
+        bindString(stat, 8, part.getCodigoVivienda());
+        bindString(stat, 9, part.getTipoVivienda());
+        bindString(stat, 10, part.getHayAmbientePERI());
+        bindString(stat, 11, part.getHoraCapturaPERI());
+        bindDouble(stat, 12, part.getHumedadRelativaPERI());
+        bindDouble(stat, 13, part.getTemperaturaPERI());
+        bindString(stat, 14, part.getTipoIngresoCodigoPERI());
+        bindString(stat, 15, part.getCodigoPERI());
+        bindString(stat, 16, part.getHayAmbienteINTRA());
+        bindString(stat, 17, part.getHoraCapturaINTRA());
+        bindDouble(stat, 18, part.getHumedadRelativaINTRA());
+        bindDouble(stat, 19, part.getTemperaturaINTRA());
+        bindString(stat, 20, part.getTipoIngresoCodigoINTRA());
+        bindString(stat, 21, part.getCodigoINTRA());
 
-        bindDate(stat,45, part.getRecordDate());
-        bindString(stat,46, part.getRecordUser());
-        stat.bindString(47, String.valueOf(part.getPasive()));
-        bindString(stat,48, part.getDeviceid());
-        stat.bindString(49, String.valueOf(part.getEstado()));
+        bindString(stat,22, part.getQuienContesta());
+        bindString(stat,23, part.getQuienContestaOtro());
+        bindString(stat,24, part.getEdadContest());
+        bindString(stat,25, part.getEscolaridadContesta());
+        bindString(stat,26, part.getTiempoVivirBarrio());
+        bindInteger(stat,27, part.getCuantasPersonasViven());
+        bindString(stat,28, part.getUsaronMosquitero());
+        bindString(stat,29, part.getQuienesUsaronMosquitero());
+        bindString(stat,30, part.getUsaronRepelente());
+        bindString(stat,31, part.getQuienesUsaronRepelente());
+        bindString(stat,32, part.getConoceLarvas());
+        bindString(stat,33, part.getAlguienVisEliminarLarvas());
+        bindString(stat,34, part.getQuienVisEliminarLarvas());
+        bindString(stat,35, part.getQuienVisEliminarLarvasOtro());
+        bindString(stat,36, part.getAlguienDedicaElimLarvasCasa());
+        bindString(stat,37, part.getQuienDedicaElimLarvasCasa());
+        bindString(stat,38, part.getTiempoElimanCridaros());
+        bindString(stat,39, part.getHayBastanteZancudos());
+        bindString(stat,40, part.getQueFaltaCasaEvitarZancudos());
+        bindString(stat,41, part.getQueFaltaCasaEvitarZancudosOtros());
+        bindString(stat,42, part.getGastaronDineroProductos());
+        bindString(stat,43, part.getQueProductosCompraron());
+        bindString(stat,44, part.getQueProductosCompraronOtros());
+        bindString(stat,45, part.getCuantoGastaron());
+        bindString(stat,46, part.getUltimaVisitaMinsaBTI());
+        bindString(stat,47, part.getUltimaVezMinsaFumigo());
+        bindString(stat,48, part.getRiesgoCasaDengue());
+        bindString(stat,49, part.getProblemasAbastecimiento());
+        bindString(stat,50, part.getCadaCuantoVaAgua());
+        bindString(stat,51, part.getCadaCuantoVaAguaOtro());
+        bindInteger(stat,52, part.getHorasSinAguaDia());
+        bindString(stat,53, part.getQueHacenBasuraHogar());
+        bindString(stat,54, part.getQueHacenBasuraHogarOtro());
+        bindString(stat,55, part.getRiesgoBarrioDengue());
+        bindString(stat,56, part.getAccionesCriaderosBarrio());
+        bindString(stat,57, part.getQueAcciones());
+        bindString(stat,58, part.getQueAccionesOtro());
+        bindString(stat,59, part.getMayorCriaderoBarrio());
+
+        bindString(stat,60, part.getEdadesFemenino());
+        bindString(stat,61, part.getEdadesMasculino());
+        bindString(stat,62, part.getAlguienParticipo());
+        bindString(stat,63, part.getQuienParticipo());
+
+        bindString(stat,64, part.getMaterialParedes());
+        bindString(stat,65, part.getMaterialPiso());
+        bindString(stat,66, part.getMaterialTecho());
+        bindString(stat,67, part.getOtroMaterialParedes());
+        bindString(stat,68, part.getOtroMaterialPiso());
+        bindString(stat,69, part.getOtroMaterialTecho());
+
+        bindDate(stat,70, part.getRecordDate());
+        bindString(stat,70, part.getRecordUser());
+        stat.bindString(72, String.valueOf(part.getPasive()));
+        bindString(stat,73, part.getDeviceid());
+        stat.bindString(74, String.valueOf(part.getEstado()));
     }
 
 

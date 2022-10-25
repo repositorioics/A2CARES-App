@@ -94,6 +94,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
     private static Casa mCasa = null;
     private static PuntoCandidato mPunto = null;
     private List<PuntoCandidato> mPuntos = new ArrayList<>();
+    private static Boolean esEntomologia = false;
 
     private GoogleMap mGoogleMap;
 
@@ -129,6 +130,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
         mParticipante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         mCasa = (Casa) getIntent().getExtras().getSerializable(Constants.CASA);
         mPunto = (PuntoCandidato) getIntent().getExtras().getSerializable(Constants.PUNTO_GPS);
+        esEntomologia = getIntent().getExtras().getBoolean(Constants.MENU_ENTO, false);
         visExitosa = getIntent().getBooleanExtra(Constants.VISITA_EXITOSA, false);
 
         codigoParticipante = getIntent().getStringExtra(Constants.COD_PARTICIPANTE);
@@ -543,7 +545,9 @@ public class CoordenadasMapActivity extends AppCompatActivity
                             intent1.putExtra("CODE_RESULT", "");
                             setResult(RESULT_OK, intent1);
                             finish();
-                        }else {
+                        } else if (esEntomologia) {
+                            finish();
+                        } else {
                             // Finish app
                             Intent i = new Intent(getApplicationContext(),
                                     MenuParticipanteActivity.class);
@@ -570,7 +574,10 @@ public class CoordenadasMapActivity extends AppCompatActivity
                 builder.setTitle(this.getString(R.string.confirm));
                 if (codigoParticipante != null && codigoParticipante.equalsIgnoreCase("00000")) {
                     builder.setMessage("Confirma agregar coordenada al nuevo participante?");
-                }else {
+                } else if (esEntomologia) {
+                    builder.setMessage("Confirma agregar coordenada al cuestionario?");
+                }
+                else {
                     builder.setMessage("Desea agregar coordenada al participante " + (mParticipante != null ? mParticipante.getCodigo() : codigoParticipante) + "?");
                 }
                 builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
@@ -580,7 +587,7 @@ public class CoordenadasMapActivity extends AppCompatActivity
                         //saveCoordinate();
                         if (!inputLatlong.getText().toString().isEmpty()) {
                             if (mLocationMarker.getPosition() != null) {
-                                if (codigoParticipante!=null){
+                                if (codigoParticipante!=null || esEntomologia){
                                         Intent intent1 = new Intent();
                                         intent1.putExtra("CODE_RESULT", inputLatlong.getText().toString());
                                         setResult(RESULT_OK, intent1);

@@ -380,8 +380,8 @@ public class PolygonsHelper {
         vertices.add(new LatLng( 12.1061131, -86.3103287));
         vertices.add(new LatLng( 12.1064705, -86.3103823));
         vertices.add(new LatLng( 12.1069115, -86.3103063));
-        vertices.add(new LatLng( 1072696, -86.3104691));
-        vertices.add(new LatLng( 1075957, -86.310648));
+        vertices.add(new LatLng( 12.1072696, -86.3104691));
+        vertices.add(new LatLng( 12.1075957, -86.310648));
 
         return vertices;
     }

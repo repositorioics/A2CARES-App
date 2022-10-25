@@ -127,6 +127,8 @@ public class EstudioDBAdapter {
             db.execSQL(MainDBConstants.CREATE_MUESTRAS_ENFERMO_TABLE);
             db.execSQL(MainDBConstants.CREATE_RECEPCION_ENFERMO_TABLE);
             db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE);
+            db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_TABLE);
+            db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_POB_TABLE);
         }
 
         @Override
@@ -141,6 +143,11 @@ public class EstudioDBAdapter {
             if (oldVersion==2) {
                 //Entomologia 2022
                 db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE);
+            }
+            if (oldVersion==3) {
+                //Entomologia 2022
+                db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_TABLE);
+                db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_POB_TABLE);
             }
         }
 
@@ -2196,12 +2203,12 @@ public class EstudioDBAdapter {
 
     public Boolean verificarDataEnto() throws SQLException{
         Cursor c = null;
-        /*c = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        c = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
         c = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_HOGAR_POB_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
-        c.close();*/
+        c.close();
         c = crearCursor(EntomologiaBConstants.ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();

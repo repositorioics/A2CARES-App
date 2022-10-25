@@ -88,7 +88,7 @@ public class UploadAllEntoActivity extends Activity implements UploadListener{
 		}
 		else{
 			Intent intent = new Intent();
-			intent.putExtra("resultado", getString(R.string.error));
+			intent.putExtra("resultado", getString(R.string.error, ""));
 			setResult(RESULT_CANCELED, intent);
 		}
 		uploadAllTask = null;
@@ -159,7 +159,7 @@ public class UploadAllEntoActivity extends Activity implements UploadListener{
 				uploadAllTask.setUploadListener(null);
 				uploadAllTask.cancel(true);
 				Intent intent = new Intent();
-				intent.putExtra("resultado", getString(R.string.error));
+				intent.putExtra("resultado", getString(R.string.error, ""));
 				setResult(RESULT_CANCELED, intent);
 				finish();
 			}

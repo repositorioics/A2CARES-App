@@ -73,6 +73,7 @@ public class BarriosMapFragment extends Fragment {
 				Intent i = new Intent(getActivity().getApplicationContext(),
 						CoordenadasMapActivity.class);
 				i.putExtra(Constants.COD_PARTICIPANTE, mPage.getCodigoParticipante());
+				i.putExtra(Constants.MENU_ENTO, mPage.isEsEntomologia());
 				MapaBarriosPage page = (MapaBarriosPage) mPage;
 				i.putExtra(Constants.UBICACION, page.getmUnidadSalud());
 				startActivityForResult(i, PART_CAPTURE);

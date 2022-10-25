@@ -9,6 +9,7 @@ import ni.org.ics.a2cares.app.domain.core.Barrio;
 import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.Estudio;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.entomologia.constants.EntomologiaBConstants;
 import ni.org.ics.a2cares.app.entomologia.domain.CuestionarioHogar;
@@ -38,6 +39,7 @@ public class DownloadAllEntoTask extends DownloadTask {
 	private List<Barrio> mBarrios = null;
 	private List<Casa> mCasas = null;
 	private List<Participante> mParticipantes = null;
+	private List<TelefonoContacto> mContactosParticipante = null;
 	private List<MessageResource> mCatalogos = null;
 	private List<CuestionarioHogar> mCuestionarios = null;
 	private List<CuestionarioPuntoClave> mCuestionariosPC = null;
@@ -46,10 +48,11 @@ public class DownloadAllEntoTask extends DownloadTask {
 	public static final String BARRIO = "2";
 	public static final String CASA = "3";
 	public static final String PARTICIPANTE = "4";
-	public static final String CATALOGOS = "5";
-	public static final String CUESTIONARIOS = "6";
-	public static final String CUESTIONARIOSPC = "7";
-	private static final String TOTAL_TASK_GENERALES = "7";
+	public static final String CONTACTOS_PART = "5";
+	public static final String CATALOGOS = "6";
+	public static final String CUESTIONARIOS = "7";
+	public static final String CUESTIONARIOSPC = "8";
+	private static final String TOTAL_TASK_GENERALES = "8";
 	
 	private String error = null;
 	private String url = null;
@@ -81,9 +84,11 @@ public class DownloadAllEntoTask extends DownloadTask {
 		estudioAdapter.borrarCasas();
 		estudioAdapter.borrarParticipantes();
 		estudioAdapter.borrarMessageResource();
-		//estudioAdapter.borrarCuestionarioHogar();
-		//estudioAdapter.borrarCuestionarioHogarPoblacion();
+		estudioAdapter.borrarCuestionarioHogar();
+		estudioAdapter.borrarCuestionarioHogarPoblacion();
 		estudioAdapter.borrarCuestionarioPuntoClave();
+		estudioAdapter.borrarTelefonoContacto();
+
 		try {
 			if (mEstudios != null){
 				publishProgress("Insertando estudios en la base de datos","1","1");
@@ -100,6 +105,10 @@ public class DownloadAllEntoTask extends DownloadTask {
 			if (mParticipantes != null){
 				publishProgress("Insertando participantes en la base de datos","1","1");
 				estudioAdapter.bulkInsertParticipantesBySql(MainDBConstants.PARTICIPANTE_TABLE, mParticipantes);
+			}
+			if (mContactosParticipante != null){
+				publishProgress("Insertando contactos participantes", CONTACTOS_PART, TOTAL_TASK_GENERALES);
+				estudioAdapter.bulkInsertCasasBySql(MainDBConstants.TELEFONO_CONTACTO_TABLE, mContactosParticipante);
 			}
 			if (mCatalogos != null){
 				publishProgress("Insertando catalogos en la base de datos", "1","1");
@@ -182,14 +191,23 @@ public class DownloadAllEntoTask extends DownloadTask {
             mParticipantes = Arrays.asList(responseEntityParticipante.getBody());
             responseEntityParticipante = null;
 
+            //Descargar contactos participante
+			urlRequest = url + "/movil/telefonos/";
+			publishProgress("Solicitando teléfonos participantes",CONTACTOS_PART,TOTAL_TASK_GENERALES);
+			// Perform the HTTP GET request
+			ResponseEntity<TelefonoContacto[]> responseEntityContactos = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+					TelefonoContacto[].class);
+			// convert the array to a list and return it
+			mContactosParticipante = Arrays.asList(responseEntityContactos.getBody());
+
 			//Descargar participantes
-			/*urlRequest = url + "/movil/cuestionariosHogar/";
+			urlRequest = url + "/movil/cuestionariosHogar/";
 			publishProgress("Solicitando cuestionarios hogar",CUESTIONARIOS,TOTAL_TASK_GENERALES);
 			// Perform the HTTP GET request
 			ResponseEntity<CuestionarioHogar[]> responseEntityCues = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
 					CuestionarioHogar[].class);
 			// convert the array to a list and return it
-			mCuestionarios = Arrays.asList(responseEntityCues.getBody());*/
+			mCuestionarios = Arrays.asList(responseEntityCues.getBody());
 
 			//Descargar participantes
 			urlRequest = url + "/movil/cuestionariosPuntosClaves/";

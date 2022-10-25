@@ -41,15 +41,6 @@ public class MenuEntomologiaAdapter extends ArrayAdapter<String> {
 		// Change icon based on position
 		Drawable img = null;
 		switch (position) {
-			/*case 0:
-				img = getContext().getResources().getDrawable(R.mipmap.ic_gps);
-				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-				break;
-			case 1:
-				img = getContext().getResources().getDrawable(R.mipmap.ic_review);
-				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-				textView.setText(values[position]+" ("+ totalCuestionarios+")");
-				break;*/
 			case 0:
 				img = getContext().getResources().getDrawable(R.mipmap.ic_gps);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
@@ -57,17 +48,30 @@ public class MenuEntomologiaAdapter extends ArrayAdapter<String> {
 			case 1:
 				img = getContext().getResources().getDrawable(R.mipmap.ic_review);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
-				textView.setText(values[position]+" ("+ totalCuestionariosPC+")");
+				textView.setText(values[position]+" ("+ totalCuestionarios+")");
 				break;
 			case 2:
-				img = getContext().getResources().getDrawable(R.mipmap.ic_download);
+				img = getContext().getResources().getDrawable(R.mipmap.ic_gps);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
 			case 3:
+				img = getContext().getResources().getDrawable(R.mipmap.ic_review);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				textView.setText(values[position]+" ("+ totalCuestionariosPC+")");
+				break;
+			case 4:
+				img = getContext().getResources().getDrawable(R.mipmap.ic_download);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				break;
+			case 5:
 				img = getContext().getResources().getDrawable(R.mipmap.ic_upload);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
-			case 4:
+			case 6:
+				img = getContext().getResources().getDrawable(R.mipmap.ic_house);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				break;
+			case 7:
 				img = getContext().getResources().getDrawable(R.mipmap.ic_menu_back);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;

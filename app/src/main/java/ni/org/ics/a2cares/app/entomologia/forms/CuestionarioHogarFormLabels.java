@@ -6,6 +6,29 @@ import ni.org.ics.a2cares.app.R;
 
 public class CuestionarioHogarFormLabels {
 
+    protected String fechaCuestionario;
+    protected String barrio;
+    protected String direccion;
+    protected String puntoGps;
+    protected String tipoIngresoCodigo;
+    protected String codigoVivienda;
+    protected String codigoViviendaBr;
+    protected String tipoVivienda;
+    protected String hayAmbientePERI;
+    protected String horaCapturaPERI;
+    protected String humedadRelativaPERI;
+    protected String temperaturaPERI;
+    protected String tipoIngresoCodigoPERI;
+    protected String codigoPERI;
+    protected String codigoPERIBr;
+    protected String hayAmbienteINTRA;
+    protected String horaCapturaINTRA;
+    protected String humedadRelativaINTRA;
+    protected String temperaturaINTRA;
+    protected String tipoIngresoCodigoINTRA;
+    protected String codigoINTRA;
+    protected String codigoINTRABr;
+
     protected String quienContesta;
     protected String quienContestaOtro;
     protected String edadContest;
@@ -49,9 +72,40 @@ public class CuestionarioHogarFormLabels {
     protected String mayorCriaderoBarrio;
     protected String alguienParticipo;
     protected String quienParticipo;
+    protected String materialParedes;
+    protected String materialPiso;
+    protected String materialTecho;
+    protected String otroMaterialParedes;
+    protected String otroMaterialPiso;
+    protected String otroMaterialTecho;
+
 
     public CuestionarioHogarFormLabels(){
         Resources res = MyIcsApplication.getContext().getResources();
+
+        fechaCuestionario = res.getString(R.string.fechaCuestionario);
+        barrio = res.getString(R.string.barrioEnto);
+        direccion = res.getString(R.string.direccionEnto);
+        puntoGps = res.getString(R.string.puntoGpsEnto);
+        tipoIngresoCodigo = res.getString(R.string.tipoIngresoCodigo);
+        codigoVivienda = res.getString(R.string.codigoVivienda);
+        codigoViviendaBr = res.getString(R.string.codigoViviendaBr);
+        tipoVivienda = res.getString(R.string.tipoViviendaEnto);
+        hayAmbientePERI = res.getString(R.string.hayAmbientePERI);
+        horaCapturaPERI = res.getString(R.string.horaCapturaPERI);
+        humedadRelativaPERI = res.getString(R.string.humedadRelativaPERI);
+        temperaturaPERI = res.getString(R.string.temperaturaPERI);
+        tipoIngresoCodigoPERI = res.getString(R.string.tipoIngresoCodigoPERI);
+        codigoPERI = res.getString(R.string.codigoPERI);
+        codigoPERIBr = res.getString(R.string.codigoPERIBr);
+        hayAmbienteINTRA = res.getString(R.string.hayAmbienteINTRA);
+        horaCapturaINTRA = res.getString(R.string.horaCapturaINTRA);
+        humedadRelativaINTRA = res.getString(R.string.humedadRelativaINTRA);
+        temperaturaINTRA = res.getString(R.string.temperaturaINTRA);
+        tipoIngresoCodigoINTRA = res.getString(R.string.tipoIngresoCodigoINTRA);
+        codigoINTRA = res.getString(R.string.codigoINTRA);
+        codigoINTRABr = res.getString(R.string.codigoINTRABr);
+
         quienContesta = res.getString(R.string.quienContesta);
         quienContestaOtro = res.getString(R.string.quienContestaOtro);
         edadContest = res.getString(R.string.edadContest);
@@ -96,7 +150,101 @@ public class CuestionarioHogarFormLabels {
         quienParticipo = res.getString(R.string.quienParticipo);
         mayorCriaderoBarrio = res.getString(R.string.mayorCriaderoBarrio);
 
+        materialParedes = res.getString(R.string.materialParedesEnto);
+        materialPiso = res.getString(R.string.materialPisoEnto);
+        materialTecho = res.getString(R.string.materialTechoEnto);
+        otroMaterialParedes = res.getString(R.string.otroMaterialParedesEnto);
+        otroMaterialPiso = res.getString(R.string.otroMaterialPisoEnto);
+        otroMaterialTecho = res.getString(R.string.otroMaterialTechoEnto);
 
+    }
+
+    public String getFechaCuestionario() {
+        return fechaCuestionario;
+    }
+
+    public String getBarrio() {
+        return barrio;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public String getPuntoGps() {
+        return puntoGps;
+    }
+
+    public String getTipoIngresoCodigo() {
+        return tipoIngresoCodigo;
+    }
+
+    public String getCodigoVivienda() {
+        return codigoVivienda;
+    }
+
+    public String getCodigoViviendaBr() {
+        return codigoViviendaBr;
+    }
+
+    public String getTipoVivienda() {
+        return tipoVivienda;
+    }
+
+    public String getHayAmbientePERI() {
+        return hayAmbientePERI;
+    }
+
+    public String getHoraCapturaPERI() {
+        return horaCapturaPERI;
+    }
+
+    public String getHumedadRelativaPERI() {
+        return humedadRelativaPERI;
+    }
+
+    public String getTemperaturaPERI() {
+        return temperaturaPERI;
+    }
+
+    public String getTipoIngresoCodigoPERI() {
+        return tipoIngresoCodigoPERI;
+    }
+
+    public String getCodigoPERI() {
+        return codigoPERI;
+    }
+
+    public String getCodigoPERIBr() {
+        return codigoPERIBr;
+    }
+
+    public String getHayAmbienteINTRA() {
+        return hayAmbienteINTRA;
+    }
+
+    public String getHoraCapturaINTRA() {
+        return horaCapturaINTRA;
+    }
+
+    public String getHumedadRelativaINTRA() {
+        return humedadRelativaINTRA;
+    }
+
+    public String getTemperaturaINTRA() {
+        return temperaturaINTRA;
+    }
+
+    public String getTipoIngresoCodigoINTRA() {
+        return tipoIngresoCodigoINTRA;
+    }
+
+    public String getCodigoINTRA() {
+        return codigoINTRA;
+    }
+
+    public String getCodigoINTRABr() {
+        return codigoINTRABr;
     }
 
     public String getQuienContesta() {
@@ -269,5 +417,29 @@ public class CuestionarioHogarFormLabels {
 
     public String getQuienParticipo() {
         return quienParticipo;
+    }
+
+    public String getMaterialParedes() {
+        return materialParedes;
+    }
+
+    public String getMaterialPiso() {
+        return materialPiso;
+    }
+
+    public String getMaterialTecho() {
+        return materialTecho;
+    }
+
+    public String getOtroMaterialParedes() {
+        return otroMaterialParedes;
+    }
+
+    public String getOtroMaterialPiso() {
+        return otroMaterialPiso;
+    }
+
+    public String getOtroMaterialTecho() {
+        return otroMaterialTecho;
     }
 }

@@ -11,39 +11,30 @@ import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
 
 import ni.org.ics.a2cares.app.AbstractAsyncActivity;
-import ni.org.ics.a2cares.app.AbstractAsyncListActivity;
 import ni.org.ics.a2cares.app.MainActivity;
 import ni.org.ics.a2cares.app.MyIcsApplication;
 import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.Casa;
-import ni.org.ics.a2cares.app.ui.adapters.CasaAdapter;
+import ni.org.ics.a2cares.app.entomologia.activities.MenuEntomologiaActivity;
 import ni.org.ics.a2cares.app.ui.adapters.CasaListAdapter;
-import ni.org.ics.a2cares.app.ui.adapters.ParticipanteListAdapter;
 import ni.org.ics.a2cares.app.utils.Constants;
 
 public class BuscarCasaActivity extends AbstractAsyncActivity {
@@ -66,6 +57,7 @@ public class BuscarCasaActivity extends AbstractAsyncActivity {
     private static final int SELECT_HOUSE = 2;
 	private AlertDialog alertDialog;
     private Boolean nuevoIngreso;
+    private Boolean desdeMenuEnto;
 	
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
@@ -77,6 +69,7 @@ public class BuscarCasaActivity extends AbstractAsyncActivity {
 		String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
 		estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(),mPass,false,false);
         nuevoIngreso = getIntent().getBooleanExtra(Constants.NUEVO_INGRESO,false);
+        desdeMenuEnto = getIntent().getBooleanExtra(Constants.MENU_ENTO, false);
 		mMetodoView = (Spinner) findViewById(R.id.metodo_busqueda);
 		recyclerView = findViewById(R.id.recycler_view);
 
@@ -187,12 +180,21 @@ public class BuscarCasaActivity extends AbstractAsyncActivity {
 			return true;
 		}
 		else if(item.getItemId()==R.id.MENU_HOME){
-			Intent i = new Intent(getApplicationContext(),
-					MainActivity.class);
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
-			finish();
-			return true;
+			if (!desdeMenuEnto) {
+				Intent i = new Intent(getApplicationContext(),
+						MainActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				finish();
+				return true;
+			} else {
+				Intent i = new Intent(getApplicationContext(),
+						MenuEntomologiaActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				finish();
+				return true;
+			}
 		}
 		else{
 			return super.onOptionsItemSelected(item);

@@ -27,6 +27,7 @@ import ni.org.ics.a2cares.app.entomologia.domain.CuestionarioPuntoClave;
 import ni.org.ics.a2cares.app.entomologia.server.DownloadAllEntoActivity;
 import ni.org.ics.a2cares.app.entomologia.server.UploadAllEntoActivity;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
+import ni.org.ics.a2cares.app.ui.activities.BuscarCasaActivity;
 import ni.org.ics.a2cares.app.utils.Constants;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 
@@ -77,9 +78,9 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
 					int position, long id) {
 				Intent i;
 				switch (position) {
-					/*case 0:
+					case 0:
 						i = new Intent(getApplicationContext(),
-								BuscarCasaActivity.class);
+								NuevoCuestionarioHogarActivity.class);
 						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						startActivity(i);
 						finish();
@@ -93,15 +94,15 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
 						i.putExtras(arguments);
 						startActivity(i);
 						finish();
-						break;*/
-					case 0:
+						break;
+					case 2:
 						i = new Intent(getApplicationContext(),
 								NuevoCuestionarioPuntoClaveActivity.class);
 						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						startActivity(i);
 						finish();
 						break;
-					case 1:
+					case 3:
 						Bundle arguments2 = new Bundle();
 						arguments2.putString(Constants.TITLE, getString(R.string.cuestionario_pc));
 						if (mCuestionariosPC !=null) arguments2.putSerializable(Constants.OBJECTO , mCuestionariosPC);
@@ -111,13 +112,18 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
 						startActivity(i);
 						finish();
 						break;
-					case 2:
+					case 4:
 						createDialog(DOWNLOAD);
 						break;
-					case 3:
+					case 5:
 						createDialog(UPLOAD);
 						break;
-					case 4:
+					case 6:
+						i = new Intent(getApplicationContext(), BuscarCasaActivity.class);
+						i.putExtra(Constants.MENU_ENTO, true);
+						startActivity(i);
+						break;
+					case 7:
 						createDialog(EXIT);
 						break;
 					default:
@@ -330,7 +336,7 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
 			Timestamp timeStamp = new Timestamp(dateWithoutTime.getTime());
             // before the request begins, show a progress indicator
 			estudiosAdapter.open();
-			//mCuestionarios = (ArrayList<CuestionarioHogar>) estudiosAdapter.getCuestionariosHogar(MainDBConstants.recordDate + ">=" + timeStamp.getTime(), EntomologiaBConstants.codigoCasa);
+			mCuestionarios = (ArrayList<CuestionarioHogar>) estudiosAdapter.getCuestionariosHogar(MainDBConstants.recordDate + ">=" + timeStamp.getTime(), EntomologiaBConstants.codigoVivienda);
 			mCuestionariosPC = (ArrayList<CuestionarioPuntoClave>) estudiosAdapter.getCuestionariosPuntoClave(EntomologiaBConstants.TODAY + ">=" + timeStamp.getTime(), EntomologiaBConstants.nombrePuntoClave);
 			estudiosAdapter.close();
             showLoadingProgressDialog();

@@ -3,6 +3,7 @@ package ni.org.ics.a2cares.app.entomologia.domain;
 import ni.org.ics.a2cares.app.domain.BaseMetaData;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by miguel on 15/8/2022.
@@ -13,8 +14,31 @@ public class CuestionarioHogar  extends BaseMetaData implements Serializable {
 
     private String codigoEncuesta;
 
+    private Date fechaCuestionario;
+    private Integer barrio;
+    private String direccion;
+    private Double latitud;
+    private Double longitud;
+
+    private String tipoIngresoCodigo;
+    private String codigoVivienda;
+    private String tipoVivienda;
+
+    private String hayAmbientePERI;
+    private String horaCapturaPERI;
+    private Double humedadRelativaPERI;
+    private Double temperaturaPERI;
+    private String tipoIngresoCodigoPERI;
+    private String codigoPERI;
+
+    private String hayAmbienteINTRA;
+    private String horaCapturaINTRA;
+    private Double humedadRelativaINTRA;
+    private Double temperaturaINTRA;
+    private String tipoIngresoCodigoINTRA;
+    private String codigoINTRA;
+
     //00.	Código de la casa
-    private int codigoCasa;
 
     //01.	¿Quién está contestando éste cuestionario?
     private String quienContesta;
@@ -124,6 +148,165 @@ public class CuestionarioHogar  extends BaseMetaData implements Serializable {
     //33.	¿Cuál es el mayor criadero de Zancudos de este barrio?
     private String mayorCriaderoBarrio;
 
+    private String materialParedes;
+    private String materialPiso;
+    private String materialTecho;
+    private String otroMaterialParedes;
+    private String otroMaterialPiso;
+    private String otroMaterialTecho;
+
+    public Date getFechaCuestionario() {
+        return fechaCuestionario;
+    }
+
+    public void setFechaCuestionario(Date fechaCuestionario) {
+        this.fechaCuestionario = fechaCuestionario;
+    }
+
+    public Integer getBarrio() {
+        return barrio;
+    }
+
+    public void setBarrio(Integer barrio) {
+        this.barrio = barrio;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public Double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
+    }
+
+    public String getTipoIngresoCodigo() {
+        return tipoIngresoCodigo;
+    }
+
+    public void setTipoIngresoCodigo(String tipoIngresoCodigo) {
+        this.tipoIngresoCodigo = tipoIngresoCodigo;
+    }
+
+    public String getTipoVivienda() {
+        return tipoVivienda;
+    }
+
+    public void setTipoVivienda(String tipoVivienda) {
+        this.tipoVivienda = tipoVivienda;
+    }
+
+    public String getHayAmbientePERI() {
+        return hayAmbientePERI;
+    }
+
+    public void setHayAmbientePERI(String hayAmbientePERI) {
+        this.hayAmbientePERI = hayAmbientePERI;
+    }
+
+    public String getHoraCapturaPERI() {
+        return horaCapturaPERI;
+    }
+
+    public void setHoraCapturaPERI(String horaCapturaPERI) {
+        this.horaCapturaPERI = horaCapturaPERI;
+    }
+
+    public Double getHumedadRelativaPERI() {
+        return humedadRelativaPERI;
+    }
+
+    public void setHumedadRelativaPERI(Double humedadRelativaPERI) {
+        this.humedadRelativaPERI = humedadRelativaPERI;
+    }
+
+    public Double getTemperaturaPERI() {
+        return temperaturaPERI;
+    }
+
+    public void setTemperaturaPERI(Double temperaturaPERI) {
+        this.temperaturaPERI = temperaturaPERI;
+    }
+
+    public String getTipoIngresoCodigoPERI() {
+        return tipoIngresoCodigoPERI;
+    }
+
+    public void setTipoIngresoCodigoPERI(String tipoIngresoCodigoPERI) {
+        this.tipoIngresoCodigoPERI = tipoIngresoCodigoPERI;
+    }
+
+    public String getCodigoPERI() {
+        return codigoPERI;
+    }
+
+    public void setCodigoPERI(String codigoPERI) {
+        this.codigoPERI = codigoPERI;
+    }
+
+    public String getHayAmbienteINTRA() {
+        return hayAmbienteINTRA;
+    }
+
+    public void setHayAmbienteINTRA(String hayAmbienteINTRA) {
+        this.hayAmbienteINTRA = hayAmbienteINTRA;
+    }
+
+    public String getHoraCapturaINTRA() {
+        return horaCapturaINTRA;
+    }
+
+    public void setHoraCapturaINTRA(String horaCapturaINTRA) {
+        this.horaCapturaINTRA = horaCapturaINTRA;
+    }
+
+    public Double getHumedadRelativaINTRA() {
+        return humedadRelativaINTRA;
+    }
+
+    public void setHumedadRelativaINTRA(Double humedadRelativaINTRA) {
+        this.humedadRelativaINTRA = humedadRelativaINTRA;
+    }
+
+    public Double getTemperaturaINTRA() {
+        return temperaturaINTRA;
+    }
+
+    public void setTemperaturaINTRA(Double temperaturaINTRA) {
+        this.temperaturaINTRA = temperaturaINTRA;
+    }
+
+    public String getTipoIngresoCodigoINTRA() {
+        return tipoIngresoCodigoINTRA;
+    }
+
+    public void setTipoIngresoCodigoINTRA(String tipoIngresoCodigoINTRA) {
+        this.tipoIngresoCodigoINTRA = tipoIngresoCodigoINTRA;
+    }
+
+    public String getCodigoINTRA() {
+        return codigoINTRA;
+    }
+
+    public void setCodigoINTRA(String codigoINTRA) {
+        this.codigoINTRA = codigoINTRA;
+    }
+
     public String getCodigoEncuesta() {
         return codigoEncuesta;
     }
@@ -132,12 +315,12 @@ public class CuestionarioHogar  extends BaseMetaData implements Serializable {
         this.codigoEncuesta = codigoEncuesta;
     }
 
-    public int getCodigoCasa() {
-        return codigoCasa;
+    public String getCodigoVivienda() {
+        return codigoVivienda;
     }
 
-    public void setCodigoCasa(int codigoCasa) {
-        this.codigoCasa = codigoCasa;
+    public void setCodigoVivienda(String codigoVivienda) {
+        this.codigoVivienda = codigoVivienda;
     }
 
     public String getQuienContesta() {
@@ -474,6 +657,54 @@ public class CuestionarioHogar  extends BaseMetaData implements Serializable {
 
     public void setQuienParticipo(String quienParticipo) {
         this.quienParticipo = quienParticipo;
+    }
+
+    public String getMaterialParedes() {
+        return materialParedes;
+    }
+
+    public void setMaterialParedes(String materialParedes) {
+        this.materialParedes = materialParedes;
+    }
+
+    public String getMaterialPiso() {
+        return materialPiso;
+    }
+
+    public void setMaterialPiso(String materialPiso) {
+        this.materialPiso = materialPiso;
+    }
+
+    public String getMaterialTecho() {
+        return materialTecho;
+    }
+
+    public void setMaterialTecho(String materialTecho) {
+        this.materialTecho = materialTecho;
+    }
+
+    public String getOtroMaterialParedes() {
+        return otroMaterialParedes;
+    }
+
+    public void setOtroMaterialParedes(String otroMaterialParedes) {
+        this.otroMaterialParedes = otroMaterialParedes;
+    }
+
+    public String getOtroMaterialPiso() {
+        return otroMaterialPiso;
+    }
+
+    public void setOtroMaterialPiso(String otroMaterialPiso) {
+        this.otroMaterialPiso = otroMaterialPiso;
+    }
+
+    public String getOtroMaterialTecho() {
+        return otroMaterialTecho;
+    }
+
+    public void setOtroMaterialTecho(String otroMaterialTecho) {
+        this.otroMaterialTecho = otroMaterialTecho;
     }
 
     @Override
