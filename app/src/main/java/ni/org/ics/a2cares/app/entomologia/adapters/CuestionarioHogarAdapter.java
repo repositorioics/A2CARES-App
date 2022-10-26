@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CuestionarioHogarAdapter extends ArrayAdapter<CuestionarioHogar> {
 
-	DateFormat mediumDf = DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.SHORT);
+	DateFormat mediumDf = DateFormat.getDateInstance(DateFormat.MEDIUM);
 
 
 	public CuestionarioHogarAdapter(Context context, int textViewResourceId,
@@ -44,7 +44,7 @@ public class CuestionarioHogarAdapter extends ArrayAdapter<CuestionarioHogar> {
 
 			textView = (TextView) v.findViewById(R.id.identifier_text);
 			if (textView != null) {
-				textView.setText(mediumDf.format(encuesta.getRecordDate()));
+				textView.setText(mediumDf.format(encuesta.getFechaCuestionario()));
 			}
 		}
 		return v;

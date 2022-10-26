@@ -337,8 +337,7 @@ public class NuevoCuestionarioHogarActivity extends FragmentActivity implements
                         String codigoTmp = valor;
                         codigoTmp = valor.substring(4, valor.length());
                         if (!codigoTmp.equalsIgnoreCase(codigoVivienda)) {
-                            Toast.makeText(this.getApplicationContext(), this.getString(R.string.error2CodigoEnto,
-                                    codigoVivienda), Toast.LENGTH_LONG).show();
+                            //Toast.makeText(this.getApplicationContext(), this.getString(R.string.error2CodigoEnto, codigoVivienda), Toast.LENGTH_LONG).show();
                             cutOffPage = i;
                             break;
                         }
@@ -350,8 +349,7 @@ public class NuevoCuestionarioHogarActivity extends FragmentActivity implements
                         String codigoTmp = valor;
                         codigoTmp = valor.substring(5, valor.length());
                         if (!codigoTmp.equalsIgnoreCase(codigoVivienda)) {
-                            Toast.makeText(this.getApplicationContext(), this.getString(R.string.error2CodigoEnto,
-                                    codigoVivienda), Toast.LENGTH_LONG).show();
+                            //Toast.makeText(this.getApplicationContext(), this.getString(R.string.error2CodigoEnto, codigoVivienda), Toast.LENGTH_LONG).show();
                             cutOffPage = i;
                             break;
                         }
@@ -371,16 +369,14 @@ public class NuevoCuestionarioHogarActivity extends FragmentActivity implements
                         if (valor.contains("PERI")){
                             codigoTmp = valor.substring(4, valor.length());
                             if (!codigoTmp.equalsIgnoreCase(codigoVivienda)){
-                                Toast.makeText( this.getApplicationContext(),this.getString(R.string.error2CodigoEnto,
-                                        codigoVivienda), Toast.LENGTH_LONG).show();
+                                //Toast.makeText( this.getApplicationContext(),this.getString(R.string.error2CodigoEnto, codigoVivienda), Toast.LENGTH_LONG).show();
                                 cutOffPage = i;
                                 break;
                             }
                         } else if (valor.contains("INTRA")) {
                             codigoTmp = valor.substring(5, valor.length());
                             if (!codigoTmp.equalsIgnoreCase(codigoVivienda)) {
-                                Toast.makeText(this.getApplicationContext(), this.getString(R.string.error2CodigoEnto,
-                                        codigoVivienda), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(this.getApplicationContext(), this.getString(R.string.error2CodigoEnto, codigoVivienda), Toast.LENGTH_LONG).show();
                                 cutOffPage = i;
                                 break;
                             }
@@ -1070,8 +1066,8 @@ public class NuevoCuestionarioHogarActivity extends FragmentActivity implements
             }
             if (tieneValor(humedadRelativaPERI)) cuestionarioHogar.setHumedadRelativaPERI(Double.valueOf(humedadRelativaPERI));
             if (tieneValor(temperaturaPERI)) cuestionarioHogar.setTemperaturaPERI(Double.valueOf(temperaturaPERI));
-            if (tieneValor(humedadRelativaINTRA)) cuestionarioHogar.setHumedadRelativaPERI(Double.valueOf(humedadRelativaINTRA));
-            if (tieneValor(temperaturaINTRA)) cuestionarioHogar.setTemperaturaPERI(Double.valueOf(temperaturaINTRA));
+            if (tieneValor(humedadRelativaINTRA)) cuestionarioHogar.setHumedadRelativaINTRA(Double.valueOf(humedadRelativaINTRA));
+            if (tieneValor(temperaturaINTRA)) cuestionarioHogar.setTemperaturaINTRA(Double.valueOf(temperaturaINTRA));
 
             //textos
             cuestionarioHogar.setDireccion(direccion);

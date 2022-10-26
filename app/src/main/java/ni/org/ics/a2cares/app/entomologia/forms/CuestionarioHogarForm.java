@@ -152,7 +152,7 @@ public class CuestionarioHogarForm extends AbstractWizardModel {
         Page gastaronDineroProductos = new SingleFixedChoicePage(this,labels.getGastaronDineroProductos(),"", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page queProductosCompraron = new MultipleFixedChoicePage(this,labels.getQueProductosCompraron(),"", Constants.WIZARD, true).setChoices(catP34).setRequired(true);
         Page queProductosCompraronOtros = new TextPage(this,labels.getQueProductosCompraronOtros(),"", Constants.WIZARD, true).setRequired(true);
-        Page cuantoGastaron = new NumberPage(this,labels.getCuantoGastaron(),"", Constants.WIZARD, true).setRequired(true);
+        Page cuantoGastaron = new NumberPage(this,labels.getCuantoGastaron(),"C$", Constants.WIZARD, true).setRequired(true);
         Page ultimaVisitaMinsaBTI = new SingleFixedChoicePage(this,labels.getUltimaVisitaMinsaBTI(),"", Constants.WIZARD, true).setChoices(catP36y37).setRequired(true);
         Page ultimaVezMinsaFumigo = new SingleFixedChoicePage(this,labels.getUltimaVezMinsaFumigo(),"", Constants.WIZARD, true).setChoices(catP36y37).setRequired(true);
         Page riesgoCasaDengue = new SingleFixedChoicePage(this,labels.getRiesgoCasaDengue(),"", Constants.WIZARD, true).setChoices(catP38y43).setRequired(true);

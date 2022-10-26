@@ -115,16 +115,19 @@ public class EntomologiaHelper extends BindStatementHelper {
         cuest.setTipoVivienda(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoVivienda)));
         cuest.setHayAmbientePERI(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.hayAmbientePERI)));
         cuest.setHoraCapturaPERI(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.horaCapturaPERI)));
+
         if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.humedadRelativaPERI)) > 0) cuest.setHumedadRelativaPERI(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.humedadRelativaPERI)));
         if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.temperaturaPERI)) > 0) cuest.setTemperaturaPERI(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.temperaturaPERI)));
+
         cuest.setTipoIngresoCodigoPERI(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoIngresoCodigoPERI)));
         cuest.setCodigoPERI(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.codigoPERI)));
         cuest.setHayAmbienteINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.hayAmbienteINTRA)));
         cuest.setHoraCapturaINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.horaCapturaINTRA)));
-        cuest.setHumedadRelativaINTRA(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.humedadRelativaINTRA)));
-        cuest.setTemperaturaINTRA(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.temperaturaINTRA)));
-        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.tipoIngresoCodigoINTRA)) > 0) cuest.setTipoIngresoCodigoINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoIngresoCodigoINTRA)));
-        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.codigoINTRA)) > 0) cuest.setCodigoINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.codigoINTRA)));
+
+        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.humedadRelativaINTRA)) > 0) cuest.setHumedadRelativaINTRA(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.humedadRelativaINTRA)));
+        if (cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.temperaturaINTRA)) > 0) cuest.setTemperaturaINTRA(cursor.getDouble(cursor.getColumnIndex(EntomologiaBConstants.temperaturaINTRA)));
+        cuest.setTipoIngresoCodigoINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.tipoIngresoCodigoINTRA)));
+        cuest.setCodigoINTRA(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.codigoINTRA)));
         cuest.setQuienContesta(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.quienContesta)));
         cuest.setQuienContestaOtro(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.quienContestaOtro)));
         cuest.setEdadContest(cursor.getString(cursor.getColumnIndex(EntomologiaBConstants.edadContest)));
@@ -259,7 +262,7 @@ public class EntomologiaHelper extends BindStatementHelper {
         bindString(stat,69, part.getOtroMaterialTecho());
 
         bindDate(stat,70, part.getRecordDate());
-        bindString(stat,70, part.getRecordUser());
+        bindString(stat,71, part.getRecordUser());
         stat.bindString(72, String.valueOf(part.getPasive()));
         bindString(stat,73, part.getDeviceid());
         stat.bindString(74, String.valueOf(part.getEstado()));
