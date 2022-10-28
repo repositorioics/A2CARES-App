@@ -49,7 +49,8 @@ public abstract class SQLiteOpenHelper {
         try {
             SQLiteDatabase.loadLibs(mContext);
             mIsInitializing = true;
-            File databaseFile = new File(mContext.getFilesDir().getPath() + "/" + mName);
+            //File databaseFile = new File(mContext.getFilesDir().getPath() + "/" + mName);
+            File databaseFile = new File(mPath + "/" + mName);
             if (databaseFile.exists()&& mCleanDb && mFromServer) {
                 databaseFile.delete();
             }
