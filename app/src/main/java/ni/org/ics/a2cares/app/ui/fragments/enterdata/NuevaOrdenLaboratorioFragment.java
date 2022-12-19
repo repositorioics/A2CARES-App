@@ -183,6 +183,16 @@ public class NuevaOrdenLaboratorioFragment  extends Fragment {
                                        int arg2, long arg3) {
                 MessageResource mr = (MessageResource) spinner.getSelectedItem();
                 categoria = mr.getCatKey();
+                if (categoria.equalsIgnoreCase("D")){
+                    //aqui se hacen invisible el FIF
+
+                    mInputFIF.setVisibility(View.INVISIBLE);
+                    mImageButtonFif.setVisibility(View.INVISIBLE);
+                } else {
+                    //aqui se hacen invinvisible el FIF
+                    mInputFIF.setVisibility(View.VISIBLE);
+                    mImageButtonFif.setVisibility(View.VISIBLE);
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -301,7 +311,8 @@ public class NuevaOrdenLaboratorioFragment  extends Fragment {
                     @Override
                     public void onDateSet(DatePicker picker, int year, int monthOfYear, int dayOfMonth) {
                         fif = (picker != null) ? String.valueOf(dayOfMonth<10? "0"+dayOfMonth:dayOfMonth)+"/"+String.valueOf((monthOfYear+1)<10? "0"+(monthOfYear+1):(monthOfYear+1))+"/"+String.valueOf(year) : null;
-                        mInputFIF.setText(fif);
+                            mInputFIF.setText(fif);
+
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 if (mParticipante.getFechaNac()!=null){
@@ -331,6 +342,7 @@ public class NuevaOrdenLaboratorioFragment  extends Fragment {
                 dFIS = formatter.parse(fis);
             if (fif != null && !fif.isEmpty())
                 dFIF = formatter.parse(fif);
+
         } catch (ParseException e) {
             showToast(e.toString() );
             e.printStackTrace();
@@ -346,9 +358,9 @@ public class NuevaOrdenLaboratorioFragment  extends Fragment {
         } else if (fis == null || fis.equals("")){
             showToast(getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.fis)));
             return false;
-        } else if (fif == null || fif.equals("")){
-            showToast(getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.fif)));
-            return false;
+        } else if  (categoria.equalsIgnoreCase("D") != true && ( fif == null || fif.equals(""))){
+                showToast(getActivity().getString(R.string.wrongSelect, getActivity().getString(R.string.fif)));
+                return false;
         } else if (consulta == null || consulta.equals("")){
             showToast(getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.tipoConsulta)));
             return false;
@@ -361,10 +373,10 @@ public class NuevaOrdenLaboratorioFragment  extends Fragment {
         } else if (dFIS.after(dFechaOrden)){//si la fecha de sintonmas es posterior a la fecha de la orden no permitir registro
             showToast(getActivity().getString(R.string.wrong_fis));
             return false;
-        } else if (dFIF.after(dFechaOrden)){//si la fecha de sintonmas es posterior a la fecha de la orden no permitir registro
+        } else if ( dFIF != null && dFIF.after(dFechaOrden)){//si la fecha de sintonmas es posterior a la fecha de la orden no permitir registro
             showToast(getActivity().getString(R.string.wrong_fif));
             return false;
-        } else if (dFIS.after(dFIF)){//si la fecha de sintonmas es posterior a la fif no permitir registro
+        } else if (dFIF != null && dFIS.after(dFIF)){//si la fecha de sintonmas es posterior a la fif no permitir registro
             showToast(getActivity().getString(R.string.wrong_fis_3));
             return false;
         } else {

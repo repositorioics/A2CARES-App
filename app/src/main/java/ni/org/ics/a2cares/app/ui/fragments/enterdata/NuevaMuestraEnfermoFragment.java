@@ -204,6 +204,16 @@ public class NuevaMuestraEnfermoFragment extends Fragment {
                                        int arg2, long arg3) {
                 MessageResource mr = (MessageResource) spinner.getSelectedItem();
                 categoria = mr.getCatKey();
+                if (categoria.equalsIgnoreCase("D")){
+                  //aqui se hacen invisible el FIF
+                    mInputFIF.setVisibility(View.INVISIBLE);
+                     mImageButtonFif.setVisibility(View.INVISIBLE);
+
+            } else {
+                    //aqui se hacen invinvisible el FIF
+                    mInputFIF.setVisibility(View.VISIBLE);
+                    mImageButtonFif.setVisibility(View.VISIBLE);
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
@@ -403,7 +413,7 @@ public class NuevaMuestraEnfermoFragment extends Fragment {
         } else if (fis == null || fis.equals("")){
             showToast(getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.fis)));
             return false;
-        } else if (fif == null || fif.equals("")){
+        } else if (categoria.equalsIgnoreCase("D") != true && (fif == null || fif.equals(""))){
             showToast(getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.fif)));
             return false;
         } else if (consulta == null || consulta.equals("")){
@@ -415,13 +425,13 @@ public class NuevaMuestraEnfermoFragment extends Fragment {
         } else if (tipoMuestra == null || tipoMuestra.equals("")){
             showToast(getActivity().getString(R.string.wrongSelect,getActivity().getString(R.string.tipoMuestra)));
             return false;
-        } else if (dFIS.after(dFechaMuestra)){//si la fecha de sintonmas es posterior a la fecha de la toma no permitir registro
+        } else if (dFIF != null && dFIS.after(dFechaMuestra)){//si la fecha de sintonmas es posterior a la fecha de la toma no permitir registro
             showToast(getActivity().getString(R.string.wrong_fis_2));
             return false;
-        } else if (dFIF.after(dFechaMuestra)){//si la fecha de sintonmas es posterior a la fecha de la toma no permitir registro
+        } else if (dFIF != null && dFIF.after(dFechaMuestra)){//si la fecha de sintonmas es posterior a la fecha de la toma no permitir registro
             showToast(getActivity().getString(R.string.wrong_fif_3));
             return false;
-        } else if (dFIS.after(dFIF)){//si la fecha de sintonmas es posterior a la fif no permitir registro
+        } else if (dFIF != null && dFIS.after(dFIF)){//si la fecha de sintonmas es posterior a la fif no permitir registro
             showToast(getActivity().getString(R.string.wrong_fis_3));
             return false;
         } else {

@@ -52,7 +52,12 @@ public class OrdenesLabListAdapter extends RecyclerView.Adapter<OrdenesLabListAd
         holder.textViewIdent.setTextColor(holder.context.getResources().getColor(R.color.blue_primary));
         holder.textViewDer.setText(mDateFormat.format(listdata.get(position).getFechaOrden()));
         holder.textViewName.setTextColor(holder.context.getResources().getColor(R.color.solid_red));
-        holder.textViewName.setText(String.format(holder.context.getString(R.string.datos_orden), getCatDesc(listdata.get(position).getTipoMuestra()), mDateFormat.format(listdata.get(position).getFis()), mDateFormat.format(listdata.get(position).getFif())));
+        if (listdata.get(position).getCategoria().equalsIgnoreCase("D") != true) {
+            holder.textViewName.setText(String.format(holder.context.getString(R.string.datos_orden), getCatDesc(listdata.get(position).getTipoMuestra()), mDateFormat.format(listdata.get(position).getFis()), mDateFormat.format(listdata.get(position).getFif())));
+        }else {
+
+            holder.textViewName.setText(String.format(holder.context.getString(R.string.datos_orden), getCatDesc(listdata.get(position).getTipoMuestra()), mDateFormat.format(listdata.get(position).getFis()), ("10/10/3000")));
+        }
     }
 
     @Override
