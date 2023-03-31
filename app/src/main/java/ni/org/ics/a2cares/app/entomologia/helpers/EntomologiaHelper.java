@@ -340,6 +340,7 @@ public class EntomologiaHelper extends BindStatementHelper {
 
         cv.put(EntomologiaBConstants.hayAmbientePERI, cuest.getHayAmbientePERI());
         cv.put(EntomologiaBConstants.horaCapturaPERI, cuest.getHoraCapturaPERI());
+        //if (cuest.getHumedadRelativaPERI() != null && cuest.getHumedadRelativaPERI().toString().length() == 2) cv.put(EntomologiaBConstants.humedadRelativaPERI, cuest.getHumedadRelativaPERI());
         if (cuest.getHumedadRelativaPERI() != null) cv.put(EntomologiaBConstants.humedadRelativaPERI, cuest.getHumedadRelativaPERI());
         if (cuest.getTemperaturaPERI() != null) cv.put(EntomologiaBConstants.temperaturaPERI, cuest.getTemperaturaPERI());
         cv.put(EntomologiaBConstants.tipoIngresoCodigoPERI, cuest.getTipoIngresoCodigoPERI());

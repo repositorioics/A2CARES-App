@@ -55,8 +55,8 @@
 
     <string name="problemaAgua">6. ¿Hay problemas de agua en este barrio?</string>
 
-    <string name="horasSinAgua">6.a ¿Cuántas horas por día  no tiene servicio de agua?</string>
-    <string name="frecuenciaSeVaAgua">6.b. ¿Cada cuánto se va el agua?</string>
+    <string name="horasSinAgua">6.1 ¿Cuántas horas por día  no tiene servicio de agua?</string>
+    <string name="frecuenciaSeVaAgua">6.2 ¿Cada cuánto se va el agua?</string>
     <string name="otraFrecuenciaSeVaAgua">¿Con que otra frecuencia se va el agua?</string>
     <string name="frecuenciaSeVaAguaHint">Seleccionar una opción</string>
 
@@ -65,39 +65,39 @@
     <string name="tieneTanque">10. ¿Tiene tanque de agua?</string>
 
     <string name="llaveAgua">11. ¿La llave del agua se encuentra dentro de la casa o fuera?</string>
-    <string name="llaveCompartida">11.¿Es compartido?</string>
+    <string name="llaveCompartida">11.1 ¿Es compartido?</string>
     <string name="llaveCompartidaHint">Indicar si la llave que esta fuera de la casa es de uso compartido</string>
     <string name="almacenaAgua">12 ¿Ud. almacena agua  en barriles, tanques u otros recipientes?</string>
-    <string name="almacenaEnBarriles">¿Ud. Utiliza barriles?</string>
+    <string name="almacenaEnBarriles">12.1 ¿Ud. Utiliza barriles?</string>
     <string name="almacenaEnBarrilesHint">Indicar si utiliza barriles para almacenar agua</string>
-    <string name="almacenaEnTanques">¿Ud. Utiliza Tanques?</string>
+    <string name="almacenaEnTanques">12.4 ¿Ud. Utiliza Tanques?</string>
     <string name="almacenaEnTanquesHint">Indicar si utiliza tanques para almacenar agua</string>
-    <string name="almacenaEnPilas">¿Ud. Utiliza Pilas?</string>
+    <string name="almacenaEnPilas">12.7 ¿Ud. Utiliza Pilas?</string>
     <string name="almacenaEnPilasHint">Indicar si utiliza Pilas para almacenar agua</string>
-    <string name="almacenaOtrosRecipientes">¿Ud. Utiliza Otros Recipientes?</string>
+    <string name="almacenaOtrosRecipientes">12.12 ¿Ud. Utiliza Otros Recipientes?</string>
     <string name="almacenaOtrosRecipientesHint">Indicar si utiliza otros recipientes que no sean barriles, tanques o pilas para almacenar agua</string>
-    <string name="otrosRecipientes">Otros recipientes</string>
+    <string name="otrosRecipientes">12.13 Otros recipientes</string>
     <string name="otrosRecipientesHint">Especificar que otros recipientes utiliza</string>
-    <string name="numBarriles">¿Cuántos barriles tiene?</string>
+    <string name="numBarriles">12.2 ¿Cuántos barriles tiene?</string>
     <string name="numBarrilesHint">Indicar la cantidad de barriles que tiene en casa</string>
-    <string name="numPilas">¿Cuántas pilas tiene?</string>
+    <string name="numPilas">12.8 ¿Cuántas pilas tiene?</string>
     <string name="numPilasHint">Indicar la cantidad de pilas que tiene en casa</string>
-    <string name="numTanques">¿Cuántos tanques tiene?</string>
+    <string name="numTanques">12.5 ¿Cuántos tanques tiene?</string>
     <string name="numTanquesHint">Indicar la cantidad de tanques que tiene en casa</string>
-    <string name="numOtrosRecipientes">¿Cuántos otros recipientes tiene?</string>
+    <string name="numOtrosRecipientes">12.14 ¿Cuántos otros recipientes tiene?</string>
     <string name="numOtrosRecipientesHint">Indicar la cantidad de otros recipientes que tiene en casa</string>
-    <string name="barrilesTapados">¿Barriles tapados?</string>
+    <string name="barrilesTapados">12.3 ¿Barriles tapados?</string>
     <string name="barrilesTapadosHint">Ud. mantiene los barriles tapados</string>
-    <string name="tanquesTapados">¿Tanques tapados?</string>
+    <string name="tanquesTapados">12.6 ¿Tanques tapados?</string>
     <string name="tanquesTapadosHint">Ud. mantiene los tanques tapados</string>
-    <string name="pilasTapadas">¿Pilas tapadas?</string>
+    <string name="pilasTapadas">12.9 ¿Pilas tapadas?</string>
     <string name="pilasTapadasHint">Ud. mantiene las pilas tapadas</string>
-    <string name="otrosRecipientesTapados">Otros recipientes tapados?</string>
+    <string name="otrosRecipientesTapados">12.15 Otros recipientes tapados?</string>
     <string name="otrosRecipientesTapadosHint">Ud. mantiene los otros recipientes tapados</string>
 
-    <string name="cepillaPilas">¿Acostumbra a cepillar estas pilas?</string>
+    <string name="cepillaPilas">12.10 ¿Acostumbra a cepillar estas pilas?</string>
     <string name="cepillaPilasHint">Indicar si acostumbra a cepillar las pilas</string>
-    <string name="frecCepillaPilas">¿Cada cuánto?</string>
+    <string name="frecCepillaPilas">12.11 ¿Cada cuánto?</string>
     <string name="frecCepillaPilasHint">Indicar con que frecuencia acostumbra a cepillar las pilas</string>
 
     <string name="cambiadoCasa">13. ¿Han cambiado de casa?</string>

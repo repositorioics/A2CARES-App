@@ -338,6 +338,7 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
 			estudiosAdapter.open();
 			mCuestionarios = (ArrayList<CuestionarioHogar>) estudiosAdapter.getCuestionariosHogar(MainDBConstants.recordDate + ">=" + timeStamp.getTime(), EntomologiaBConstants.codigoVivienda);
 			mCuestionariosPC = (ArrayList<CuestionarioPuntoClave>) estudiosAdapter.getCuestionariosPuntoClave(EntomologiaBConstants.TODAY + ">=" + timeStamp.getTime(), EntomologiaBConstants.nombrePuntoClave);
+			//mCuestionariosPC = (ArrayList<CuestionarioPuntoClave>) estudiosAdapter.getCuestionariosPuntoClave(EntomologiaBConstants.TODAY + ">=" + "1664554960000", EntomologiaBConstants.nombrePuntoClave);
 			estudiosAdapter.close();
             showLoadingProgressDialog();
         }

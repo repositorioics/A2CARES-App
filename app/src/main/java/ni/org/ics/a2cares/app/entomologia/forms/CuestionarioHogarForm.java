@@ -112,16 +112,19 @@ public class CuestionarioHogarForm extends AbstractWizardModel {
 
         Page hayAmbientePERI = new SingleFixedChoicePage(this,labels.getHayAmbientePERI(),"", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page horaCapturaPERI = new TimePage(this,labels.getHoraCapturaPERI(),"", Constants.WIZARD, true).setRequired(true);
-        Page humedadRelativaPERI = new NumberPage(this,labels.getHumedadRelativaPERI(),"%", Constants.WIZARD, true).setRequired(true);
-        Page temperaturaPERI = new NumberPage(this,labels.getTemperaturaPERI(),"C°", Constants.WIZARD, true).setRequired(true);
+        Page humedadRelativaPERI = new NumberPage(this,labels.getHumedadRelativaPERI(),"%", Constants.WIZARD, true).setRangeValidation(true, 30, 99).setRequired(true);
+        Page temperaturaPERI = new NumberPage(this,labels.getTemperaturaPERI(),"C°", Constants.WIZARD, true).setRangeValidation(true, 20, 45).setRequired(true);
         Page tipoIngresoCodigoPERI = new SingleFixedChoicePage(this,labels.getTipoIngresoCodigoPERI(),"", Constants.WIZARD, true).setChoices(catP10y15).setRequired(true);
         Page codigoPERI = new TextPage(this,labels.getCodigoPERI(),"", Constants.WIZARD, true).setPatternValidation(true, "^PERI\\d+$").setRequired(true);
         Page codigoPERIBr = new BarcodePage(this,labels.getCodigoPERIBr(),"", Constants.WIZARD, true).setPatternValidation(true, "^PERI\\d+$").setRequired(true);
 
-        Page hayAmbienteINTRA = new SingleFixedChoicePage(this,labels.getHayAmbienteINTRA(),"", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+       // Page hayAmbienteINTRA = new SingleFixedChoicePage(this,labels.getHayAmbienteINTRA(),"", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+        //Page hayAmbienteINTRA = new SingleFixedChoicePage(this,labels.getHayAmbienteINTRA(),"", Constants.WIZARD, true);
+        Page hayAmbienteINTRA = new SingleFixedChoicePage(this,labels.getHayAmbienteINTRA(),"", Constants.WIZARD, true).setValue("Si");
+
         Page horaCapturaINTRA = new TimePage(this,labels.getHoraCapturaINTRA(),"", Constants.WIZARD, true).setRequired(true);
-        Page humedadRelativaINTRA = new NumberPage(this,labels.getHumedadRelativaINTRA(),"%", Constants.WIZARD, true).setRequired(true);
-        Page temperaturaINTRA = new NumberPage(this,labels.getTemperaturaINTRA(),"C°", Constants.WIZARD, true).setRequired(true);
+        Page humedadRelativaINTRA = new NumberPage(this,labels.getHumedadRelativaINTRA(),"%", Constants.WIZARD, true).setRangeValidation(true, 30, 99).setRequired(true);
+        Page temperaturaINTRA = new NumberPage(this,labels.getTemperaturaINTRA(),"C°", Constants.WIZARD, true).setRangeValidation(true, 20, 45).setRequired(true);
         Page tipoIngresoCodigoINTRA = new SingleFixedChoicePage(this,labels.getTipoIngresoCodigoINTRA(),"", Constants.WIZARD, true).setChoices(catP10y15).setRequired(true);
         Page codigoINTRA = new TextPage(this,labels.getCodigoINTRA(),"", Constants.WIZARD, true).setPatternValidation(true, "^INTRA\\d+$").setRequired(true);
         Page codigoINTRABr = new BarcodePage(this,labels.getCodigoINTRABr(),"", Constants.WIZARD, true).setPatternValidation(true, "^INTRA\\d+$").setRequired(true);

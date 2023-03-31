@@ -750,7 +750,8 @@ public class NuevoCuestionarioHogarActivity extends FragmentActivity implements
             String tipoIngresoCodigoPERI = datos.getString(this.getString(R.string.tipoIngresoCodigoPERI));
             String codigoPERI = datos.getString(this.getString(R.string.codigoPERI));
             String codigoPERIBr = datos.getString(this.getString(R.string.codigoPERIBr));
-            String hayAmbienteINTRA = datos.getString(this.getString(R.string.hayAmbienteINTRA));
+           // String hayAmbienteINTRA = datos.getString(this.getString(R.string.hayAmbienteINTRA));
+            String hayAmbienteINTRA = "Si";
             String horaCapturaINTRA = datos.getString(this.getString(R.string.horaCapturaINTRA));
             String humedadRelativaINTRA = datos.getString(this.getString(R.string.humedadRelativaINTRA));
             String temperaturaINTRA = datos.getString(this.getString(R.string.temperaturaINTRA));
