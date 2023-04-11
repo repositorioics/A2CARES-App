@@ -176,7 +176,7 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
         boolean esMujer = participante.getSexo().equalsIgnoreCase("F");
 
         //Solo para mayores o iguales de 13 y menores de 18.
-        if (anios >= 13 && anios < 18 ){
+        if (anios >= 16 && anios < 18 ){
             changeStatus(mWizardModel.findByKey(labels.getEmancipado()), true);
             changeStatus(mWizardModel.findByKey(labels.getDescEmancipado()), true);
             changeStatus(mWizardModel.findByKey(labels.getOtraDescEmanc()), true);
@@ -184,7 +184,7 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
             onPageTreeChanged();
         }
         //Solo para mujeres mayores o iguales a 18 años y menores o iguales a 50
-        if (esMujer && anios >= 18 && anios <= 50 ){
+        if (esMujer && anios >= 18 && anios <= 49 ){
             changeStatus(mWizardModel.findByKey(labels.getEmbarazada()), true);
             changeStatus(mWizardModel.findByKey(labels.getConoceFUR()), true);
             changeStatus(mWizardModel.findByKey(labels.getFur()), true);
@@ -192,7 +192,7 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
             onPageTreeChanged();
         }
         //Solo para menores de 18 años
-        if (anios < 18 ){
+        if ( anios < 18 ){
             changeStatus(mWizardModel.findByKey(labels.getAsisteEscuela()), true);
             changeStatus(mWizardModel.findByKey(labels.getGradoEstudia()), true);
             changeStatus(mWizardModel.findByKey(labels.getNombreEscuela()), true);
@@ -218,7 +218,8 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
 
             onPageTreeChanged();
 
-        } else { //para 18 a'os o mas
+        }
+        if ( anios >= 18 ) { //para 18 a'os o mas
             changeStatus(mWizardModel.findByKey(labels.getFuma()), true);
             changeStatus(mWizardModel.findByKey(labels.getPeriodicidadFuma()), true);
             changeStatus(mWizardModel.findByKey(labels.getCantidadCigarrillos()), true);

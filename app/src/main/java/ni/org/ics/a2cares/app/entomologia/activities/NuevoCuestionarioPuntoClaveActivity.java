@@ -229,7 +229,7 @@ public class NuevoCuestionarioPuntoClaveActivity extends AbstractAsyncActivity {
 			EstudioDBAdapter ca = new EstudioDBAdapter(this.getApplicationContext(), mPass, false, false);
 			ca.open();
 			List<CuestionarioPuntoClave> mCuestionariosPC = ca.getCuestionariosPuntoClave(EntomologiaBConstants.codigoSitio + "='" + mPuntoClave.getCodigoSitio() +"'", null);
-			if (mCuestionariosPC.size() <= 0) {
+			if (mCuestionariosPC.size() <= 1) {
 				ca.crearCuestionarioPuntoClave(mPuntoClave);
 				Toast toast = Toast.makeText(getApplicationContext(),getString(R.string.success),Toast.LENGTH_LONG);
 				toast.show();
