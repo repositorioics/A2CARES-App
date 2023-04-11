@@ -116,6 +116,7 @@ public class DownloadBaseTask extends DownloadTask {
         estudioAdapter.borrarOrdenesLaboratorio();
         estudioAdapter.borrarMuestrasEnfermo();
         estudioAdapter.borrarRecepcionesEnfermo();
+        estudioAdapter.borrarEncuestaSatisfaccionUsuario();
         try {
             if (mCatalogos != null){
                 publishProgress("Insertando catalogos", CATALOGOS, TOTAL_TASK_GENERALES);

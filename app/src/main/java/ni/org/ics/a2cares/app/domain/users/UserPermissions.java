@@ -21,6 +21,7 @@ public class UserPermissions {
 	private Boolean casazika=false;
 	private Boolean tamizajezika=false;
 	private Boolean datosparto=false;
+	private Boolean encSatUsu=false;
 
 	public String getUsername() {
 		return username;
@@ -125,6 +126,13 @@ public class UserPermissions {
 	}
 	public void setDatosparto(Boolean datosparto) {
 		this.datosparto = datosparto;
+	}
+
+	public Boolean getEncSatUsu() {
+		return encSatUsu;
+	}
+	public void setEncSatUsu(Boolean encSatUsu) {
+		this.encSatUsu = encSatUsu;
 	}
 
 }

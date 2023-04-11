@@ -36,6 +36,7 @@ import ni.org.ics.a2cares.app.domain.survey.EncuestaPesoTalla;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaPesoTallaActivity;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaSatisfaccionActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaMuestraEnfermoActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaVisitaTerrenoActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoObsequioActivity;
@@ -60,6 +61,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private boolean pendienteMuestras = false;
     private boolean pendienteObseq = false;
     private boolean visitaExitosa = false;
+    private boolean pendienteEncuestaSatisfaccion = false;
 
     private final int OPCION_VISITA = 0;
     private final int OPCION_ENCUESTA_CASA = 1;
@@ -69,6 +71,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private final int OPCION_OBSEQUIO = 5;
     private final int OPCION_IR_CASA = 6;
     private final int OPCION_MUESTRAS_ENF = 7;
+    //Encuesta de satisfaccion de usuario
+    private final int OPCION_ENCUESTA_SATISFACCION = 8;
 
     private static final int EXIT = 1;
 
@@ -218,7 +222,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     }
 
     private boolean datosPendintes() {
-        return (visitaExitosa && (pendienteMuestras || pendienteEncuestaPeso || pendienteEncuestaParticip || pendienteEncuestaCasa || pendienteObseq));
+        return (visitaExitosa && (pendienteMuestras || pendienteEncuestaPeso || pendienteEncuestaParticip || pendienteEncuestaCasa || pendienteObseq || pendienteEncuestaSatisfaccion));
     }
 
     private void crearFomulario(int position){
@@ -370,6 +374,15 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         startActivity(i);
                         finish();
                         break;
+                    case OPCION_ENCUESTA_SATISFACCION:
+                        arguments.putSerializable(Constants.PARTICIPANTE, participante);
+                        i = new Intent(getApplicationContext(),
+                                NuevaEncuestaSatisfaccionActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        finish();
+                        break;
                     default:
                         break;
 
@@ -428,6 +441,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                 pendienteMuestras = participante.getProcesos().getPendienteMxMA().equalsIgnoreCase(Constants.YESKEYSND);
                 pendienteObseq = participante.getProcesos().getPendienteObseq().equalsIgnoreCase(Constants.YESKEYSND);
 
+                pendienteEncuestaSatisfaccion = participante.getProcesos().getEsatUsuario().equalsIgnoreCase(Constants.YESKEYSND);
+
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
                 return "error";
@@ -453,7 +468,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
             textView.setText(Html.fromHtml(header));
 
             gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, participante, pendienteEncuestaCasa, pendienteEncuestaParticip,
-                    pendienteEncuestaPeso, pendienteMuestras, pendienteObseq, visitaExitosa, mMuestrasEnf.size()));
+                    pendienteEncuestaPeso, pendienteMuestras, pendienteObseq, visitaExitosa, mMuestrasEnf.size(), pendienteEncuestaSatisfaccion));
             dismissProgressDialog();
         }
     }

@@ -113,6 +113,8 @@ public class MainDBConstants {
     public static final String U_CASAZIKA = "casazika";
     public static final String U_TAMZIKA = "tamizajezika";
     public static final String U_PARTO = "datosparto";
+    //Usuario encuesta satisfaccion usuario
+    public static final String U_ENCSATUSUARIO = "encSatUsu";
 
     public static final String CREATE_USER_PERM_TABLE = "create table if not exists "
             + USER_PERM_TABLE + " ("
@@ -131,6 +133,7 @@ public class MainDBConstants {
             + U_CASAZIKA + " boolean, "
             + U_TAMZIKA + " boolean, "
             + U_PARTO + " boolean, "
+            + U_ENCSATUSUARIO + " boolean, "
             + "primary key (" + USERNAME + "));";
 
     public static final String INSERT_USER_PERM_TABLE = "insert into "
@@ -149,8 +152,9 @@ public class MainDBConstants {
             + U_CONS + ","
             + U_CASAZIKA + ","
             + U_TAMZIKA + ","
-            + U_PARTO
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + U_PARTO + ","
+            + U_ENCSATUSUARIO
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     //Tabla mensajes
     public static final String MESSAGES_TABLE = "mensajes";
@@ -391,6 +395,7 @@ public class MainDBConstants {
     public static final String pendienteMxMA = "pendienteMxMA";
     public static final String pendienteMxTx = "pendienteMxTx";
     public static final String pendienteObseq = "pendienteObseq";
+    public static final String pendienteEsatUsuario = "esatUsuario";
 
     //Crear tabla participantes
     public static final String CREATE_PARTICIPANTE_PROC_TALBE = "create table if not exists "
@@ -408,6 +413,7 @@ public class MainDBConstants {
             + pasive + " text, "
             + deviceId + " text, "
             + estado + " text not null, "
+            + pendienteEsatUsuario + " text, "
             + "primary key (" + codigo + "));";
 
     public static final String INSERT_PARTICIPANTE_PROC_TABLE = "insert into " + PARTICIPANTE_PROC_TABLE + "("
@@ -423,8 +429,9 @@ public class MainDBConstants {
             + recordUser + ","
             + pasive + ","
             + deviceId + ","
-            + estado
-            + ") " + "values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + estado + ","
+            + pendienteEsatUsuario
+            + ") " + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     // Tabla Tamizaje
     public static final String TAMIZAJE_TABLE = "tamizajes";

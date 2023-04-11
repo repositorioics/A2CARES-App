@@ -24,6 +24,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
     private boolean pendienteObseq = false;
     private boolean visitaExitosa = false;
     private int cantidadMxEnfermo = 0;
+    private boolean pendienteEncuestaSatisfaccion;
 
     //private final int OPCION_CONSULTA = 0;
     private final int OPCION_VISITA = 0;
@@ -37,12 +38,15 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
     private final int OPCION_OBSEQUIO = 5;
     private final int OPCION_IR_CASA = 6;
     private final int OPCION_MUESTRAS_ENF = 7;
+    //Encuesta de satisfaccion de usuario
+    private final int OPCION_ENCUESTA_SATISFACCION = 8;
 
     private final Context context;
     private final Participante participante;
 	public MenuParticipanteAdapter(Context context, int textViewResourceId,
                                    String[] values, Participante participante,  boolean pendienteEncuestaCasa, boolean pendienteEncuestaParticipante,
-                                   boolean pendienteEncuestaPeso, boolean pendientenMuestras, boolean pendienteObseq, boolean visitaExitosa, int cantidadMxEnfermo) {
+                                   boolean pendienteEncuestaPeso, boolean pendientenMuestras, boolean pendienteObseq, boolean visitaExitosa, int cantidadMxEnfermo,
+                                   boolean pendienteEncuestaSatisfaccion) {
 		super(context, textViewResourceId, values);
         this.context = context;
 		this.values = values;
@@ -54,6 +58,7 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
         this.visitaExitosa = visitaExitosa;
         this.pendienteObseq = pendienteObseq;
         this.cantidadMxEnfermo = cantidadMxEnfermo;
+        this.pendienteEncuestaSatisfaccion = pendienteEncuestaSatisfaccion;
 	}
 
 
@@ -89,6 +94,9 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
                 break;
             case OPCION_MUESTRAS_ENF:
                 habilitado = true;
+                break;
+            case OPCION_ENCUESTA_SATISFACCION:
+                habilitado = visitaExitosa && pendienteEncuestaSatisfaccion;
                 break;
             default: break;
         }
@@ -219,6 +227,21 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
             case OPCION_MUESTRAS_ENF:
                 img=getContext().getResources().getDrawable(R.mipmap.ic_sick);
                 textView.setText(textView.getText() + " ("+cantidadMxEnfermo+")");
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+                break;
+            case OPCION_ENCUESTA_SATISFACCION:
+                if (visitaExitosa) {
+                    if (!pendienteEncuestaSatisfaccion) {
+                        textView.setTextColor(Color.BLUE);
+                        textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.done));
+                    } else {
+                        textView.setText(textView.getText() + "\n" + context.getResources().getString(R.string.pending));
+                        textView.setTextColor(Color.RED);
+                    }
+                } else {
+                    textView.setTextColor(Color.GRAY);
+                }
+                img=getContext().getResources().getDrawable(R.mipmap.ic_weight);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
 		default:

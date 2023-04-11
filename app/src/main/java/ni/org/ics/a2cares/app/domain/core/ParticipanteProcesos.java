@@ -17,6 +17,8 @@ public class ParticipanteProcesos extends BaseMetaData implements Serializable {
     private String pendienteMxMA;
     private String pendienteMxTx;
     private String pendienteObseq;
+    //Indica realizar encuensta de satisfaccion de usuario
+    private String esatUsuario;
 
     public String getCodigo() {
         return codigo;
@@ -80,5 +82,13 @@ public class ParticipanteProcesos extends BaseMetaData implements Serializable {
 
     public void setPendienteObseq(String pendienteObseq) {
         this.pendienteObseq = pendienteObseq;
+    }
+
+    public String getEsatUsuario() {
+        return esatUsuario;
+    }
+
+    public void setEsatUsuario(String esatUsuario) {
+        this.esatUsuario = esatUsuario;
     }
 }

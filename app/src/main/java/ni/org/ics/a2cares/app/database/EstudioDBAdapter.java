@@ -59,6 +59,7 @@ import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaParticipante;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaPesoTalla;
+import ni.org.ics.a2cares.app.domain.survey.EncuestaSatisfaccionUsuario;
 import ni.org.ics.a2cares.app.domain.users.Authority;
 import ni.org.ics.a2cares.app.domain.users.UserPermissions;
 import ni.org.ics.a2cares.app.domain.users.UserSistema;
@@ -68,6 +69,7 @@ import ni.org.ics.a2cares.app.entomologia.domain.CuestionarioHogar;
 import ni.org.ics.a2cares.app.entomologia.domain.CuestionarioHogarPoblacion;
 import ni.org.ics.a2cares.app.entomologia.domain.CuestionarioPuntoClave;
 import ni.org.ics.a2cares.app.entomologia.helpers.EntomologiaHelper;
+import ni.org.ics.a2cares.app.ui.helpers.EncuestaSatisfaccionUsuarioHelper;
 import ni.org.ics.a2cares.app.utils.Constants;
 import ni.org.ics.a2cares.app.utils.FileUtils;
 
@@ -129,6 +131,7 @@ public class EstudioDBAdapter {
             db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_PUNTO_CLAVE_TABLE);
             db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_TABLE);
             db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_POB_TABLE);
+            db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_TABLE);
         }
 
         @Override
@@ -148,6 +151,10 @@ public class EstudioDBAdapter {
                 //Entomologia 2022
                 db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_TABLE);
                 db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_POB_TABLE);
+            }
+            if (oldVersion==4)  {
+                /*Nueva encuesta satisfaccion por usuario 30/03/2023*/
+                db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_TABLE);
             }
         }
 
@@ -1839,6 +1846,58 @@ public class EstudioDBAdapter {
         if (!cursor.isClosed()) cursor.close();
         return mCuestionarioPuntoClaves;
     }
+
+    /*-------------ENCUESTA DE SATISFACCION DE USUARIO-------------*/
+
+    public boolean borrarEncuestaSatisfaccionUsuario() {
+        return mDb.delete(EncuestasDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, null, null) > 0;
+    }
+
+    //Crear una nueva encuesta satisfaccion usuario en la base de datos
+    public void crearEncuestaSatisfaccionUsuarioValues(EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario) {
+        ContentValues cv = EncuestaSatisfaccionUsuarioHelper.crearEncuenstaSatisfaccionUsuarioContentValues(encuestaSatisfaccionUsuario);
+        mDb.insertOrThrow(EncuestasDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, null, cv);
+    }
+
+    public boolean updateEncuestaSatisfaccionUsuario(EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario) {
+        ContentValues cv = EncuestaSatisfaccionUsuarioHelper.crearEncuenstaSatisfaccionUsuarioContentValues(encuestaSatisfaccionUsuario);
+        return mDb.update(EncuestasDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, cv, EncuestasDBConstants.codigoParticipante + "="
+                + encuestaSatisfaccionUsuario.getCodigoParticipante(), null) > 0;
+    }
+
+    public ArrayList<EncuestaSatisfaccionUsuario> getListaEncuestaSatisfaccionUsuario(Integer codigo) throws SQLException {
+        Cursor cEncSatUsu = null;
+        ArrayList<EncuestaSatisfaccionUsuario> mEncSatUsu = new ArrayList<EncuestaSatisfaccionUsuario>();
+        cEncSatUsu = mDb.query(true, EncuestasDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, null,
+                null,  null, null, null, null, null);
+        if (cEncSatUsu != null && cEncSatUsu.getCount() > 0) {
+            cEncSatUsu.moveToFirst();
+            mEncSatUsu.clear();
+            do{
+                mEncSatUsu.add(EncuestaSatisfaccionUsuarioHelper.crearEncuestaSatisfaccionUsuario(cEncSatUsu));
+            } while (cEncSatUsu.moveToNext());
+        }
+        cEncSatUsu.close();
+        return mEncSatUsu;
+    }
+
+    public List<EncuestaSatisfaccionUsuario> getListaEncSatisfaccionUsuarioSinEnviar() throws SQLException {
+        Cursor cEncSatUsuario = null;
+        List<EncuestaSatisfaccionUsuario> mEncSatUsu = new ArrayList<EncuestaSatisfaccionUsuario>();
+        cEncSatUsuario = mDb.query(true, EncuestasDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, null,
+                MainDBConstants.estado + "= '" + '0' + "'", null, null, null, null, null);
+        if (cEncSatUsuario != null && cEncSatUsuario.getCount() > 0) {
+            cEncSatUsuario.moveToFirst();
+            mEncSatUsu.clear();
+            do{
+                mEncSatUsu.add(EncuestaSatisfaccionUsuarioHelper.crearEncuestaSatisfaccionUsuario(cEncSatUsuario));
+            } while (cEncSatUsuario.moveToNext());
+        }
+        cEncSatUsuario.close();
+        return mEncSatUsu;
+    }
+
+    /*-------------------------------------------------------------*/
 
     public boolean bulkInsertCuestionarioEntoBySql(String tabla, List<?> list) throws Exception {
         if (null == list || list.size() <= 0) {

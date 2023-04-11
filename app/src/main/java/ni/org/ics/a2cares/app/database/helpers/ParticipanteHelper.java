@@ -129,6 +129,8 @@ public class ParticipanteHelper extends BindStatementHelper {
         procesos.setEstado(cursor.getString(cursor.getColumnIndex(MainDBConstants.estado)).charAt(0));
         procesos.setDeviceid(cursor.getString(cursor.getColumnIndex(MainDBConstants.deviceId)));
 
+        procesos.setEsatUsuario(cursor.getString(cursor.getColumnIndex(MainDBConstants.pendienteEsatUsuario)));
+
         return procesos;
     }
 
@@ -155,6 +157,8 @@ public class ParticipanteHelper extends BindStatementHelper {
         cv.put(MainDBConstants.pasive, String.valueOf(participante.getPasive()));
         cv.put(MainDBConstants.estado, String.valueOf(participante.getEstado()));
         cv.put(MainDBConstants.deviceId, participante.getDeviceid());
+
+        cv.put(MainDBConstants.pendienteEsatUsuario, participante.getEsatUsuario());
         return cv;
     }
 
@@ -173,6 +177,7 @@ public class ParticipanteHelper extends BindStatementHelper {
         stat.bindString(11, String.valueOf(participante.getPasive()));
         bindString(stat,12, participante.getDeviceid());
         stat.bindString(13, String.valueOf(participante.getEstado()));
+        bindString(stat,14, participante.getEsatUsuario());
     }
 
 }

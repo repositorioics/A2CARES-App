@@ -38,6 +38,7 @@ import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaParticipante;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaPesoTalla;
+import ni.org.ics.a2cares.app.domain.survey.EncuestaSatisfaccionUsuario;
 import ni.org.ics.a2cares.app.domain.visita.VisitaTerrenoParticipante;
 import ni.org.ics.a2cares.app.listeners.UploadListener;
 import ni.org.ics.a2cares.app.utils.Constants;
@@ -74,6 +75,9 @@ public class UploadAllTask extends UploadTask {
     private List<MuestraEnfermo> mMuestrasEnf = new ArrayList<MuestraEnfermo>();
     private List<RecepcionEnfermo> mRecepcionesEnf = new ArrayList<RecepcionEnfermo>();
 
+    //Encuesta de satisfacción de usuario
+    private List<EncuestaSatisfaccionUsuario> mEncSatUsuario = new ArrayList<EncuestaSatisfaccionUsuario>();
+
 	private String url = null;
 	private String username = null;
 	private String password = null;
@@ -101,7 +105,10 @@ public class UploadAllTask extends UploadTask {
     public static final String MUESTRAS_ENF = "19";
     public static final String RECEPCIONES_ENF = "20";
 
-	private static final String TOTAL_TASK = "20";
+    //Encuesta de satisfaccion de usuario
+    public static final String ENCUESTA_SATISFACCION_USUARIO = "21";
+
+	private static final String TOTAL_TASK = "21";
 	
 
 	@Override
@@ -135,6 +142,8 @@ public class UploadAllTask extends UploadTask {
             mOrdenesLab = estudioAdapter.getOrdenesLaboratorio(filtro, null);
             mMuestrasEnf = estudioAdapter.getMuestrasEnfermo(filtro, null);
             mRecepcionesEnf = estudioAdapter.getRecepcionesEnfermo(filtro, null);
+            //Encuesta satisfaccion de usuario
+            mEncSatUsuario = estudioAdapter.getListaEncSatisfaccionUsuarioSinEnviar();
 
             if (mVisitasTerreno.size() <= 0 &&
                     mTamizajes.size() <= 0 &&
@@ -155,7 +164,8 @@ public class UploadAllTask extends UploadTask {
                     mObsequiosGeneral.size() <= 0 &&
                     mOrdenesLab.size() <= 0 &&
                     mMuestrasEnf.size() <= 0 &&
-                    mRecepcionesEnf.size() <= 0
+                    mRecepcionesEnf.size() <= 0 &&
+                    mEncSatUsuario.size() <= 0
             ) {
                 error = Constants.NO_DATA;
             } else {
@@ -283,6 +293,15 @@ public class UploadAllTask extends UploadTask {
                     actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, RECEPCIONES_ENF);
                     return error;
                 }
+
+
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENCUESTA_SATISFACCION_USUARIO);
+                error = cargarEncuestaSatisfaccionUsuario(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_SATISFACCION_USUARIO);
+                    return error;
+                }
+
             }
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -516,6 +535,17 @@ public class UploadAllTask extends UploadTask {
                     }catch (Exception ex){
                         ex.printStackTrace();
                     }
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(ENCUESTA_SATISFACCION_USUARIO)){
+            c = mEncSatUsuario.size();
+            if(c>0){
+                for (EncuestaSatisfaccionUsuario encSatUsuario : mEncSatUsuario) {
+                    encSatUsuario.setEstado(estado);
+                    estudioAdapter.updateEncuestaSatisfaccionUsuario(encSatUsuario);
+                    publishProgress("Actualizando encuestas de satisfaccion de usuario en base de datos local", Integer.valueOf(mEncSatUsuario.indexOf(encSatUsuario)).toString(), Integer
+                            .valueOf(c).toString());
                 }
             }
         }
@@ -1209,5 +1239,46 @@ public class UploadAllTask extends UploadTask {
             Log.e(TAG, e.getMessage(), e);
             return e.getMessage();
         }
+    }
+
+    /***************************************************/
+    /******** Encuesta Satisfaccin de Usuario **********/
+    /***************************************************/
+    // url, username, password
+    protected String cargarEncuestaSatisfaccionUsuario(String url, String username,
+                                                       String password) throws Exception {
+        try {
+            //getEncuestaSatisfaccionUsuarioPendientes();
+            if(mEncSatUsuario.size()>0) {
+                // La URL de la solicitud POST
+                //saveEncuestaSatisfaccionUsuario('1');
+                final String urlRequest = url + "/movil/encuestaSatisfaccionUsuario";
+                EncuestaSatisfaccionUsuario[] envio = mEncSatUsuario.toArray(new EncuestaSatisfaccionUsuario[mEncSatUsuario.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<EncuestaSatisfaccionUsuario[]> requestEntity =
+                        new HttpEntity<EncuestaSatisfaccionUsuario[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                // Regresa la respuesta a mostrar al usuario
+                /*if (!response.getBody().matches("Datos recibidos!")) {
+                    saveEncuestaSatisfaccionUsuario('0');
+                }*/
+                return response.getBody();
+            } else {
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            //saveEncuestaSatisfaccionUsuario('0');
+            return e.getMessage();
+        }
+
     }
 }

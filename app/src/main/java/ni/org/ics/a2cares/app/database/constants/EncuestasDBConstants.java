@@ -644,4 +644,161 @@ public class EncuestasDBConstants {
             + MainDBConstants.deviceId + " text, "
             + MainDBConstants.estado + " text not null, "
             + "primary key (" + codigo + "));";
+
+    //Nueva encuesta de satisfaccion por usuario
+
+    public static final String ENCUESTA_SATISFACCION_USUARIO_TABLE = "encuestaSatisfaccionUsuario";
+
+    public static final String codigoParticipante = "codigoParticipante";
+    public static final String atencionMedica = "atencionMedica";
+    public static final String familaAmistades = "familaAmistades";
+    public static final String desicionPropia = "desicionPropia";
+    public static final String obsequiosOfreceEstudio = "obsequiosOfreceEstudio";
+    public static final String ayudaRecibeComunidad = "ayudaRecibeComunidad";
+    public static final String examenesLaboratorio = "examenesLaboratorio";
+    public static final String interesCientificoPersonalP1 = "interesCientificoPersonalP1";
+    public static final String informacionAyudaOtros = "informacionAyudaOtros";
+    public static final String otraP1 = "otraP1";
+    public static final String calidadAtencionMedica = "calidadAtencionMedica";
+    public static final String atencionOportuna = "atencionOportuna";
+    public static final String buenaCoordinacionhosp = "buenaCoordinacionhosp";
+    public static final String infoEstadoSalud = "infoEstadoSalud";
+    public static final String enseniaPrevEnfermedades = "enseniaPrevEnfermedades";
+    public static final String infoConsMejoraConocimientos = "infoConsMejoraConocimientos";
+    public static final String interesCientificoPersonalP2 = "interesCientificoPersonalP2";
+    public static final String mejorarTratamientoDengue = "mejorarTratamientoDengue";
+    public static final String unicaManeraRecibirAtencionMed = "unicaManeraRecibirAtencionMed";
+    public static final String otraP2 = "otraP2";
+    public static final String difBuscarAtencionMed = "difBuscarAtencionMed";
+    public static final String centroSaludLejos = "centroSaludLejos";
+    public static final String costoTrasnporteElevado = "costoTrasnporteElevado";
+    public static final String trabajoTiempo = "trabajoTiempo";
+    public static final String noQueriapasarConsulta = "noQueriapasarConsulta";
+    public static final String horarioClases = "horarioClases";
+    public static final String temorTomenMx = "temorTomenMx";
+    public static final String temorInfoPersonal = "temorInfoPersonal";
+    public static final String otraP3 = "otraP3";
+    public static final String recomendariaAmigoFamiliar = "recomendariaAmigoFamiliar";
+    public static final String atencionCalidad = "atencionCalidad";
+    public static final String respNecesidadesSaludOportuna = "respNecesidadesSaludOportuna";
+    public static final String tiempoEsperaCorto = "tiempoEsperaCorto";
+    public static final String mejorAtencionQueSeguro = "mejorAtencionQueSeguro";
+    public static final String examenLabNecesarios = "examenLabNecesarios";
+    public static final String conocimientosImportantes = "conocimientosImportantes";
+    public static final String pocosRequisitos = "pocosRequisitos";
+    public static final String otraP_4_1 = "otraP_4_1";
+    public static final String atencionPersonalMala = "atencionPersonalMala";
+    public static final String noDanRespNecesidades = "noDanRespNecesidades";
+    public static final String tiempoEsperaLargo = "tiempoEsperaLargo";
+    public static final String mejorAtencionOtraUnidadSalud = "mejorAtencionOtraUnidadSalud";
+    public static final String solicitaDemasiadaMx = "solicitaDemasiadaMx";
+    public static final String muchosRequisitos = "muchosRequisitos";
+    public static final String noExplicanHacenMx = "noExplicanHacenMx";
+    public static final String noConfianza = "noConfianza";
+    public static final String otraP_4_2 = "otraP_4_2";
+    public static final String comprendeProcedimientos = "comprendeProcedimientos";
+    public static final String noComodoRealizarPreg = "noComodoRealizarPreg";
+    public static final String noRespondieronPreg = "noRespondieronPreg";
+    public static final String explicacionRapida = "explicacionRapida";
+    public static final String noDejaronHacerPreg = "noDejaronHacerPreg";
+    public static final String otraP_5_1 = "otraP_5_1";
+    public static final String brindaronConsejosPrevencionEnfer = "brindaronConsejosPrevencionEnfer";
+    public static final String entiendoProcedimientosEstudios = "entiendoProcedimientosEstudios";
+    public static final String satisfecho = "satisfecho";
+    public static final String comodoInfoRecolectada = "comodoInfoRecolectada";
+    public static final String noComodoPreguntas = "noComodoPreguntas";
+    public static final String recomendacionMejorarAtencion = "recomendacionMejorarAtencion";
+    public static final String importanciaRecibirInformacion = "importanciaRecibirInformacion";
+    public static final String identificadoEquipo = "identificadoEquipo";
+    public static final String fechaRegistro = "fechaRegistro";
+    public static final String creado = "creado";
+    public static final String usuarioRegistro = "usuarioRegistro";
+    public static final String codigoCasa = "codigoCasa";
+
+    public static final String pasive = "pasive";
+    public static final String deviceId = "identificador_equipo";
+    public static final String estado = "estado";
+    public static final String nombre1Tutor = "nombre1Tutor";
+    public static final String nombre2Tutor = "nombre2Tutor";
+    public static final String apellido1Tutor = "apellido1Tutor";
+    public static final String apellido2Tutor = "apellido2Tutor";
+    public static final String estudio = "estudio";
+
+    //Crear tabla encuesta satiscaccion usuario
+    public static final String CREATE_ENCUESTA_SATISFACCION_USUARIO_TABLE = "create table if not exists "
+            + ENCUESTA_SATISFACCION_USUARIO_TABLE + " ("
+            + codigoParticipante + " text not null, "
+            + atencionMedica + " text, "
+            + familaAmistades + " text, "
+            + desicionPropia + " text, "
+            + obsequiosOfreceEstudio + " text, "
+            + ayudaRecibeComunidad + " text, "
+            + examenesLaboratorio + " text, "
+            + interesCientificoPersonalP1 + " text, "
+            + informacionAyudaOtros + " text, "
+            + otraP1 + " text, "
+            + calidadAtencionMedica + " text, "
+            + atencionOportuna + " text, "
+            + buenaCoordinacionhosp + " text, "
+            + infoEstadoSalud + " text, "
+            + enseniaPrevEnfermedades + " text, "
+            + infoConsMejoraConocimientos + " text, "
+            + interesCientificoPersonalP2 + " text, "
+            + mejorarTratamientoDengue + " text, "
+            + unicaManeraRecibirAtencionMed + " text, "
+            + otraP2 + " text, "
+            + difBuscarAtencionMed + " text, "
+            + centroSaludLejos + " text, "
+            + costoTrasnporteElevado + " text, "
+            + trabajoTiempo + " text, "
+            + noQueriapasarConsulta + " text, "
+            + horarioClases + " text, "
+            + temorTomenMx + " text, "
+            + temorInfoPersonal + " text, "
+            + otraP3 + " text, "
+            + recomendariaAmigoFamiliar + " text, "
+            + atencionCalidad + " text, "
+            + respNecesidadesSaludOportuna + " text, "
+            + tiempoEsperaCorto + " text, "
+            + mejorAtencionQueSeguro + " text, "
+            + examenLabNecesarios + " text, "
+            + conocimientosImportantes + " text, "
+            + pocosRequisitos + " text, "
+            + otraP_4_1 + " text, "
+            + atencionPersonalMala + " text, "
+            + noDanRespNecesidades + " text, "
+            + tiempoEsperaLargo + " text, "
+            + mejorAtencionOtraUnidadSalud + " text, "
+            + solicitaDemasiadaMx + " text, "
+            + muchosRequisitos + " text, "
+            + noExplicanHacenMx + " text, "
+            + noConfianza + " text, "
+            + otraP_4_2 + " text, "
+            + comprendeProcedimientos + " text, "
+            + noComodoRealizarPreg + " text, "
+            + noRespondieronPreg + " text, "
+            + explicacionRapida + " text, "
+            + noDejaronHacerPreg + " text, "
+            + otraP_5_1 + " text, "
+            + brindaronConsejosPrevencionEnfer + " text, "
+            + entiendoProcedimientosEstudios + " text, "
+            + satisfecho + " text, "
+            + comodoInfoRecolectada + " text, "
+            + noComodoPreguntas + " text, "
+            + recomendacionMejorarAtencion + " text, "
+            + importanciaRecibirInformacion + " text, "
+            + identificadoEquipo + " text, "
+            + pasive + " text, "
+            + estado + " text not null, "
+            + fechaRegistro + " text, "
+            + creado + " text, "
+            + usuarioRegistro + " text, "
+            + nombre1Tutor + " text, "
+            + nombre2Tutor + " text, "
+            + apellido1Tutor + " text, "
+            + apellido2Tutor + " text, "
+            + codigoCasa + " text, "
+            //+ casaCHF + " text, "
+            + estudio + " text, "
+            + "primary key (" + codigoParticipante + "));";
 }

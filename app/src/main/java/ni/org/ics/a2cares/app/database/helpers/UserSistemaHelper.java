@@ -94,6 +94,7 @@ public class UserSistemaHelper extends BindStatementHelper {
         cv.put(MainDBConstants.U_CASAZIKA, userPermissions.getCasazika());
         cv.put(MainDBConstants.U_TAMZIKA, userPermissions.getTamizajezika());
         cv.put(MainDBConstants.U_PARTO, userPermissions.getDatosparto());
+        cv.put(MainDBConstants.U_ENCSATUSUARIO, userPermissions.getEncSatUsu());
         return cv;
     }
 
@@ -118,6 +119,7 @@ public class UserSistemaHelper extends BindStatementHelper {
         Boolean tamizajezika = usuarios.getInt(usuarios.getColumnIndex(MainDBConstants.U_TAMZIKA)) > 0;
         Boolean casazika = usuarios.getInt(usuarios.getColumnIndex(MainDBConstants.U_CASAZIKA)) > 0;
         Boolean parto = usuarios.getInt(usuarios.getColumnIndex(MainDBConstants.U_PARTO)) > 0;
+        Boolean enSatUsuario = usuarios.getInt(usuarios.getColumnIndex(MainDBConstants.U_ENCSATUSUARIO)) > 0;
         mUser.setEncuestaCasa(enCasa);
         mUser.setEncuestaParticipante(enPart);
         mUser.setEncuestaLactancia(enLact);
@@ -131,6 +133,7 @@ public class UserSistemaHelper extends BindStatementHelper {
         mUser.setTamizajezika(tamizajezika);
         mUser.setCasazika(casazika);
         mUser.setDatosparto(parto);
+        mUser.setEncSatUsu(enSatUsuario);
         return mUser;
     }
 
@@ -171,6 +174,7 @@ public class UserSistemaHelper extends BindStatementHelper {
         stat.bindLong(13, (userPermissions.getCasazika()?1:0));
         stat.bindLong(14, (userPermissions.getTamizajezika()?1:0));
         stat.bindLong(15, (userPermissions.getDatosparto()?1:0));
+        stat.bindLong(16, (userPermissions.getEncSatUsu()?1:0));
     }
 
 }
