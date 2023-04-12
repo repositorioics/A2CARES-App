@@ -378,6 +378,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         arguments.putSerializable(Constants.PARTICIPANTE, participante);
                         i = new Intent(getApplicationContext(),
                                 NuevaEncuestaSatisfaccionActivity.class);
+                        i.putExtra(Constants.VISITA_EXITOSA, visitaExitosa);
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         i.putExtras(arguments);
                         startActivity(i);
