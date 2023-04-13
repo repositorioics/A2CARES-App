@@ -1861,8 +1861,8 @@ public class EstudioDBAdapter {
 
     public boolean updateEncuestaSatisfaccionUsuario(EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario) {
         ContentValues cv = EncuestaSatisfaccionUsuarioHelper.crearEncuenstaSatisfaccionUsuarioContentValues(encuestaSatisfaccionUsuario);
-        return mDb.update(EncuestasDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, cv, EncuestasDBConstants.codigoParticipante + "="
-                + encuestaSatisfaccionUsuario.getCodigoParticipante(), null) > 0;
+        return mDb.update(EncuestasDBConstants.ENCUESTA_SATISFACCION_USUARIO_TABLE, cv, EncuestasDBConstants.codigoParticipante + "='"
+                + encuestaSatisfaccionUsuario.getCodigoParticipante() + "'", null) > 0;
     }
 
     public ArrayList<EncuestaSatisfaccionUsuario> getListaEncuestaSatisfaccionUsuario(Integer codigo) throws SQLException {

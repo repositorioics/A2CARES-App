@@ -40,11 +40,12 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
     private Context CONTEXT;
     private static EncuestaSatisfaccionUsuario encuestaSatisfaccionUsuario = new EncuestaSatisfaccionUsuario();
     private DeviceInfo infoMovil;
-    private static Participante participante = new Participante();
+    private Participante participante;
     private boolean visExitosa = false;
     private String username;
     private SharedPreferences settings;
     private EstudioDBAdapter estudiosAdapter;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -2634,10 +2635,20 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
 
             estudiosAdapter.crearEncuestaSatisfaccionUsuarioValues(encuestaSatisfaccionUsuario);
 
-            ParticipanteProcesos procesos = participante.getProcesos();
-            procesos.setEsatUsuario(Constants.NOKEYSND);
+            participante.getProcesos().setEsatUsuario(Constants.NOKEYSND);
+            participante.getProcesos().setRecordDate(new Date());
+            participante.getProcesos().setRecordUser(username);
+            participante.getProcesos().setDeviceid(infoMovil.getDeviceId());
+            participante.getProcesos().setEstado('0');
+            participante.getProcesos().setPasive('0');
+            estudiosAdapter.editarParticipanteProcesos(participante.getProcesos());
+
+            showToast(getString(R.string.success));
+
+            //ParticipanteProcesos procesos = participante.getProcesos();
+            //procesos.setEsatUsuario(Constants.NOKEYSND);
             //procesos.setMovilInfo(movilInfo);
-            estudiosAdapter.editarParticipanteProcesos(procesos);
+            //estudiosAdapter.editarParticipanteProcesos(procesos);
 
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.PARTICIPANTE , participante);

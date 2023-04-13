@@ -1267,9 +1267,9 @@ public class UploadAllTask extends UploadTask {
                 ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
                         String.class);
                 // Regresa la respuesta a mostrar al usuario
-                /*if (!response.getBody().matches("Datos recibidos!")) {
-                    saveEncuestaSatisfaccionUsuario('0');
-                }*/
+                if (!response.getBody().matches("Datos recibidos!")) {
+                    //saveEncuestaSatisfaccionUsuario('0');
+                }
                 return response.getBody();
             } else {
                 return Constants.DATOS_RECIBIDOS;
@@ -1281,4 +1281,14 @@ public class UploadAllTask extends UploadTask {
         }
 
     }
+
+    /*private void saveEncuestaSatisfaccionUsuario(char estado) {
+        int c = mEncSatUsuario.size();
+        for (EncuestaSatisfaccionUsuario enSatUsu : mEncSatUsuario) {
+            enSatUsu.setEstado(estado);
+            estudioAdapter.updateEncuestaSatisfaccionUsuario(enSatUsu);
+            publishProgress("Actualizando las encuestas de satisfaccion de usuario", Integer.valueOf(mEncSatUsuario.indexOf(enSatUsu)).toString(), Integer
+                    .valueOf(c).toString());
+        }
+    }*/
 }
