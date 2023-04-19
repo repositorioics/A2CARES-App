@@ -41,6 +41,8 @@
     <string-array name="menu_laboratorio">
         <item>@string/lab_1</item>
         <item>@string/lab_3</item>
+        <item>@string/lab_2</item>
+
     </string-array>
 
     <string-array name="menu_doctor">

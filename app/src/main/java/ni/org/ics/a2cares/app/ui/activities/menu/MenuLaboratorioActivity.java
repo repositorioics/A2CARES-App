@@ -34,7 +34,7 @@ public class MenuLaboratorioActivity extends AbstractAsyncActivity {
 	private String[] menu_casa;
     private AlertDialog alertDialog;
 
-    //private final int OPCION_RECEPCION_BHC = 0;
+    private final int OPCION_RECEPCION_BHC = 2;
     private final int OPCION_RECEPCION_ROJO = 0;
 	private final int OPCION_RECEPCION_ENFERMO = 1;
 
@@ -58,13 +58,13 @@ public class MenuLaboratorioActivity extends AbstractAsyncActivity {
 				Bundle arguments = new Bundle();
 				Intent i;
 				switch (position){
-					/*case OPCION_RECEPCION_BHC:
+					case OPCION_RECEPCION_BHC:
 						i = new Intent(getApplicationContext(),
 								RecepcionBhcActivity.class);
 						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						i.putExtras(arguments);
 						startActivity(i);
-			        	break;*/
+			        	break;
                     case OPCION_RECEPCION_ROJO:
                     	i = new Intent(getApplicationContext(),
 								RecepcionRojoLaboratorioActivity.class);

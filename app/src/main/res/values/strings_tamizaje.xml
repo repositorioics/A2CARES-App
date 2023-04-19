@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="fechaNacimiento">Fecha de Nacimiento</string>
+    <string name="fechaNacimiento">2. Fecha de Nacimiento</string>
     <string name="fechaNacimientoHint">.</string>
-    <string name="sexo">Género</string>
+    <string name="sexo">1. Género</string>
     <string name="sexoHint">Anote el género de la persona que esta tamizando.</string>
-    <string name="aceptaTamizaje">Acepta realizar tamizaje?</string>
+    <string name="aceptaTamizaje">3. Acepta realizar tamizaje?</string>
     <string name="aceptaTamizajeHint">Pregunte si está de acuerdo en realizar el tamizaje.</string>
-    <string name="razonNoAceptaTamizaje">Porque no acepta tamizaje?</string>
+    <string name="razonNoAceptaTamizaje">3.1 Porque no acepta tamizaje?</string>
     <string name="razonNoAceptaTamizajeHint">Pregunte porque no está de acuerdo en realizar el tamizaje.</string>
-    <string name="otraRazonNoAceptaTamizaje">Otra razón desacuerdo tamizaje</string>
+    <string name="otraRazonNoAceptaTamizaje">3.2 Otra razón desacuerdo tamizaje</string>
     <string name="otraRazonNoAceptaTamizajeHint">Indicar porque otra razón no esta de acuerdo en realizar tamisaje</string>
-    <string name="tiempoResidencia">Tiempo de residencia</string>
-    <string name="tipoVivienda">Tipo de Vivienda</string>
-    <string name="planesMudarse">¿Tiene planes de mudarse de esta comunidad en los próximos 5 años?</string>
+    <string name="tiempoResidencia">4.1 Tiempo de residencia</string>
+    <string name="tipoVivienda">4. Tipo de Vivienda</string>
+    <string name="planesMudarse">5. ¿Tiene planes de mudarse de esta comunidad en los próximos 5 años?</string>
 
-    <string name="aceptaParticipar">Acepta participar en el estudio?</string>
+    <string name="aceptaParticipar">7. Acepta participar en el estudio?</string>
     <string name="aceptaParticiparHint">Estudio de vigilancia basada en la población para la aparición y transmisión de Arbovirus</string>
-    <string name="razonNoAceptaParticipar">Porque no acepta participar en el estudio?</string>
+    <string name="razonNoAceptaParticipar">7.1 Porque no acepta participar en el estudio?</string>
     <string name="razonNoAceptaParticiparHint">Indicar porque razón no acepta participar en el estudio</string>
-    <string name="otraRazonNoAceptaParticipar">Otra razón</string>
+    <string name="otraRazonNoAceptaParticipar">7.2 Otra razón</string>
     <string name="otraRazonNoAceptaParticiparHint">Indicar porque otra razón no acepta participar en el estudio</string>
 
-    <string name="asentimientoVerbal">Dió el niño Asentimiento verbal</string>
+    <string name="asentimientoVerbal">6. Dió el niño Asentimiento verbal</string>
     <string name="asentimientoVerbalHint">(Para Niños de 6 a 17 años)</string>
 
     <string name="aceptaContactoFuturo">Contacto en el futuro</string>
@@ -31,19 +31,19 @@
     <string name="aceptaParteC">Acepta Parte C</string>
     <string name="aceptaParteCHint">¿Acepta Parte C Consentimiento para uso futuro?</string>
 
-    <string name="casaPerteneceCohorte">¿Casa ya pertenece a la cohorte?</string>
-    <string name="codigoCasaCohorte">Código de Casa</string>
+    <string name="casaPerteneceCohorte">8. ¿Casa ya pertenece a la cohorte?</string>
+    <string name="codigoCasaCohorte">8.1 Código de Casa</string>
     <string name="codigoCasaCohorteHint">Código de casa en la cohorte</string>
-    <string name="codigoNuevaCasaCohorte">Código de Nueva Casa</string>
-    <string name="nombre1JefeFamilia">Primer nombre</string>
-    <string name="nombre2JefeFamilia">Segundo nombre</string>
-    <string name="apellido1JefeFamilia">Primer apellido</string>
-    <string name="apellido2JefeFamilia">Segundo apellido</string>
+    <string name="codigoNuevaCasaCohorte">8.2 Código de Nueva Casa</string>
+    <string name="nombre1JefeFamilia">10.1 Primer nombre</string>
+    <string name="nombre2JefeFamilia">10.2 Segundo nombre</string>
+    <string name="apellido1JefeFamilia">10.3 Primer apellido</string>
+    <string name="apellido2JefeFamilia">10.4 Segundo apellido</string>
     <string name="jefeFamiliaHint">Nombres y apellidos del jefe de la casa</string>
-    <string name="direccion">Dirección</string>
+    <string name="direccion">12. Dirección</string>
     <string name="direccionHint">Dirección de la casa</string>
-    <string name="barrio">Barrio</string>
-    <string name="coordenadas">Ubicación</string>
+    <string name="barrio">11. Barrio</string>
+    <string name="coordenadas">13. Ubicación</string>
     <string name="manzana">Manzana</string>
     <string name="participanteOTutorAlfabeto">Alfabeto</string>
     <string name="participanteOTutorAlfabetoHint">¿El participante o Tutor es Alfabeto?</string>
@@ -58,7 +58,7 @@
     <string name="apellido2Testigo">2do Apellido Testigo</string>
     <string name="apellido2TestigoHint">Nombre completo del Testigo</string>
 
-    <string name="codigoNuevoParticipante">Código para el nuevo Participante</string>
+    <string name="codigoNuevoParticipante">9. Código para el nuevo Participante</string>
 
     <string name="nombre1">1er Nombre</string>
     <string name="nombre1Hint">Nombre completo del participante</string>
