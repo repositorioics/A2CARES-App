@@ -40,6 +40,7 @@ import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaSatisfaccionA
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaMuestraEnfermoActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaVisitaTerrenoActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoObsequioActivity;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoReconsentimientoActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.RazonNoDataActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaMuestrasParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.adapters.MenuParticipanteAdapter;
@@ -62,6 +63,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private boolean pendienteObseq = false;
     private boolean visitaExitosa = false;
     private boolean pendienteEncuestaSatisfaccion = false;
+    private boolean pendienteReconsentimiento = false;
 
     private final int OPCION_VISITA = 0;
     private final int OPCION_ENCUESTA_CASA = 1;
@@ -73,7 +75,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private final int OPCION_MUESTRAS_ENF = 7;
     //Encuesta de satisfaccion de usuario
     private final int OPCION_ENCUESTA_SATISFACCION = 8;
-
+    private final int OPCION_RECONSENTIMIENTO = 9;
     private static final int EXIT = 1;
 
     private AlertDialog alertDialog;
@@ -222,7 +224,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     }
 
     private boolean datosPendintes() {
-        return (visitaExitosa && (pendienteMuestras || pendienteEncuestaPeso || pendienteEncuestaParticip || pendienteEncuestaCasa || pendienteObseq || pendienteEncuestaSatisfaccion));
+        return (visitaExitosa && (pendienteMuestras || pendienteEncuestaPeso || pendienteEncuestaParticip || pendienteEncuestaCasa || pendienteObseq || pendienteEncuestaSatisfaccion || pendienteReconsentimiento));
     }
 
     private void crearFomulario(int position){
@@ -384,6 +386,16 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         startActivity(i);
                         finish();
                         break;
+                    case OPCION_RECONSENTIMIENTO:
+                        arguments.putSerializable(Constants.PARTICIPANTE, participante);
+                        i = new Intent(getApplicationContext(),
+                               NuevoReconsentimientoActivity.class);
+                        i.putExtra(Constants.VISITA_EXITOSA, visitaExitosa);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.putExtras(arguments);
+                        startActivity(i);
+                        finish();
+                        break;
                     default:
                         break;
 
@@ -443,7 +455,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                 pendienteObseq = participante.getProcesos().getPendienteObseq().equalsIgnoreCase(Constants.YESKEYSND);
 
                 pendienteEncuestaSatisfaccion = participante.getProcesos().getEsatUsuario().equalsIgnoreCase(Constants.YESKEYSND);
-
+                pendienteReconsentimiento = participante.getProcesos().getReconsent().equalsIgnoreCase(Constants.YESKEYSND);
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
                 return "error";
@@ -469,7 +481,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
             textView.setText(Html.fromHtml(header));
 
             gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, participante, pendienteEncuestaCasa, pendienteEncuestaParticip,
-                    pendienteEncuestaPeso, pendienteMuestras, pendienteObseq, visitaExitosa, mMuestrasEnf.size(), pendienteEncuestaSatisfaccion));
+                    pendienteEncuestaPeso, pendienteMuestras, pendienteObseq, visitaExitosa, mMuestrasEnf.size(), pendienteEncuestaSatisfaccion,pendienteReconsentimiento));
             dismissProgressDialog();
         }
     }

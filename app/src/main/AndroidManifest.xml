@@ -113,6 +113,7 @@
         <activity android:name=".entomologia.activities.NuevoCuestionarioPuntoClaveActivity" android:screenOrientation="portrait" />
 
         <activity android:name=".ui.activities.enterdata.NuevaEncuestaSatisfaccionActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.enterdata.NuevoReconsentimientoActivity" android:screenOrientation="portrait"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

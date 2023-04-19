@@ -171,7 +171,7 @@ public class EncuestaParticipanteHelper {
         mEncuesta.setNombreEscuela(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.nombreEscuela)));
         mEncuesta.setTurno(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.turno)));
         mEncuesta.setCuidan(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.cuidan)));
-        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cuantosCuidan)) > 0) mEncuesta.setCuantosCuidan(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cuantosCuidan)));
+        if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cuantosCuidan)) < 99 ) mEncuesta.setCuantosCuidan(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cuantosCuidan)));
         mEncuesta.setNombreCDI(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.nombreCDI)));
         mEncuesta.setDireccionCDI(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.direccionCDI)));
         mEncuesta.setOtroLugarCuidan(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otroLugarCuidan)));

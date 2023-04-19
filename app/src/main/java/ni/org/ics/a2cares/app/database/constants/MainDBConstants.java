@@ -115,6 +115,7 @@ public class MainDBConstants {
     public static final String U_PARTO = "datosparto";
     //Usuario encuesta satisfaccion usuario
     public static final String U_ENCSATUSUARIO = "encSatUsu";
+    public static final String U_RECONSENTIMIENTO = "reconsent";
 
     public static final String CREATE_USER_PERM_TABLE = "create table if not exists "
             + USER_PERM_TABLE + " ("
@@ -134,6 +135,7 @@ public class MainDBConstants {
             + U_TAMZIKA + " boolean, "
             + U_PARTO + " boolean, "
             + U_ENCSATUSUARIO + " boolean, "
+            + U_RECONSENTIMIENTO + " boolean, "
             + "primary key (" + USERNAME + "));";
 
     public static final String INSERT_USER_PERM_TABLE = "insert into "
@@ -153,8 +155,9 @@ public class MainDBConstants {
             + U_CASAZIKA + ","
             + U_TAMZIKA + ","
             + U_PARTO + ","
-            + U_ENCSATUSUARIO
-            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + U_ENCSATUSUARIO + ","
+            + U_RECONSENTIMIENTO
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     //Tabla mensajes
     public static final String MESSAGES_TABLE = "mensajes";
@@ -396,6 +399,7 @@ public class MainDBConstants {
     public static final String pendienteMxTx = "pendienteMxTx";
     public static final String pendienteObseq = "pendienteObseq";
     public static final String pendienteEsatUsuario = "esatUsuario";
+    public static final String pendienteReconsentir = "reconsent";
 
     //Crear tabla participantes
     public static final String CREATE_PARTICIPANTE_PROC_TALBE = "create table if not exists "
@@ -414,6 +418,7 @@ public class MainDBConstants {
             + deviceId + " text, "
             + estado + " text not null, "
             + pendienteEsatUsuario + " text, "
+            + pendienteReconsentir + " text, "
             + "primary key (" + codigo + "));";
 
     public static final String INSERT_PARTICIPANTE_PROC_TABLE = "insert into " + PARTICIPANTE_PROC_TABLE + "("
@@ -430,8 +435,9 @@ public class MainDBConstants {
             + pasive + ","
             + deviceId + ","
             + estado + ","
-            + pendienteEsatUsuario
-            + ") " + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + pendienteEsatUsuario + ","
+            + pendienteReconsentir
+            + ") " + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     // Tabla Tamizaje
     public static final String TAMIZAJE_TABLE = "tamizajes";
@@ -623,6 +629,8 @@ public class MainDBConstants {
     public static final String visitaExitosa = "visitaExitosa";
     public static final String razonVisitaNoExitosa = "razonVisitaNoExitosa";
     public static final String otraRazonVisitaNoExitosa = "otraRazonVisitaNoExitosa";
+    public static final String direccion_cambio_domicilio = "direccion_cambio_domicilio";
+    public static final String telefono_cambio_domicilio = "telefono_cambio_domicilio";
 
     //crear tabla Visitas
     public static final String CREATE_VISITA_TABLE = "create table if not exists "
@@ -633,6 +641,8 @@ public class MainDBConstants {
             + participante + " text not null, "
             + razonVisitaNoExitosa + " text, "
             + otraRazonVisitaNoExitosa + " text, "
+            + direccion_cambio_domicilio + " text, "
+            + telefono_cambio_domicilio + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "

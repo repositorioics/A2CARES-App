@@ -348,6 +348,12 @@ public class NuevaVisitaTerrenoActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonVisitaNoExitosa()), visible);
                 onPageTreeChanged();
             }
+            if(page.getTitle().equals(labels.getRazonVisitaNoExitosa())){
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Se cambiaron de casa");
+                changeStatus(mWizardModel.findByKey(labels.getDireccion_cambio_domicilio()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getTelefono_cambio_domicilio()), visible);
+                onPageTreeChanged();
+            }
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -403,6 +409,8 @@ public class NuevaVisitaTerrenoActivity extends AbstractAsyncActivity implements
             String visitaExitosa = datos.getString(this.getString(R.string.visitaExitosa));
             String razonVisitaNoExitosa = datos.getString(this.getString(R.string.razonVisitaNoExitosa));
             String otraRazonVisitaNoExitosa = datos.getString(this.getString(R.string.otraRazonVisitaNoExitosa));
+            String direccion = datos.getString(this.getString(R.string.direccion_cambio_domicilio));
+            String telefono1 = datos.getString(this.getString(R.string.telefono_cambio_domicilio));
 
             VisitaTerrenoParticipante visita = new VisitaTerrenoParticipante();
             visita.setCodigoVisita(infoMovil.getId());
@@ -416,12 +424,15 @@ public class NuevaVisitaTerrenoActivity extends AbstractAsyncActivity implements
             if (tieneValor(visitaExitosa)) {
                 MessageResource messageResource = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + visitaExitosa + "' and " + MainDBConstants.catRoot + "='CAT_SINO'", null);
                 if (messageResource != null) visita.setVisitaExitosa(messageResource.getCatKey());
+                razonVisitaNoExitosa = null;
             }
             if (tieneValor(razonVisitaNoExitosa)) {
                 MessageResource messageResource = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + razonVisitaNoExitosa + "' and " + MainDBConstants.catRoot + "='CAT_NO_VISITA'", null);
                 if (messageResource != null) visita.setRazonVisitaNoExitosa(messageResource.getCatKey());
             }
             visita.setOtraRazonVisitaNoExitosa(otraRazonVisitaNoExitosa);
+            visita.setDireccion_cambio_domicilio(direccion);
+            visita.setTelefono_cambio_domicilio(telefono1);
 
             estudiosAdapter.crearVisitaTerrenoParticipante(visita);
 

@@ -98,7 +98,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         Page nombreEscuela = new TextPage(this, labels.getNombreEscuela(), "", Constants.WIZARD, false).setRequired(true);
         Page turno = new SingleFixedChoicePage(this, labels.getTurno(), "", Constants.WIZARD, false).setChoices(catTurno).setRequired(true);
         Page cuidan = new SingleFixedChoicePage(this, labels.getCuidan(), "", Constants.WIZARD, false).setChoices(catCuidanNino).setRequired(true);
-        Page cuantosCuidan = new NumberPage(this, labels.getCuantosCuidan(), "", Constants.WIZARD, false).setRangeValidation(true, 1, 999).setRequired(true);
+        Page cuantosCuidan = new NumberPage(this, labels.getCuantosCuidan(), "", Constants.WIZARD, false).setRangeValidation(true, 0, 999).setRequired(true);
         Page nombreCDI = new TextPage(this, labels.getNombreCDI(), "", Constants.WIZARD, false).setRequired(true);
         Page direccionCDI = new TextPage(this, labels.getDireccionCDI(), "", Constants.WIZARD, false).setRequired(true);
         Page otroLugarCuidan = new TextPage(this, labels.getOtroLugarCuidan(), "", Constants.WIZARD, false).setRequired(true);
@@ -206,7 +206,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         Page tiempoFiebre = new SingleFixedChoicePage(this, labels.getTiempoFiebre(), "", Constants.WIZARD, true).setChoices(catTmpFiebre).setRequired(true);
         Page lugarConsFiebre = new SingleFixedChoicePage(this, labels.getLugarConsFiebre(), "", Constants.WIZARD, true).setChoices(catLugarCons).setRequired(true);
         Page noAcudioCs = new SingleFixedChoicePage(this, labels.getNoAcudioCs(), "", Constants.WIZARD, true).setChoices(catNoCS).setRequired(true);
-        Page automedicoFiebre = new MultipleFixedChoicePage(this, labels.getAutomedicoFiebre(), "", Constants.WIZARD, true).setChoices(catAutomed).setRequired(true);
+        Page automedicoFiebre = new MultipleFixedChoicePage(this, labels.getAutomedicoFiebre(), "", Constants.WIZARD, true).setChoices(catAutomed).setRequired(false);
         Page tenidoDengueUA = new SingleFixedChoicePage(this, labels.getTenidoDengueUA(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page unidadSaludDengue = new SingleFixedChoicePage(this, labels.getUnidadSaludDengue(), "", Constants.WIZARD, true).setChoices(catDondeAsiste).setRequired(true);
         Page centroSaludDengue = new SingleFixedChoicePage(this, labels.getCentroSaludDengue(), "", Constants.WIZARD, true).setChoices(catCS).setRequired(true);

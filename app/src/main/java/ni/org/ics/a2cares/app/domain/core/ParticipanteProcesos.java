@@ -19,6 +19,7 @@ public class ParticipanteProcesos extends BaseMetaData implements Serializable {
     private String pendienteObseq;
     //Indica realizar encuensta de satisfaccion de usuario
     private String esatUsuario;
+    private String reconsent;
 
     public String getCodigo() {
         return codigo;
@@ -90,5 +91,13 @@ public class ParticipanteProcesos extends BaseMetaData implements Serializable {
 
     public void setEsatUsuario(String esatUsuario) {
         this.esatUsuario = esatUsuario;
+    }
+
+    public String getReconsent(){
+        return reconsent;
+    }
+
+    public void setReconsent(String reconsent) {
+        this.reconsent = reconsent;
     }
 }

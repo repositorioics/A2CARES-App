@@ -164,11 +164,14 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
             }
         });
 
-       /* BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoBHC());
-        pagetmp.setPatternValidation(true, "^\\d{4}$");*/
-
-        BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoRojo());
+       BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoBHC());
         pagetmp.setPatternValidation(true, "^\\d{4}$");
+
+        onPageTreeChanged();
+        updateBottomBar();
+
+        BarcodePage pagetmp1 = (BarcodePage) mWizardModel.findByKey(labels.getCodigoRojo());
+        pagetmp1.setPatternValidation(true, "^\\d{4}$");
 
         onPageTreeChanged();
         updateBottomBar();
@@ -367,10 +370,10 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoRojo()), !visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoRojo()), false, null);
 
-                /*Page tmp = mWizardModel.findByKey(labels.getTuboBHC());
+               /*Page tmp = mWizardModel.findByKey(labels.getTuboBHC());
                 boolean tomoBHC = tmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && tmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
-                changeStatus(mWizardModel.findByKey(labels.getPinchazos()), visible || tomoBHC, null);
-                */
+                changeStatus(mWizardModel.findByKey(labels.getPinchazos()), visible || tomoBHC, null);*/
+
                 changeStatus(mWizardModel.findByKey(labels.getPinchazos()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible, null);
 
@@ -381,7 +384,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getDescOtraObservacion()), visible, null);
                 onPageTreeChanged();
             }
-            /*if (page.getTitle().equals(labels.getTuboBHC())) {
+            if (page.getTitle().equals(labels.getTuboBHC())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoBHC()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getVolumenBHC()), visible, null);
@@ -394,7 +397,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getPinchazos()), visible || tomoRojo, null);
 
                 onPageTreeChanged();
-            }*/
+            }
 
         }catch (Exception ex){
             ex.printStackTrace();

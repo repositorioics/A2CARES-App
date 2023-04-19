@@ -712,6 +712,11 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAnioDengue()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDiagMedicoDengue()), visible);
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getDiagMedicoDengue())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                //realizar validacion sin no
                 changeStatus(mWizardModel.findByKey(labels.getDondeDengue()), visible);
                 onPageTreeChanged();
             }
@@ -720,6 +725,11 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAnioZika()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDiagMedicoZika()), visible);
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getDiagMedicoZika())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                //realizar validacion sin no
                 changeStatus(mWizardModel.findByKey(labels.getDondeZika()), visible);
                 onPageTreeChanged();
             }
@@ -728,6 +738,11 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAnioChik()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDiagMedicoChik()), visible);
+                onPageTreeChanged();
+            }
+            if(page.getTitle().equals(labels.getDiagMedicoChik())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                //realizar validacion sin no
                 changeStatus(mWizardModel.findByKey(labels.getDondeChik()), visible);
                 onPageTreeChanged();
             }
@@ -1137,6 +1152,7 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                 if (messageResource != null) encuestaParticipante.setCuidan(messageResource.getCatKey());
             }
 
+
             if (tieneValor(alfabeto)) {
                 MessageResource messageResource = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + alfabeto + "' and " + MainDBConstants.catRoot + "='"+ catSiNo +"'", null);
                 if (messageResource != null) encuestaParticipante.setAlfabeto(messageResource.getCatKey());
@@ -1505,7 +1521,7 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                     keys += ms.getCatKey() + ",";
                 }
                 if (!keys.isEmpty())
-                    keys = keys.substring(0, keys.length() - 1);
+                 //   keys = keys.substring(0, keys.length() - 1);
                 encuestaParticipante.setAutomedicoFiebre(keys);
             }
 
@@ -1527,6 +1543,9 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
 
             if (tieneValor(fur)) encuestaParticipante.setFur(DateUtil.StringToDate(fur, "dd/MM/yyyy"));
             if (tieneValor(cuantosCuidan)) encuestaParticipante.setCuantosCuidan(Integer.parseInt(cuantosCuidan));
+            //da el error s == null por la conversion a int de un vacio
+            //    encuestaParticipante.setCuantosCuidan(Integer.parseInt(cuantosCuidan));
+
             if (tieneValor(ordenNac)) encuestaParticipante.setOrdenNac(Integer.parseInt(ordenNac));
             if (tieneValor(hab1)) encuestaParticipante.setHab1(Integer.parseInt(hab1));
             if (tieneValor(hab2)) encuestaParticipante.setHab2(Integer.parseInt(hab2));

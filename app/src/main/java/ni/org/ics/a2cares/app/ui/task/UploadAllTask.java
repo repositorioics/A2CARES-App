@@ -77,6 +77,8 @@ public class UploadAllTask extends UploadTask {
 
     //Encuesta de satisfacción de usuario
     private List<EncuestaSatisfaccionUsuario> mEncSatUsuario = new ArrayList<EncuestaSatisfaccionUsuario>();
+    private List<ParticipanteProcesos> mReconsent = new ArrayList<ParticipanteProcesos>();
+
 
 	private String url = null;
 	private String username = null;
@@ -107,8 +109,10 @@ public class UploadAllTask extends UploadTask {
 
     //Encuesta de satisfaccion de usuario
     public static final String ENCUESTA_SATISFACCION_USUARIO = "21";
+    public static final String RECONSENTIMIENTO = "22";
 
-	private static final String TOTAL_TASK = "21";
+
+    private static final String TOTAL_TASK = "22";
 	
 
 	@Override
@@ -165,7 +169,8 @@ public class UploadAllTask extends UploadTask {
                     mOrdenesLab.size() <= 0 &&
                     mMuestrasEnf.size() <= 0 &&
                     mRecepcionesEnf.size() <= 0 &&
-                    mEncSatUsuario.size() <= 0
+                    mEncSatUsuario.size() <= 0 &&
+                    mReconsent.size() <= 0
             ) {
                 error = Constants.NO_DATA;
             } else {

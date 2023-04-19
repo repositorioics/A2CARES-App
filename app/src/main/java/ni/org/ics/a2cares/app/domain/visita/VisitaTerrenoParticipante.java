@@ -21,6 +21,9 @@ public class VisitaTerrenoParticipante extends BaseMetaData {
 	private String visitaExitosa;
 	private String razonVisitaNoExitosa;
     private String otraRazonVisitaNoExitosa;
+    private String direccion_cambio_domicilio;
+    private String telefono_cambio_domicilio;
+
 
     public String getCodigoVisita() {
         return codigoVisita;
@@ -69,7 +72,19 @@ public class VisitaTerrenoParticipante extends BaseMetaData {
     public void setOtraRazonVisitaNoExitosa(String otraRazonVisitaNoExitosa) {
         this.otraRazonVisitaNoExitosa = otraRazonVisitaNoExitosa;
     }
+    public String getDireccion_cambio_domicilio() {
+        return direccion_cambio_domicilio;
+    }
+    public void setDireccion_cambio_domicilio(String direccion_cambio_domicilio) {
+        this.direccion_cambio_domicilio = direccion_cambio_domicilio;
+    }
+    public String getTelefono_cambio_domicilio() {
+        return telefono_cambio_domicilio;
+    }
 
+    public void setTelefono_cambio_domicilio(String telefono_cambio_domicilio) {
+        this.telefono_cambio_domicilio = telefono_cambio_domicilio;
+    }
     @Override
     public String toString() {
         return "'" + codigoVisita + "'";

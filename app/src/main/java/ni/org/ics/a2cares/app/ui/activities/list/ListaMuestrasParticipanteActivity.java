@@ -173,7 +173,7 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 					muestraDTO.setParticipante(muestra.getParticipante());
 					muestraDTO.setProposito(muestra.getProposito());
 					mMuestrasDTO.add(muestraDTO);
-					/*
+
 					muestraDTO = new MuestraDTO();
 					muestraDTO.setIdMuestra(muestra.getIdMuestra());
 					muestraDTO.setTipoTubo("BHC");
@@ -196,7 +196,7 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 					muestraDTO.setParticipante(muestra.getParticipante());
 					muestraDTO.setProposito(muestra.getProposito());
 					mMuestrasDTO.add(muestraDTO);
-					 */
+
 				}
 
 			} catch (Exception e) {

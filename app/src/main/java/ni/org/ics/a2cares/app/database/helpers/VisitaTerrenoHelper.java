@@ -23,6 +23,8 @@ public class VisitaTerrenoHelper {
         cv.put(MainDBConstants.visitaExitosa, visitaTerreno.getVisitaExitosa());
         cv.put(MainDBConstants.razonVisitaNoExitosa, visitaTerreno.getRazonVisitaNoExitosa());
         cv.put(MainDBConstants.otraRazonVisitaNoExitosa, visitaTerreno.getOtraRazonVisitaNoExitosa());
+        cv.put(MainDBConstants.direccion_cambio_domicilio, visitaTerreno.getDireccion_cambio_domicilio());
+        cv.put(MainDBConstants.telefono_cambio_domicilio, visitaTerreno.getTelefono_cambio_domicilio());
         if (visitaTerreno.getRecordDate() != null) cv.put(MainDBConstants.recordDate, visitaTerreno.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, visitaTerreno.getRecordUser());
         cv.put(MainDBConstants.pasive, String.valueOf(visitaTerreno.getPasive()));
@@ -40,6 +42,8 @@ public class VisitaTerrenoHelper {
         visitaTerreno.setVisitaExitosa(cursor.getString(cursor.getColumnIndex(MainDBConstants.visitaExitosa)));
         visitaTerreno.setRazonVisitaNoExitosa(cursor.getString(cursor.getColumnIndex(MainDBConstants.razonVisitaNoExitosa)));
         visitaTerreno.setOtraRazonVisitaNoExitosa(cursor.getString(cursor.getColumnIndex(MainDBConstants.otraRazonVisitaNoExitosa)));
+        visitaTerreno.setDireccion_cambio_domicilio(cursor.getString(cursor.getColumnIndex(MainDBConstants.direccion_cambio_domicilio))) ;
+        visitaTerreno.setTelefono_cambio_domicilio(cursor.getString(cursor.getColumnIndex(MainDBConstants.telefono_cambio_domicilio))) ;
 
         if(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))>0) visitaTerreno.setRecordDate(new Date(cursor.getLong(cursor.getColumnIndex(MainDBConstants.recordDate))));
         visitaTerreno.setRecordUser(cursor.getString(cursor.getColumnIndex(MainDBConstants.recordUser)));

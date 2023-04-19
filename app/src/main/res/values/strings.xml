@@ -83,6 +83,7 @@
     <string name="go_home">Ir Casa</string>
     <string name="sick_samples">Muestras Enfermo</string>
     <string name="satisfaction_survey">Encuensta de Satisfacción Usuario</string>
+    <string name="reconsent">Reconsentimiento</string>
 
     <string name="code">Código</string>
     <string name="casa">Casa</string>
@@ -151,6 +152,8 @@
     <string name="otraRazonVisitaNoExitosa">Otra razón visita no exitosa</string>
     <string name="otraRazonVisitaNoExitosaHint">Indicar porque otra razón no logró realizar una visita exitosa</string>
     <string name="visitaNoExitosa">Visita registrada. Se guardó en la base de datos una visita fallida por <xliff:g id="razon">%1$s</xliff:g></string>
+    <string name="direccion_cambio_domicilio">Dirección de nuevo domicilio.</string>
+    <string name="telefono_cambio_domicilio">Teléfono de nuevo domicilio.</string>
 
     <!-- Mapas -->
     <string name="marker_detail_latlng">(%1$.6f, %2$.6f)</string>

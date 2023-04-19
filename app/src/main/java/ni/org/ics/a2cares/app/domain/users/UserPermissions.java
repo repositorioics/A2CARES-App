@@ -22,6 +22,7 @@ public class UserPermissions {
 	private Boolean tamizajezika=false;
 	private Boolean datosparto=false;
 	private Boolean encSatUsu=false;
+	private Boolean reconsent=false;
 
 	public String getUsername() {
 		return username;
@@ -133,6 +134,13 @@ public class UserPermissions {
 	}
 	public void setEncSatUsu(Boolean encSatUsu) {
 		this.encSatUsu = encSatUsu;
+	}
+
+	public Boolean getReconsent() {
+		return reconsent;
+	}
+	public void setReconsent(Boolean reconsent) {
+		this.reconsent = reconsent;
 	}
 
 }

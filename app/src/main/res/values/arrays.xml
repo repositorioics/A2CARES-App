@@ -24,6 +24,7 @@
         <item>@string/go_home</item>
         <item>@string/sick_samples</item>
         <item>@string/satisfaction_survey</item>
+        <item>@string/reconsent</item>
     </string-array>
 
     <string-array name="menu_casa">

@@ -17,6 +17,10 @@ public class VisitaTerrenoFormLabels {
     protected String razonVisitaNoExitosaHint;
     protected String otraRazonVisitaNoExitosa;
     protected String otraRazonVisitaNoExitosaHint;
+    protected String direccion_cambio_domicilio;
+    protected String direccion_cambio_domicilioHint ;
+    protected String telefono_cambio_domicilio;
+    protected String telefono_cambio_domicilioHint ;
 
     public VisitaTerrenoFormLabels() {
         Resources res = MyIcsApplication.getContext().getResources();
@@ -28,6 +32,8 @@ public class VisitaTerrenoFormLabels {
         razonVisitaNoExitosaHint = res.getString(R.string.razonVisitaNoExitosaHint);
         otraRazonVisitaNoExitosa = res.getString(R.string.otraRazonVisitaNoExitosa);
         otraRazonVisitaNoExitosaHint = res.getString(R.string.otraRazonVisitaNoExitosaHint);
+        direccion_cambio_domicilio = res.getString(R.string.direccion_cambio_domicilio );
+        telefono_cambio_domicilio = res.getString(R.string.telefono_cambio_domicilio );
     }
 
     public String getFechaVisita() {
@@ -57,8 +63,25 @@ public class VisitaTerrenoFormLabels {
     public String getOtraRazonVisitaNoExitosa() {
         return otraRazonVisitaNoExitosa;
     }
-
     public String getOtraRazonVisitaNoExitosaHint() {
         return otraRazonVisitaNoExitosaHint;
     }
+
+    public String getDireccion_cambio_domicilio() {
+        return direccion_cambio_domicilio;
+    }
+
+    public String getDireccion_cambio_domicilioHint() {
+        return direccion_cambio_domicilioHint;
+    }
+    public String getTelefono_cambio_domicilio() {
+        return telefono_cambio_domicilio;
+    }
+
+    public String getTelefono_cambio_domicilioHint () {
+        return telefono_cambio_domicilio;
+    }
+
+
+
 }
