@@ -11,6 +11,7 @@
         <item>@string/main_8</item>
         <item>@string/main_9</item>
         <item>@string/main_10</item>
+        <item>@string/main_11</item>
     </string-array>
 
     <string-array name="menu_participante">
@@ -63,5 +64,10 @@
         <item>@string/upload</item>
         <item>@string/main_3</item>
         <item>@string/exit</item>
+    </string-array>
+
+    <string-array name="menu_control_calidad">
+        <item>@string/main_2</item>
+        <item>@string/main_3</item>
     </string-array>
 </resources>
