@@ -122,7 +122,9 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
 		textView.setTypeface(null, Typeface.BOLD);
 		textView.setText(values[position]);
 		textView.setTextColor(Color.BLACK);
-
+        if(participante.getProcesos().getRetirado().equals(1)) {
+            visitaExitosa = true;
+        }
 		// Change icon based on position
 		Drawable img = null;
 		switch (position){

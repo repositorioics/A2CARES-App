@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import ni.org.ics.a2cares.app.AbstractAsyncActivity;
@@ -36,6 +37,8 @@ import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.core.MuestraEnfermo;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
 import ni.org.ics.a2cares.app.domain.users.UserPermissions;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuParticipanteActivity;
@@ -54,6 +57,7 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 	private Integer opcion;
 	public static final int BARCODE_CAPTURE = 2;
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
+	private List<RecepcionEnfermo> mRecepcionEnfermo = new ArrayList<RecepcionEnfermo>();
 	private ParticipanteListAdapter adapter;
 	private static UserPermissions mUser = new UserPermissions();
 	private SharedPreferences settings;
@@ -165,6 +169,7 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 			@Override
 			public void onClick(View v) {
 				mParticipantes.clear();
+				mRecepcionEnfermo.clear();
 				if ((mCodigoView.getText().toString()==null) || (mCodigoView.getText().toString().matches(""))){
 					mCodigoView.requestFocus();
 					mCodigoView.setError(getString(R.string.search_hint));
@@ -254,12 +259,15 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 
 	public void buscarParticipante(String parametro, int opcion){
 		String filtro = "";
+		String filtroR = "";
 		switch (opcion) {
 			case 0:
 				filtro = MainDBConstants.codigo + "='" + parametro +"'";
+				filtroR = MainDBConstants.participante + "='" + parametro +"'";
 				break;
 			case 1:
 				filtro = MainDBConstants.codigo + "='" + parametro +"'";
+				filtroR = MainDBConstants.participante + "='" + parametro +"'";
 				break;
 			case 2:
 				filtro = MainDBConstants.nombre1 + " like '%" + parametro + "%' or " + MainDBConstants.nombre2 + " like '%" + parametro + "%'";
@@ -281,6 +289,7 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 	// ***************************************
 	private class FetchParticipantsTask extends AsyncTask<String, Void, String> {
 		private String filtro = null;
+		private String filtroR = null;
 		@Override
 		protected void onPreExecute() {
 			// before the request begins, show a progress indicator
@@ -290,10 +299,13 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 		@Override
 		protected String doInBackground(String... values) {
 			filtro = values[0];
+			filtroR = values[0];
 			try {
 				estudiosAdapter.open();
 				mParticipantes.clear();
 				mParticipantes.addAll(estudiosAdapter.getParticipantes(filtro, MainDBConstants.codigo));
+				filtroR = MainDBConstants.participante + "='" + mParticipantes.get(0).getCodigo() +"'";
+			//	mRecepcionEnfermo.addAll((Collection<? extends RecepcionEnfermo>) estudiosAdapter.getRecepcionEnfermo(filtroR, MainDBConstants.participante));
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);
@@ -331,7 +343,7 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 		}
 
 		protected void onPostExecute(String resultado) {
-			adapter = new ParticipanteListAdapter(mParticipantes, mUser.getVisitas(), desdeMedico, desdeLaboratorio);
+			adapter = new ParticipanteListAdapter(mParticipantes,mRecepcionEnfermo, mUser.getVisitas(), desdeMedico, desdeLaboratorio);
 			recyclerView.setAdapter(adapter);
 			dismissProgressDialog();
 		}

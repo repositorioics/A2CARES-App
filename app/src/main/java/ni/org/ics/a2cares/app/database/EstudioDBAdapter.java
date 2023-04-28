@@ -93,6 +93,9 @@ public class EstudioDBAdapter {
         mCleanDb = cleanDb;
     }
 
+
+
+
     private static class DataBaseHelper extends SQLiteOpenHelper {
         public DataBaseHelper(Context mContext, String mPassword, boolean mFromServer, boolean mCleanDb) {
             super(FileUtils.DATABASE_PATH, MainDBConstants.DATABASE_NAME, MainDBConstants.DATABASE_VERSION, mContext,
@@ -1684,6 +1687,7 @@ public class EstudioDBAdapter {
     //Obtener un RecepcionEnfermo de la base de datos
     public RecepcionEnfermo getRecepcionEnfermo(String filtro, String orden) throws SQLException {
         RecepcionEnfermo mRecepcionEnfermo = null;
+
         Cursor cursorRecepcionEnfermo = crearCursor(MainDBConstants.RECEPCION_ENFERMO_TABLE , filtro, null, orden);
         if (cursorRecepcionEnfermo != null && cursorRecepcionEnfermo.getCount() > 0) {
             cursorRecepcionEnfermo.moveToFirst();
@@ -2091,6 +2095,35 @@ public class EstudioDBAdapter {
                 default:
                     break;
             }
+
+            mDb.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                if (null != mDb) {
+                    mDb.endTransaction();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+    public boolean bulkInsertRecepcionEnfermoBySql(List<RecepcionEnfermo> mRecepcionEnfermos) {
+        if (null == mRecepcionEnfermos || mRecepcionEnfermos.size() <= 0) {
+            return false;
+        }
+        try {
+            SQLiteStatement stat = null;
+            mDb.beginTransaction();
+                    stat = mDb.compileStatement(MainDBConstants.INSERT_RECEPCION_ENFERMO_TABLE);
+                    for (Object remoteAppInfo : mRecepcionEnfermos) {
+                        CasaHelper.fillCasaStatement(stat, (Casa) remoteAppInfo);
+                        long result = stat.executeInsert();
+                        if (result < 0) return false;
+                    }
 
             mDb.setTransactionSuccessful();
         } catch (Exception e) {

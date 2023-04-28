@@ -30,6 +30,8 @@ import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.core.MuestraEnfermo;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
 import ni.org.ics.a2cares.app.domain.users.UserPermissions;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.adapters.MenuCasaAdapter;
@@ -43,6 +45,7 @@ public class ListaParticipantesCasaActivity extends AbstractAsyncActivity {
 	private TextView textView;
 	private Integer opcion;
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
+	private List<RecepcionEnfermo> mRecepcionEnfermo = new ArrayList<RecepcionEnfermo>();
 	private ParticipanteListAdapter adapter;
 	private static Casa casa = new Casa();
 	private static UserPermissions mUser = new UserPermissions();
@@ -121,6 +124,7 @@ public class ListaParticipantesCasaActivity extends AbstractAsyncActivity {
 			try {
 				estudiosAdapter.open();
 				mParticipantes.clear();
+				mRecepcionEnfermo.clear();
 				mParticipantes.addAll(estudiosAdapter.getParticipantes(MainDBConstants.casa +" = " + codigoCasa, MainDBConstants.codigo));
 				mUser = estudiosAdapter.getPermisosUsuario(MainDBConstants.USERNAME + "='" +username+"'", null);
 				estudiosAdapter.close();
@@ -133,7 +137,7 @@ public class ListaParticipantesCasaActivity extends AbstractAsyncActivity {
 
 		protected void onPostExecute(String resultado) {
 			dismissProgressDialog();
-			adapter = new ParticipanteListAdapter(mParticipantes, mUser.getVisitas(), false, false);
+			adapter = new ParticipanteListAdapter(mParticipantes,mRecepcionEnfermo, mUser.getVisitas(), false, false);
 			recyclerView.setAdapter(adapter);
 			refreshView();
 		}

@@ -11,11 +11,11 @@
         <item>@string/main_8</item>
         <item>@string/main_9</item>
         <item>@string/main_10</item>
-        <item>@string/main_11</item>
-    </string-array>
+        <!-- <item>@string/main_11</item>-->
+     </string-array>
 
-    <string-array name="menu_participante">
-        <!--<item>@string/new_consultation</item>-->
+     <string-array name="menu_participante">
+         <!--<item>@string/new_consultation</item>-->
         <item>@string/new_visit</item>
         <item>@string/new_survey_1</item>
         <item>@string/new_survey_2</item>

@@ -35,17 +35,22 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 
 	private EstudioDBAdapter estudiosAdapter;
 	private RecyclerView recyclerView;
+	private RecyclerView recyclerViewbhc;
 	private TextView textView;
 	private Button mAddSample;
 	private Integer opcion;
 	private List<Muestra> mMuestras = new ArrayList<Muestra>();
+	private List<Muestra> mMuestrasBhc = new ArrayList<Muestra>();
 	private List<MuestraDTO> mMuestrasDTO = new ArrayList<MuestraDTO>();
+	private List<MuestraDTO> mMuestrasDTOBhc = new ArrayList<MuestraDTO>();
 	private MuestraListAdapter adapter;
+	private MuestraListAdapter adapterBhc;
 	private static Participante participante = new Participante();
 	private boolean visitaExitosa = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		try {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.samples_list);
 
@@ -59,11 +64,13 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 		textView.setText(getString(R.string.muestras)+"\n"+ getString(R.string.code)+ " "+ getString(R.string.participant)+ ": "+ participante.getCodigo());
 
 		recyclerView = findViewById(R.id.recycler_view);
+
 		new FetchDataCasaTask().execute(participante.getCodigo().toString());
 		adapter = new MuestraListAdapter(mMuestrasDTO);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		recyclerView.setAdapter(adapter);
+
 
 		mAddSample = (Button) findViewById(R.id.add_sample);
 		mAddSample.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +88,9 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 				startActivity(i);
 			}
 		});
+	}catch (Exception ex){
+		ex.printStackTrace();
+	}
 	}
 
 	@Override
@@ -92,6 +102,7 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
 		switch (item.getItemId()) {
 			case android.R.id.home:
 				finish();
@@ -109,6 +120,7 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+
 	}
 
 	@Override
@@ -145,7 +157,9 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 			try {
 				estudiosAdapter.open();
 				mMuestrasDTO.clear();
+				mMuestrasDTOBhc.clear();
 				mMuestras = estudiosAdapter.getMuestras(MainDBConstants.participante +" = '" + codigoParticipante + "'", MainDBConstants.fechaMuestra);
+				mMuestrasBhc = estudiosAdapter.getMuestras(MainDBConstants.participante +" = '" + codigoParticipante + "'", MainDBConstants.fechaMuestra);
 				List<MessageResource> catSinMuestra = estudiosAdapter.getMessageResources(MainDBConstants.catRoot + "='CAT_RAZON_NO_MX'", null);
 				estudiosAdapter.close();
 
@@ -174,7 +188,7 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 					muestraDTO.setProposito(muestra.getProposito());
 					mMuestrasDTO.add(muestraDTO);
 
-					muestraDTO = new MuestraDTO();
+				 	muestraDTO = new MuestraDTO();
 					muestraDTO.setIdMuestra(muestra.getIdMuestra());
 					muestraDTO.setTipoTubo("BHC");
 					muestraDTO.setColor(Color.MAGENTA);
@@ -196,6 +210,7 @@ public class ListaMuestrasParticipanteActivity extends AbstractAsyncActivity {
 					muestraDTO.setParticipante(muestra.getParticipante());
 					muestraDTO.setProposito(muestra.getProposito());
 					mMuestrasDTO.add(muestraDTO);
+					mMuestrasDTOBhc.add(muestraDTO);
 
 				}
 

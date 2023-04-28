@@ -825,6 +825,7 @@ public class MainDBConstants {
             + estado
             + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
+
     public static final String seguimiento="seguimiento";
     public static final String numVisitaSeguimiento="numVisitaSeguimiento";
     public static final String entregoObsequio="entregoObsequio";
@@ -937,6 +938,28 @@ public class MainDBConstants {
             + deviceId + " text, "
             + estado + " text not null, "
             + "primary key (" + idRecepcion + "));";
+
+    public static final String INSERT_RECEPCION_ENFERMO_TABLE = "insert into "
+            + RECEPCION_ENFERMO_TABLE + " ("
+            + idRecepcion + ","
+            + participante + ","
+            + fechaRecepcion + ","
+            + tipoTubo + ","
+            + volumen + ", "
+            + observacion + ", "
+            + fis + ", "
+            + fif + ", "
+            + categoria + ", "
+            + consulta + ","
+            + tipoMuestra + ","
+            + estudiosAct + ","
+            + observacion + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
 }

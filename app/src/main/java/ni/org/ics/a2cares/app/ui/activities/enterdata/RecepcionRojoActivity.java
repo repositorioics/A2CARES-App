@@ -191,14 +191,18 @@ public class RecepcionRojoActivity extends AbstractAsyncActivity {
                     }
 
                     if (codigo != null && codigo.matches("^\\d{4}$")){
-                        estudiosAdapter.open();
-                        if (estudiosAdapter.recepcionRegistrada(MainDBConstants.codigoMx + "='" + codigo + "' and " + MainDBConstants.tipoTubo + "='" + Constants.TIPO_TUBO_ROJO + "' and " +
-                                MainDBConstants.fechaRecepcion + "=" + todayWithZeroTime.getTime())) {
-                            editCodigo.setText(null);
-                            codigo = null;
-                            showToast("Ya ingresó este código!!!!");
-                        }
+
+                            estudiosAdapter.open();
+                            if (estudiosAdapter.recepcionRegistrada(MainDBConstants.codigoMx + "='" + codigo + "' and " + MainDBConstants.tipoTubo + "='" + Constants.TIPO_TUBO_ROJO + "' and " +
+                                    MainDBConstants.fechaRecepcion + "=" + todayWithZeroTime.getTime())) {
+                                editCodigo.setText(null);
+                                codigo = null;
+                                showToast("Ya ingresó este código!!!!");
+                            }
+
                         estudiosAdapter.close();
+
+
                     }
                     else
                     {

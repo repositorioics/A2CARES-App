@@ -361,6 +361,9 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
             if (sb != null && sb.length() > 0) {
                 try{
                     codigo = sb;
+                    if (codigo!=null && codigo.length() > 4) {
+                        codigo = codigo.substring(3, 7);
+                    }
                 }
                 catch(Exception e){
                     showToast("Lectura Inválida!!!!");
@@ -368,6 +371,7 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
                 }
             }
             if (codigo != null && codigo.matches("^\\d{4}$")){
+                if (  Integer.parseInt(codigo) < 3000 ) {
                 estudiosAdapter.open();
                 if (estudiosAdapter.recepcionRegistrada(MainDBConstants.codigoMx + "='" + codigo + "' and " + MainDBConstants.tipoTubo + "='" + Constants.TIPO_TUBO_BHC + "' and " +
                         MainDBConstants.fechaRecepcion + "=" + todayWithZeroTime.getTime())) {
@@ -376,6 +380,12 @@ public class RecepcionBhcActivity extends AbstractAsyncActivity {
                     editCodigo.setText(codigo.toString());
                 }
                 estudiosAdapter.close();
+                }
+                else{
+                    editCodigo.setText(null);
+                    codigo = null;
+                    showToast("Código Inválido, fuera de rango. Escanear de nuevo por favor!!!!");
+                }
             }
             else
             {

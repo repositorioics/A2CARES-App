@@ -52,6 +52,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
 
     private GridView gridView;
     private TextView textView;
+    public TextView textViewConva;
     private String[] menu_participante;
     private static Participante participante = new Participante();
     private List<MuestraEnfermo> mMuestrasEnf = new ArrayList<MuestraEnfermo>();
@@ -85,13 +86,17 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.menu_participante);
 
         textView = (TextView) findViewById(R.id.label);
-        gridView = (GridView) findViewById(R.id.gridView1);
-        menu_participante = getResources().getStringArray(R.array.menu_participante);
+            gridView = (GridView) findViewById(R.id.gridView1);
+            menu_participante = getResources().getStringArray(R.array.menu_participante);
         participante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
+
         visitaExitosa = getIntent().getBooleanExtra(Constants.VISITA_EXITOSA, false);
+
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(),mPass,false,false);
         new FetchDataCasaTask().execute();
@@ -145,7 +150,9 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.general, menu);
+
+            getMenuInflater().inflate(R.menu.general, menu);
+
         return true;
     }
 
@@ -294,6 +301,9 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
             position = Integer.valueOf(values[0]);
             Bundle arguments = new Bundle();
             Intent i;
+            if(participante.getProcesos().getRetirado().equals(1)) {
+                position = -1;
+            }
             try {
                 estudiosAdapter.open();
                 //String filtro = EncuestasDBConstants.participante + "=" + participanteCHF.getParticipante().getCodigo();
@@ -479,6 +489,22 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>";
 
             textView.setText(Html.fromHtml(header));
+            if(participante.getProcesos().getPendienteMxTx().equalsIgnoreCase("1")) {
+                String header1 = participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo()+ " - " +
+                        getString(R.string.participant)+ ": "+ participante.getCodigo()+ "</font> <br /> <small>"
+                        + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>"
+                        + " <br /> <font color='red'>" + getString(R.string.alerta_conva) ;
+                textView.setText(Html.fromHtml(header1));
+            }
+
+            if(participante.getProcesos().getRetirado().equals(1)) {
+                String header1 = participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo()+ " - " +
+                        getString(R.string.participant)+ ": "+ participante.getCodigo()+ "</font> <br /> <small>"
+                        + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>"
+                        + " <br /> <font color='red'>" + getString(R.string.alerta_retirado) ;
+                textView.setText(Html.fromHtml(header1));
+            }
+
 
             gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, participante, pendienteEncuestaCasa, pendienteEncuestaParticip,
                     pendienteEncuestaPeso, pendienteMuestras, pendienteObseq, visitaExitosa, mMuestrasEnf.size(), pendienteEncuestaSatisfaccion,pendienteReconsentimiento));

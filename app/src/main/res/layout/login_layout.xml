@@ -80,13 +80,15 @@
 		        android:padding="20dip"
 		        android:text="@string/check_server" />
             
-            <CheckBox
+               <CheckBox
 		        android:id="@+id/checkWipe"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
 		        android:textSize="18sp"
 		        android:padding="20dip"
-		        android:text="@string/check_wipe" />
+		        android:text="@string/check_wipe"
+				android:visibility="visible"
+				   />
             
             <EditText
 		        android:id="@+id/url"

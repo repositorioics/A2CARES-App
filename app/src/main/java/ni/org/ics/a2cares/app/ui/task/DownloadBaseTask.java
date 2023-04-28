@@ -18,6 +18,7 @@ import ni.org.ics.a2cares.app.domain.core.Estudio;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.core.ParticipanteProcesos;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.domain.puntos.PuntoCandidato;
 import ni.org.ics.a2cares.app.domain.users.Authority;
@@ -47,6 +48,7 @@ public class DownloadBaseTask extends DownloadTask {
     private List<MessageResource> mCatalogos = null;
     private List<TelefonoContacto> mContactosParticipante = null;
     private List<PuntoCandidato> mPuntosCandidatos = null;
+    private List<RecepcionEnfermo> mRecepcionEnfermos = null;
 
     public static final String CATALOGOS = "1";
     public static final String USUARIOS = "2";
@@ -59,8 +61,9 @@ public class DownloadBaseTask extends DownloadTask {
     public static final String PARTICIPANTE_PROC = "9";
     public static final String CONTACTOS_PART = "10";
     public static final String PUNTOS_CANDIDATOS = "11";
+    public static final String RECEPCION_ENFERMO = "12";
 
-    private static final String TOTAL_TASK_GENERALES = "11";
+    private static final String TOTAL_TASK_GENERALES = "12";
 	
 	private String error = null;
 	private String url = null;
@@ -80,6 +83,7 @@ public class DownloadBaseTask extends DownloadTask {
 			error = descargarDatosGenerales();
             error = descargarContactosParticipantes();
             error = descargarPuntosCandidatos();
+          //  error = descargarRecepcionEnfermo();
             if (error!=null) return error;
 		} catch (Exception e) {
 			// Regresa error al descargar
@@ -162,6 +166,10 @@ public class DownloadBaseTask extends DownloadTask {
                 publishProgress("Insertando puntos candidatos ingreso", PUNTOS_CANDIDATOS, TOTAL_TASK_GENERALES);
                 estudioAdapter.bulkInsertPuntosCandidatosBySql(mPuntosCandidatos);
             }
+          /*  if (mRecepcionEnfermos != null){
+                publishProgress("Insertando recepcion enfermo", RECEPCION_ENFERMO, TOTAL_TASK_GENERALES);
+                estudioAdapter.bulkInsertRecepcionEnfermoBySql(mRecepcionEnfermos);
+            }*/
         } catch (Exception e) {
 			// Regresa error al insertar
 			e.printStackTrace();
@@ -406,6 +414,39 @@ public class DownloadBaseTask extends DownloadTask {
                     PuntoCandidato[].class);
             // convert the array to a list and return it
             mPuntosCandidatos = Arrays.asList(responseEntityContactos.getBody());
+            return null;
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    // url, username, password
+    protected String descargarRecepcionEnfermo() throws Exception {
+        try {
+            // The URL for making the GET request
+            String urlRequest;
+            // Set the Accept header for "application/json"
+            HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+            HttpHeaders requestHeaders = new HttpHeaders();
+            List<MediaType> acceptableMediaTypes = new ArrayList<MediaType>();
+            acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+            requestHeaders.setAccept(acceptableMediaTypes);
+            requestHeaders.setAuthorization(authHeader);
+            // Populate the headers in an HttpEntity object to use for the request
+            HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+            // Create a new RestTemplate instance
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+
+            //Descargar recepcion Enfermos
+            urlRequest = url + "/movil/MuestraEnfermos/";
+            publishProgress("Solicitando recepcion de enfermos",RECEPCION_ENFERMO,TOTAL_TASK_GENERALES);
+            // Perform the HTTP GET request
+            ResponseEntity<RecepcionEnfermo[]> responseEntityRecepcionEnfermos = restTemplate.exchange(urlRequest, HttpMethod.GET, requestEntity,
+                    RecepcionEnfermo[].class);
+            // convert the array to a list and return it
+            mRecepcionEnfermos = Arrays.asList(responseEntityRecepcionEnfermos.getBody());
             return null;
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);

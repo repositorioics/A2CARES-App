@@ -91,6 +91,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        try {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_enter);
         settings =
@@ -165,6 +166,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
         });
 
        BarcodePage pagetmp = (BarcodePage) mWizardModel.findByKey(labels.getCodigoBHC());
+        pagetmp = pagetmp.setValue(labels.getCodigoBHC().substring(3,7));
         pagetmp.setPatternValidation(true, "^\\d{4}$");
 
         onPageTreeChanged();
@@ -175,6 +177,9 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
 
         onPageTreeChanged();
         updateBottomBar();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -238,6 +243,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
 
     private void createDialog(int dialog) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        try {
         switch(dialog){
             case EXIT:
                 builder.setTitle(this.getString(R.string.confirm));
@@ -270,87 +276,104 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
         }
         alertDialog = builder.create();
         alertDialog.show();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     private void updateBottomBar() {
-        int position = mPager.getCurrentItem();
-        if (position == mCurrentPageSequence.size()) {
-            mNextButton.setText(R.string.finish);
-            mNextButton.setBackgroundResource(R.drawable.finish_background);
-            mNextButton.setTextAppearance(this, R.style.TextAppearanceFinish);
-        } else {
-            mNextButton.setText(mEditingAfterReview
-                    ? R.string.review
-                    : R.string.next);
-            mNextButton.setBackgroundResource(R.drawable.selectable_item_background);
+        try {
+            int position = mPager.getCurrentItem();
+            if (position == mCurrentPageSequence.size()) {
+                mNextButton.setText(R.string.finish);
+                mNextButton.setBackgroundResource(R.drawable.finish_background);
+                mNextButton.setTextAppearance(this, R.style.TextAppearanceFinish);
+            } else {
+                mNextButton.setText(mEditingAfterReview
+                        ? R.string.review
+                        : R.string.next);
+                mNextButton.setBackgroundResource(R.drawable.selectable_item_background);
+                TypedValue v = new TypedValue();
+                getTheme().resolveAttribute(android.R.attr.textAppearanceButton, v, true);
+                mNextButton.setTextAppearance(this, v.resourceId);
+                mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
+            }
             TypedValue v = new TypedValue();
             getTheme().resolveAttribute(android.R.attr.textAppearanceButton, v, true);
-            mNextButton.setTextAppearance(this, v.resourceId);
-            mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
+            mPrevButton.setTextAppearance(this, v.resourceId);
+            mPrevButton.setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
-        TypedValue v = new TypedValue();
-        getTheme().resolveAttribute(android.R.attr.textAppearanceButton, v, true);
-        mPrevButton.setTextAppearance(this, v.resourceId);
-        mPrevButton.setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);
     }
 
     private boolean recalculateCutOffPage() {
         // Cut off the pager adapter at first required page that isn't completed
-        int cutOffPage = mCurrentPageSequence.size() + 1;
-        for (int i = 0; i < mCurrentPageSequence.size(); i++) {
-            Page page = mCurrentPageSequence.get(i);
-            String clase = page.getClass().toString();
-            if (page.isRequired() && !page.isCompleted()) {
-                cutOffPage = i;
-                break;
-            }
-            if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.a2cares.app.wizard.model.NumberPage")) {
-                NumberPage np = (NumberPage) page;
-                String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
-                if((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Double.valueOf(valor) || np.getmLowerOrEqualsThan() < Double.valueOf(valor)))
-                        || (np.ismValPattern() && !valor.matches(np.getmPattern()))){
+        try {
+            int cutOffPage = mCurrentPageSequence.size() + 1;
+            for (int i = 0; i < mCurrentPageSequence.size(); i++) {
+                Page page = mCurrentPageSequence.get(i);
+                String clase = page.getClass().toString();
+                if (page.isRequired() && !page.isCompleted()) {
                     cutOffPage = i;
                     break;
                 }
-            }
-            if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.a2cares.app.wizard.model.TextPage")) {
-                TextPage tp = (TextPage) page;
-                if (tp.ismValPattern()) {
-                    String valor = tp.getData().getString(TextPage.SIMPLE_DATA_KEY);
-                    if(!valor.matches(tp.getmPattern())){
+                if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.a2cares.app.wizard.model.NumberPage")) {
+                    NumberPage np = (NumberPage) page;
+                    String valor = np.getData().getString(NumberPage.SIMPLE_DATA_KEY);
+                    if ((np.ismValRange() && (np.getmGreaterOrEqualsThan() > Double.valueOf(valor) || np.getmLowerOrEqualsThan() < Double.valueOf(valor)))
+                            || (np.ismValPattern() && !valor.matches(np.getmPattern()))) {
                         cutOffPage = i;
                         break;
                     }
                 }
-            }
-            if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.a2cares.app.wizard.model.BarcodePage")) {
-                BarcodePage tp = (BarcodePage) page;
-                if (tp.ismValPattern()) {
-                    String valor = tp.getData().getString(BarcodePage.SIMPLE_DATA_KEY);
-                    if(!valor.matches(tp.getmPattern())){
-                        showToast(this.getString(R.string.error1CodigoMx));
-                        cutOffPage = i;
-                        break;
-                    } else {
-                        String codigoTmp = valor;
-                        /*if (tp.getTitle().equals(labels.getCodigoRojo())) {
-                            String[] partes = valor.split("\\."); //A2.80001.21SER
-                            codigoTmp = partes[1];
-                        }//la bhc solo lleva el codigo del participante
-*/
-                        if (!codigoTmp.equalsIgnoreCase(participante.getCodigo().toString())){
-                            showToast(this.getString(R.string.error2CodigoMx, participante.getCodigo().toString()));
+                if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.a2cares.app.wizard.model.TextPage")) {
+                    TextPage tp = (TextPage) page;
+                    if (tp.ismValPattern()) {
+                        String valor = tp.getData().getString(TextPage.SIMPLE_DATA_KEY);
+                        if (!valor.matches(tp.getmPattern())) {
                             cutOffPage = i;
                             break;
                         }
                     }
                 }
+                if (!page.getData().isEmpty() && clase.equals("class ni.org.ics.a2cares.app.wizard.model.BarcodePage")) {
+                    BarcodePage tp = (BarcodePage) page;
+                    if (tp.ismValPattern()) {
+                        String valor = tp.getData().getString(BarcodePage.SIMPLE_DATA_KEY);
+                        if (valor != null) {
+                            if (valor.length() > 4) {
+                                valor = valor.substring(3, 7);
+                            }
+                        }
+                        //tp.setValue(valor) ;
+                        if (!valor.matches(tp.getmPattern())) {
+                            showToast(this.getString(R.string.error1CodigoMx));
+                            cutOffPage = i;
+                            break;
+                        } else {
+                            String codigoTmp = valor;
+                        /*if (tp.getTitle().equals(labels.getCodigoRojo())) {
+                            String[] partes = valor.split("\\."); //A2.80001.21SER
+                            codigoTmp = partes[1];
+                        }//la bhc solo lleva el codigo del participante
+*/
+                            if (!codigoTmp.equalsIgnoreCase(participante.getCodigo().toString())) {
+                                showToast(this.getString(R.string.error2CodigoMx, participante.getCodigo().toString()));
+                                cutOffPage = i;
+                                break;
+                            }
+                        }
+                    }
+                }
             }
-        }
 
-        if (mPagerAdapter.getCutOffPage() != cutOffPage) {
-            mPagerAdapter.setCutOffPage(cutOffPage);
-            return true;
+            if (mPagerAdapter.getCutOffPage() != cutOffPage) {
+                mPagerAdapter.setCutOffPage(cutOffPage);
+                return true;
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
 
         return false;
@@ -491,6 +514,11 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
             muestra.setTuboBHC(getKeyFromCatalog(tuboBHC, catSiNo));
             muestra.setRazonNoBHC(getKeyFromCatalog(razonNoBHC, catSinMuestra));
             muestra.setRazonNoRojo(getKeyFromCatalog(razonNoRojo, catSinMuestra));
+            if (codigoBHC != null){
+                 if (codigoBHC.length() > 4){
+                    codigoBHC = codigoBHC.substring(3,7);
+                  }
+            }
             muestra.setCodigoBHC(codigoBHC);
             muestra.setCodigoRojo(codigoRojo);
             muestra.setOtraRazonNoBHC(otraRazonNoBHC);

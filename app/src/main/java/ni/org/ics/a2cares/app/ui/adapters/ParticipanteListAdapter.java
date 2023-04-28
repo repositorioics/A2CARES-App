@@ -20,6 +20,8 @@ import java.util.List;
 
 import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.core.MuestraEnfermo;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaOrdenLaboratorioActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaRecepcionEnfermoActivity;
@@ -37,10 +39,12 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
     private boolean desdeMedico;
     private boolean desdeLaboratorio;
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+    private List<RecepcionEnfermo> listdata1;
 
     // RecyclerView recyclerView;
-    public ParticipanteListAdapter(List<Participante> listdata, boolean permisoVisita, boolean desdeMedico, boolean desdeLaboratorio) {
+    public ParticipanteListAdapter(List<Participante> listdata,List<RecepcionEnfermo> listdata1, boolean permisoVisita, boolean desdeMedico, boolean desdeLaboratorio) {
         this.listdata = listdata;
+        this.listdata1 = listdata1;
         this.permisoVisita = permisoVisita;
         this.desdeMedico = desdeMedico;
         this.desdeLaboratorio = desdeLaboratorio;
@@ -58,15 +62,28 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Participante participante = listdata.get(position);
+
+
         holder.textViewIdent.setText(holder.context.getString(R.string.code) + ": " + listdata.get(position).getCodigo());
         holder.textViewDer.setText(mDateFormat.format(listdata.get(position).getFechaNac()));
         holder.textViewName.setText(listdata.get(position).getNombreCompleto());
         holder.textViewName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        if (participante.getSexo().equalsIgnoreCase("F")) {
-            holder.imageView.setImageResource(R.mipmap.ic_female);
-        } else {
-            holder.imageView.setImageResource(R.mipmap.ic_male);
+
+            if (participante.getSexo().equalsIgnoreCase("F")) {
+                holder.imageView.setImageResource(R.mipmap.ic_female);
+            } else {
+                holder.imageView.setImageResource(R.mipmap.ic_male);
+            }
+        if(participante.getProcesos().getPendienteMxTx().equalsIgnoreCase("1")) {
+                holder.textViewConva.setText(holder.context.getString(R.string.alerta_conva) + ": ");
+        }else{
+            holder.textViewConva.setText("");
         }
+
+        if(participante.getProcesos().getRetirado().equals(1)) {
+            holder.textViewConva.setText(holder.context.getString(R.string.alerta_retirado) + "");
+        }
+
 
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +129,7 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
         public TextView textViewIdent;
         public TextView textViewDer;
         public TextView textViewName;
+        public TextView textViewConva;
         public LinearLayout relativeLayout;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -121,6 +139,7 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
             this.textViewIdent = (TextView) itemView.findViewById(R.id.identifier_text);
             this.textViewDer = (TextView) itemView.findViewById(R.id.der_text);
             this.textViewName = (TextView) itemView.findViewById(R.id.name_text);
+            this.textViewConva = (TextView) itemView.findViewById(R.id.alert_Conva);
 
             relativeLayout = (LinearLayout)itemView.findViewById(R.id.linearLayout);
         }

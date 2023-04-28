@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.list.ListaMuestrasParticipanteActivity"
     android:orientation="vertical">
+
     <TextView
         android:id="@+id/label_logo"
         style="?android:textAppearanceLarge"
@@ -16,20 +17,21 @@
         android:text="@string/samples"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/add_sample"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:contentDescription="@string/agregarMuestra"
+        android:drawableStart="@mipmap/ic_add"
+        android:text="@string/agregarMuestra" />
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        android:id="@+id/recycler_view"
-        tools:context=".ui.activities.list.ListaMuestrasParticipanteActivity">
-    </android.support.v7.widget.RecyclerView>
+        tools:context=".ui.activities.list.ListaMuestrasParticipanteActivity"></android.support.v7.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/add_sample"
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/agregarMuestra"
-        android:contentDescription="@string/agregarMuestra"
-        android:drawableStart="@mipmap/ic_add" />
+
 </LinearLayout>

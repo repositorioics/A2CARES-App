@@ -62,6 +62,8 @@
     <string name="code_notfound">Identificador no encontrado!</string>
     <string name="text_notfound">Valor no encontrado!</string>
     <string name="scan_error">Esta lectura es inválida!</string>
+    <string name="alerta_conva">Pendiente Convaleciente, consulte con su Supervisor</string>
+    <string name="alerta_retirado">Participante Retirado</string>
 
     <!-- Formularios-->
     <string name="next">Siguiente</string>

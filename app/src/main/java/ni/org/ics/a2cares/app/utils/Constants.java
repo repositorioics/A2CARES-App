@@ -74,7 +74,7 @@ public class Constants {
     public static final int UBICACION_CO = 2;
 
     //Rango de volumen muestra
-    public static final int VOLUMEN_MIN_ROJO = 4;
+    public static final int VOLUMEN_MIN_ROJO = 2;
     public static final int VOLUMEN_MAX_ROJO = 7;
 
     //Entomologia

@@ -3,12 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/activity_main.xml" value="0.16927083333333334" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/complex_list_item.xml" value="0.2890625" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/fragment_nueva_orden_lab.xml" value="0.25677083333333334" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/login_layout.xml" value="0.16927083333333334" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/menu_item_2.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/menu_participante.xml" value="0.1125" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/recepcion_rojo_laboratorio.xml" value="0.25677083333333334" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/recepcionbhc.xml" value="0.17239583333333333" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/receptions_list.xml" value="0.16927083333333334" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/samples_list.xml" value="0.16927083333333334" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/search_house_list.xml" value="0.16927083333333334" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/search_list.xml" value="0.225" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/search_participants_list.xml" value="0.16927083333333334" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/menu/activity_login.xml" value="0.1125" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/xml/preferences.xml" value="0.11458333333333333" />
       </map>
