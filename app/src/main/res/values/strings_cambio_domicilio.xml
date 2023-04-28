@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="acepta_cambio_domicilioHint">Desea realizar el cambio de domicilio?</string>
+    <string name="cd_cambio_domicilio">Cambio Domicilio</string>
+    <string name="cd_codigoCasaCohorte">Código de Casa</string>
+    <string name="cd_codigoCasaCohorteHint">Código de casa en la cohorte</string>
+    <string name="cd_nombre1JefeFamilia">Primer nombre</string>
+    <string name="cd_nombre2JefeFamilia">Segundo nombre</string>
+    <string name="cd_apellido1JefeFamilia">Primer apellido</string>
+    <string name="cd_apellido2JefeFamilia">Segundo apellido</string>
+    <string name="cd_jefeFamiliaHint">Nombres y apellidos del jefe de la casa</string>
+    <string name="cd_direccion">Dirección</string>
+    <string name="cd_direccionHint">Dirección de la casa</string>
+    <string name="cd_barrio">Barrio</string>
+    <string name="cd_coordenadas">Ubicación</string>
+
+    <string name="otro_participante_Hint">Desea agregar otro participante al cambio de domicilio?</string>
+    <string name="cd_participante">Seleccione...</string>
+
+</resources>

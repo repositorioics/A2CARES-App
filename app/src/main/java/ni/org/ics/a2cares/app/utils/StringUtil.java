@@ -13,6 +13,9 @@ public class StringUtil {
       * @param longitud tamanio de la cadena
      * @return String cadenaAleatoria
      */
+
+    public static final String EMPTY_STRING = "";
+
     public static String getCadenaAlfanumAleatoria (int longitud){
         StringBuffer cadenaAleatoria = new StringBuffer();
         long milis = new java.util.GregorianCalendar().getTimeInMillis();
@@ -44,5 +47,19 @@ public class StringUtil {
     public static String completarCerosIzquierda(long numero, int longitud){
         Formatter obj = new Formatter();
         return String.valueOf(obj.format("%0"+longitud+"d", numero));
+    }
+
+    public static final boolean isNullOrEmpty(String string) {
+        return string==null || string.trim().equals(EMPTY_STRING);
+    }
+
+    public static String nextString(String str) {
+        String firstValue = "A";
+        if (isNullOrEmpty(str))
+            return firstValue;  // return 'A' if str is empty or null
+
+        int charValue = str.charAt(0);
+        String next = String.valueOf((char) (charValue + 1));
+        return next;
     }
 }

@@ -114,6 +114,11 @@
 
         <activity android:name=".ui.activities.enterdata.NuevaEncuestaSatisfaccionActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.enterdata.NuevoReconsentimientoActivity" android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.activities.cambioDomicilio.CambioDomicilioMainActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.cambioDomicilio.CambioDomicilioBuscarParticipanteActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.cambioDomicilio.CambioDomicilioBuscarCasaActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.cambioDomicilio.CambioDomicilioParticipanteActivity" android:screenOrientation="portrait"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

@@ -240,5 +240,8 @@
     <string name="agregarRecepcion">Agregar Recepción Mx Enfermo</string>
 
     <string name="err_not_completed">No ha completado el formulario</string>
+    <!-- Cambio de Domicilio-->
+    <string name="title_home_camb_domicilio">Cambio de Domicilio</string>
+    <string name="title_home_camb_domicilio_part">Cambio de Domicilio - Participante</string>
 
 </resources>

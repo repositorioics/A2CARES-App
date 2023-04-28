@@ -11,7 +11,7 @@ public class MainDBConstants {
 
     //Base de datos y tablas
     public static final String DATABASE_NAME = "a2carescryp.sqlite3";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 5;
 
     //Campos metadata
     public static final String recordDate = "recordDate";
@@ -961,5 +961,85 @@ public class MainDBConstants {
             + estado
             + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
+    //Crear tabla cambio_domicilio
+    public static final String CAMBIO_DOMICILIO_TABLE = "cambio_domicilio";
 
+    //Campos tabla cambio_domicilio
+    public static final String codigoNuevaCasaCohorte = "codigoNuevaCasaCohorte";
+    public static final String numTelefono1 = "numTelefono1";
+    public static final String operadoraTelefono1 = "operadoraTelefono1";
+    public static final String numTelefono2 = "numTelefono2";
+    public static final String operadoraTelefono2 = "operadoraTelefono2";
+    public static final String numTelefono3 = "numTelefono3";
+    public static final String operadoraTelefono3 = "operadoraTelefono3";
+    public static final String codigoMovimiento = "codigoMovimiento";
+    public static final String identificadoEquipo = "identificadoEquipo";
+    public static final String fechaRegistro = "fechaRegistro";
+    public static final String creado = "creado";
+    public static final String usuarioRegistro = "usuarioRegistro";
+    public static final String codigoParticipante = "codigoParticipante";
+
+    //crear tabla cambio_domicilio
+    public static final String CREATE_CAMBIO_DOMICILIO_TABLE = "create table if not exists "
+            + CAMBIO_DOMICILIO_TABLE + " ("
+            + id + " integer not null, "
+            + codigoNuevaCasaCohorte + " text not null, "
+            + codigoCasa + " text not null, "
+            + nombre1JefeFamilia + " text not null, "
+            + nombre2JefeFamilia + " text, "
+            + apellido1JefeFamilia + " text not null, "
+            + apellido2JefeFamilia + " text, "
+            + direccion + " text not null, "
+            + barrio + " text, "
+            + puntoGps + " text, "
+            + latitud + " real not null, "
+            + longitud + " real not null, "
+            + numTelefono1 + " text, "
+            + operadoraTelefono1 + " text, "
+            + numTelefono2 + " text, "
+            + operadoraTelefono2 + " text, "
+            + numTelefono3 + " text, "
+            + operadoraTelefono3 + " text, "
+            + codigoMovimiento + " text not null, "
+            + identificadoEquipo + " text, "
+            + estado + " text not null, "
+            + pasive + " text not null, "
+            + fechaRegistro + " text not null, "
+            + creado + " text not null, "
+            + usuarioRegistro + " text not null, "
+            + actual + " boolean, "
+            + codigoParticipante + " text not null, "
+            + "primary key (" + id + "));";
+    //+ "primary key AUTOINCREMENT (" + id + "));";
+
+    public static final String INSERT_CAMBIO_DOMICILIO_TABLE = "insert into "
+            + CAMBIO_DOMICILIO_TABLE + " ("
+            + id + ","
+            + codigoNuevaCasaCohorte + ","
+            + codigoCasa + ","
+            + nombre1JefeFamilia + ","
+            + nombre2JefeFamilia + ","
+            + apellido1JefeFamilia + ","
+            + apellido2JefeFamilia + ","
+            + direccion + ","
+            + barrio + ","
+            + puntoGps + ","
+            + latitud + ","
+            + longitud + ","
+            + numTelefono1 + ","
+            + operadoraTelefono1 + ","
+            + numTelefono2 + ","
+            + operadoraTelefono2 + ","
+            + numTelefono3 + ","
+            + operadoraTelefono3 + ","
+            + codigoMovimiento + ","
+            + identificadoEquipo + ","
+            + estado + ","
+            + pasive + ","
+            + fechaRegistro + ","
+            + creado + ","
+            + usuarioRegistro + ","
+            + actual + ","
+            + codigoParticipante
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 }

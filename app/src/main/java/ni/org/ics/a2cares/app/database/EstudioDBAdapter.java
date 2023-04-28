@@ -15,6 +15,7 @@ import java.util.List;
 import ni.org.ics.a2cares.app.database.constants.EncuestasDBConstants;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.database.helpers.BarrioHelper;
+import ni.org.ics.a2cares.app.database.helpers.CambioDomicilioHelper;
 import ni.org.ics.a2cares.app.database.helpers.CartaConsentimientoHelper;
 import ni.org.ics.a2cares.app.database.helpers.CasaHelper;
 import ni.org.ics.a2cares.app.database.helpers.DatosCoordenadasHelper;
@@ -38,6 +39,7 @@ import ni.org.ics.a2cares.app.database.helpers.TelefonoContactoHelper;
 import ni.org.ics.a2cares.app.database.helpers.UserSistemaHelper;
 import ni.org.ics.a2cares.app.database.helpers.VisitaTerrenoHelper;
 import ni.org.ics.a2cares.app.domain.core.Barrio;
+import ni.org.ics.a2cares.app.domain.core.CambioDomicilio;
 import ni.org.ics.a2cares.app.domain.core.CartaConsentimiento;
 import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
@@ -135,6 +137,7 @@ public class EstudioDBAdapter {
             db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_TABLE);
             db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_POB_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_TABLE);
+            db.execSQL(MainDBConstants.CREATE_CAMBIO_DOMICILIO_TABLE);
         }
 
         @Override
@@ -158,6 +161,10 @@ public class EstudioDBAdapter {
             if (oldVersion==4)  {
                 /*Nueva encuesta satisfaccion por usuario 30/03/2023*/
                 db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_TABLE);
+            }
+            if (oldVersion==5) {
+                /*Cambio de domicilio 24/04/2023*/
+                db.execSQL(MainDBConstants.CREATE_CAMBIO_DOMICILIO_TABLE);
             }
         }
 
@@ -2305,6 +2312,89 @@ public class EstudioDBAdapter {
         if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
         return false;
+    }
+
+    /**
+     * Metodos para cambios de domicilio en la base de datos
+     *
+     * @param cambioDomicilio
+     *            Objeto cambioDomicilio que contiene la informacion
+     *
+     */
+    //Crear nuevo cambio de domicilio en la base de datos
+    public void crearCambioDomicilio(CambioDomicilio cambioDomicilio) {
+        ContentValues cv = CambioDomicilioHelper.crearCambioDomicilioValues(cambioDomicilio);
+        mDb.insertOrThrow(MainDBConstants.CAMBIO_DOMICILIO_TABLE, null, cv);
+    }
+
+    //Editar nuevo cambio de domicilio existente en la base de datos
+    public boolean editarCambioDomicilio(CambioDomicilio cambioDomicilio) {
+        ContentValues cv = CambioDomicilioHelper.crearCambioDomicilioValues(cambioDomicilio);
+        return mDb.update(MainDBConstants.CAMBIO_DOMICILIO_TABLE , cv, MainDBConstants.id + "='"
+                + cambioDomicilio.getId()+ "'", null) > 0;
+    }
+
+    //Limpiar la tabla de cambio de domicilio de la base de datos
+    public boolean borrarCambioDomicilio() {
+        return mDb.delete(MainDBConstants.CAMBIO_DOMICILIO_TABLE, null, null) > 0;
+    }
+
+    public List<CambioDomicilio> getListaCambioDomicilioSinEnviar(String filtro, String orden) throws SQLException {
+        List<CambioDomicilio> mCambiosDomicilio = new ArrayList<CambioDomicilio>();
+        Cursor cursorCambiosDomicilio = crearCursor(MainDBConstants.CAMBIO_DOMICILIO_TABLE, filtro, null, orden);
+        if (cursorCambiosDomicilio != null && cursorCambiosDomicilio.getCount() > 0) {
+            cursorCambiosDomicilio.moveToFirst();
+            mCambiosDomicilio.clear();
+            do{
+                CambioDomicilio mDatosCoordenadas = null;
+                mDatosCoordenadas = CambioDomicilioHelper.crearCambioDomicilio(cursorCambiosDomicilio);
+                Barrio barrio = this.getBarrio(MainDBConstants.codigo+"="+cursorCambiosDomicilio.getInt(cursorCambiosDomicilio.getColumnIndex(MainDBConstants.barrio)), null);
+                mDatosCoordenadas.setBarrio(barrio);
+                mCambiosDomicilio.add(mDatosCoordenadas);
+            } while (cursorCambiosDomicilio.moveToNext());
+        }
+        if (!cursorCambiosDomicilio.isClosed()) cursorCambiosDomicilio.close();
+        return mCambiosDomicilio;
+    }
+
+    //Obtener un cambio de domicilio de la base de datos
+    public CambioDomicilio getCambioDomicilio(String filtro, String orden) throws SQLException {
+        CambioDomicilio mCambioDomicilio = null;
+        Cursor cursorCambioDomicilio = crearCursor(MainDBConstants.CAMBIO_DOMICILIO_TABLE , filtro, null, orden);
+        if (cursorCambioDomicilio != null && cursorCambioDomicilio.getCount() > 0) {
+            cursorCambioDomicilio.moveToFirst();
+            mCambioDomicilio=CambioDomicilioHelper.crearCambioDomicilio(cursorCambioDomicilio);
+        }
+        if (!cursorCambioDomicilio.isClosed()) cursorCambioDomicilio.close();
+        return mCambioDomicilio;
+    }
+
+    public boolean bulkInsertCambioDomicilioBySql(List<CambioDomicilio> list) throws Exception{
+        if (null == list || list.size() <= 0) {
+            return false;
+        }
+        try {
+            SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_CAMBIO_DOMICILIO_TABLE);
+            mDb.beginTransaction();
+            for (CambioDomicilio remoteAppInfo : list) {
+                CambioDomicilioHelper.fillCambioDomicilioStatement(stat, remoteAppInfo);
+                long result = stat.executeInsert();
+                if (result < 0) return false;
+            }
+            mDb.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                if (null != mDb) {
+                    mDb.endTransaction();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
     }
 
 }

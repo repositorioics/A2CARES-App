@@ -19,6 +19,7 @@ import android.util.Log;
 
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
+import ni.org.ics.a2cares.app.domain.core.CambioDomicilio;
 import ni.org.ics.a2cares.app.domain.core.CartaConsentimiento;
 import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
@@ -79,6 +80,9 @@ public class UploadAllTask extends UploadTask {
     private List<EncuestaSatisfaccionUsuario> mEncSatUsuario = new ArrayList<EncuestaSatisfaccionUsuario>();
     private List<ParticipanteProcesos> mReconsent = new ArrayList<ParticipanteProcesos>();
 
+    //Cambio de domicilio
+    private List<CambioDomicilio> mCambioDomicilio = new ArrayList<CambioDomicilio>();
+
 
 	private String url = null;
 	private String username = null;
@@ -111,8 +115,10 @@ public class UploadAllTask extends UploadTask {
     public static final String ENCUESTA_SATISFACCION_USUARIO = "21";
     public static final String RECONSENTIMIENTO = "22";
 
+    //Cambio de domicilio
+    public static final String CAMBIO_DOMICILIO = "23";
 
-    private static final String TOTAL_TASK = "22";
+    private static final String TOTAL_TASK = "24";
 	
 
 	@Override
@@ -149,6 +155,8 @@ public class UploadAllTask extends UploadTask {
             //Encuesta satisfaccion de usuario
             mEncSatUsuario = estudioAdapter.getListaEncSatisfaccionUsuarioSinEnviar();
 
+            mCambioDomicilio = estudioAdapter.getListaCambioDomicilioSinEnviar(filtro, null);
+
             if (mVisitasTerreno.size() <= 0 &&
                     mTamizajes.size() <= 0 &&
                     mCasas.size() <= 0 &&
@@ -170,7 +178,8 @@ public class UploadAllTask extends UploadTask {
                     mMuestrasEnf.size() <= 0 &&
                     mRecepcionesEnf.size() <= 0 &&
                     mEncSatUsuario.size() <= 0 &&
-                    mReconsent.size() <= 0
+                    mReconsent.size() <= 0 &&
+                    mCambioDomicilio.size() <= 0
             ) {
                 error = Constants.NO_DATA;
             } else {
@@ -304,6 +313,13 @@ public class UploadAllTask extends UploadTask {
                 error = cargarEncuestaSatisfaccionUsuario(url, username, password);
                 if (!error.matches(Constants.DATOS_RECIBIDOS)) {
                     actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENCUESTA_SATISFACCION_USUARIO);
+                    return error;
+                }
+
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CAMBIO_DOMICILIO);
+                error = cargarCambioDomicilios(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CAMBIO_DOMICILIO);
                     return error;
                 }
 
@@ -551,6 +567,16 @@ public class UploadAllTask extends UploadTask {
                     estudioAdapter.updateEncuestaSatisfaccionUsuario(encSatUsuario);
                     publishProgress("Actualizando encuestas de satisfaccion de usuario en base de datos local", Integer.valueOf(mEncSatUsuario.indexOf(encSatUsuario)).toString(), Integer
                             .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(CAMBIO_DOMICILIO)){
+            c = mCambioDomicilio.size();
+            if(c>0){
+                for (CambioDomicilio cambioDomicilio : mCambioDomicilio) {
+                    cambioDomicilio.setEstado(estado);
+                    estudioAdapter.editarCambioDomicilio(cambioDomicilio);
+                    publishProgress("Actualizando los cambios de domicilio en base de datos local", Integer.valueOf(mCambioDomicilio.indexOf(cambioDomicilio)).toString(), Integer.valueOf(c).toString());
                 }
             }
         }
@@ -1287,13 +1313,38 @@ public class UploadAllTask extends UploadTask {
 
     }
 
-    /*private void saveEncuestaSatisfaccionUsuario(char estado) {
-        int c = mEncSatUsuario.size();
-        for (EncuestaSatisfaccionUsuario enSatUsu : mEncSatUsuario) {
-            enSatUsu.setEstado(estado);
-            estudioAdapter.updateEncuestaSatisfaccionUsuario(enSatUsu);
-            publishProgress("Actualizando las encuestas de satisfaccion de usuario", Integer.valueOf(mEncSatUsuario.indexOf(enSatUsu)).toString(), Integer
-                    .valueOf(c).toString());
+    /***************************************************/
+    /********************* Cambio Domicilio ************************/
+    /***************************************************/
+    // url, username, password
+    protected String cargarCambioDomicilios(String url, String username,String password) throws Exception {
+        try {
+            if(mCambioDomicilio.size()>0){
+                // La URL de la solicitud POST
+                publishProgress("Enviando los cambios de domicilios!", CAMBIO_DOMICILIO, TOTAL_TASK);
+                final String urlRequest = url + "/movil/cambiodomicilio";
+                CambioDomicilio[] envio = mCambioDomicilio.toArray(new CambioDomicilio[mCambioDomicilio.size()]);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<CambioDomicilio[]> requestEntity =
+                        new HttpEntity<CambioDomicilio[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
         }
-    }*/
+    }
+
 }
