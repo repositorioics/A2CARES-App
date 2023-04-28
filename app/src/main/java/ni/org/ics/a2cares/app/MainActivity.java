@@ -23,6 +23,7 @@ import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.activities.BuscarCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.BuscarParticipanteActivity;
+import ni.org.ics.a2cares.app.ui.activities.cambioDomicilio.CambioDomicilioMainActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoTamizajeActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaPuntosCandidatosActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuLaboratorioActivity;
@@ -158,6 +159,10 @@ public class MainActivity extends AbstractAsyncActivity {
                         else{
                             showToast(getApplicationContext().getString(R.string.perm_error));
                         }
+                        break;
+                    case 10: //Cambio de Domicilio
+                        i = new Intent(getApplicationContext(), CambioDomicilioMainActivity.class);
+                        startActivity(i);
                         break;
                     default:
                         break;
