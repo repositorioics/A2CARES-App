@@ -11,7 +11,7 @@
         <item>@string/main_8</item>
         <item>@string/main_9</item>
         <item>@string/main_10</item>
-        <!-- <item>@string/main_11</item>-->
+        <item>@string/main_11</item>
      </string-array>
 
      <string-array name="menu_participante">
