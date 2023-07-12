@@ -18,7 +18,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ni.org.ics.a2cares.app.AbstractAsyncActivity;
@@ -29,6 +31,8 @@ import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.EncuestasDBConstants;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.MuestraEnfermo;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermomessage;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaParticipante;
@@ -46,6 +50,9 @@ import ni.org.ics.a2cares.app.ui.activities.list.ListaMuestrasParticipanteActivi
 import ni.org.ics.a2cares.app.ui.adapters.MenuParticipanteAdapter;
 import ni.org.ics.a2cares.app.utils.Constants;
 import ni.org.ics.a2cares.app.utils.DateUtil;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
 
 
 public class MenuParticipanteActivity extends AbstractAsyncActivity {
@@ -55,6 +62,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     public TextView textViewConva;
     private String[] menu_participante;
     private static Participante participante = new Participante();
+    private static RecepcionEnfermo recepcionenfermo = new RecepcionEnfermo();
+    private static RecepcionEnfermomessage recepcionenfermom = new RecepcionEnfermomessage();
     private List<MuestraEnfermo> mMuestrasEnf = new ArrayList<MuestraEnfermo>();
     private EstudioDBAdapter estudiosAdapter;
     private boolean pendienteEncuestaParticip = false;
@@ -452,7 +461,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     pendienteEncuestaPeso = true;
                 }*/
                 //actualizar por cualquier cambio en la base
-                participante = estudiosAdapter.getParticipante(MainDBConstants.codigo + "='" + participante.getCodigo()+"'", null);
+                participante = estudiosAdapter.getParticipante(MainDBConstants.participante  + "='" + participante.getCodigo()+"'", null);
+                recepcionenfermom = estudiosAdapter.getRecepcionEnfermo1(MainDBConstants.codigo + "='" + participante.getCodigo()+"'", null);
                 mMuestrasEnf = estudiosAdapter.getMuestrasEnfermo(MainDBConstants.fechaMuestra + " = "+ DateUtil.getTodayWithZeroTime().getTime(), null);
 
                 estudiosAdapter.close();
@@ -476,6 +486,8 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         protected void onPostExecute(String resultado) {
             // after the request completes, hide the progress indicator
             String edadFormateada = "";
+            recepcionenfermom = estudiosAdapter.getRecepcionEnfermo1(MainDBConstants.participante  + "='" + participante.getCodigo()+"'", null);
+
             if (!participante.getEdad().equalsIgnoreCase("ND")) {
                 String edad[] = participante.getEdad().split("/");
                 if (edad.length > 0) {
@@ -490,11 +502,32 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
 
             textView.setText(Html.fromHtml(header));
             if(participante.getProcesos().getPendienteMxTx().equalsIgnoreCase("1")) {
-                String header1 = participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo()+ " - " +
-                        getString(R.string.participant)+ ": "+ participante.getCodigo()+ "</font> <br /> <small>"
-                        + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>"
-                        + " <br /> <font color='red'>" + getString(R.string.alerta_conva) ;
-                textView.setText(Html.fromHtml(header1));
+                Date d = new Date();
+
+                String Dateinicio = String.valueOf(recepcionenfermom.getFechaRecepcion());
+                SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+                Date fechafis = null;
+
+                fechafis = (recepcionenfermom.getFis());
+
+                Date fechaactual = new Date(System.currentTimeMillis());
+                int milisecondsByDay = 86400000;
+                int dias = (int) ((fechaactual.getTime()- recepcionenfermom.getFechaRecepcion().getTime() ) / milisecondsByDay);
+
+                if ( dias < 14) {
+                    String header1 = String.format(String.format(participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo() + " - " +
+                            getString(R.string.participant) + ": " + participante.getCodigo() + "</font> <br /> <small>"
+                            + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>"
+                            + " <br /> <font color='blue'>" + getString(R.string.alerta_conva) + " --Días Conv.: " + dias + " --Fis.: " + date.format(recepcionenfermom.getFis())) );
+                    textView.setText(Html.fromHtml(header1));
+                }
+                if ( dias > 13 && dias < 45) {
+                    String header1 = participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo() + " - " +
+                            getString(R.string.participant) + ": " + participante.getCodigo() + "</font> <br /> <small>"
+                            + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>"
+                            + " <br /> <font color='red'>" + getString(R.string.alerta_conva) + " --Días Conv.:" + dias + " --Fis.: " + date.format(recepcionenfermom.getFis());
+                    textView.setText(Html.fromHtml(header1));
+                }
             }
 
             if(participante.getProcesos().getRetirado().equals(1)) {

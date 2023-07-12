@@ -15,13 +15,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import ni.org.ics.a2cares.app.MyIcsApplication;
 import ni.org.ics.a2cares.app.R;
+import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
+import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.core.MuestraEnfermo;
+
 import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermomessage;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaOrdenLaboratorioActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaRecepcionEnfermoActivity;
@@ -37,23 +44,32 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
     private List<Participante> listdata;
     private boolean permisoVisita;
     private boolean desdeMedico;
+    private static RecepcionEnfermo recepcionenfermo = new RecepcionEnfermo();
+    private static RecepcionEnfermomessage recepcionenfermom = new RecepcionEnfermomessage();
+    private EstudioDBAdapter estudiosAdapter;
     private boolean desdeLaboratorio;
-    private SimpleDateFormat mDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+    private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd-MM-yyyy");
     private List<RecepcionEnfermo> listdata1;
+    private List<RecepcionEnfermomessage> listdata2;
+    private String dias;
+
 
     // RecyclerView recyclerView;
-    public ParticipanteListAdapter(List<Participante> listdata,List<RecepcionEnfermo> listdata1, boolean permisoVisita, boolean desdeMedico, boolean desdeLaboratorio) {
+    public ParticipanteListAdapter(List<Participante> listdata,List<RecepcionEnfermomessage> listdata2, boolean permisoVisita, boolean desdeMedico, boolean desdeLaboratorio) {
         this.listdata = listdata;
-        this.listdata1 = listdata1;
+        this.listdata2= listdata2;
         this.permisoVisita = permisoVisita;
         this.desdeMedico = desdeMedico;
         this.desdeLaboratorio = desdeLaboratorio;
+
+
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem= layoutInflater.inflate(R.layout.complex_list_item, parent, false);
+
         ViewHolder viewHolder = new ViewHolder(listItem) {
         };
         return viewHolder;
@@ -62,6 +78,8 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Participante participante = listdata.get(position);
+       // estudiosAdapter.open();
+
 
 
         holder.textViewIdent.setText(holder.context.getString(R.string.code) + ": " + listdata.get(position).getCodigo());
@@ -75,7 +93,13 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
                 holder.imageView.setImageResource(R.mipmap.ic_male);
             }
         if(participante.getProcesos().getPendienteMxTx().equalsIgnoreCase("1")) {
-                holder.textViewConva.setText(holder.context.getString(R.string.alerta_conva) + ": ");
+             dias = listdata2.get(0).getPositivo();
+              if (Integer.parseInt(dias) < 14){
+                  holder.textViewConva1.setText(String.format(String.format(String.format(holder.context.getString(R.string.alerta_conva) + " --Días Conv.: " + dias + " --Fis.: " + mDateFormat.format(listdata2.get(0).getFis())))));
+              }
+             if (Integer.parseInt(dias) > 13 && Integer.parseInt(dias) > 46 ) {
+                  holder.textViewConva.setText(holder.context.getString(R.string.alerta_conva) + " --Días Conv.: " + dias + " --Fis.: " + mDateFormat.format(listdata2.get(0).getFis()));
+            }
         }else{
             holder.textViewConva.setText("");
         }
@@ -84,7 +108,7 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
             holder.textViewConva.setText(holder.context.getString(R.string.alerta_retirado) + "");
         }
 
-
+       // estudiosAdapter.close();
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,6 +154,7 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
         public TextView textViewDer;
         public TextView textViewName;
         public TextView textViewConva;
+        public TextView textViewConva1;
         public LinearLayout relativeLayout;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -140,6 +165,7 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
             this.textViewDer = (TextView) itemView.findViewById(R.id.der_text);
             this.textViewName = (TextView) itemView.findViewById(R.id.name_text);
             this.textViewConva = (TextView) itemView.findViewById(R.id.alert_Conva);
+            this.textViewConva1 = (TextView) itemView.findViewById(R.id.alert_Conva1);
 
             relativeLayout = (LinearLayout)itemView.findViewById(R.id.linearLayout);
         }

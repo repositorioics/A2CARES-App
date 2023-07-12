@@ -13,7 +13,7 @@
 
     <string name="app_preferences">Configuración Aplicación</string>
     <string name="update_app_preferences">Actualizar Aplicación</string>
-    <string name="version_app_preferences">Versión 1.4.5.1</string>
-    <string name="versiondate_app_preferences">Abr 26, 2023</string>
+    <string name="version_app_preferences">Versión 1.4.5.2</string>
+    <string name="versiondate_app_preferences">May 04, 2023</string>
 
 </resources>

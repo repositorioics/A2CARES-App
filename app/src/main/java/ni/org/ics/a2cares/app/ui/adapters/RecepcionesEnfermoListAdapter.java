@@ -46,7 +46,7 @@ public class RecepcionesEnfermoListAdapter extends RecyclerView.Adapter<Recepcio
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final RecepcionEnfermo recepcionEnfermo = listdata.get(position);
-        holder.textViewIdent.setText(recepcionEnfermo.getParticipante().getCodigoNombreCompleto());
+      //  holder.textViewIdent.setText(recepcionEnfermo.getParticipante().getCodigoNombreCompleto());
         holder.textViewName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         holder.textViewIdent.setTextColor(holder.context.getResources().getColor(R.color.blue_primary));
         holder.textViewDer.setText(mDateFormat.format(listdata.get(position).getFechaRecepcion()));

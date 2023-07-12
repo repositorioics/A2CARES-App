@@ -32,6 +32,7 @@ import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.core.MuestraEnfermo;
 import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermomessage;
 import ni.org.ics.a2cares.app.domain.users.UserPermissions;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.adapters.MenuCasaAdapter;
@@ -46,6 +47,7 @@ public class ListaParticipantesCasaActivity extends AbstractAsyncActivity {
 	private Integer opcion;
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
 	private List<RecepcionEnfermo> mRecepcionEnfermo = new ArrayList<RecepcionEnfermo>();
+	private List<RecepcionEnfermomessage> mRecepcionEnfermom = new ArrayList<RecepcionEnfermomessage>();
 	private ParticipanteListAdapter adapter;
 	private static Casa casa = new Casa();
 	private static UserPermissions mUser = new UserPermissions();
@@ -137,7 +139,7 @@ public class ListaParticipantesCasaActivity extends AbstractAsyncActivity {
 
 		protected void onPostExecute(String resultado) {
 			dismissProgressDialog();
-			adapter = new ParticipanteListAdapter(mParticipantes,mRecepcionEnfermo, mUser.getVisitas(), false, false);
+			adapter = new ParticipanteListAdapter(mParticipantes,mRecepcionEnfermom, mUser.getVisitas(), false, false);
 			recyclerView.setAdapter(adapter);
 			refreshView();
 		}

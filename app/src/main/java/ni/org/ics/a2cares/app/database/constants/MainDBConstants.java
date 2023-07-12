@@ -915,33 +915,36 @@ public class MainDBConstants {
             + "primary key (" + idMuestra + "));";
 
     //Tabla muestras de enfermos
+    //public static final String identificador_Equipo = "identificador_Equipo";
     public static final String RECEPCION_ENFERMO_TABLE = "recepciones_enfermo";
 
     //Crear tabla muestras de enfermos
     public static final String CREATE_RECEPCION_ENFERMO_TABLE = "create table if not exists "
             + RECEPCION_ENFERMO_TABLE + " ("
             + idRecepcion + " text not null, "
+
             + participante + " text, "
             + fechaRecepcion + " date, "
-            + tipoTubo + " text, "
+            + tipoTubo + " text null, "
             + volumen + " real, "
-            + observacion + " text, "
+            + observacion + " text null, "
             + fis + " date, "
             + fif + " date, "
-            + categoria + " text, "
-            + consulta + " text, "
-            + tipoMuestra + " text, "
-            + estudiosAct + " text, "
+            + categoria + " text null, "
+            + consulta + " text null, "
+            + tipoMuestra + " text null, "
+            + estudiosAct + " text null, "
             + recordDate + " date, "
-            + recordUser + " text, "
-            + pasive + " text, "
-            + deviceId + " text, "
-            + estado + " text not null, "
+            + recordUser + " text null, "
+            + pasive + " text null, "
+            + deviceId + " text null, "
+            + estado + " text null, "
             + "primary key (" + idRecepcion + "));";
 
     public static final String INSERT_RECEPCION_ENFERMO_TABLE = "insert into "
             + RECEPCION_ENFERMO_TABLE + " ("
             + idRecepcion + ","
+
             + participante + ","
             + fechaRecepcion + ","
             + tipoTubo + ","
@@ -957,7 +960,7 @@ public class MainDBConstants {
             + recordDate + ","
             + recordUser + ","
             + pasive + ","
-            + deviceId + ","
+            + deviceId+ ","
             + estado
             + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 

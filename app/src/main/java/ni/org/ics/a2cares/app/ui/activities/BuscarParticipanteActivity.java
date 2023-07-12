@@ -26,8 +26,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bea.xml.stream.samples.Parse;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import ni.org.ics.a2cares.app.AbstractAsyncActivity;
@@ -37,6 +42,8 @@ import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.Participante;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermomessage;
 import ni.org.ics.a2cares.app.domain.core.MuestraEnfermo;
 import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
 import ni.org.ics.a2cares.app.domain.users.UserPermissions;
@@ -58,12 +65,16 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 	public static final int BARCODE_CAPTURE = 2;
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
 	private List<RecepcionEnfermo> mRecepcionEnfermo = new ArrayList<RecepcionEnfermo>();
+	private List<RecepcionEnfermomessage > mRecepcionEnfermomesage = new ArrayList<RecepcionEnfermomessage>();
+	private static RecepcionEnfermo recepcionenfermo = new RecepcionEnfermo();
+	private static RecepcionEnfermomessage recepcionenfermom = new RecepcionEnfermomessage();
 	private ParticipanteListAdapter adapter;
 	private static UserPermissions mUser = new UserPermissions();
 	private SharedPreferences settings;
 	private String username;
 	private boolean desdeMedico = false;
 	private boolean desdeLaboratorio = false;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +181,7 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 			public void onClick(View v) {
 				mParticipantes.clear();
 				mRecepcionEnfermo.clear();
+				mRecepcionEnfermomesage.clear();
 				if ((mCodigoView.getText().toString()==null) || (mCodigoView.getText().toString().matches(""))){
 					mCodigoView.requestFocus();
 					mCodigoView.setError(getString(R.string.search_hint));
@@ -305,6 +317,20 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 				mParticipantes.clear();
 				mParticipantes.addAll(estudiosAdapter.getParticipantes(filtro, MainDBConstants.codigo));
 				filtroR = MainDBConstants.participante + "='" + mParticipantes.get(0).getCodigo() +"'";
+				//recepcionenfermo = estudiosAdapter.getRecepcionEnfermo(MainDBConstants.participante  + "='" + mParticipantes.get(0).getCodigo()+"'", null);
+/**/
+				recepcionenfermom = estudiosAdapter.getRecepcionEnfermo1(MainDBConstants.participante  + "='" + mParticipantes.get(0).getCodigo()+"'", null);
+				Date fechaactual = new Date(System.currentTimeMillis());
+				int milisecondsByDay = 86400000;
+				if (recepcionenfermom.getFechaRecepcion() != null) {
+					int dias = (int) ((fechaactual.getTime() - recepcionenfermom.getFechaRecepcion().getTime()) / milisecondsByDay);
+
+					recepcionenfermom.setPositivo(String.valueOf(dias));
+					//  recepcionenfermom.setFis();
+					// recepcionenfermo.setObservacion(recepcionenfermo.getFis().toString());
+					// mRecepcionEnfermo.add(recepcionenfermo);
+					mRecepcionEnfermomesage.add(recepcionenfermom);
+				}
 			//	mRecepcionEnfermo.addAll((Collection<? extends RecepcionEnfermo>) estudiosAdapter.getRecepcionEnfermo(filtroR, MainDBConstants.participante));
 				estudiosAdapter.close();
 			} catch (Exception e) {
@@ -343,7 +369,7 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 		}
 
 		protected void onPostExecute(String resultado) {
-			adapter = new ParticipanteListAdapter(mParticipantes,mRecepcionEnfermo, mUser.getVisitas(), desdeMedico, desdeLaboratorio);
+			adapter = new ParticipanteListAdapter(mParticipantes,mRecepcionEnfermomesage, mUser.getVisitas(), desdeMedico, desdeLaboratorio);
 			recyclerView.setAdapter(adapter);
 			dismissProgressDialog();
 		}

@@ -14,7 +14,7 @@ import ni.org.ics.a2cares.app.domain.core.Participante;
  **/
 
 
-public class RecepcionEnfermo extends BaseMetaData implements Serializable {
+public class RecepcionEnfermomessage extends BaseMetaData implements Serializable {
 
 	/**
 	 * 
@@ -25,8 +25,7 @@ public class RecepcionEnfermo extends BaseMetaData implements Serializable {
 	 */
 
 	private String idRecepcion;
-	private Participante participante;
-	//private String participante;
+	private String participante;
 	private Date fechaRecepcion;
 	private String tipoTubo; //Serogologia, BHC, etc
 	private Double volumen;
@@ -53,11 +52,11 @@ public class RecepcionEnfermo extends BaseMetaData implements Serializable {
 		this.idRecepcion = idRecepcion;
 	}
 
-	public Participante getParticipante() {
+	public String getParticipante() {
 		return participante;
 	}
 
-	public void setParticipante(Participante participante) {
+	public void setParticipante(String participante) {
 		this.participante = participante;
 	}
 

@@ -784,10 +784,11 @@ public class CambioDomicilioParticipanteActivity extends AbstractAsyncActivity i
                 }
             }
             showToast(getString(R.string.success));
+            finish();
             Intent i = new Intent(getApplicationContext(),
                     CambioDomicilioMainActivity.class);
             startActivity(i);
-            finish();
+
         } catch (Exception e) {
             Log.e(TAG, e.getLocalizedMessage(), e);
         }

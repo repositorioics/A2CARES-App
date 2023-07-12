@@ -53,6 +53,7 @@ import ni.org.ics.a2cares.app.domain.core.RazonNoData;
 import ni.org.ics.a2cares.app.domain.core.Tamizaje;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
 import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
+import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermomessage;
 import ni.org.ics.a2cares.app.domain.laboratorio.Serologia;
 import ni.org.ics.a2cares.app.domain.medico.OrdenLaboratorio;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
@@ -1636,6 +1637,9 @@ public class EstudioDBAdapter {
     public boolean borrarMuestrasEnfermo() {
         return mDb.delete(MainDBConstants.MUESTRAS_ENFERMO_TABLE, null, null) > 0;
     }
+
+
+
     //Obtener un MuestraEnfermo de la base de datos
     public MuestraEnfermo getMuestraEnfermo(String filtro, String orden) throws SQLException {
         MuestraEnfermo mMuestraEnfermo = null;
@@ -1681,6 +1685,10 @@ public class EstudioDBAdapter {
         ContentValues cv = RecepcionEnfermoHelper.crearRecepcionEnfermoContentValues(recepcionEnfermo);
         mDb.insertOrThrow(MainDBConstants.RECEPCION_ENFERMO_TABLE, null, cv);
     }
+    public void crearRecepcionEnfermo1(RecepcionEnfermomessage recepcionEnfermo) {
+        ContentValues cv = RecepcionEnfermoHelper.crearRecepcionEnfermoContentValues1(recepcionEnfermo);
+        mDb.insertOrThrow(MainDBConstants.RECEPCION_ENFERMO_TABLE, null, cv);
+    }
     //Editar RecepcionEnfermo existente en la base de datos
     public boolean editarRecepcionEnfermo(RecepcionEnfermo recepcionEnfermo) {
         ContentValues cv = RecepcionEnfermoHelper.crearRecepcionEnfermoContentValues(recepcionEnfermo);
@@ -1695,12 +1703,30 @@ public class EstudioDBAdapter {
     public RecepcionEnfermo getRecepcionEnfermo(String filtro, String orden) throws SQLException {
         RecepcionEnfermo mRecepcionEnfermo = null;
 
-        Cursor cursorRecepcionEnfermo = crearCursor(MainDBConstants.RECEPCION_ENFERMO_TABLE , filtro, null, orden);
+        Cursor cursorRecepcionEnfermo = crearCursor(MainDBConstants.RECEPCION_ENFERMO_TABLE , filtro, null, null);
+
         if (cursorRecepcionEnfermo != null && cursorRecepcionEnfermo.getCount() > 0) {
+
             cursorRecepcionEnfermo.moveToFirst();
             mRecepcionEnfermo= RecepcionEnfermoHelper.crearRecepcionEnfermo(cursorRecepcionEnfermo);
             Participante participante = this.getParticipante(MainDBConstants.codigo + "='" +cursorRecepcionEnfermo.getString(cursorRecepcionEnfermo.getColumnIndex(MainDBConstants.participante)) +"'", null);
             mRecepcionEnfermo.setParticipante(participante);
+        }
+        if (!cursorRecepcionEnfermo.isClosed()) cursorRecepcionEnfermo.close();
+        return mRecepcionEnfermo;
+    }
+    //Obtener un RecepcionEnfermo de la base de datos
+    public RecepcionEnfermomessage getRecepcionEnfermo1(String filtro, String orden) throws SQLException {
+        RecepcionEnfermomessage mRecepcionEnfermo = null;
+
+        Cursor cursorRecepcionEnfermo = crearCursor(MainDBConstants.RECEPCION_ENFERMO_TABLE , filtro, null, null);
+
+        if (cursorRecepcionEnfermo != null && cursorRecepcionEnfermo.getCount() > 0) {
+
+            cursorRecepcionEnfermo.moveToFirst();
+            mRecepcionEnfermo = RecepcionEnfermoHelper.crearRecepcionEnfermo1(cursorRecepcionEnfermo);
+            Participante participante = this.getParticipante(MainDBConstants.codigo + "='" +cursorRecepcionEnfermo.getString(cursorRecepcionEnfermo.getColumnIndex(MainDBConstants.participante)) +"'", null);
+            mRecepcionEnfermo.setParticipante(participante.getCodigo());
         }
         if (!cursorRecepcionEnfermo.isClosed()) cursorRecepcionEnfermo.close();
         return mRecepcionEnfermo;
@@ -2067,6 +2093,34 @@ public class EstudioDBAdapter {
         return true;
     }
 
+    public boolean bulkInsertRecepcionEnfermoBySql(List<RecepcionEnfermomessage> list) throws Exception {
+        if (null == list || list.size() <= 0) {
+            return false;
+        }
+        try {
+            SQLiteStatement stat = mDb.compileStatement(MainDBConstants.INSERT_RECEPCION_ENFERMO_TABLE);
+            mDb.beginTransaction();
+            for (RecepcionEnfermomessage remoteAppInfo : list) {
+                RecepcionEnfermoHelper.fillRecepcionEnfermoStatement(stat, remoteAppInfo);
+                long result = stat.executeInsert();
+                if (result < 0) return false;
+            }
+            mDb.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            try {
+                if (null != mDb) {
+                    mDb.endTransaction();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+
     public boolean bulkInsertUsuariosBySql(String tabla, List<?> list) throws Exception{
         if (null == list || list.size() <= 0) {
             return false;
@@ -2118,35 +2172,7 @@ public class EstudioDBAdapter {
         }
         return true;
     }
-    public boolean bulkInsertRecepcionEnfermoBySql(List<RecepcionEnfermo> mRecepcionEnfermos) {
-        if (null == mRecepcionEnfermos || mRecepcionEnfermos.size() <= 0) {
-            return false;
-        }
-        try {
-            SQLiteStatement stat = null;
-            mDb.beginTransaction();
-                    stat = mDb.compileStatement(MainDBConstants.INSERT_RECEPCION_ENFERMO_TABLE);
-                    for (Object remoteAppInfo : mRecepcionEnfermos) {
-                        CasaHelper.fillCasaStatement(stat, (Casa) remoteAppInfo);
-                        long result = stat.executeInsert();
-                        if (result < 0) return false;
-                    }
 
-            mDb.setTransactionSuccessful();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        } finally {
-            try {
-                if (null != mDb) {
-                    mDb.endTransaction();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return true;
-    }
 
     public boolean bulkInsertCasasBySql(String tabla, List<?> list) throws Exception{
         if (null == list || list.size() <= 0) {
