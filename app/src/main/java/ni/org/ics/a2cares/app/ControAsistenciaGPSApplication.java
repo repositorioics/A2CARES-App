@@ -3,12 +3,11 @@ package ni.org.ics.a2cares.app;
 import android.app.Application;
 import android.content.Context;
 
-public class MyIcsApplication extends Application{
+public class ControAsistenciaGPSApplication extends Application{
 	
-	private String passApp;
-	private static Context mContext;
 	private String latitudapp;
 	private String longitudapp;
+	private static Context mContext;
 	
 	@Override
 	public void onCreate() {
@@ -19,14 +18,6 @@ public class MyIcsApplication extends Application{
 	public static Context getContext(){
         return mContext;
     }
-
-	public String getPassApp() {
-		return passApp;
-	}
-
-	protected void setPassApp(String passApp) {
-		this.passApp = passApp;
-	}
 
 	public String getLatitudapp() {
 		return latitudapp;

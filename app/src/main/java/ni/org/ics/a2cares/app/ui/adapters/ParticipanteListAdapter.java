@@ -93,13 +93,21 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
                 holder.imageView.setImageResource(R.mipmap.ic_male);
             }
         if(participante.getProcesos().getPendienteMxTx().equalsIgnoreCase("1")) {
-             dias = listdata2.get(0).getPositivo();
-              if (Integer.parseInt(dias) < 14){
-                  holder.textViewConva1.setText(String.format(String.format(String.format(holder.context.getString(R.string.alerta_conva) + " --Días Conv.: " + dias + " --Fis.: " + mDateFormat.format(listdata2.get(0).getFis())))));
-              }
-             if (Integer.parseInt(dias) > 13 && Integer.parseInt(dias) > 46 ) {
-                  holder.textViewConva.setText(holder.context.getString(R.string.alerta_conva) + " --Días Conv.: " + dias + " --Fis.: " + mDateFormat.format(listdata2.get(0).getFis()));
+            if (listdata2.size() != 0) {
+                for (int b=0;b < listdata2.size();b++) {
+                    dias = listdata2.get(b).getPositivo();
+
+                    if (Integer.parseInt(dias) < 14) {
+                        holder.textViewConva1.setText(String.format(String.format(String.format(holder.context.getString(R.string.alerta_conva) + " --Días Conv.: " + dias + " --Fis.: " + mDateFormat.format(listdata2.get(b).getFis())))));
+                    }
+                    if (Integer.parseInt(dias) > 13 && Integer.parseInt(dias) < 46) {
+                        holder.textViewConva.setText(holder.context.getString(R.string.alerta_conva) + " --Días Conv.: " + dias + " --Fis.: " + mDateFormat.format(listdata2.get(b).getFis()));
+                    }
+                }
+            }else{
+                dias = "0";
             }
+
         }else{
             holder.textViewConva.setText("");
         }

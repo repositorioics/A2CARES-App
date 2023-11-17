@@ -71,6 +71,12 @@ public class MenuParticipanteAdapter extends ArrayAdapter<String> {
         //a partir del MA2018 no se deberia ingresar información en la pantalla de Familia
         boolean habilitado = true;
 
+        if (participante.getProcesos().getReconsent()!= null) {
+            if (participante.getProcesos().getReconsent().equals("1")) {
+                pendienteReconsentimiento = true;
+            }
+        }
+
         switch (position){
             /*case OPCION_CONSULTA:
                 habilitado = true;

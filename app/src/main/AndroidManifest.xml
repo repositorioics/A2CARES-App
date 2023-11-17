@@ -85,6 +85,8 @@
         <activity android:name=".bluetooth.activity.ChatActivity" android:screenOrientation="portrait"/>
         <activity android:name=".bluetooth.activity.DeviceListActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.maps.CoordenadasMapActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.maps.CoordenadasOnlyActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activities.enterdata.NuevoControlAsistenciaGPSActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.menu.MenuSupervisorActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.enterdata.RecepcionBhcActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.enterdata.RecepcionRojoActivity" android:screenOrientation="portrait"/>
@@ -119,6 +121,8 @@
         <activity android:name=".ui.activities.cambioDomicilio.CambioDomicilioBuscarParticipanteActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.cambioDomicilio.CambioDomicilioBuscarCasaActivity" android:screenOrientation="portrait"/>
         <activity android:name=".ui.activities.cambioDomicilio.CambioDomicilioParticipanteActivity" android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.activities.enterdata.NuevoControlAsistenciaActivity" android:screenOrientation="portrait"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

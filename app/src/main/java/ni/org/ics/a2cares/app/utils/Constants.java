@@ -48,6 +48,7 @@ public class Constants {
     public static final String VISITA_EXITOSA = "visita_exitosa";
     public static final String COD_PARTICIPANTE = "codigo_participante";
     public static final String PEDIR_VISITA = "pedir_visita";
+    public static final String CONTROL_ASISTNCIA = "control_asistencia";
 
     //Bluetooth
     public static final String ACCION = "accion";

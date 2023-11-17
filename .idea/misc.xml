@@ -3,9 +3,29 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.219" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/drawable/border.xml" value="0.219" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/drawable/finish_background.xml" value="0.219" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.219" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.219" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/drawable/ic_launcher_background.xml" value="0.219" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.219" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/drawable/selectable_item_background.xml" value="0.219" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/activity_data_enter.xml" value="0.192481884057971" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/activity_main.xml" value="0.16927083333333334" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/activity_markers.xml" value="0.192481884057971" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/activity_review.xml" value="0.192481884057971" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/complex_list_item.xml" value="0.2890625" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/fragment_nueva_mx_enfermo.xml" value="0.15729166666666666" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/fragment_nueva_orden_lab.xml" value="0.25677083333333334" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/fragment_nuevo_control_asistencia.xml" value="0.15729166666666666" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/fragment_page.xml" value="0.192481884057971" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/fragment_page_coordenates.xml" value="0.24427083333333333" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/layout_data_enter.xml" value="0.15729166666666666" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/layout_data_enter_ControlAsist.xml" value="0.24427083333333333" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/layout_data_enter_controlAsistencia.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/layout_data_enter_control_asistencia.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/layout_mapa_control_asistencia.xml" value="0.2" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/login_layout.xml" value="0.16927083333333334" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/menu_item_2.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/menu_participante.xml" value="0.1125" />
@@ -16,7 +36,13 @@
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/search_house_list.xml" value="0.16927083333333334" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/search_list.xml" value="0.225" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/search_participants_list.xml" value="0.16927083333333334" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/spinner_item.xml" value="0.192481884057971" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/spinner_item_2.xml" value="0.192481884057971" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/toast.xml" value="0.192481884057971" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/layout/yesno.xml" value="0.192481884057971" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/menu/activity_login.xml" value="0.1125" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/menu/main.xml" value="0.1" />
+        <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/menu/menu_ento.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/PC/Documents/GitHub/A2CARES-App/app/src/main/res/xml/preferences.xml" value="0.11458333333333333" />
       </map>
     </option>

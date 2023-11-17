@@ -1045,4 +1045,51 @@ public class MainDBConstants {
             + actual + ","
             + codigoParticipante
             + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    //Tabla Control de Asistencia personal A2CARES
+    public static final String CONTROL_ASISTENCIA_TABLE = "control_asistencia";
+
+    //Campos tabla CONTROL_ASISTENCIA
+    public static final String horaentrada  = "horaEntrada";
+    public static final String horasalida  = "horaSalida";
+    public static final String usuarioregistro = "usuarioRegistro";
+   // public static final Integer idasistencia = ;
+    public static final String fechaasistencia = "fechaAsistencia";
+
+    //Crear tabla CONTROL_ASISTENCIA
+    public static final String CREATE_CONTROL_ASISTENCIA_TABLE = "create table if not exists "
+            + CONTROL_ASISTENCIA_TABLE + " ("
+            + id + " integer not null,  "
+            + fechaasistencia + " date, "
+            + horaentrada + " text, "
+            + horasalida + " text, "
+            + usuarioregistro + " text, "
+            + latitud +" real, "
+            + longitud + " real, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + id + "));";
+
+
+    public static final String INSERT_CONTROL_ASISTENCIA_TABLE = "insert into "
+            + CONTROL_ASISTENCIA_TABLE + " ("
+            + id + ","
+            + fechaasistencia + ","
+            + horaentrada + ","
+            + horasalida + ","
+            + usuarioregistro + ","
+            + latitud + ","
+            + longitud + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?)";
+
+
+
 }

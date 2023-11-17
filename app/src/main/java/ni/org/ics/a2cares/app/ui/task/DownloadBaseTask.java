@@ -66,6 +66,7 @@ public class DownloadBaseTask extends DownloadTask {
     public static final String CONTACTOS_PART = "10";
     public static final String PUNTOS_CANDIDATOS = "11";
     public static final String RECEPCION_ENFERMO = "12";
+    public static final String CONTROL_ASISTENCIA = "13";
 
     private static final String TOTAL_TASK_GENERALES = "12";
 	

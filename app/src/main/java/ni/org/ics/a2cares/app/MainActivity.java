@@ -24,6 +24,8 @@ import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.activities.BuscarCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.BuscarParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.activities.cambioDomicilio.CambioDomicilioMainActivity;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoControlAsistenciaActivity;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoControlAsistenciaGPSActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoTamizajeActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaPuntosCandidatosActivity;
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuLaboratorioActivity;
@@ -163,6 +165,20 @@ public class MainActivity extends AbstractAsyncActivity {
                     case 10: //Cambio de Domicilio
                         i = new Intent(getApplicationContext(), CambioDomicilioMainActivity.class);
                         startActivity(i);
+                        break;
+                    case 11: //Control Asistencia
+                        estudiosAdapter.open();
+                        Boolean esPersonA2cares = estudiosAdapter.buscarRol(username, "ROLE_PERSONAL_A2CARES");
+                        estudiosAdapter.close();
+                        if (esPersonA2cares){
+                          // i = new Intent(getApplicationContext(), NuevoControlAsistenciaActivity.class);
+                            i = new Intent(getApplicationContext(), NuevoControlAsistenciaGPSActivity.class);
+                            startActivity(i);
+
+                        }
+                        else{
+                            showToast(getApplicationContext().getString(R.string.perm_error));
+                        }
                         break;
                     default:
                         break;

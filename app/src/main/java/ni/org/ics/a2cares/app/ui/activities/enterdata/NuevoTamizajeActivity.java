@@ -1142,7 +1142,7 @@ public class NuevoTamizajeActivity extends AbstractAsyncActivity implements
                         procesos.setPendienteMxTx(Constants.NOKEYSND);
                         //encuesta de satisfaccion de usuario
                         procesos.setEsatUsuario(Constants.YESKEYSND);
-
+                        procesos.setReconsent(Constants.NOKEYSND);
                         //meta data
                         procesos.setRecordDate(new Date());
                         procesos.setRecordUser(username);

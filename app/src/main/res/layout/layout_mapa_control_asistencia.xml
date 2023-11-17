@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/mapa_control_asistencia_fragment"
+        android:layout_width="350dp"
+        android:layout_height="315dp"
+        android:layout_marginTop="330dp"/>
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="348dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="0dp"></fragment>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="395dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="6dip"
+                android:paddingTop="8dip"
+                android:paddingRight="6dip"
+                android:paddingBottom="2dip">
+
+                <EditText
+                    android:id="@+id/latlong"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:focusable="false"
+                    android:inputType="text" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+</LinearLayout>

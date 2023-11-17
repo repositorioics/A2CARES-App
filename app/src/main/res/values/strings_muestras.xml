@@ -2,6 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="muestras">Lista de Muestras</string>
     <string name="fechaMuestra">Fecha toma muestra</string>
+    <string name="fechaControlAsistencia">Fecha:</string>
     <string name="tuboRojo">¿Tomó tubo rojo?</string>
     <string name="codigoRojo">Código Muestra Rojo</string>
     <string name="razonNoRojo">¿Porqué razón no se tomó muestra en Tubo Rojo?</string>
@@ -32,4 +33,5 @@
 
     <!-- Muestras enfermo-->
     <string name="horaToma">Hora toma muestra</string>
+    <string name="horaControlAsistencia">Hora:</string>
 </resources>

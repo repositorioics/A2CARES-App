@@ -18,6 +18,7 @@ import ni.org.ics.a2cares.app.database.helpers.BarrioHelper;
 import ni.org.ics.a2cares.app.database.helpers.CambioDomicilioHelper;
 import ni.org.ics.a2cares.app.database.helpers.CartaConsentimientoHelper;
 import ni.org.ics.a2cares.app.database.helpers.CasaHelper;
+import ni.org.ics.a2cares.app.database.helpers.ControlAsistenciaHelper;
 import ni.org.ics.a2cares.app.database.helpers.DatosCoordenadasHelper;
 import ni.org.ics.a2cares.app.database.helpers.EncuestaCasaHelper;
 import ni.org.ics.a2cares.app.database.helpers.EncuestaParticipanteHelper;
@@ -42,6 +43,7 @@ import ni.org.ics.a2cares.app.domain.core.Barrio;
 import ni.org.ics.a2cares.app.domain.core.CambioDomicilio;
 import ni.org.ics.a2cares.app.domain.core.CartaConsentimiento;
 import ni.org.ics.a2cares.app.domain.core.Casa;
+import ni.org.ics.a2cares.app.domain.core.ControlAsistencia;
 import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
 import ni.org.ics.a2cares.app.domain.core.Estudio;
 import ni.org.ics.a2cares.app.domain.core.Muestra;
@@ -139,6 +141,7 @@ public class EstudioDBAdapter {
             db.execSQL(EntomologiaBConstants.CREATE_ENTO_CUESTIONARIO_HOGAR_POB_TABLE);
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_TABLE);
             db.execSQL(MainDBConstants.CREATE_CAMBIO_DOMICILIO_TABLE);
+            db.execSQL(MainDBConstants.CREATE_CONTROL_ASISTENCIA_TABLE);
         }
 
         @Override
@@ -1637,8 +1640,39 @@ public class EstudioDBAdapter {
     public boolean borrarMuestrasEnfermo() {
         return mDb.delete(MainDBConstants.MUESTRAS_ENFERMO_TABLE, null, null) > 0;
     }
+    //Crear nuevo ControlAsistencia en la base de datos
+    public void crearControlAsistencia(ControlAsistencia controlAsistencia) {
+        ContentValues cv = ControlAsistenciaHelper.crearControlAsistenciaContentValues(controlAsistencia);
+        mDb.insertOrThrow(MainDBConstants.CONTROL_ASISTENCIA_TABLE, null, cv);
+    }
 
-
+    //Obtener un ControlAsistencia de la base de datos
+    public ControlAsistencia getControlAsistencia(String filtro, String orden) throws SQLException {
+        ControlAsistencia mControlAsistencia = null;
+        Cursor cursorControlAsistencia = crearCursor(MainDBConstants.CONTROL_ASISTENCIA_TABLE , filtro, null, orden);
+        if (cursorControlAsistencia != null && cursorControlAsistencia.getCount() > 0) {
+            cursorControlAsistencia.moveToFirst();
+            mControlAsistencia = ControlAsistenciaHelper.crearControlAsistencia(cursorControlAsistencia);
+        }
+        if (!cursorControlAsistencia.isClosed()) cursorControlAsistencia.close();
+        return mControlAsistencia;
+    }
+    //Obtener una lista de CONTROL ASISTENCIA de la base de datos
+    public List<ControlAsistencia> getControlAsistencial(String filtro, String orden) throws SQLException {
+        List<ControlAsistencia> mControlAsistencia = new ArrayList<ControlAsistencia>();
+        Cursor cursorControlAsistencia = crearCursor(MainDBConstants.CONTROL_ASISTENCIA_TABLE, null, null, orden);
+        if (cursorControlAsistencia != null && cursorControlAsistencia.getCount() > 0) {
+            cursorControlAsistencia.moveToFirst();
+            mControlAsistencia.clear();
+            do{
+                ControlAsistencia mCA = null;
+                mCA = ControlAsistenciaHelper.crearControlAsistencia(cursorControlAsistencia);
+                mControlAsistencia.add(mCA);
+            } while (cursorControlAsistencia.moveToNext());
+        }
+        if (!cursorControlAsistencia.isClosed()) cursorControlAsistencia.close();
+        return mControlAsistencia;
+    }
 
     //Obtener un MuestraEnfermo de la base de datos
     public MuestraEnfermo getMuestraEnfermo(String filtro, String orden) throws SQLException {
@@ -2322,6 +2356,8 @@ public class EstudioDBAdapter {
         c.close();
         c = crearCursor(MainDBConstants.RECEPCION_ENFERMO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
+      /*  c = crearCursor(MainDBConstants.CONTROL_ASISTENCIA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}*/
         c.close();
         return false;
     }
@@ -2359,7 +2395,12 @@ public class EstudioDBAdapter {
         return mDb.update(MainDBConstants.CAMBIO_DOMICILIO_TABLE , cv, MainDBConstants.id + "='"
                 + cambioDomicilio.getId()+ "'", null) > 0;
     }
-
+    //Editar nuevo control de asistencia existente en la base de datos
+    public boolean editarControlAsistencia(ControlAsistencia controlAsistencia) {
+        ContentValues cv = ControlAsistenciaHelper.crearControlAsistenciaContentValues(controlAsistencia);
+        return mDb.update(MainDBConstants.CONTROL_ASISTENCIA_TABLE , cv, MainDBConstants.usuarioregistro + "='"
+                + controlAsistencia.getId()+ "'", null) > 0;
+    }
     //Limpiar la tabla de cambio de domicilio de la base de datos
     public boolean borrarCambioDomicilio() {
         return mDb.delete(MainDBConstants.CAMBIO_DOMICILIO_TABLE, null, null) > 0;

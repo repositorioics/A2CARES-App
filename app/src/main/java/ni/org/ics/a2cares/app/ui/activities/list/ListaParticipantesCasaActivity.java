@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ni.org.ics.a2cares.app.AbstractAsyncActivity;
@@ -48,6 +49,7 @@ public class ListaParticipantesCasaActivity extends AbstractAsyncActivity {
 	private List<Participante> mParticipantes = new ArrayList<Participante>();
 	private List<RecepcionEnfermo> mRecepcionEnfermo = new ArrayList<RecepcionEnfermo>();
 	private List<RecepcionEnfermomessage> mRecepcionEnfermom = new ArrayList<RecepcionEnfermomessage>();
+	private static RecepcionEnfermomessage recepcionenfermom = new RecepcionEnfermomessage();
 	private ParticipanteListAdapter adapter;
 	private static Casa casa = new Casa();
 	private static UserPermissions mUser = new UserPermissions();
@@ -129,6 +131,21 @@ public class ListaParticipantesCasaActivity extends AbstractAsyncActivity {
 				mRecepcionEnfermo.clear();
 				mParticipantes.addAll(estudiosAdapter.getParticipantes(MainDBConstants.casa +" = " + codigoCasa, MainDBConstants.codigo));
 				mUser = estudiosAdapter.getPermisosUsuario(MainDBConstants.USERNAME + "='" +username+"'", null);
+
+				for (int b=0;b<mParticipantes.size();b++) {
+					recepcionenfermom = estudiosAdapter.getRecepcionEnfermo1(MainDBConstants.participante + "='" + mParticipantes.get(b).getCodigo() + "'", null);
+					Date fechaactual = new Date(System.currentTimeMillis());
+					int milisecondsByDay = 86400000;
+					if (recepcionenfermom != null) {
+						int dias = (int) ((fechaactual.getTime() - recepcionenfermom.getFechaRecepcion().getTime()) / milisecondsByDay);
+
+						recepcionenfermom.setPositivo(String.valueOf(dias));
+						//  recepcionenfermom.setFis();
+						// recepcionenfermo.setObservacion(recepcionenfermo.getFis().toString());
+						// mRecepcionEnfermo.add(recepcionenfermo);
+						mRecepcionEnfermom.add(recepcionenfermom);
+					}
+				}
 				estudiosAdapter.close();
 			} catch (Exception e) {
 				Log.e(TAG, e.getLocalizedMessage(), e);

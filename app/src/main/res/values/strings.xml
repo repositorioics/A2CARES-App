@@ -19,6 +19,7 @@
     <string name="main_9">Candidatos</string>
     <string name="main_10">Médicos</string>
     <string name="main_11">Cambio de Domicilio</string>
+    <string name="main_12">Control de Asistencia</string>
     <string name="datos_part">Datos participante</string>
     <string name="participants">Lista Participantes</string>
     <string name="phones">Teléfonos</string>
@@ -27,6 +28,7 @@
     <string name="locate_house">Ubicar Casa</string>
     <string name="menu_doctor">Menu Médicos</string>
     <string name="lab_orders">Ordenes Laboratorio</string>
+    <string name="marcar_asistencia">Control de Asistencia</string>
 
     <string name="exit">Salir</string>
     <string name="success">Operación exitosa!</string>
@@ -65,6 +67,8 @@
     <string name="scan_error">Esta lectura es inválida!</string>
     <string name="alerta_conva">Pendiente Convaleciente, consulte con su Supervisor</string>
     <string name="alerta_retirado">Participante Retirado</string>
+    <string name="enter_guardado">Asistencia guardada con éxito</string>
+    <string name="procesando_espere">Procesando ubicación actual - De Guardar nuevamente</string>
 
     <!-- Formularios-->
     <string name="next">Siguiente</string>
@@ -73,6 +77,7 @@
     <string name="review">Revisar</string>
     <string name="submit_confirm_message">Guardar la informacion en la base de datos?</string>
     <string name="submit_confirm_button">Guardar</string>
+    <string name="submit_confirm_button_asist">Guardar Asistencia</string>
     <string name="cancel">Cancelar</string>
     <string name="is_null">(Nulo)</string>
     <string name="loading">Cargando.....</string>
@@ -91,6 +96,8 @@
     <string name="code">Código</string>
     <string name="casa">Casa</string>
     <string name="participant">Participante</string>
+    <string name="usuarioa2cares">Usuario:</string>
+    <string name="ubicaciona2cares">Ubicación Actual:</string>
     <string name="edad">Edad</string>
     <string name="notavailable">No disponible</string>
     <string name="pending">Pendiente</string>
@@ -232,6 +239,7 @@
 
     <!-- muestras de enfermo bioanalista-->
     <string name="sick_sample_title">Agregar muestra de enfermo</string>
+    <string name="control_asistencia_sample_title">Control de Asistencia Personal A2CARES</string>
     <string name="wrong_fis_2">FIS es posterior a la fecha de toma</string>
     <string name="wrong_fif_3">FIF es posterior a la fecha de toma</string>
     <!-- muestras de enfermo laboratorio-->
