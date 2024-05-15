@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	style="@style/WizardPageContainer">
+
+    <TextView style="@style/WizardPageTitleVertical"
+		android:text="@string/control_temperatura_termo_title"/>
+
+	<ScrollView
+		android:layout_width="385dp"
+		android:layout_height="420dp">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+
+			<TextView
+				style="@style/WizardFormLabel"
+				android:text="@string/usuarioBioanalista" />
+
+			<TextView
+				style="@style/WizardFormLabelPrincipal"
+				android:layout_marginLeft="100dp"
+				android:layout_marginRight="150dp"
+				android:text="@string/usuarioa2cares" />
+
+			<TextView
+				style="@style/WizardFormLabel"
+				android:text="@string/fechaControlAsistencia" />
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="20dp"
+				android:orientation="horizontal">
+
+				<EditText
+					android:id="@+id/inputFechaAsistencia"
+					android:layout_width="0dip"
+					android:layout_height="wrap_content"
+					android:layout_weight="1.0"
+					android:focusable="false"
+					android:inputType="text" />
+
+			</LinearLayout>
+
+			<TextView
+				style="@style/WizardFormLabel"
+				android:text="@string/horaControlAsistencia" />
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="20dp"
+				android:orientation="horizontal">
+
+				<EditText
+					android:id="@+id/inputHoraAsistencia"
+					android:layout_width="0dip"
+					android:layout_height="wrap_content"
+					android:layout_weight="1.0"
+					android:focusable="false"
+					android:inputType="text" />
+
+			</LinearLayout>
+
+			<TextView
+				style="@style/WizardFormLabel"
+				android:text="@string/temperaturaTermo" />
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="20dp"
+				android:orientation="horizontal">
+
+				<EditText
+					android:id="@+id/temperaturaTermo"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="20dp"
+					android:inputType="numberDecimal" />
+
+			</LinearLayout>
+		</LinearLayout>
+	</ScrollView>
+
+
+</LinearLayout>

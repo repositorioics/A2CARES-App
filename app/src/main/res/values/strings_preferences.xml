@@ -4,16 +4,17 @@
     <string name="preferences">Configuración</string>
 
     <string name="server_preferences">Configuración Servidor</string>
-    <string name="default_server_url">http://nicaumich3.miserver.it.umich.edu/a2cares</string>
-    <string name="server_url">URL de servidor</string>
-    <string name="check_server">Verificar en el servidor</string>
-    <string name="check_wipe">Limpiar base de datos</string>
-    <string name="url_error">Error en la dirección</string>
-    <string name="change_server_url">Cambiar URL de servidor</string>
+   <string name="default_server_url">http://nicaumich3.miserver.it.umich.edu/a2cares</string>
+    <!--<string name="default_server_url">http://192.168.1.14:8080/a2cares</string>-->
+   <string name="server_url">URL de servidor</string>
+   <string name="check_server">Verificar en el servidor</string>
+   <string name="check_wipe">Limpiar base de datos</string>
+   <string name="url_error">Error en la dirección</string>
+   <string name="change_server_url">Cambiar URL de servidor</string>
 
-    <string name="app_preferences">Configuración Aplicación</string>
-    <string name="update_app_preferences">Actualizar Aplicación</string>
-    <string name="version_app_preferences">Versión 1.4.6.0</string>
-    <string name="versiondate_app_preferences">Ago 18, 2023</string>
+   <string name="app_preferences">Configuración Aplicación</string>
+   <string name="update_app_preferences">Actualizar Aplicación</string>
+   <string name="version_app_preferences">Versión 1.4.8.2</string>
+   <string name="versiondate_app_preferences">Abr 20, 2024</string>
 
 </resources>

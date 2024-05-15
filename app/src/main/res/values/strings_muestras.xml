@@ -27,6 +27,15 @@
     <string name="ml"> (ml)</string>
     <string name="agregarMuestra">Agregar Muestra</string>
 
+    <string name="perteneceEstudio">1.¿El participante pertence al estudio?</string>
+
+    <string name="edadA">Ingrese la edad del paciente:</string>
+    <string name="sexoA">Seleccione el sexo del paciente:</string>
+    <string name="febrilA">2.¿El participante acude por un proceso febril, rash o conjuntivis?</string>
+    <string name="generaHoja">2.1 Generar hoja de consulta con codigo de participante</string>
+    <string name="anotarHoja">2.2 Anotar hoja de consulta que será asignada al participante en la atención</string>
+    <string name="sinFiebre">Participante cohorte atendido sin fiebre</string>
+
     <string name="error1CodigoMx">Código de muestra no válido</string>
     <string name="error2CodigoMx">Código de muestra no pertenece al participante: <xliff:g id="codigo">%1$s</xliff:g></string>
     <string name="errorMx">Muestra ya existe en la base de datos</string>
@@ -34,4 +43,6 @@
     <!-- Muestras enfermo-->
     <string name="horaToma">Hora toma muestra</string>
     <string name="horaControlAsistencia">Hora:</string>
+    <!-- Control de Temperatura Termo-->
+    <string name="temperaturaTermo">Temperatura:</string>
 </resources>

@@ -45,6 +45,11 @@ public class MenuMedicoAdapter extends ArrayAdapter<String> {
                 img=getContext().getResources().getDrawable(R.mipmap.ic_samples);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
                 break;
+			case 1:
+				//textView.setText(values[position] + "(" + numOrdenes + ")");
+				img=getContext().getResources().getDrawable(R.mipmap.ic_review);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				break;
             default:
                 img=getContext().getResources().getDrawable(R.mipmap.ic_help);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);

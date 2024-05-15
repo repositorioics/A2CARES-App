@@ -119,8 +119,8 @@ public class RecepcionEnfermoHelper extends BindStatementHelper {
         //stat.bindString(9, recepcionEnfermo.getObservacion() );
         //stat.bindString(10, recepcionEnfermo.getCategoria() );
 
-        bindDate(stat, 6, recepcionEnfermo.getFif() );
-        bindDate(stat, 7, recepcionEnfermo.getFis());
+        bindDate(stat, 6, recepcionEnfermo.getFis() );
+        bindDate(stat, 7, recepcionEnfermo.getFif());
 
         //stat.bindString(13, String.valueOf(recepcionEnfermo.getEstado()));
         //stat.bindString(14, recepcionEnfermo.getRecordUser());

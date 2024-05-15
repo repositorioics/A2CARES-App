@@ -2,7 +2,7 @@
 <resources>
     <string name="fechaNacimiento">2. Fecha de Nacimiento</string>
     <string name="fechaNacimientoHint">.</string>
-    <string name="sexo">1. Género</string>
+    <string name="sexo">Género</string>
     <string name="sexoHint">Anote el género de la persona que esta tamizando.</string>
     <string name="aceptaTamizaje">3. Acepta realizar tamizaje?</string>
     <string name="aceptaTamizajeHint">Pregunte si está de acuerdo en realizar el tamizaje.</string>
@@ -59,6 +59,7 @@
     <string name="apellido2TestigoHint">Nombre completo del Testigo</string>
 
     <string name="codigoNuevoParticipante">9. Código para el nuevo Participante</string>
+    <string name="codigoParticipanteAdmision"> Código del Participante</string>
 
     <string name="nombre1">1er Nombre</string>
     <string name="nombre1Hint">Nombre completo del participante</string>

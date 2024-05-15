@@ -21,6 +21,7 @@ import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.core.CambioDomicilio;
 import ni.org.ics.a2cares.app.domain.core.ControlAsistencia;
+import ni.org.ics.a2cares.app.domain.core.Admision;
 import ni.org.ics.a2cares.app.domain.core.CartaConsentimiento;
 import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
@@ -34,6 +35,8 @@ import ni.org.ics.a2cares.app.domain.core.Tamizaje;
 import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
 import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
 import ni.org.ics.a2cares.app.domain.laboratorio.Serologia;
+import ni.org.ics.a2cares.app.domain.medico.InformeFindeDiaMedicos;
+import ni.org.ics.a2cares.app.domain.core.ControlTemperaturaTermo;
 import ni.org.ics.a2cares.app.domain.medico.OrdenLaboratorio;
 import ni.org.ics.a2cares.app.domain.puntos.PuntoCandidato;
 import ni.org.ics.a2cares.app.domain.supervisor.RecepcionMuestra;
@@ -77,6 +80,10 @@ public class UploadAllTask extends UploadTask {
     private List<MuestraEnfermo> mMuestrasEnf = new ArrayList<MuestraEnfermo>();
     private List<RecepcionEnfermo> mRecepcionesEnf = new ArrayList<RecepcionEnfermo>();
     private List<ControlAsistencia> mControlAsistencia = new ArrayList<ControlAsistencia>();
+    private List<Admision> mAdmision = new ArrayList<Admision>();
+    private ControlAsistencia mControlAsistencia1 = new ControlAsistencia();
+    private List<InformeFindeDiaMedicos> mInformeDiaMedicos = new ArrayList<InformeFindeDiaMedicos>();
+    private List<ControlTemperaturaTermo> mControlTemperatura = new ArrayList<ControlTemperaturaTermo>();
 
     //Encuesta de satisfacción de usuario
     private List<EncuestaSatisfaccionUsuario> mEncSatUsuario = new ArrayList<EncuestaSatisfaccionUsuario>();
@@ -122,7 +129,10 @@ public class UploadAllTask extends UploadTask {
 
     //Control Asistencias
     public static final String CONTROL_ASISTENCIA = "24";
-    private static final String TOTAL_TASK = "25";
+    public static final String ADMISION = "25";
+    public static final String INFORME_FIN_DIA_MEDICOS = "26";
+    public static final String CONTROL_TEMPERATURA = "27";
+    private static final String TOTAL_TASK = "28";
 	
 
 	@Override
@@ -161,6 +171,11 @@ public class UploadAllTask extends UploadTask {
 
             mCambioDomicilio = estudioAdapter.getListaCambioDomicilioSinEnviar(filtro, null);
             mControlAsistencia = estudioAdapter.getControlAsistencial(filtro, null);
+            mAdmision = estudioAdapter.getAdmision(filtro, null);
+            mControlAsistencia1 = estudioAdapter.getControlAsistencia(filtro, null);
+            mInformeDiaMedicos = estudioAdapter.getInformeFinDiaMedicos(filtro, null);
+            mControlTemperatura = estudioAdapter.getControlTemperatura(filtro, null);
+
 
             if (mVisitasTerreno.size() <= 0 &&
                     mTamizajes.size() <= 0 &&
@@ -185,7 +200,10 @@ public class UploadAllTask extends UploadTask {
                     mEncSatUsuario.size() <= 0 &&
                     mReconsent.size() <= 0 &&
                     mCambioDomicilio.size() <= 0 &&
-                    mControlAsistencia.size() <= 0
+                    mControlAsistencia.size() <= 0 &&
+                    mAdmision.size() <= 0 &&
+                    mInformeDiaMedicos.size() <= 0 &&
+                    mControlTemperatura.size() <= 0
             ) {
                 error = Constants.NO_DATA;
             } else {
@@ -332,7 +350,28 @@ public class UploadAllTask extends UploadTask {
                 actualizarBaseDatos(Constants.STATUS_SUBMITTED, CONTROL_ASISTENCIA);
                 error = cargarControlAsistencia(url, username, password);
                 if (!error.matches(Constants.DATOS_RECIBIDOS)) {
-                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CONTROL_ASISTENCIA);
+                  //  actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, CONTROL_ASISTENCIA);
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, ADMISION);
+                error = cargarAdmision(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                   // actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ADMISION);
+
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, INFORME_FIN_DIA_MEDICOS);
+                error = cargarInformeFinDiaMedicos(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                     actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ADMISION);
+
+                    return error;
+                }
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, CONTROL_TEMPERATURA);
+                error = cargarControlTemperatura(url, username, password);
+                if (!error.matches(Constants.DATOS_RECIBIDOS)) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ADMISION);
+
                     return error;
                 }
 
@@ -341,6 +380,7 @@ public class UploadAllTask extends UploadTask {
 			e1.printStackTrace();
 			return e1.getLocalizedMessage();
 		}finally {
+
             estudioAdapter.close();
         }
         return error;
@@ -597,9 +637,39 @@ public class UploadAllTask extends UploadTask {
             c = mControlAsistencia.size();
             if(c>0){
                 for (ControlAsistencia controlAsistencia : mControlAsistencia) {
-                   // controlAsistencia.setEstado(estado);
+                    controlAsistencia.setEstado(estado);
                     estudioAdapter.editarControlAsistencia(controlAsistencia);
                     publishProgress("Actualizando los cambios de Control de Asistencia en base de datos local", Integer.valueOf(mControlAsistencia.indexOf(controlAsistencia)).toString(), Integer.valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(ADMISION)){
+            c = mAdmision.size();
+            if(c>0){
+                for (Admision admision : mAdmision) {
+                    admision.setEstado(estado);
+                    estudioAdapter.editarAdmision(admision);
+                    publishProgress("Actualizando los cambios de Admision en base de datos local", Integer.valueOf(mControlAsistencia.indexOf(admision)).toString(), Integer.valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(INFORME_FIN_DIA_MEDICOS)){
+            c = mInformeDiaMedicos.size();
+            if(c>0){
+                for (InformeFindeDiaMedicos informeFindeDiaMedicos : mInformeDiaMedicos) {
+                    informeFindeDiaMedicos.setEstado(estado);
+                    estudioAdapter.editarInformeFinDiaMedicos(informeFindeDiaMedicos);
+                    publishProgress("Actualizando los cambios de Informe Fin de Dia Médicos en base de datos local", Integer.valueOf(mControlAsistencia.indexOf(informeFindeDiaMedicos)).toString(), Integer.valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(CONTROL_TEMPERATURA)){
+            c = mControlTemperatura.size();
+            if(c>0){
+                for (ControlTemperaturaTermo controltemp : mControlTemperatura) {
+                    controltemp.setEstado(estado);
+                    estudioAdapter.editarControlTemperatura(controltemp);
+                    publishProgress("Actualizando los cambios de Control de Temperatura en base de datos local", Integer.valueOf(mControlTemperatura.indexOf(controltemp)).toString(), Integer.valueOf(c).toString());
                 }
             }
         }
@@ -1202,7 +1272,7 @@ public class UploadAllTask extends UploadTask {
             if(mOrdenesLab.size()>0){
                 // La URL de la solicitud POST
                 publishProgress("Enviando ordenes laboratorio!", ORDENES_LAB, TOTAL_TASK);
-                final String urlRequest = url + "/movil/ordeneslab";
+                final String urlRequest = url + "/movil/ordeneslab1";
                 OrdenLaboratorio[] envio = mOrdenesLab.toArray(new OrdenLaboratorio[mOrdenesLab.size()]);
                 HttpHeaders requestHeaders = new HttpHeaders();
                 HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
@@ -1375,17 +1445,53 @@ public class UploadAllTask extends UploadTask {
     // url, username, password
     protected String cargarControlAsistencia(String url, String username,String password) throws Exception {
         try {
-            if(mControlAsistencia.size()>0){
+
+            if(mControlAsistencia.size()>0 ){
                 // La URL de la solicitud POST
                 publishProgress("Enviando Control de Asistencia de Personal!", CONTROL_ASISTENCIA, TOTAL_TASK);
                 final String urlRequest = url + "/movil/controlasistencia";
                 ControlAsistencia[] envio = mControlAsistencia.toArray(new ControlAsistencia[mControlAsistencia.size()]);
+
+                    HttpHeaders requestHeaders = new HttpHeaders();
+                    HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                    requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                    requestHeaders.setAuthorization(authHeader);
+                    HttpEntity<ControlAsistencia[]> requestEntity =
+                            new HttpEntity<ControlAsistencia[]>(envio, requestHeaders);
+                    RestTemplate restTemplate = new RestTemplate();
+                    restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                    restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                    // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                    ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                            String.class);
+                    return response.getBody();
+
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+    /********************* ADMISION ************************/
+    // url, username, password
+    protected String cargarAdmision(String url, String username,String password) throws Exception {
+        try {
+
+            if(mAdmision.size()>0 ){
+                // La URL de la solicitud POST
+                publishProgress("Enviando Admision de Pacientes!", ADMISION, TOTAL_TASK);
+                final String urlRequest = url + "/movil/admisionpacientes";
+                Admision[] envio = mAdmision.toArray(new Admision[mAdmision.size()]);
+
                 HttpHeaders requestHeaders = new HttpHeaders();
                 HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
                 requestHeaders.setContentType(MediaType.APPLICATION_JSON);
                 requestHeaders.setAuthorization(authHeader);
-                HttpEntity<ControlAsistencia[]> requestEntity =
-                        new HttpEntity<ControlAsistencia[]>(envio, requestHeaders);
+                HttpEntity<Admision[]> requestEntity =
+                        new HttpEntity<Admision[]>(envio, requestHeaders);
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
                 restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
@@ -1393,6 +1499,75 @@ public class UploadAllTask extends UploadTask {
                 ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
                         String.class);
                 return response.getBody();
+
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+    /********************* INFORME FIN DE DIA MEDICOS ************************/
+    // url, username, password
+    protected String cargarInformeFinDiaMedicos(String url, String username,String password) throws Exception {
+        try {
+
+            if(mInformeDiaMedicos.size()>0 ){
+                // La URL de la solicitud POST
+                publishProgress("Enviando Informe de Fin de Dia Médicos!", INFORME_FIN_DIA_MEDICOS, TOTAL_TASK);
+                final String urlRequest = url + "/movil/informemedicos";
+                InformeFindeDiaMedicos[] envio = mInformeDiaMedicos.toArray(new InformeFindeDiaMedicos[mInformeDiaMedicos.size()]);
+
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<InformeFindeDiaMedicos[]> requestEntity =
+                        new HttpEntity<InformeFindeDiaMedicos[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
+    /********************* CONTROL DE TEMPERATURA TERMOS ************************/
+    // url, username, password
+    protected String cargarControlTemperatura(String url, String username,String password) throws Exception {
+        try {
+
+            if(mControlTemperatura.size()>0 ){
+                // La URL de la solicitud POST
+                publishProgress("Enviando Control de Temperatura de Termos!", CONTROL_TEMPERATURA, TOTAL_TASK);
+                final String urlRequest = url + "/movil/controltemperatura";
+                ControlTemperaturaTermo[] envio = mControlTemperatura.toArray(new ControlTemperaturaTermo [mControlTemperatura.size()]);
+
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ControlTemperaturaTermo[]> requestEntity =
+                        new HttpEntity<ControlTemperaturaTermo[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+
             }
             else{
                 return Constants.DATOS_RECIBIDOS;

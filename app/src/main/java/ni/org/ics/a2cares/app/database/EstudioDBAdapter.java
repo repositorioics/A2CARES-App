@@ -14,16 +14,19 @@ import java.util.List;
 
 import ni.org.ics.a2cares.app.database.constants.EncuestasDBConstants;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
+import ni.org.ics.a2cares.app.database.helpers.AdmisionHelper;
 import ni.org.ics.a2cares.app.database.helpers.BarrioHelper;
 import ni.org.ics.a2cares.app.database.helpers.CambioDomicilioHelper;
 import ni.org.ics.a2cares.app.database.helpers.CartaConsentimientoHelper;
 import ni.org.ics.a2cares.app.database.helpers.CasaHelper;
 import ni.org.ics.a2cares.app.database.helpers.ControlAsistenciaHelper;
+import ni.org.ics.a2cares.app.database.helpers.ControlTemperaturaHelper;
 import ni.org.ics.a2cares.app.database.helpers.DatosCoordenadasHelper;
 import ni.org.ics.a2cares.app.database.helpers.EncuestaCasaHelper;
 import ni.org.ics.a2cares.app.database.helpers.EncuestaParticipanteHelper;
 import ni.org.ics.a2cares.app.database.helpers.EncuestaPesoTallaHelper;
 import ni.org.ics.a2cares.app.database.helpers.EstudiosHelper;
+import ni.org.ics.a2cares.app.database.helpers.InformeFinDiaMedicosHelper;
 import ni.org.ics.a2cares.app.database.helpers.MessageResourceHelper;
 import ni.org.ics.a2cares.app.database.helpers.MuestraEnfermoHelper;
 import ni.org.ics.a2cares.app.database.helpers.MuestraHelper;
@@ -39,11 +42,13 @@ import ni.org.ics.a2cares.app.database.helpers.TamizajeHelper;
 import ni.org.ics.a2cares.app.database.helpers.TelefonoContactoHelper;
 import ni.org.ics.a2cares.app.database.helpers.UserSistemaHelper;
 import ni.org.ics.a2cares.app.database.helpers.VisitaTerrenoHelper;
+import ni.org.ics.a2cares.app.domain.core.Admision;
 import ni.org.ics.a2cares.app.domain.core.Barrio;
 import ni.org.ics.a2cares.app.domain.core.CambioDomicilio;
 import ni.org.ics.a2cares.app.domain.core.CartaConsentimiento;
 import ni.org.ics.a2cares.app.domain.core.Casa;
 import ni.org.ics.a2cares.app.domain.core.ControlAsistencia;
+import ni.org.ics.a2cares.app.domain.core.ControlTemperaturaTermo;
 import ni.org.ics.a2cares.app.domain.core.DatosCoordenadas;
 import ni.org.ics.a2cares.app.domain.core.Estudio;
 import ni.org.ics.a2cares.app.domain.core.Muestra;
@@ -57,6 +62,7 @@ import ni.org.ics.a2cares.app.domain.core.TelefonoContacto;
 import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermo;
 import ni.org.ics.a2cares.app.domain.laboratorio.RecepcionEnfermomessage;
 import ni.org.ics.a2cares.app.domain.laboratorio.Serologia;
+import ni.org.ics.a2cares.app.domain.medico.InformeFindeDiaMedicos;
 import ni.org.ics.a2cares.app.domain.medico.OrdenLaboratorio;
 import ni.org.ics.a2cares.app.domain.message.MessageResource;
 import ni.org.ics.a2cares.app.domain.puntos.PuntoCandidato;
@@ -142,6 +148,9 @@ public class EstudioDBAdapter {
             db.execSQL(EncuestasDBConstants.CREATE_ENCUESTA_SATISFACCION_USUARIO_TABLE);
             db.execSQL(MainDBConstants.CREATE_CAMBIO_DOMICILIO_TABLE);
             db.execSQL(MainDBConstants.CREATE_CONTROL_ASISTENCIA_TABLE);
+            db.execSQL(MainDBConstants.CREATE_ADMISION_PACIENTES_TABLE);
+            db.execSQL(MainDBConstants.CREATE_INFORME_FIN_DIA_MEDICOS_TABLE);
+            db.execSQL(MainDBConstants.CREATE_CONTROL_TEMPERATURA_TERMO_TABLE);
         }
 
         @Override
@@ -1161,7 +1170,16 @@ public class EstudioDBAdapter {
         if (!cursor.isClosed()) cursor.close();
         return mEncuestas;
     }
-
+    //Crear nueva Admision en la base de datos
+    public void crearAdmision(Admision admision) {
+        ContentValues cv = AdmisionHelper.crearAdmisionContentValues(admision);
+        mDb.insertOrThrow(MainDBConstants.ADMISION_PACIENTES_TABLE, null, cv);
+    }
+    //Crear nueva Admision en la base de datos
+    public void crearInformeFinDiaMedicos(InformeFindeDiaMedicos informeFindeDiaMedicos) {
+        ContentValues cv = InformeFinDiaMedicosHelper.crearFinDiaMedicosValues(informeFindeDiaMedicos);
+        mDb.insertOrThrow(MainDBConstants.INFORME_FIN_DIA_MEDICOS_TABLE, null, cv);
+    }
     /**
      * Metodos para Muestra en la base de datos
      *
@@ -1646,6 +1664,12 @@ public class EstudioDBAdapter {
         mDb.insertOrThrow(MainDBConstants.CONTROL_ASISTENCIA_TABLE, null, cv);
     }
 
+    //Crear nuevo Control Temperatura en la base de datos
+    public void crearControlTemperatura(ControlTemperaturaTermo controlTemp) {
+        ContentValues cv = ControlTemperaturaHelper.crearControlTemperaturaContentValues(controlTemp);
+        mDb.insertOrThrow(MainDBConstants.CONTROL_TEMPERATURA_TERMO_TABLE, null, cv);
+    }
+
     //Obtener un ControlAsistencia de la base de datos
     public ControlAsistencia getControlAsistencia(String filtro, String orden) throws SQLException {
         ControlAsistencia mControlAsistencia = null;
@@ -1660,7 +1684,7 @@ public class EstudioDBAdapter {
     //Obtener una lista de CONTROL ASISTENCIA de la base de datos
     public List<ControlAsistencia> getControlAsistencial(String filtro, String orden) throws SQLException {
         List<ControlAsistencia> mControlAsistencia = new ArrayList<ControlAsistencia>();
-        Cursor cursorControlAsistencia = crearCursor(MainDBConstants.CONTROL_ASISTENCIA_TABLE, null, null, orden);
+        Cursor cursorControlAsistencia = crearCursor(MainDBConstants.CONTROL_ASISTENCIA_TABLE, filtro, null, orden);
         if (cursorControlAsistencia != null && cursorControlAsistencia.getCount() > 0) {
             cursorControlAsistencia.moveToFirst();
             mControlAsistencia.clear();
@@ -1673,7 +1697,65 @@ public class EstudioDBAdapter {
         if (!cursorControlAsistencia.isClosed()) cursorControlAsistencia.close();
         return mControlAsistencia;
     }
-
+    //Obtener una lista de ADMISION de la base de datos
+    public List<Admision> getAdmision(String filtro, String orden) throws SQLException {
+        List<Admision> mAdmision= new ArrayList<Admision>();
+        Cursor cursorAdmision = crearCursor(MainDBConstants.ADMISION_PACIENTES_TABLE, filtro, null, orden);
+        if (cursorAdmision != null && cursorAdmision.getCount() > 0) {
+            cursorAdmision.moveToFirst();
+            mAdmision.clear();
+            do{
+                Admision mCA = null;
+                mCA = AdmisionHelper.crearAdmision(cursorAdmision);
+                mAdmision.add(mCA);
+            } while (cursorAdmision.moveToNext());
+        }
+        if (!cursorAdmision.isClosed()) cursorAdmision.close();
+        return mAdmision;
+    }
+    //Obtener una lista de Control de temperatura de la base de datos
+    public List<ControlTemperaturaTermo> getControlTemperatura(String filtro, String orden) throws SQLException {
+        List<ControlTemperaturaTermo> mControlTemperatura= new ArrayList<ControlTemperaturaTermo>();
+        Cursor cursorInforme = crearCursor(MainDBConstants.CONTROL_TEMPERATURA_TERMO_TABLE, filtro, null, orden);
+        if (cursorInforme != null && cursorInforme.getCount() > 0) {
+            cursorInforme.moveToFirst();
+            mControlTemperatura.clear();
+            do{
+                ControlTemperaturaTermo mCA = null;
+                mCA = ControlTemperaturaHelper.crearControlTemperatura(cursorInforme);
+                mControlTemperatura.add(mCA);
+            } while (cursorInforme.moveToNext());
+        }
+        if (!cursorInforme.isClosed()) cursorInforme.close();
+        return mControlTemperatura;
+    }
+    //Obtener una lista de ADMISION de la base de datos
+    public List<InformeFindeDiaMedicos> getInformeFinDiaMedicos(String filtro, String orden) throws SQLException {
+        List<InformeFindeDiaMedicos> mInformeDiaMedicos= new ArrayList<InformeFindeDiaMedicos>();
+        Cursor cursorInforme = crearCursor(MainDBConstants.INFORME_FIN_DIA_MEDICOS_TABLE, filtro, null, orden);
+        if (cursorInforme != null && cursorInforme.getCount() > 0) {
+            cursorInforme.moveToFirst();
+            mInformeDiaMedicos.clear();
+            do{
+                InformeFindeDiaMedicos mCA = null;
+                mCA = InformeFinDiaMedicosHelper.crearInformeFinDiaMedicos(cursorInforme);
+                mInformeDiaMedicos.add(mCA);
+            } while (cursorInforme.moveToNext());
+        }
+        if (!cursorInforme.isClosed()) cursorInforme.close();
+        return mInformeDiaMedicos;
+    }
+    //Obtener un ControlAsistencia de la base de datos
+    public InformeFindeDiaMedicos getInformeFinDiaMedicosU(String filtro, String orden) throws SQLException {
+        InformeFindeDiaMedicos mControlAsistencia = null;
+        Cursor cursorControlAsistencia = crearCursor(MainDBConstants.INFORME_FIN_DIA_MEDICOS_TABLE , filtro, null, orden);
+        if (cursorControlAsistencia != null && cursorControlAsistencia.getCount() > 0) {
+            cursorControlAsistencia.moveToFirst();
+            mControlAsistencia = InformeFinDiaMedicosHelper.crearInformeFinDiaMedicos(cursorControlAsistencia);
+        }
+        if (!cursorControlAsistencia.isClosed()) cursorControlAsistencia.close();
+        return mControlAsistencia;
+    }
     //Obtener un MuestraEnfermo de la base de datos
     public MuestraEnfermo getMuestraEnfermo(String filtro, String orden) throws SQLException {
         MuestraEnfermo mMuestraEnfermo = null;
@@ -2356,8 +2438,8 @@ public class EstudioDBAdapter {
         c.close();
         c = crearCursor(MainDBConstants.RECEPCION_ENFERMO_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
         if (c != null && c.getCount()>0) {c.close();return true;}
-      /*  c = crearCursor(MainDBConstants.CONTROL_ASISTENCIA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
-        if (c != null && c.getCount()>0) {c.close();return true;}*/
+        c = crearCursor(MainDBConstants.CONTROL_ASISTENCIA_TABLE, MainDBConstants.estado + "='"  + Constants.STATUS_NOT_SUBMITTED+ "'", null, null);
+        if (c != null && c.getCount()>0) {c.close();return true;}
         c.close();
         return false;
     }
@@ -2398,8 +2480,30 @@ public class EstudioDBAdapter {
     //Editar nuevo control de asistencia existente en la base de datos
     public boolean editarControlAsistencia(ControlAsistencia controlAsistencia) {
         ContentValues cv = ControlAsistenciaHelper.crearControlAsistenciaContentValues(controlAsistencia);
-        return mDb.update(MainDBConstants.CONTROL_ASISTENCIA_TABLE , cv, MainDBConstants.usuarioregistro + "='"
+        return mDb.update(MainDBConstants.CONTROL_ASISTENCIA_TABLE , cv, MainDBConstants.id + "='"
                 + controlAsistencia.getId()+ "'", null) > 0;
+    }
+    //Editar nueva ADMISION en la base de datos
+    public boolean editarAdmision(Admision admision) {
+        ContentValues cv = AdmisionHelper.crearAdmisionContentValues(admision);
+        return mDb.update(MainDBConstants.ADMISION_PACIENTES_TABLE , cv, MainDBConstants.id + "='"
+                + admision.getId()+ "'", null) > 0;
+    }
+    //Editar nueva control de temperatura en la base de datos
+    public boolean editarControlTemperatura(ControlTemperaturaTermo controlTemperaturaTermo) {
+        ContentValues cv = ControlTemperaturaHelper.crearControlTemperaturaContentValues(controlTemperaturaTermo);
+        return mDb.update(MainDBConstants.CONTROL_TEMPERATURA_TERMO_TABLE , cv, MainDBConstants.recordUser + "='"
+                + controlTemperaturaTermo.getRecordUser() + "'", null) > 0;
+    }
+    //Editar nueva informe fin de dia medicos en la base de datos
+    public boolean editarInformeFinDiaMedicos(InformeFindeDiaMedicos informeFindeDiaMedicos) {
+        ContentValues cv = InformeFinDiaMedicosHelper.crearFinDiaMedicosValues(informeFindeDiaMedicos);
+        return mDb.update(MainDBConstants.INFORME_FIN_DIA_MEDICOS_TABLE , cv, MainDBConstants.id + "='"
+                + informeFindeDiaMedicos.getId()+ "'", null) > 0;
+    }
+    //Limpiar la tabla de Admision de la base de datos
+    public boolean borrarAdmision() {
+        return mDb.delete(MainDBConstants.ADMISION_PACIENTES_TABLE, null, null) > 0;
     }
     //Limpiar la tabla de cambio de domicilio de la base de datos
     public boolean borrarCambioDomicilio() {

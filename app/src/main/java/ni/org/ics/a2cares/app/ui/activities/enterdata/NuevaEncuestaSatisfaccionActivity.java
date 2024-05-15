@@ -50,7 +50,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nueva_encuesta_satisfaccion);
+        setContentView(R.layout.activity_nueva_encuesta_satisfaccioneverts);
 
         participante = (Participante) getIntent().getExtras().getSerializable(Constants.PARTICIPANTE);
         visExitosa = getIntent().getBooleanExtra(Constants.VISITA_EXITOSA,false);
@@ -64,14 +64,16 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(),mPass,false,false);
 
-        TextView txtvPregunta1 = (TextView)findViewById(R.id.txtvPregunta1);
+        /*TextView txtvPregunta1 = (TextView)findViewById(R.id.txtvPregunta1);
         TextView txtvPregunta2 = (TextView)findViewById(R.id.txtvPregunta2);
         TextView txtvComodoHaciendoPreguntas = (TextView)findViewById(R.id.txtvComodoHaciendoPreguntas);
 
         txtvPregunta1.setText(stringBuilder("¿Qué le motivó a Ud. ingresar a su hijo/a en el proyecto ? ", "Puede seleccionar más de una respuesta, e indique su nivel de conformidad a cada opción."), TextView.BufferType.SPANNABLE);
         txtvPregunta2.setText(stringBuilder("¿Por qué ha decidido mantener a su hijo/a durante todo este tiempo en el proyecto? ", "Puede seleccionar más de una respuesta, e indique su acuerdo a cada frase en la escala."), TextView.BufferType.SPANNABLE);
         txtvComodoHaciendoPreguntas.setText(stringBuilder("¿Se siente cómodo/a haciendo preguntas acerca de los procedimientos del proyecto? ", "Puede seleccionar más de una respuesta."), TextView.BufferType.SPANNABLE);
+*/
 
+       // TextView txtvComodoHaciendoPreguntas = (TextView)findViewById(R.id.txtvComodoHaciendoPreguntas);
         this.CONTEXT = this;
         inicializarContorles();
     }
@@ -91,12 +93,103 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
     }
 
     public void inicializarContorles() {
+
+        /**
+         * XML 6 parte 1
+         * */
+        //chkOtras_P1
+        //chkOtrasDificultades
+        View.OnClickListener onClikOtrasDificultades = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onChkOtrasDificultades(view);
+            }
+        };
+        this.findViewById(R.id.chkOtrasDificultades2).setOnClickListener(onClikOtrasDificultades);
+
+        //onChkOtrasRazonesNoRecomendaria
+        View.OnClickListener onChkOtrasRazonesNoRecomendaria = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onChkOtrasRazonesNoRecomendaria(view);
+            }
+        };
+        this.findViewById(R.id.chkOtrasRazonesNoRecomendaria).setOnClickListener(onChkOtrasRazonesNoRecomendaria);
+        //onChkOtrasRazonesRecomendaria
+        View.OnClickListener onChkOtrasRazonesRecomendaria = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onChkOtrasRazonesRecomendaria(view);
+            }
+        };
+        this.findViewById(R.id.chkOtrasRazonesRecomendaria).setOnClickListener(onChkOtrasRazonesRecomendaria);
+
+        //
+        View.OnClickListener onChkOtroMotivosNoComprendioProcedimiento = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onChkOtroMotivosNoComprendioProcedimiento(view);
+            }
+        };
+        this.findViewById(R.id.chkOtroMotivosNoComprendioProcedimiento).setOnClickListener(onChkOtroMotivosNoComprendioProcedimiento);
+
+      /*  //opcionAtencionPersonalEstudio
+        View.OnClickListener onRadioImportanciaInforEstudiosClicked = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onRadioImportanciaInforEstudiosClicked(view);
+            }
+        };
+        this.findViewById(R.id.radioGroupP01).setOnClickListener(onRadioImportanciaInforEstudiosClicked);
+     /*   //chkEntiendoProcedimientos
+       View.OnClickListener onEntiendoProcedimientos = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onRadioImportanciaInforEstudiosClicked(view);
+            }
+        };
+        this.findViewById(R.id.radioImportanciaInforEstudios02).setOnClickListener(onEntiendoProcedimientos);
+        //radioImportanciaInforEstudios02
+        View.OnClickListener radioImportanciaInforEstudios03 = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onRadioImportanciaInforEstudiosClicked(view);
+            }
+        };
+        this.findViewById(R.id.radioImportanciaInforEstudios03).setOnClickListener(radioImportanciaInforEstudios03);
+
+        //chkSatisfecho
+    /*    View.OnClickListener onSatisfecho = new View.OnClickListener()s {
+            @Override
+            public void onClick(View view) {
+                onChkSatisfecho(view);
+            }
+        };
+        this.findViewById(R.id.chkSatisfecho).setOnClickListener(onSatisfecho);
+
+        //chkComodoInformacion
+        View.OnClickListener onComodoInformacion = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onChkComodoInformacion(view);
+            }
+        };
+        this.findViewById(R.id.chkComodoInformacion).setOnClickListener(onComodoInformacion);
+
+        //chkNoComodoPreguntas
+        View.OnClickListener onNoComodoPreguntas = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onChkNoComodoPreguntas(view);
+            }
+        };
+        this.findViewById(R.id.chkNoComodoPreguntas).setOnClickListener(onNoComodoPreguntas);
         /**
          * Primera Parte
          * */
 
         //chkAtenMedica
-        View.OnClickListener onClikAtenMedica = new View.OnClickListener() {
+    /*    View.OnClickListener onClikAtenMedica = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onChkAtenMedica(view);
@@ -180,7 +273,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
          * Segunda Parte
          * */
         //chkCalidadAtencionMed
-        View.OnClickListener onClikCalidadAtencionMed = new View.OnClickListener() {
+       /* View.OnClickListener onClikCalidadAtencionMed = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onChkCalidadAtencionMed(view);
@@ -252,7 +345,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         this.findViewById(R.id.chkMejorarTrataDengue).setOnClickListener(onClikMejorarTrataDengue);
 
         //chkNoQuieroQuedarmeEstudio
-        View.OnClickListener onClikNoQuieroQuedarmeEstudio = new View.OnClickListener() {
+     /*   View.OnClickListener onClikNoQuieroQuedarmeEstudio = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onChkNoQuieroQuedarmeEstudio(view);
@@ -273,7 +366,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
          * Parte 3
          * */
         //chkLejosCentroSalud
-        View.OnClickListener onClikLejosCentroSalud = new View.OnClickListener() {
+      /*  View.OnClickListener onClikLejosCentroSalud = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onChkLejosCentroSalud(view);
@@ -349,7 +442,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
          * */
 
         //chkAtencionRecibidaCalidad
-        View.OnClickListener onAtencionRecibidaCalidad = new View.OnClickListener() {
+       /* View.OnClickListener onAtencionRecibidaCalidad = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onChkAtencionRecibidaCalidad(view);
@@ -425,7 +518,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
          * */
 
         //chkAtencionRecibidaMala
-        View.OnClickListener onAtencionRecibidaMala = new View.OnClickListener() {
+   /*     View.OnClickListener onAtencionRecibidaMala = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onChkAtencionRecibidaMala(view);
@@ -510,7 +603,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
          * **/
 
         //chkNoEstuveComodoRealizarPreg
-        View.OnClickListener onNoEstuveComodoRealizarPreg = new View.OnClickListener() {
+      /*  View.OnClickListener onNoEstuveComodoRealizarPreg = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onChkNoEstuveComodoRealizarPreg(view);
@@ -554,46 +647,25 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         };
         this.findViewById(R.id.chkOtroMotivosNoComprendioProcedimiento).setOnClickListener(onOtroMotivosNoComprendioProcedimiento);
 
-        /**
-         * Parte 6
-         * */
-
-        //chkEntiendoProcedimientos
-        View.OnClickListener onEntiendoProcedimientos = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onChkEntiendoProcedimientos(view);
-            }
-        };
-        this.findViewById(R.id.chkEntiendoProcedimientos).setOnClickListener(onEntiendoProcedimientos);
-
-        //chkSatisfecho
-        View.OnClickListener onSatisfecho = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onChkSatisfecho(view);
-            }
-        };
-        this.findViewById(R.id.chkSatisfecho).setOnClickListener(onSatisfecho);
-
-        //chkComodoInformacion
-        View.OnClickListener onComodoInformacion = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onChkComodoInformacion(view);
-            }
-        };
-        this.findViewById(R.id.chkComodoInformacion).setOnClickListener(onComodoInformacion);
-
-        //chkNoComodoPreguntas
-        View.OnClickListener onNoComodoPreguntas = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onChkNoComodoPreguntas(view);
-            }
-        };
-        this.findViewById(R.id.chkNoComodoPreguntas).setOnClickListener(onNoComodoPreguntas);
+*/
     }
+
+
+    // onRadioImportanciaInforEstudiosClicked
+  /*  public void onRadioImportanciaInforEstudiosClicked(View view) {
+        boolean chkAtenMedica = ((CheckBox) this.findViewById(R.id.chkAtenMedica)).isChecked();
+        ((CheckBox) this.findViewById(R.id.chkAtenMedica)).setChecked(chkAtenMedica);
+        if (chkAtenMedica) {
+            ((CheckBox) this.findViewById(R.id.chkAtenMedica)).setChecked(true);
+            this.findViewById(R.id.radioGroup1).setVisibility(view.VISIBLE);
+        } else {
+            ((CheckBox) this.findViewById(R.id.chkAtenMedica)).setChecked(false);
+            this.findViewById(R.id.radioGroup1).setVisibility(view.INVISIBLE);
+            RadioGroup radioGroup = (RadioGroup) this.findViewById(R.id.radioGroup1);
+            radioGroup.clearCheck();
+        }
+    }*/
+
 
     // AtenMedica
     public void onChkAtenMedica(View view) {
@@ -725,6 +797,20 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         } else {
             ((CheckBox) this.findViewById(R.id.chkOtras_P1)).setChecked(false);
             this.findViewById(R.id.edtxP1_Otras).setVisibility(view.INVISIBLE);
+            EditText textView = (EditText) this.findViewById(R.id.edtxP1_Otras);
+            textView.setText("");
+        }
+    }
+
+    public void onChkOtras_9_2(View view) {
+        boolean chkOtras_P1 = ((CheckBox) this.findViewById(R.id.chkOtrasDificultades2)).isChecked();
+        ((CheckBox) this.findViewById(R.id.chkOtrasDificultades2)).setChecked(chkOtras_P1);
+        if (chkOtras_P1) {
+            ((CheckBox) this.findViewById(R.id.chkOtrasDificultades2)).setChecked(true);
+            this.findViewById(R.id.edtxOtrasDificultades).setVisibility(view.VISIBLE);
+        } else {
+            ((CheckBox) this.findViewById(R.id.chkOtrasDificultades2)).setChecked(false);
+            this.findViewById(R.id.edtxOtrasDificultades).setVisibility(view.INVISIBLE);
             EditText textView = (EditText) this.findViewById(R.id.edtxP1_Otras);
             textView.setText("");
         }
@@ -924,50 +1010,17 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         }
     }
 
-    //PorHorarioClases
-    public void onChkPorHorarioClases(View view) {
-        boolean chkPorHorarioClases = ((CheckBox) this.findViewById(R.id.chkPorHorarioClases)).isChecked();
-        ((CheckBox) this.findViewById(R.id.chkPorHorarioClases)).setChecked(chkPorHorarioClases);
-        if (chkPorHorarioClases) {
-            ((CheckBox) this.findViewById(R.id.chkPorHorarioClases)).setChecked(true);
-        } else {
-            ((CheckBox) this.findViewById(R.id.chkPorHorarioClases)).setChecked(false);
-        }
-    }
-
-    //TemorTomenMx
-    public void onChkTemorTomenMx(View view) {
-        boolean chkTemorTomenMx = ((CheckBox) this.findViewById(R.id.chkTemorTomenMx)).isChecked();
-        ((CheckBox) this.findViewById(R.id.chkTemorTomenMx)).setChecked(chkTemorTomenMx);
-        if (chkTemorTomenMx) {
-            ((CheckBox) this.findViewById(R.id.chkTemorTomenMx)).setChecked(true);
-        } else {
-            ((CheckBox) this.findViewById(R.id.chkTemorTomenMx)).setChecked(false);
-        }
-    }
-
-    //TemorDarInformacion
-    public void onChkTemorDarInformacion(View view) {
-        boolean chkTemorDarInformacion = ((CheckBox) this.findViewById(R.id.chkTemorDarInformacion)).isChecked();
-        ((CheckBox) this.findViewById(R.id.chkTemorDarInformacion)).setChecked(chkTemorDarInformacion);
-        if (chkTemorDarInformacion) {
-            ((CheckBox) this.findViewById(R.id.chkTemorDarInformacion)).setChecked(true);
-        } else {
-            ((CheckBox) this.findViewById(R.id.chkTemorDarInformacion)).setChecked(false);
-        }
-    }
-
     //OtrasDificultades
     public void onChkOtrasDificultades(View view) {
-        boolean chkOtrasDificultades = ((CheckBox) this.findViewById(R.id.chkOtrasDificultades)).isChecked();
-        ((CheckBox) this.findViewById(R.id.chkOtrasDificultades)).setChecked(chkOtrasDificultades);
+        boolean chkOtrasDificultades = ((CheckBox) this.findViewById(R.id.chkOtrasDificultades2)).isChecked();
+        ((CheckBox) this.findViewById(R.id.chkOtrasDificultades2)).setChecked(chkOtrasDificultades);
         if (chkOtrasDificultades) {
-            ((CheckBox) this.findViewById(R.id.chkOtrasDificultades)).setChecked(true);
-            this.findViewById(R.id.edtxOtrasDificultades).setVisibility(view.VISIBLE);
+            ((CheckBox) this.findViewById(R.id.chkOtrasDificultades2)).setChecked(true);
+            this.findViewById(R.id.edtxOtrasDificultades1).setVisibility(view.VISIBLE);
         } else {
-            ((CheckBox) this.findViewById(R.id.chkOtrasDificultades)).setChecked(false);
-            this.findViewById(R.id.edtxOtrasDificultades).setVisibility(view.INVISIBLE);
-            EditText textView = (EditText) this.findViewById(R.id.edtxOtrasDificultades);
+            ((CheckBox) this.findViewById(R.id.chkOtrasDificultades2)).setChecked(false);
+            this.findViewById(R.id.edtxOtrasDificultades1).setVisibility(view.INVISIBLE);
+            EditText textView = (EditText) this.findViewById(R.id.edtxOtrasDificultades1);
             textView.setText("");
         }
     }
@@ -1027,16 +1080,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         }
     }
 
-    //GeneraConocimiento
-    public void onChkGeneraConocimiento(View view) {
-        boolean chkGeneraConocimiento = ((CheckBox) this.findViewById(R.id.chkGeneraConocimiento)).isChecked();
-        ((CheckBox) this.findViewById(R.id.chkGeneraConocimiento)).setChecked(chkGeneraConocimiento);
-        if (chkGeneraConocimiento) {
-            ((CheckBox) this.findViewById(R.id.chkGeneraConocimiento)).setChecked(true);
-        } else {
-            ((CheckBox) this.findViewById(R.id.chkGeneraConocimiento)).setChecked(false);
-        }
-    }
+
 
     //PocosRequisitos
     public void onChkPocosRequisitos(View view) {
@@ -1226,7 +1270,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         }
     }
 
-    //EntiendoProcedimientos
+    /*//EntiendoProcedimientos
     public void onChkEntiendoProcedimientos(View view) {
         boolean chkEntiendoProcedimientos = ((CheckBox) this.findViewById(R.id.chkEntiendoProcedimientos)).isChecked();
         ((CheckBox) this.findViewById(R.id.chkEntiendoProcedimientos)).setChecked(chkEntiendoProcedimientos);
@@ -1268,7 +1312,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         } else {
             ((CheckBox) this.findViewById(R.id.chkNoComodoPreguntas)).setChecked(false);
         }
-    }
+    }*/
 
     public void clearFocus() {
         EditText edtxP1_Otras = (EditText) this.findViewById(R.id.edtxP1_Otras);
@@ -1277,11 +1321,11 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         EditText edtxOtrasRazonesRecomendaria = (EditText) this.findViewById(R.id.edtxOtrasRazonesRecomendaria);
         EditText edtxOtroMotivosNoComprendioProcedimiento = (EditText) this.findViewById(R.id.edtxOtroMotivosNoComprendioProcedimiento);
 
-        edtxP1_Otras.clearFocus();
-        edtxP2_Otras.clearFocus();
-        edtxOtrasDificultades.clearFocus();
-        edtxOtrasRazonesRecomendaria.clearFocus();
-        edtxOtroMotivosNoComprendioProcedimiento.clearFocus();
+     //   edtxP1_Otras.clearFocus();
+       // edtxP2_Otras.clearFocus();
+    //   edtxOtrasDificultades.clearFocus();
+    //    edtxOtrasRazonesRecomendaria.clearFocus();
+   //     edtxOtroMotivosNoComprendioProcedimiento.clearFocus();
     }
 
     //Primera Parte
@@ -1753,33 +1797,50 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         switch(view.getId()) {
             case R.id.radioDificultadBuscarAtencionS:
                 if (checked)
-                    activarPreguntas3_1(view);
+                    activarPreguntas3_11(view);
                 break;
             case R.id.radioDificultadBuscarAtencionN:
                 if (checked)
-                    desactivarPreguntas3_1(view);
+                    desactivarPreguntas3_11 (view);
                 break;
         }
     }
 
     public void activarPreguntas3_1(View view) {
-        LinearLayout linearLayout = (LinearLayout) this.findViewById(R.id.pregunta3_1);
+        LinearLayout linearLayout = (LinearLayout) this.findViewById(R.id.pregunta8_1);
         linearLayout.setVisibility(view.VISIBLE);
     }
 
     public void desactivarPreguntas3_1(View view) {
-        LinearLayout linearLayout = (LinearLayout) this.findViewById(R.id.pregunta3_1);
+        LinearLayout linearLayout = (LinearLayout) this.findViewById(R.id.pregunta8_1);
         linearLayout.setVisibility(view.GONE);
-        ((CheckBox) this.findViewById(R.id.chkTemorDarInformacion)).setChecked(false);
-        ((CheckBox) this.findViewById(R.id.chkTemorTomenMx)).setChecked(false);
-        ((CheckBox) this.findViewById(R.id.chkPorHorarioClases)).setChecked(false);
+
         ((CheckBox) this.findViewById(R.id.chkNoQueriaPasarConsultMomento)).setChecked(false);
         ((CheckBox) this.findViewById(R.id.chkTrabajoTiempo)).setChecked(false);
         ((CheckBox) this.findViewById(R.id.chkCostoElevadoTransporte)).setChecked(false);
         ((CheckBox) this.findViewById(R.id.chkLejosCentroSalud)).setChecked(false);
-        ((CheckBox) this.findViewById(R.id.chkOtrasDificultades)).setChecked(false);
-        this.findViewById(R.id.edtxOtrasDificultades).setVisibility(view.INVISIBLE);
-        EditText textView = (EditText) this.findViewById(R.id.edtxOtrasDificultades);
+        ((CheckBox) this.findViewById(R.id.chkOtrasDificultades2)).setChecked(false);
+        this.findViewById(R.id.edtxOtrasDificultades1).setVisibility(view.INVISIBLE);
+        EditText textView = (EditText) this.findViewById(R.id.edtxOtrasDificultades1);
+        textView.setText("");
+    }
+
+    public void activarPreguntas3_11(View view) {
+        LinearLayout linearLayout = (LinearLayout) this.findViewById(R.id.pregunta3_1);
+        linearLayout.setVisibility(view.VISIBLE);
+    }
+
+    public void desactivarPreguntas3_11(View view) {
+        LinearLayout linearLayout = (LinearLayout) this.findViewById(R.id.pregunta3_1);
+        linearLayout.setVisibility(view.GONE);
+
+        ((CheckBox) this.findViewById(R.id.chkNoQueriaPasarConsultMomento)).setChecked(false);
+        ((CheckBox) this.findViewById(R.id.chkTrabajoTiempo)).setChecked(false);
+        ((CheckBox) this.findViewById(R.id.chkCostoElevadoTransporte)).setChecked(false);
+        ((CheckBox) this.findViewById(R.id.chkLejosCentroSalud)).setChecked(false);
+        ((CheckBox) this.findViewById(R.id.chkOtrasDificultades2)).setChecked(false);
+        this.findViewById(R.id.edtxOtrasDificultades1).setVisibility(view.INVISIBLE);
+        EditText textView = (EditText) this.findViewById(R.id.edtxOtrasDificultades1);
         textView.setText("");
     }
 
@@ -1801,7 +1862,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
     }
 
     public void activarPreguntas4_1(View view) {
-        LinearLayout linearLayout4_1 = (LinearLayout) this.findViewById(R.id.pregunta4_1);
+        LinearLayout linearLayout4_1 = (LinearLayout) this.findViewById(R.id.pregunta10_1);
         linearLayout4_1.setVisibility(view.VISIBLE);
         LinearLayout linearLayout4_2 = (LinearLayout) this.findViewById(R.id.pregunta4_2);
         linearLayout4_2.setVisibility(view.GONE);
@@ -1821,14 +1882,13 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
     }
 
     public void activarPreguntas4_2(View view) {
-        LinearLayout linearLayout4_1 = (LinearLayout) this.findViewById(R.id.pregunta4_1);
+        LinearLayout linearLayout4_1 = (LinearLayout) this.findViewById(R.id.pregunta10_1);
         linearLayout4_1.setVisibility(view.GONE);
         LinearLayout linearLayout4_2 = (LinearLayout) this.findViewById(R.id.pregunta4_2);
         linearLayout4_2.setVisibility(view.VISIBLE);
         //Desmarcar Todo de la prgunta 4.1
         ((CheckBox) this.findViewById(R.id.chkOtrasRazonesRecomendaria)).setChecked(false);
         ((CheckBox) this.findViewById(R.id.chkPocosRequisitos)).setChecked(false);
-        ((CheckBox) this.findViewById(R.id.chkGeneraConocimiento)).setChecked(false);
         ((CheckBox) this.findViewById(R.id.chkExamLabNecesarios)).setChecked(false);
         ((CheckBox) this.findViewById(R.id.chkMejorAtencionSeguroMed)).setChecked(false);
         ((CheckBox) this.findViewById(R.id.chkTiempoEsperaCorto)).setChecked(false);
@@ -1879,15 +1939,16 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
         clearFocus();
-        switch(view.getId()) {
+       /* switch(view.getId()) {
             case R.id.radioPersonalBrindaConsejosS:
                 if (checked)
                     break;
             case R.id.radioPersonalBrindaConsejosN:
                 if (checked)
                     break;
-        }
+        }*/
     }
+
 
     public void onRadioImportanciaInforEstudiosClicked(View view) {
         // Is the button now checked?
@@ -1895,27 +1956,205 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
         // Check which radio button was clicked
         clearFocus();
         switch(view.getId()) {
-            case R.id.radioImportanciaInforEstudios0:
+          /*  case R.id.radioImportanciaInforEstudios0:
+                if (checked)
+                    break;*/
+            case R.id.radioImportanciaInforEstudios02:
                 if (checked)
                     break;
-            case R.id.radioImportanciaInforEstudios1:
+            case R.id.radioImportanciaInforEstudios03:
                 if (checked)
                     break;
-            case R.id.radioImportanciaInforEstudios2:
+            case R.id.radioImportanciaInforEstudios04:
                 if (checked)
                     break;
-            case R.id.radioImportanciaInforEstudios3:
+            case R.id.radioImportanciaInforEstudios05:
                 if (checked)
                     break;
-            case R.id.radioImportanciaInforEstudios4:
-                if (checked)
-                    break;
-            case R.id.radioImportanciaInforEstudios5:
+            case R.id.radioImportanciaInforEstudios06:
                 if (checked)
                     break;
         }
     }
+    public void onRadioopcionTiempoAtencionRecibido1Clicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+        // Check which radio button was clicked
+        clearFocus();
+        switch(view.getId()) {
+          /*  case R.id.radioImportanciaInforEstudios0:
+                if (checked)
+                    break;*/
+            case R.id.radioopcionTiempoAtencionRecibido1:
+                if (checked)
+                    break;
+            case R.id.radioopcionTiempoAtencionRecibido2:
+                if (checked)
+                    break;
+            case R.id.radioopcionTiempoAtencionRecibido3:
+                if (checked)
+                    break;
+            case R.id.radioopcionTiempoAtencionRecibido4:
+                if (checked)
+                    break;
+            case R.id.radioopcionTiempoAtencionRecibido5:
+                if (checked)
+                    break;
+        }
+    }
+    public void onRadioopcionAtencionEnfermeriaClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+        // Check which radio button was clicked
+        clearFocus();
+        switch(view.getId()) {
+          /*  case R.id.radioImportanciaInforEstudios0:
+                if (checked)
+                    break;*/
+            case R.id.radioopcionAtencionEnfermeria1:
+                if (checked)
+                    break;
+            case R.id.radioopcionAtencionEnfermeria2:
+                if (checked)
+                    break;
+            case R.id.radioopcionAtencionEnfermeria3:
+                if (checked)
+                    break;
+            case R.id.radioopcionAtencionEnfermeria4:
+                if (checked)
+                    break;
+            case R.id.radioopcionAtencionEnfermeria5:
+                if (checked)
+                    break;
+        }
+    }
+    public void onRadioAtencionDoctorClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+        // Check which radio button was clicked
+        clearFocus();
+        switch(view.getId()) {
+          /*  case R.id.radioImportanciaInforEstudios0:
+                if (checked)
+                    break;*/
+            case R.id.radioAtencionDoctor1:
+                if (checked)
+                    break;
+            case R.id.radioAtencionDoctor2:
+                if (checked)
+                    break;
+            case R.id.radioAtencionDoctor3:
+                if (checked)
+                    break;
+            case R.id.radioAtencionDoctor4:
+                if (checked)
+                    break;
+            case R.id.radioAtencionDoctor5:
+                if (checked)
+                    break;
+        }
+    }
+    public void onRadioAmbienteAtiendeClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+        // Check which radio button was clicked
+        clearFocus();
+        switch(view.getId()) {
+          /*  case R.id.radioImportanciaInforEstudios0:
+                if (checked)
+                    break;*/
+            case R.id.radioAmbienteAtiende1:
+                if (checked)
+                    break;
+            case R.id.radioAmbienteAtiende2:
+                if (checked)
+                    break;
+            case R.id.radioAmbienteAtiende3:
+                if (checked)
+                    break;
+            case R.id.radioAmbienteAtiende4:
+                if (checked)
+                    break;
+            case R.id.radioAmbienteAtiende5:
+                if (checked)
+                    break;
+        }
+    }
+    public void onRadioExplicaroDiagnosticoClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+        // Check which radio button was clicked
+        clearFocus();
+        switch(view.getId()) {
+          /*  case R.id.radioImportanciaInforEstudios0:
+                if (checked)
+                    break;*/
+            case R.id.radioExplicaroDiagnostico1:
+                if (checked)
+                    break;
+            case R.id.radioExplicaroDiagnostico2:
+                if (checked)
+                    break;
+            case R.id.radioExplicaroDiagnostico3:
+                if (checked)
+                    break;
+            case R.id.radioExplicaroDiagnostico4:
+                if (checked)
+                    break;
+            case R.id.radioExplicaroDiagnostico5:
+                if (checked)
+                    break;
+        }
+    }
+    public void onRadioExplicaronTratamientoClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+        // Check which radio button was clicked
+        clearFocus();
+        switch(view.getId()) {
+          /*  case R.id.radioImportanciaInforEstudios0:
+                if (checked)
+                    break;*/
+            case R.id.radioExplicaronTratamiento1:
+                if (checked)
+                    break;
+            case R.id.radioExplicaronTratamiento2:
+                if (checked)
+                    break;
+            case R.id.radioExplicaronTratamiento3:
+                if (checked)
+                    break;
+            case R.id.radioExplicaronTratamiento4:
+                if (checked)
+                    break;
+            case R.id.radioExplicaronTratamiento5:
+                if (checked)
+                    break;
+        }
+    }
+    public void onRadioHaTenidoArbovirusClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+        // Check which radio button was clicked
+        clearFocus();
+        switch(view.getId()) {
+          /*  case R.id.radioImportanciaInforEstudios0:
+                if (checked)
+                    break;*/
+            case R.id.radioHaTenidoArbovirusS:
+                if (checked)
+                    activarPreguntas3_1(view);
+                    break;
+            case R.id.radioHaTenidoArbovirusN:
+                if (checked)
+                    desactivarPreguntas3_1(view);
+                    break;
+            case R.id.radioNoAplicaNoTieneAbovirusNA:
+                if (checked)
+                    break;
 
+        }
+    }
     public void onClickGuardar(View view) {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
@@ -1966,7 +2205,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(), mPass, false, false);
             estudiosAdapter.open();
 
-            boolean chkAtenMedica = ((CheckBox) this.findViewById(R.id.chkAtenMedica)).isChecked();
+         /*   boolean chkAtenMedica = ((CheckBox) this.findViewById(R.id.chkAtenMedica)).isChecked();
             boolean chkFamAmistades = ((CheckBox) this.findViewById(R.id.chkFamAmistades)).isChecked();
             boolean chkDecisionPropia = ((CheckBox) this.findViewById(R.id.chkDecisionPropia)).isChecked();
             boolean chkObsequios = ((CheckBox) this.findViewById(R.id.chkObsequios)).isChecked();
@@ -1975,28 +2214,26 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             boolean chkInteresCientifico = ((CheckBox) this.findViewById(R.id.chkInteresCientifico)).isChecked();
             boolean chkAyudarOtros = ((CheckBox) this.findViewById(R.id.chkAyudarOtros)).isChecked();
             boolean chkOtras_P1 = ((CheckBox) this.findViewById(R.id.chkOtras_P1)).isChecked();
-
+*/
             //Parte2
-            boolean chkCalidadAtencionMed = ((CheckBox) this.findViewById(R.id.chkCalidadAtencionMed)).isChecked();
+            /*boolean chkCalidadAtencionMed = ((CheckBox) this.findViewById(R.id.chkAtencionRecibidaCalidad)).isChecked();
             boolean chkAtencionOportuna = ((CheckBox) this.findViewById(R.id.chkAtencionOportuna)).isChecked();
             boolean chkCoordinacionHosp = ((CheckBox) this.findViewById(R.id.chkCoordinacionHosp)).isChecked();
             boolean chkInformacionEstadoSalud = ((CheckBox) this.findViewById(R.id.chkInformacionEstadoSalud)).isChecked();
-            boolean chkEnseniaPrevEnfer = ((CheckBox) this.findViewById(R.id.chkEnseniaPrevEnfer)).isChecked();
-            boolean chkMejoraConoEnfer = ((CheckBox) this.findViewById(R.id.chkMejoraConoEnfer)).isChecked();
-            boolean chkInteresCientificoP2 = ((CheckBox) this.findViewById(R.id.chkInteresCientificoP2)).isChecked();
-            boolean chkMejorarTrataDengue = ((CheckBox) this.findViewById(R.id.chkMejorarTrataDengue)).isChecked();
-            boolean chkNoQuieroQuedarmeEstudio = ((CheckBox) this.findViewById(R.id.chkNoQuieroQuedarmeEstudio)).isChecked();
-            boolean chkP2_Otras = ((CheckBox) this.findViewById(R.id.chkP2_Otras)).isChecked();
+            boolean chkEnseniaPrevEnfer = ((CheckBox) this.findViewById(R.id.chkEnseniaPrevEnfer)).isChecked();*/
+//            boolean chkMejoraConoEnfer = ((CheckBox) this.findViewById(R.id.chkMejoraConoEnfer)).isChecked();
+       //     boolean chkInteresCientificoP2 = ((CheckBox) this.findViewById(R.id.chkInteresCientificoP2)).isChecked();
+       //     boolean chkMejorarTrataDengue = ((CheckBox) this.findViewById(R.id.chkMejorarTrataDengue)).isChecked();
+        //    boolean chkNoQuieroQuedarmeEstudio = ((CheckBox) this.findViewById(R.id.chkNoQuieroQuedarmeEstudio)).isChecked();
+      //      boolean chkP2_Otras = ((CheckBox) this.findViewById(R.id.chkP2_Otras)).isChecked();
 
             //Parte3
             boolean chkLejosCentroSalud = ((CheckBox) this.findViewById(R.id.chkLejosCentroSalud)).isChecked();
             boolean chkCostoElevadoTransporte = ((CheckBox) this.findViewById(R.id.chkCostoElevadoTransporte)).isChecked();
             boolean chkTrabajoTiempo = ((CheckBox) this.findViewById(R.id.chkTrabajoTiempo)).isChecked();
             boolean chkNoQueriaPasarConsultMomento = ((CheckBox) this.findViewById(R.id.chkNoQueriaPasarConsultMomento)).isChecked();
-            boolean chkPorHorarioClases = ((CheckBox) this.findViewById(R.id.chkPorHorarioClases)).isChecked();
-            boolean chkTemorTomenMx = ((CheckBox) this.findViewById(R.id.chkTemorTomenMx)).isChecked();
-            boolean chkTemorDarInformacion = ((CheckBox) this.findViewById(R.id.chkTemorDarInformacion)).isChecked();
-            boolean chkOtrasDificultades = ((CheckBox) this.findViewById(R.id.chkOtrasDificultades)).isChecked();
+
+            boolean chkOtrasDificultades = ((CheckBox) this.findViewById(R.id.chkOtrasDificultades2)).isChecked();
 
             //Parte4
             boolean chkAtencionRecibidaCalidad = ((CheckBox) this.findViewById(R.id.chkAtencionRecibidaCalidad)).isChecked();
@@ -2004,7 +2241,6 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             boolean chkTiempoEsperaCorto = ((CheckBox) this.findViewById(R.id.chkTiempoEsperaCorto)).isChecked();
             boolean chkMejorAtencionSeguroMed = ((CheckBox) this.findViewById(R.id.chkMejorAtencionSeguroMed)).isChecked();
             boolean chkExamLabNecesarios = ((CheckBox) this.findViewById(R.id.chkExamLabNecesarios)).isChecked();
-            boolean chkGeneraConocimiento = ((CheckBox) this.findViewById(R.id.chkGeneraConocimiento)).isChecked();
             boolean chkPocosRequisitos = ((CheckBox) this.findViewById(R.id.chkPocosRequisitos)).isChecked();
             boolean chkOtrasRazonesRecomendaria = ((CheckBox) this.findViewById(R.id.chkOtrasRazonesRecomendaria)).isChecked();
 
@@ -2026,19 +2262,19 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             boolean chkOtroMotivosNoComprendioProcedimiento = ((CheckBox) this.findViewById(R.id.chkOtroMotivosNoComprendioProcedimiento)).isChecked();
 
             //PARTE 6
-            boolean chkEntiendoProcedimientos = ((CheckBox) this.findViewById(R.id.chkEntiendoProcedimientos)).isChecked();
+        /*    boolean chkEntiendoProcedimientos = ((CheckBox) this.findViewById(R.id.chkEntiendoProcedimientos)).isChecked();
             boolean chkSatisfecho = ((CheckBox) this.findViewById(R.id.chkSatisfecho)).isChecked();
             boolean chkComodoInformacion = ((CheckBox) this.findViewById(R.id.chkComodoInformacion)).isChecked();
-            boolean chkNoComodoPreguntas = ((CheckBox) this.findViewById(R.id.chkNoComodoPreguntas)).isChecked();
+            boolean chkNoComodoPreguntas = ((CheckBox) this.findViewById(R.id.chkNoComodoPreguntas)).isChecked();*/
 
 
-            /*EncuestaSatisfaccionUsuarioId esId = new EncuestaSatisfaccionUsuarioId();
+           /* EncuestaSatisfaccionUsuarioId esId = new EncuestaSatisfaccionUsuarioId();
             esId.setCodigo(participante.getCodigo());
             esId.setFecha(new Date());
             encuestaSatisfaccionUsuario.setEsId(esId);*/
 
             //Parte 1
-            if (!chkAtenMedica
+         /*   if (!chkAtenMedica
                     && !chkFamAmistades
                     && !chkDecisionPropia
                     && !chkObsequios
@@ -2049,12 +2285,12 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     & !chkOtras_P1) {
                 Toast.makeText(getApplicationContext(), "Debe seleccionar al menos una opción en la pregunta 1", Toast.LENGTH_LONG).show();
                 return;
-            }
+            }*/
 
             //Validando la pregunta 1
-            if (chkAtenMedica) {
-                RadioGroup radioGroup1 = (RadioGroup) findViewById(R.id.radioGroup1);
-                int selected = radioGroup1.getCheckedRadioButtonId();
+         //   if (chkAtenMedica) {
+         /*       RadioGroup radioGroupP01 = (RadioGroup) findViewById(R.id.radioGroupP01);
+                int selected = radioGroupP01.getCheckedRadioButtonId();
                 RadioButton selectedRadioGroup1 = (RadioButton) findViewById(selected);
                 if (selectedRadioGroup1 == null) {
                     //Retornar mensaje
@@ -2065,12 +2301,12 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setAtencionMedica(selectedRadioGroup1.getText().toString());
                 }
-            }
+    //        }
             //Validando la pregunta 2
-            if (chkFamAmistades) {
+          //  if (chkFamAmistades) {
                 RadioGroup radioGroup2 = (RadioGroup) findViewById(R.id.radioGroup2);
-                int selected = radioGroup2.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroup2 = (RadioButton) findViewById(selected);
+                int selected2 = radioGroup2.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroup2 = (RadioButton) findViewById(selected2);
                 if (selectedRadioGroup2 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2080,12 +2316,12 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setFamilaAmistades(selectedRadioGroup2.getText().toString());
                 }
-            }
+        //    }
             //Validando la pregunta 3
-            if (chkDecisionPropia) {
+          //  if (chkDecisionPropia) {
                 RadioGroup radioGroup3 = (RadioGroup) findViewById(R.id.radioGroup3);
-                int selected = radioGroup3.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroup3 = (RadioButton) findViewById(selected);
+                int selected3 = radioGroup3.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroup3 = (RadioButton) findViewById(selected3);
                 if (selectedRadioGroup3 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2095,12 +2331,12 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setDesicionPropia(selectedRadioGroup3.getText().toString());
                 }
-            }
+        //    }
             //Validando la pregunta 4
-            if (chkObsequios) {
+          //  if (chkObsequios) {
                 RadioGroup radioGroup4 = (RadioGroup) findViewById(R.id.radioGroup4);
-                int selected = radioGroup4.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroup4 = (RadioButton) findViewById(selected);
+                int selected4 = radioGroup4.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroup4 = (RadioButton) findViewById(selected4);
                 if (selectedRadioGroup4 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2110,12 +2346,12 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setObsequiosOfreceEstudio(selectedRadioGroup4.getText().toString());
                 }
-            }
+          //  }
             //Validando la pregunta 5
-            if (chkAyudaComunidad) {
+           // if (chkAyudaComunidad) {
                 RadioGroup radioGroup5 = (RadioGroup) findViewById(R.id.radioGroup5);
-                int selected = radioGroup5.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroup5 = (RadioButton) findViewById(selected);
+                int selected5 = radioGroup5.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroup5 = (RadioButton) findViewById(selected5);
                 if (selectedRadioGroup5 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2125,12 +2361,12 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setAyudaRecibeComunidad(selectedRadioGroup5.getText().toString());
                 }
-            }
+          //  }
             //Validando la pregunta 6
-            if (chkExamLaboratorio) {
+           // if (chkExamLaboratorio) {
                 RadioGroup radioGroup6 = (RadioGroup) findViewById(R.id.radioGroup6);
-                int selected = radioGroup6.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroup6 = (RadioButton) findViewById(selected);
+                int selected6 = radioGroup6.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroup6 = (RadioButton) findViewById(selected6);
                 if (selectedRadioGroup6 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2140,12 +2376,12 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setExamenesLaboratorio(selectedRadioGroup6.getText().toString());
                 }
-            }
+           // }
             //Validando la pregunta 7
-            if (chkInteresCientifico) {
+          //  if (chkInteresCientifico) {
                 RadioGroup radioGroup7 = (RadioGroup) findViewById(R.id.radioGroup7);
-                int selected = radioGroup7.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroup7 = (RadioButton) findViewById(selected);
+                int selected7 = radioGroup7.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroup7 = (RadioButton) findViewById(selected7);
                 if (selectedRadioGroup7 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2155,12 +2391,12 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setInteresCientificoPersonalP1(selectedRadioGroup7.getText().toString());
                 }
-            }
+          //  }
             //Validando la pregunta 8
-            if (chkAyudarOtros) {
+          //  if (chkAyudarOtros) {
                 RadioGroup radioGroup8 = (RadioGroup) findViewById(R.id.radioGroup8);
-                int selected = radioGroup8.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroup8 = (RadioButton) findViewById(selected);
+                int selected8 = radioGroup8.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroup8 = (RadioButton) findViewById(selected8);
                 if (selectedRadioGroup8 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2170,37 +2406,36 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setInformacionAyudaOtros(selectedRadioGroup8.getText().toString());
                 }
-            }
+           // }
             //Validando la pregunta 9
-            if (chkOtras_P1) {
+         //   if (chkOtras_P1) {
                 EditText edtxP1_Otras = (EditText) this.findViewById(R.id.edtxP1_Otras);
                 if (edtxP1_Otras.getText().toString().equals("") || edtxP1_Otras.getText() == null) {
                     Toast.makeText(getApplicationContext(), "Debe ingresar la informacion", Toast.LENGTH_LONG).show();
                     return;
                 } else {
-                    encuestaSatisfaccionUsuario.setOtraP1(edtxP1_Otras.getText().toString());
-                }
-            }
+                    encuestaSatisfaccionUsuario.setOtra(edtxP1_Otras.getText().toString());
+                }*/
+        //    }
 
             //PARTE 2
-            if (!chkCalidadAtencionMed
+         /*   if (!chkCalidadAtencionMed
                     && !chkAtencionOportuna
                     && !chkCoordinacionHosp
                     && !chkInformacionEstadoSalud
                     && !chkEnseniaPrevEnfer
                     && !chkMejoraConoEnfer
-                    && !chkInteresCientificoP2
+
                     && !chkMejorarTrataDengue
                     && !chkNoQuieroQuedarmeEstudio
                     && !chkP2_Otras) {
-                Toast.makeText(getApplicationContext(), "Debe seleccionar al menos una opción en la pregunta 2", Toast.LENGTH_LONG).show();
-                return;
-            }
+                Toast.makeText(getApplicationContext(), "Debe seleccionar al menos una opción en la pregunta 10.2", Toast.LENGTH_LONG).show();                return;
+            }*/
             //Validando la pregunta 10
-            if (chkCalidadAtencionMed) {
-                RadioGroup radioGroupP2_1 = (RadioGroup) findViewById(R.id.radioGroupP2_1);
-                int selected = radioGroupP2_1.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroupP2_1 = (RadioButton) findViewById(selected);
+           /* if (chkCalidadAtencionMed) {
+                RadioGroup radioGroupP01 = (RadioGroup) findViewById(R.id.radioGroupP01);
+                int selected21 = radioGroupP01.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroupP2_1 = (RadioButton) findViewById(selected21);
                 if (selectedRadioGroupP2_1 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2210,12 +2445,12 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setCalidadAtencionMedica(selectedRadioGroupP2_1.getText().toString());
                 }
-            }
+            }*/
             //Validando la pregunta 11
-            if (chkAtencionOportuna) {
+          /*  if (chkAtencionOportuna) {
                 RadioGroup radioGroupP2_2 = (RadioGroup) findViewById(R.id.radioGroupP2_2);
-                int selected = radioGroupP2_2.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroupP2_2 = (RadioButton) findViewById(selected);
+                int selected22= radioGroupP2_2.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroupP2_2 = (RadioButton) findViewById(selected22);
                 if (selectedRadioGroupP2_2 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2229,8 +2464,8 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             //Validando la pregunta 12
             if (chkCoordinacionHosp) {
                 RadioGroup radioGroupP2_3 = (RadioGroup) findViewById(R.id.radioGroupP2_3);
-                int selected = radioGroupP2_3.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroupP2_3 = (RadioButton) findViewById(selected);
+                int selected23 = radioGroupP2_3.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroupP2_3 = (RadioButton) findViewById(selected23);
                 if (selectedRadioGroupP2_3 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2244,8 +2479,8 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             //Validando la pregunta 13
             if (chkInformacionEstadoSalud) {
                 RadioGroup radioGroupP2_4 = (RadioGroup) findViewById(R.id.radioGroupP2_4);
-                int selected = radioGroupP2_4.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroupP2_4 = (RadioButton) findViewById(selected);
+                int selected24 = radioGroupP2_4.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroupP2_4 = (RadioButton) findViewById(selected24);
                 if (selectedRadioGroupP2_4 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2259,8 +2494,8 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             //Validando la pregunta 14
             if (chkEnseniaPrevEnfer) {
                 RadioGroup radioGroupP2_5 = (RadioGroup) findViewById(R.id.radioGroupP2_5);
-                int selected = radioGroupP2_5.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroupP2_5 = (RadioButton) findViewById(selected);
+                int selected25 = radioGroupP2_5.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroupP2_5 = (RadioButton) findViewById(selected25);
                 if (selectedRadioGroupP2_5 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2274,8 +2509,8 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             //Validando la pregunta 15
             if (chkMejoraConoEnfer) {
                 RadioGroup radioGroupP2_6 = (RadioGroup) findViewById(R.id.radioGroupP2_6);
-                int selected = radioGroupP2_6.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroupP2_6 = (RadioButton) findViewById(selected);
+                int selected26 = radioGroupP2_6.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroupP2_6 = (RadioButton) findViewById(selected26);
                 if (selectedRadioGroupP2_6 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2285,12 +2520,12 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setInfoConsMejoraConocimientos(selectedRadioGroupP2_6.getText().toString());
                 }
-            }
+            }*/
             //Validando la pregunta 16
-            if (chkInteresCientificoP2) {
+         /*   if (chkInteresCientificoP2) {
                 RadioGroup radioGroupP2_7 = (RadioGroup) findViewById(R.id.radioGroupP2_7);
-                int selected = radioGroupP2_7.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroupP2_7 = (RadioButton) findViewById(selected);
+                int selected27 = radioGroupP2_7.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroupP2_7 = (RadioButton) findViewById(selected27);
                 if (selectedRadioGroupP2_7 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2300,12 +2535,12 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setInteresCientificoPersonalP2(selectedRadioGroupP2_7.getText().toString());
                 }
-            }
+            }*/
             //Validando la pregunta 17
-            if (chkMejorarTrataDengue) {
+           /* if (chkMejorarTrataDengue) {
                 RadioGroup radioGroupP2_8 = (RadioGroup) findViewById(R.id.radioGroupP2_8);
-                int selected = radioGroupP2_8.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroupP2_8 = (RadioButton) findViewById(selected);
+                int selected28 = radioGroupP2_8.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroupP2_8 = (RadioButton) findViewById(selected28);
                 if (selectedRadioGroupP2_8 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2315,12 +2550,12 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                     encuestaSatisfaccionUsuario.setMejorarTratamientoDengue(selectedRadioGroupP2_8.getText().toString());
                 }
-            }
+            }*/
             //Validando la pregunta 18
-            if (chkNoQuieroQuedarmeEstudio) {
+          /*  if (chkNoQuieroQuedarmeEstudio) {
                 RadioGroup radioGroupP2_9 = (RadioGroup) findViewById(R.id.radioGroupP2_9);
-                int selected = radioGroupP2_9.getCheckedRadioButtonId();
-                RadioButton selectedRadioGroupP2_9 = (RadioButton) findViewById(selected);
+                int selected29 = radioGroupP2_9.getCheckedRadioButtonId();
+                RadioButton selectedRadioGroupP2_9 = (RadioButton) findViewById(selected29);
                 if (selectedRadioGroupP2_9 == null) {
                     //Retornar mensaje
                     dialogInterface.dismiss();
@@ -2338,64 +2573,54 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     Toast.makeText(getApplicationContext(), "Debe ingresar la informacion", Toast.LENGTH_LONG).show();
                     return;
                 } else {
-                    encuestaSatisfaccionUsuario.setOtraP2(edtxP2_Otras.getText().toString());
+                    encuestaSatisfaccionUsuario.setOtra(edtxP2_Otras.getText().toString());
                 }
-            }
+            }*/
 
             //PARTE 3
             //Validando la pregunta 20
             RadioGroup radioGroupP3_1 = (RadioGroup) findViewById(R.id.radioGroupP3_1);
-            int selected = radioGroupP3_1.getCheckedRadioButtonId();
-            RadioButton selectedRadioGroupP3_1 = (RadioButton) findViewById(selected);
+            int selected31 = radioGroupP3_1.getCheckedRadioButtonId();
+            RadioButton selectedRadioGroupP3_1 = (RadioButton) findViewById(selected31);
             if (selectedRadioGroupP3_1 == null) {
-                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 3", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 9", Toast.LENGTH_LONG).show();
                 return;
             } else {
                 if (selectedRadioGroupP3_1.getText().toString().equals("Si")) {
-                    encuestaSatisfaccionUsuario.setDifBuscarAtencionMed("1");
+                    encuestaSatisfaccionUsuario.setDificultadAtencion_P9("1");
                 } else {
-                    encuestaSatisfaccionUsuario.setDifBuscarAtencionMed("0");
+                    encuestaSatisfaccionUsuario.setDificultadAtencion_P9("0");
                 }
             }
 
-            if (selectedRadioGroupP3_1.getText().toString().equals("Si")
+           /* if (selectedRadioGroupP3_1.getText().toString().equals("Si")
                     && !chkLejosCentroSalud
                     && !chkCostoElevadoTransporte
                     && !chkTrabajoTiempo
                     && !chkNoQueriaPasarConsultMomento
-                    && !chkPorHorarioClases
-                    && !chkTemorTomenMx
-                    && !chkTemorDarInformacion
+  
                     && !chkOtrasDificultades) {
-                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 3.1", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 11.1", Toast.LENGTH_LONG).show();
                 return;
-            }
+            }*/
 
             // 3.1 Se activan cuando la pregunta 3 es 'Si'
             if (chkLejosCentroSalud) {
-                encuestaSatisfaccionUsuario.setCentroSaludLejos("1");
+                encuestaSatisfaccionUsuario.setCentroSaludLejos_P9_1("1");
             }
             if (chkCostoElevadoTransporte) {
-                encuestaSatisfaccionUsuario.setCostoTrasnporteElevado("1");
+                encuestaSatisfaccionUsuario.setCostoTrasnporteElevado_P9_2("1");
             }
             if (chkTrabajoTiempo) {
-                encuestaSatisfaccionUsuario.setTrabajoTiempo("1");
+                encuestaSatisfaccionUsuario.setTrabajoTiempo_P9_3("1");
             }
             if (chkNoQueriaPasarConsultMomento) {
-                encuestaSatisfaccionUsuario.setNoQueriapasarConsulta("1");
+                encuestaSatisfaccionUsuario.setNoQueriapasarConsulta_P9_4("1");
             }
-            if (chkPorHorarioClases) {
-                encuestaSatisfaccionUsuario.setHorarioClases("1");
-            }
-            if (chkTemorTomenMx) {
-                encuestaSatisfaccionUsuario.setTemorTomenMx("1");
-            }
-            if (chkTemorDarInformacion) {
-                encuestaSatisfaccionUsuario.setTemorInfoPersonal("1");
-            }
+
             if (chkOtrasDificultades) {
-                EditText edtxOtrasDificultades = (EditText) this.findViewById(R.id.edtxOtrasDificultades);
-                encuestaSatisfaccionUsuario.setOtraP3(edtxOtrasDificultades.getText().toString());
+                EditText edtxOtrasDificultades = (EditText) this.findViewById(R.id.edtxOtrasDificultades1);
+                encuestaSatisfaccionUsuario.setOtrasEspecifique_P9_5(edtxOtrasDificultades.getText().toString());
             }
 
             //PARTE4
@@ -2404,13 +2629,13 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             int selectedP4_1 = radioGroupP4_1.getCheckedRadioButtonId();
             RadioButton selectedRadioGroupP4_1 = (RadioButton) findViewById(selectedP4_1);
             if (selectedRadioGroupP4_1 == null) {
-                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 4", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 10", Toast.LENGTH_LONG).show();
                 return;
             } else {
                 if (selectedRadioGroupP4_1.getText().toString().equals("Si")) {
-                    encuestaSatisfaccionUsuario.setRecomendariaAmigoFamiliar("1");
+                    encuestaSatisfaccionUsuario.setRecomendariaAmigoFamiliar_P10("1");
                 } else {
-                    encuestaSatisfaccionUsuario.setRecomendariaAmigoFamiliar("0");
+                    encuestaSatisfaccionUsuario.setRecomendariaAmigoFamiliar_P10("0");
                 }
             }
 
@@ -2420,10 +2645,9 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     && !chkTiempoEsperaCorto
                     && !chkMejorAtencionSeguroMed
                     && !chkExamLabNecesarios
-                    && !chkGeneraConocimiento
                     && !chkPocosRequisitos
                     && !chkOtrasRazonesRecomendaria) {
-                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 4.1", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 10.1", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -2437,66 +2661,64 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     && !chkNoExplicanHacenMx
                     && !chkNoConfianzaEstudios
                     && !chkOtrasRazonesNoRecomendaria) {
-                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 4.2", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 10.1", Toast.LENGTH_LONG).show();
                 return;
             }
 
             //4.1 se activa cuando la respuesta de la pregunta 4 es Si
             if (chkAtencionRecibidaCalidad) {
-                encuestaSatisfaccionUsuario.setAtencionCalidad("1");
+                encuestaSatisfaccionUsuario.setAtencionPersonalMala_P10_2("1");
             }
             if (chkRespuestaNecesidades) {
-                encuestaSatisfaccionUsuario.setRespNecesidadesSaludOportuna("1");
+                encuestaSatisfaccionUsuario.setRespNecesidadesSaludOportuna_P10_1("1");
             }
             if (chkTiempoEsperaCorto) {
-                encuestaSatisfaccionUsuario.setTiempoEsperaCorto("1");
+                encuestaSatisfaccionUsuario.setTiempoEsperaCorto_P10_1("1");
             }
             if (chkMejorAtencionSeguroMed) {
-                encuestaSatisfaccionUsuario.setMejorAtencionQueSeguro("1");
+                encuestaSatisfaccionUsuario.setMejorAtencionQueSeguro_P10_1("1");
             }
             if (chkExamLabNecesarios) {
-                encuestaSatisfaccionUsuario.setExamenLabNecesarios("1");
+                encuestaSatisfaccionUsuario.setExamenLabNecesarios_P10_1("1");
             }
-            if (chkGeneraConocimiento) {
-                encuestaSatisfaccionUsuario.setConocimientosImportantes("1");
-            }
+
             if (chkPocosRequisitos) {
-                encuestaSatisfaccionUsuario.setPocosRequisitos("1");
+                encuestaSatisfaccionUsuario.setPocosRequisitos_P10_1("1");
             }
             if (chkOtrasRazonesRecomendaria) {
                 EditText edtxOtrasRazonesRecomendaria = (EditText) this.findViewById(R.id.edtxOtrasRazonesRecomendaria);
-                encuestaSatisfaccionUsuario.setOtraP_4_1(edtxOtrasRazonesRecomendaria.getText().toString());
+                encuestaSatisfaccionUsuario.setOtraP_10_1(edtxOtrasRazonesRecomendaria.getText().toString());
             }
 
             if (selectedRadioGroupP4_1.getText().toString().equals("No")) {}
             //4.2 se activa cuando la respuesta de la pregunta 4 es No
             if (chkAtencionRecibidaMala) {
-                encuestaSatisfaccionUsuario.setAtencionPersonalMala("1");
+                encuestaSatisfaccionUsuario.setAtencionPersonalMala_P10_2("1");
             }
             if (chkNoDanRespuestaNecesidades) {
-                encuestaSatisfaccionUsuario.setNoDanRespNecesidades("1");
+                encuestaSatisfaccionUsuario.setNoDanRespNecesidades_P10_2("1");
             }
             if (chkTiempoEsperaLargo) {
-                encuestaSatisfaccionUsuario.setTiempoEsperaLargo("1");
+                encuestaSatisfaccionUsuario.setTiempoEsperaLargo_P10_2("1");
             }
             if (chkMejorAtencionOtroCentro) {
-                encuestaSatisfaccionUsuario.setMejorAtencionOtraUnidadSalud("1");
+                encuestaSatisfaccionUsuario.setMejorAtencionOtraUnidadSalud_P10_2("1");
             }
             if (chkDemasiadasMx) {
-                encuestaSatisfaccionUsuario.setSolicitaDemasiadaMx("1");
+                encuestaSatisfaccionUsuario.setSolicitaDemasiadaMx_P10_2("1");
             }
             if (chkMuchosRequisitos) {
-                encuestaSatisfaccionUsuario.setMuchosRequisitos("1");
+                encuestaSatisfaccionUsuario.setMuchosRequisitos_P10_2("1");
             }
             if (chkNoExplicanHacenMx) {
-                encuestaSatisfaccionUsuario.setNoExplicanHacenMx("1");
+                encuestaSatisfaccionUsuario.setNoExplicanHacenMx_P10_2("1");
             }
             if (chkNoConfianzaEstudios) {
-                encuestaSatisfaccionUsuario.setNoConfianza("1");
+                encuestaSatisfaccionUsuario.setNoConfianza_P10_2("1");
             }
             if (chkOtrasRazonesNoRecomendaria) {
                 EditText edtxOtrasRazonesNoRecomendaria = (EditText) this.findViewById(R.id.edtxOtrasRazonesNoRecomendaria);
-                encuestaSatisfaccionUsuario.setOtraP_4_2(edtxOtrasRazonesNoRecomendaria.getText().toString());
+                encuestaSatisfaccionUsuario.setOtraP_10_2(edtxOtrasRazonesNoRecomendaria.getText().toString());
             }
 
             //PARTE 5
@@ -2505,13 +2727,13 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             int selectedP5_1 = radioGroupP5_1.getCheckedRadioButtonId();
             RadioButton selectedRadioGroupP5_1 = (RadioButton) findViewById(selectedP5_1);
             if (selectedRadioGroupP5_1 == null) {
-                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 5", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 11", Toast.LENGTH_LONG).show();
                 return;
             } else {
                 if (selectedRadioGroupP5_1.getText().toString().equals("Si")) {
-                    encuestaSatisfaccionUsuario.setComprendeProcedimientos("1");
+                    encuestaSatisfaccionUsuario.setComprendeProcedimientos_P11("1");
                 } else {
-                    encuestaSatisfaccionUsuario.setComprendeProcedimientos("0");
+                    encuestaSatisfaccionUsuario.setComprendeProcedimientos_P11("0");
                 }
             }
 
@@ -2521,44 +2743,183 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
                     && !chkExplicaronRapido
                     && !chkNoDejaronHacerPreguntas
                     && !chkOtroMotivosNoComprendioProcedimiento) {
-                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 5.1", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 11.1", Toast.LENGTH_LONG).show();
                 return;
             }
             if (chkNoEstuveComodoRealizarPreg) {
-                encuestaSatisfaccionUsuario.setNoComodoRealizarPreg("1");
+                encuestaSatisfaccionUsuario.setNoComodoRealizarPreg_P11_1("1");
             }
             if (chkNoRespondieronPreguntas) {
-                encuestaSatisfaccionUsuario.setNoRespondieronPreg("1");
+                encuestaSatisfaccionUsuario.setNoRespondieronPreg_P11_1("1");
             }
             if (chkExplicaronRapido) {
-                encuestaSatisfaccionUsuario.setExplicacionRapida("1");
+                encuestaSatisfaccionUsuario.setExplicacionRapida_P11_1("1");
             }
             if (chkNoDejaronHacerPreguntas) {
-                encuestaSatisfaccionUsuario.setNoDejaronHacerPreg("1");
+                encuestaSatisfaccionUsuario.setNoDejaronHacerPreg_P11_1("1");
             }
             if (chkOtroMotivosNoComprendioProcedimiento) {
                 EditText edtxOtroMotivosNoComprendioProcedimiento = (EditText) this.findViewById(R.id.edtxOtroMotivosNoComprendioProcedimiento);
-                encuestaSatisfaccionUsuario.setOtraP_5_1(edtxOtroMotivosNoComprendioProcedimiento.getText().toString());
+                encuestaSatisfaccionUsuario.setOtraP_11_1(edtxOtroMotivosNoComprendioProcedimiento.getText().toString());
             }
 
-            //PARTE 6
-            //Pregunta 6
-            RadioGroup radioGroupP6_1 = (RadioGroup) findViewById(R.id.radioGroupP6_1);
-            int selectedP6_1 = radioGroupP6_1.getCheckedRadioButtonId();
-            RadioButton selectedRadioGroupP6_1 = (RadioButton) findViewById(selectedP6_1);
-            if (selectedRadioGroupP6_1 == null) {
-                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 6", Toast.LENGTH_LONG).show();
+            //XML 6
+            //Pregunta 1
+            RadioGroup radioGroupP1 = (RadioGroup) findViewById(R.id.radioGroupP01);
+            int selectedP1 = radioGroupP1.getCheckedRadioButtonId();
+            RadioButton selectedRadioGroupP1 = (RadioButton) findViewById(selectedP1);
+            if (selectedRadioGroupP1 == null) {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar la intensidad en la pregunta 1", Toast.LENGTH_LONG).show();
                 return;
             } else {
-                if (selectedRadioGroupP6_1.getText().toString().equals("Si")) {
-                    encuestaSatisfaccionUsuario.setBrindaronConsejosPrevencionEnfer("1");
-                } else {
-                    encuestaSatisfaccionUsuario.setBrindaronConsejosPrevencionEnfer("0");
-                }
+                //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
+                encuestaSatisfaccionUsuario.setAtencionPersonalEstudio_P1(selectedRadioGroupP1.getText().toString());
             }
 
+            //Pregunta 2
+            RadioGroup radioGroupP2 = (RadioGroup) findViewById(R.id.radioGroupP02);
+            int selectedP2 = radioGroupP2.getCheckedRadioButtonId();
+            RadioButton selectedRadioGroupP2 = (RadioButton) findViewById(selectedP2);
+            if (selectedRadioGroupP2 == null) {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar la intensidad en la pregunta 2", Toast.LENGTH_LONG).show();
+                return;
+            } else {
+                //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
+                encuestaSatisfaccionUsuario.setTiempoAtencionRecibido_P2(selectedRadioGroupP2.getText().toString());
+            }
+            //Pregunta 3
+            RadioGroup radioGroupP3 = (RadioGroup) findViewById(R.id.radioGroupP03);
+            int selectedP3 = radioGroupP3.getCheckedRadioButtonId();
+            RadioButton selectedRadioGroupP3 = (RadioButton) findViewById(selectedP3);
+            if (selectedRadioGroupP3 == null) {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar la intensidad en la pregunta 3", Toast.LENGTH_LONG).show();
+                return;
+            } else {
+                //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
+                encuestaSatisfaccionUsuario.setAtencionRecibidaEnfermeria_P3(selectedRadioGroupP3.getText().toString());
+            }
+            //Pregunta 4
+            RadioGroup radioGroupP4 = (RadioGroup) findViewById(R.id.radioGroupP04);
+            int selectedP4 = radioGroupP4.getCheckedRadioButtonId();
+            RadioButton selectedRadioGroupP4 = (RadioButton) findViewById(selectedP4);
+            if (selectedRadioGroupP4 == null) {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar la intensidad en la pregunta 4", Toast.LENGTH_LONG).show();
+                return;
+            } else {
+                //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
+                encuestaSatisfaccionUsuario.setAtencionRecibidaDoctores_P4(selectedRadioGroupP4.getText().toString());
+            }
+            //Pregunta 5
+            RadioGroup radioGroupP5 = (RadioGroup) findViewById(R.id.radioGroupP05);
+            int selectedP5 = radioGroupP5.getCheckedRadioButtonId();
+            RadioButton selectedRadioGroupP5 = (RadioButton) findViewById(selectedP5);
+            if (selectedRadioGroupP5 == null) {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar la intensidad en la pregunta 5", Toast.LENGTH_LONG).show();
+                return;
+            } else {
+                //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
+                encuestaSatisfaccionUsuario.setAmbienteDondeRecibeAtencion_P5(selectedRadioGroupP5.getText().toString());
+            }
+            //Pregunta 6
+            RadioGroup radioGroupP6 = (RadioGroup) findViewById(R.id.radioGroupP06);
+            int selectedP6 = radioGroupP6.getCheckedRadioButtonId();
+            RadioButton selectedRadioGroupP6 = (RadioButton) findViewById(selectedP6);
+            if (selectedRadioGroupP6 == null) {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar la intensidad en la pregunta 6", Toast.LENGTH_LONG).show();
+                return;
+            } else {
+                //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
+                encuestaSatisfaccionUsuario.setExplicaronDiagnostico_P6(selectedRadioGroupP6.getText().toString());
+            }
             //Pregunta 7
-            if (!chkEntiendoProcedimientos
+            RadioGroup radioGroupP7 = (RadioGroup) findViewById(R.id.radioGroupP07);
+            int selectedP7 = radioGroupP7.getCheckedRadioButtonId();
+            RadioButton selectedRadioGroupP7 = (RadioButton) findViewById(selectedP7);
+            if (selectedRadioGroupP7 == null) {
+                //Retornar mensaje
+                dialogInterface.dismiss();
+                Toast.makeText(getApplicationContext(), "Debe seleccionar la intensidad en la pregunta 7", Toast.LENGTH_LONG).show();
+                return;
+            } else {
+                //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
+                encuestaSatisfaccionUsuario.setExplicaronTratamiento_P7(selectedRadioGroupP7.getText().toString());
+            }
+         //Pregunta 8
+            RadioGroup radioGroupP8 = (RadioGroup) findViewById(R.id.radioGroupP3_1);
+            int selectedP8 = radioGroupP8.getCheckedRadioButtonId();
+            RadioButton selectedRadioGroupP8 = (RadioButton) findViewById(selectedP8);
+            if (selectedRadioGroupP8 == null) {
+                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 8", Toast.LENGTH_LONG).show();
+                return;
+            } else {
+                if (selectedRadioGroupP8.getText().toString().equals("Si")) {
+                    encuestaSatisfaccionUsuario.setTieneArbovirusImportanciaSeg_P8("1");
+
+                    //Pregunta 8.1
+                    RadioGroup radioGroupP8_1 = (RadioGroup) findViewById(R.id.radioGroupP3_2);
+                    int selectedP8_1 = radioGroupP8_1.getCheckedRadioButtonId();
+                    RadioButton selectedRadioGroupP8_1 = (RadioButton) findViewById(selectedP8_1);
+                    if (selectedRadioGroupP8_1 == null) {
+                        Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 8.1", Toast.LENGTH_LONG).show();
+                        return;
+                    } else {
+                        if (selectedRadioGroupP8_1.getText().toString().equals("Si")) {
+                            encuestaSatisfaccionUsuario.setExplicaronPeligrosArbovirus_P8_1("1");
+                        } else {
+                            encuestaSatisfaccionUsuario.setExplicaronPeligrosArbovirus_P8_1("0");
+                        }
+                    }
+                    //Pregunta 8.2
+                    RadioGroup radioGroupP8_2 = (RadioGroup) findViewById(R.id.radioGroupP3_3);
+                    int selectedP8_2 = radioGroupP8_2.getCheckedRadioButtonId();
+                    RadioButton selectedRadioGroupP8_2 = (RadioButton) findViewById(selectedP8_2);
+                    if (selectedRadioGroupP8_2 == null) {
+                        Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 8.2", Toast.LENGTH_LONG).show();
+                        return;
+                    } else {
+                        if (selectedRadioGroupP8_2.getText().toString().equals("Si")) {
+                            encuestaSatisfaccionUsuario.setMedicoDijoCuidados_P8_2("1");
+                        } else {
+                            encuestaSatisfaccionUsuario.setMedicoDijoCuidados_P8_2("0");
+                        }
+                    }
+                } else {
+                    if (selectedRadioGroupP8.getText().toString().equals("No Aplica")) {
+                        encuestaSatisfaccionUsuario.setTieneArbovirusImportanciaSeg_P8("2");
+                    } else {
+                        encuestaSatisfaccionUsuario.setTieneArbovirusImportanciaSeg_P8("0");
+
+                    }
+                }
+            }/*
+            //Pregunta 3
+            RadioGroup radioGroupP03 = (RadioGroup) findViewById(R.id.radioGroupP03);
+            int selectedP3 = radioGroupP03.getCheckedRadioButtonId();
+            RadioButton selectedRadioGroupP3 = (RadioButton) findViewById(selectedP3);
+            if (selectedRadioGroupP3 == null) {
+                Toast.makeText(getApplicationContext(), "Debe seleccionar una opción en la pregunta 3", Toast.LENGTH_LONG).show();
+                return;
+            } else {
+                if (selectedRadioGroupP3.getText().toString().equals("Si")) {
+                    encuestaSatisfaccionUsuario.setAtencionRecibidaEnfermeria_P3("1");
+                } else {
+                    encuestaSatisfaccionUsuario.setAtencionRecibidaEnfermeria_P3("0");
+                }
+            }*/
+            //Pregunta 7
+          /*  if (!chkEntiendoProcedimientos
                     && !chkSatisfecho
                     && !chkComodoInformacion
                     && !chkNoComodoPreguntas) {
@@ -2597,7 +2958,7 @@ public class NuevaEncuestaSatisfaccionActivity extends AbstractAsyncActivity {
             } else {
                 //Setear el valor de la  variable seleccionada en el radio button al modelo a guardar
                 encuestaSatisfaccionUsuario.setImportanciaRecibirInformacion(selectedRadioGroupP9.getText().toString());
-            }
+            }*/
 
             //Caprutar el codigo del participante
             encuestaSatisfaccionUsuario.setCodigoParticipante(participante.getCodigo());

@@ -16,7 +16,7 @@
             android:gravity="center_horizontal"
             android:textSize="20dp"
             android:textColor="@color/solid_blue"
-            android:text="Encuesta de Satisfacción de Usuario"
+            android:text="Encuesta de Satisfacción para Participantes , Padres/Tutores"
             android:textAlignment="center"
             android:textStyle="bold" />
 
@@ -35,10 +35,10 @@
 
         <include
             android:id="@+id/incNuevaEnc3"
+            layout="@layout/nueva_encuesta_parte3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/incNuevaEnc2"
-            layout="@layout/nueva_encuesta_parte3"/>
+            android:layout_below="@+id/incNuevaEnc2" />
 
         <include
             android:id="@+id/incNuevaEnc4"

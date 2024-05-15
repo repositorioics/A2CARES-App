@@ -282,6 +282,59 @@ public class Participante extends BaseMetaData implements Serializable{
             return "ND";
         }
     }
+    /*public String getEdadMuestreo() {
+        if (this.getFechaNac()!=null) {
+            Calendar calendarDOB = Calendar.getInstance();
+            Calendar calendarToday = Calendar.getInstance();
+
+            calendarToday.setTime(this.getRecordDate());
+            calendarDOB.setTime(this.fechaNac);
+            Integer diaInicio = calendarDOB.get(Calendar.DAY_OF_MONTH);
+            Integer mesInicio = calendarDOB.get(Calendar.MONTH)+1;
+            Integer anioInicio = calendarDOB.get(Calendar.YEAR);
+
+            Integer diaActual = calendarToday.get(Calendar.DAY_OF_MONTH);
+            Integer mesActual = calendarToday.get(Calendar.MONTH)+1;
+            Integer anioActual = calendarToday.get(Calendar.YEAR);
+
+            int b = 0;
+            Integer dias = 0;
+            Integer anios = 0;
+            Integer meses = 0;
+            b = calendarDOB.getActualMaximum(Calendar.DAY_OF_MONTH);
+            if ((anioInicio > anioActual) || (anioInicio.equals(anioActual) && mesInicio > mesActual)
+                    || (anioInicio.equals(anioActual) && mesInicio.equals(mesActual) && diaInicio > diaActual)) {
+                return "ND";
+            } else {
+                if (mesInicio <= mesActual) {
+                    anios = anioActual - anioInicio;
+                    if (diaInicio <= diaActual) {
+                        meses = mesActual - mesInicio;
+                        dias = (diaActual - diaInicio);
+                    } else {
+                        if (mesActual.equals(mesInicio)) {
+                            anios = anios - 1;
+                        }
+                        meses = (mesActual - mesInicio - 1 + 12) % 12;
+                        dias = b - (diaInicio - diaActual);
+                    }
+                } else {
+                    anios = anioActual - anioInicio - 1;
+                    System.out.println(anios);
+                    if (diaInicio > diaActual) {
+                        meses = mesActual - mesInicio - 1 + 12;
+                        dias = b - (diaInicio - diaActual);
+                    } else {
+                        meses = mesActual - mesInicio + 12;
+                        dias = diaActual - diaInicio;
+                    }
+                }
+            }
+            return anios.toString() + "/" + meses.toString() + "/" + dias.toString();
+        }else{
+            return "ND";
+        }
+    }*/
 
     @JsonIgnore
     public Integer getEdadMeses(){

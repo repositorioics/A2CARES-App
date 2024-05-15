@@ -79,75 +79,108 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Participante participante = listdata.get(position);
        // estudiosAdapter.open();
+        String edad[] = participante.getEdad().split("/");
+
+        try {
+            holder.textViewIdent.setText(holder.context.getString(R.string.code) + ": " + listdata.get(position).getCodigo());
+            holder.textViewDer.setText(mDateFormat.format(listdata.get(position).getFechaNac()));
+            holder.textViewConva.setText("");
+            holder.textViewConva1.setText("");
+            if (participante.getProcesos().getReconsent().equals("1")) {
+                holder.textViewConva.setText(holder.context.getString(R.string.pendiente_reconsent) + "");
+            }
+            holder.textViewName.setText(listdata.get(position).getNombreCompleto());
+            if (participante.getProcesos().getPendienteMxMA().equals("1")) {
+                holder.infotext.setText(holder.context.getString(R.string.alerta_no_pendiente_muestra_anual) + "");
+            } else {
+                holder.infotext.setText(holder.context.getString(R.string.alerta_pendiente_muestra_anual) + "");
+            }
 
 
-
-        holder.textViewIdent.setText(holder.context.getString(R.string.code) + ": " + listdata.get(position).getCodigo());
-        holder.textViewDer.setText(mDateFormat.format(listdata.get(position).getFechaNac()));
-        holder.textViewName.setText(listdata.get(position).getNombreCompleto());
-        holder.textViewName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            holder.textViewName.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
             if (participante.getSexo().equalsIgnoreCase("F")) {
                 holder.imageView.setImageResource(R.mipmap.ic_female);
             } else {
                 holder.imageView.setImageResource(R.mipmap.ic_male);
             }
-        if(participante.getProcesos().getPendienteMxTx().equalsIgnoreCase("1")) {
-            if (listdata2.size() != 0) {
-                for (int b=0;b < listdata2.size();b++) {
-                    dias = listdata2.get(b).getPositivo();
 
-                    if (Integer.parseInt(dias) < 14) {
-                        holder.textViewConva1.setText(String.format(String.format(String.format(holder.context.getString(R.string.alerta_conva) + " --Días Conv.: " + dias + " --Fis.: " + mDateFormat.format(listdata2.get(b).getFis())))));
+            if (participante.getProcesos().getPendienteMxTx().equalsIgnoreCase("1")) {
+                if (listdata2.size() != 0) {
+                    for (int b = 0; b < listdata2.size(); b++) {
+                        dias = listdata2.get(b).getPositivo();
+
+                        if (Integer.parseInt(dias) < 14) {
+                            if (participante.getProcesos().getReconsent().equals("1")) {
+                                holder.textViewConva1.setText(String.format(String.format(String.format(holder.context.getString(R.string.alerta_seguimiento) + " --Días Conv.: " + dias + " --Fis.: " + mDateFormat.format(listdata2.get(b).getFis()) + "  " + "PENDIENTE RECONSENTIMIENTO"))));
+                            } else {
+                                holder.textViewConva1.setText(String.format(String.format(String.format(holder.context.getString(R.string.alerta_seguimiento) + " --Días Conv.: " + dias + " --Fis.: " + mDateFormat.format(listdata2.get(b).getFis())))));
+                            }
+                        }
+                        if (Integer.parseInt(dias) > 13 && Integer.parseInt(dias) < 46) {
+                            if (participante.getProcesos().getReconsent().equals("1")) {
+                                holder.textViewConva.setText(holder.context.getString(R.string.alerta_conva) + " --Días Conv.: " + dias + " --Fif.: " + mDateFormat.format(listdata2.get(b).getFis()) + " -------- " + "PENDIENTE RECONSENTIMIENTO");
+                            } else {
+                                holder.textViewConva.setText(holder.context.getString(R.string.alerta_conva) + " --Días Conv.: " + dias + " --Fif.: " + mDateFormat.format(listdata2.get(b).getFis()));
+                            }
+                        }
                     }
-                    if (Integer.parseInt(dias) > 13 && Integer.parseInt(dias) < 46) {
-                        holder.textViewConva.setText(holder.context.getString(R.string.alerta_conva) + " --Días Conv.: " + dias + " --Fis.: " + mDateFormat.format(listdata2.get(b).getFis()));
-                    }
+                } else {
+                    dias = "0";
                 }
-            }else{
-                dias = "0";
+
+            } else {
+                if (participante.getProcesos().getReconsent().equals("1")) {
+                    holder.textViewConva.setText(holder.context.getString(R.string.pendiente_reconsent) + "");
+                } else {
+                    holder.textViewConva.setText("");
+                }
             }
 
-        }else{
-            holder.textViewConva.setText("");
-        }
-
-        if(participante.getProcesos().getRetirado().equals(1)) {
-            holder.textViewConva.setText(holder.context.getString(R.string.alerta_retirado) + "");
-        }
-
-       // estudiosAdapter.close();
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (desdeMedico) {
-                    Intent i = new Intent(holder.context,
-                            NuevaOrdenLaboratorioActivity.class);
-                    Bundle arguments = new Bundle();
-                    arguments.putSerializable(Constants.PARTICIPANTE, participante);
-                    i.putExtras(arguments);
-                    holder.context.startActivity(i);
-                    ((Activity)holder.context).finish();
-                } else if (desdeLaboratorio) {
-                    Intent i = new Intent(holder.context,
-                            NuevaRecepcionEnfermoActivity.class);
-                    Bundle arguments = new Bundle();
-                    arguments.putSerializable(Constants.PARTICIPANTE, participante);
-                    i.putExtras(arguments);
-                    holder.context.startActivity(i);
-                    ((Activity)holder.context).finish();
-                }
-                else {
-                    Intent i = new Intent(holder.context,
-                            MenuParticipanteActivity.class);
-                    Bundle arguments = new Bundle();
-                    arguments.putSerializable(Constants.PARTICIPANTE, participante);
-                    i.putExtras(arguments);
-                    i.putExtra(Constants.VISITA_EXITOSA, !permisoVisita); //si no tiene permiso de visita, se va a asumir la visita como exitosa para no solicitar visita al momento de ingresar informacion
-                    holder.context.startActivity(i);
-                }
+            if (participante.getProcesos().getRetirado().equals(1)) {
+                holder.textViewConva.setText(holder.context.getString(R.string.alerta_retirado) + "");
             }
-        });
+
+            // estudiosAdapter.close();
+            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (desdeMedico) {
+                        Intent i = new Intent(holder.context,
+                                NuevaOrdenLaboratorioActivity.class);
+                        Bundle arguments = new Bundle();
+                        arguments.putSerializable(Constants.PARTICIPANTE, participante);
+                        i.putExtras(arguments);
+                        holder.context.startActivity(i);
+                        ((Activity) holder.context).finish();
+                    } else if (desdeLaboratorio) {
+                        Intent i = new Intent(holder.context,
+                                NuevaRecepcionEnfermoActivity.class);
+                        Bundle arguments = new Bundle();
+                        arguments.putSerializable(Constants.PARTICIPANTE, participante);
+                        i.putExtras(arguments);
+                        holder.context.startActivity(i);
+                        ((Activity) holder.context).finish();
+                    } else {
+                        Intent i = new Intent(holder.context,
+                                MenuParticipanteActivity.class);
+                        Bundle arguments = new Bundle();
+                        arguments.putSerializable(Constants.PARTICIPANTE, participante);
+                        i.putExtras(arguments);
+                        i.putExtra(Constants.VISITA_EXITOSA, !permisoVisita); //si no tiene permiso de visita, se va a asumir la visita como exitosa para no solicitar visita al momento de ingresar informacion
+                        holder.context.startActivity(i);
+                    }
+                }
+            });
+        }catch (Exception ex){
+            ex.printStackTrace();
+            holder.textViewConva.setText(holder.context.getString(R.string.error_necesita_descargar) + "");
+        }finally {
+            //Cierra la base de datos
+            if (estudiosAdapter!=null)
+                estudiosAdapter.close();
+
+        }
     }
 
     @Override
@@ -163,6 +196,7 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
         public TextView textViewName;
         public TextView textViewConva;
         public TextView textViewConva1;
+        public TextView infotext;
         public LinearLayout relativeLayout;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -174,6 +208,7 @@ public class ParticipanteListAdapter extends RecyclerView.Adapter<ParticipanteLi
             this.textViewName = (TextView) itemView.findViewById(R.id.name_text);
             this.textViewConva = (TextView) itemView.findViewById(R.id.alert_Conva);
             this.textViewConva1 = (TextView) itemView.findViewById(R.id.alert_Conva1);
+            this.infotext = (TextView) itemView.findViewById(R.id.infoc_text);
 
             relativeLayout = (LinearLayout)itemView.findViewById(R.id.linearLayout);
         }

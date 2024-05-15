@@ -5,6 +5,7 @@
     <string name="confirm_house_survey_edit">¿Desea editar encuesta de casa? </string>
 
     <string name="cuantasPersonas">1. ¿Cuántas personas viven en la casa?</string>
+    <string name="cuantasPersonasT">Total de personas que viven en la casa:</string>
     <string name="cuantasMujeres">2. ¿Cuántas mujeres y niñas?</string>
     <string name="cuantasMujeresHint">En las siguientes preguntas ingresar las edades de menor a mayor</string>
     <string name="edadMujer1">2.1 Edad</string>
@@ -55,7 +56,7 @@
 
     <string name="problemaAgua">6. ¿Hay problemas de agua en este barrio?</string>
 
-    <string name="horasSinAgua">6.1 ¿Cuántas horas por día  no tiene servicio de agua?</string>
+    <string name="horasSinAgua">6.1 ¿Cuántas horas al día se les va el agua?</string>
     <string name="frecuenciaSeVaAgua">6.2 ¿Cada cuánto se va el agua?</string>
     <string name="otraFrecuenciaSeVaAgua">¿Con que otra frecuencia se va el agua?</string>
     <string name="frecuenciaSeVaAguaHint">Seleccionar una opción</string>
@@ -65,7 +66,7 @@
     <string name="tieneTanque">10. ¿Tiene tanque de agua?</string>
 
     <string name="llaveAgua">11. ¿La llave del agua se encuentra dentro de la casa o fuera?</string>
-    <string name="llaveCompartida">11.1 ¿Es compartido?</string>
+    <string name="llaveCompartida">11.1 ¿Si el grifo se encuentra fuera de la casa es compartido?</string>
     <string name="llaveCompartidaHint">Indicar si la llave que esta fuera de la casa es de uso compartido</string>
     <string name="almacenaAgua">12 ¿Ud. almacena agua  en barriles, tanques u otros recipientes?</string>
     <string name="almacenaEnBarriles">12.1 ¿Ud. Utiliza barriles?</string>
@@ -140,12 +141,12 @@
     <string name="tieneOtrosServicios">26. ¿Tiene alguno de los siguientes servicios?</string>
     <string name="tieneVehiculo">27. ¿Tiene vehículo en su casa?</string>
     <!--28 -->
-    <string name="tieneMoto">28.1 ¿Tiene moto?</string>
-    <string name="tieneCarro">28.2 ¿Tiene carro?</string>
-    <string name="tieneMicrobus">28.3 ¿Tiene microbús?</string>
-    <string name="tieneCamioneta">28.4 ¿Tiene camioneta?</string>
-    <string name="tieneCamion">28.5 ¿Tiene camión?</string>
-    <string name="tieneOtroMedioTransAuto">28.6 ¿Tiene otro medio de transporte automotriz?</string>
+    <string name="tieneMoto">27.1 ¿Tiene moto?</string>
+    <string name="tieneCarro">27.2 ¿Tiene carro?</string>
+    <string name="tieneMicrobus">27.3 ¿Tiene microbús?</string>
+    <string name="tieneCamioneta">27.4 ¿Tiene camioneta?</string>
+    <string name="tieneCamion">27.5 ¿Tiene camión?</string>
+    <string name="tieneOtroMedioTransAuto">27.6 ¿Tiene otro medio de transporte automotriz?</string>
     <string name="otroMedioTransAuto">Especifique que otro medio de transporte</string>
     <string name="anioFabMoto">Año de fabricacion de la moto</string>
     <string name="anioFabCarro">Año de fabricacion del carro</string>
@@ -161,13 +162,13 @@
     <string name="marcaOtroMedioTrans">Marca del otro medio de transporte</string>
     <!--28 -->
 
-    <string name="tipoCocina">29. ¿Qué tipo de cocina tiene?</string>
-    <string name="cuantosQuemadores">29. a.	¿Cuantos quemadores?</string>
-    <string name="tieneHorno">30. ¿Tiene horno?</string>
-    <string name="cocinaConLenia">31. ¿Cocina con leña en la casa?</string>
+    <string name="tipoCocina">28. ¿Qué tipo de cocina tiene?</string>
+    <string name="cuantosQuemadores">28.1	¿Cuantos quemadores?</string>
+    <string name="tieneHorno">28.2 ¿Tiene horno?</string>
+    <string name="cocinaConLenia">29. ¿Cocina con leña en la casa?</string>
     <string name="ubicacionCocinaLenia">Ubicacición de la cocina</string>
     <string name="ubicacionCocinaLeniaHint">Indicar si cocina con leña dentro o fuera de la casa</string>
-    <string name="periodicidadCocinaLenia">¿Con que frecuencia cocina con leña en la casa?</string>
+    <string name="periodicidadCocinaLenia">29.2 ¿Con que frecuencia cocina con leña en la casa?</string>
     <string name="numDiarioCocinaLenia">Diario</string>
     <string name="numSemanalCocinaLenia">Semanal</string>
     <string name="numQuincenalCocinaLenia">Quincenal</string>
@@ -176,7 +177,7 @@
     <string name="numSemanalCocinaLeniaHint"># de veces que cocina semanalmente</string>
     <string name="numQuincenalCocinaLeniaHint"># de veces que cocina quincenalmente</string>
     <string name="numMensualCocinaLeniaHint"># de veces que cocina al mes</string>
-    <string name="tieneAnimales">32. ¿Tiene animales en la casa?</string>
+    <string name="tieneAnimales">30. ¿Tiene animales en la casa?</string>
     <string name="tieneGallinas">¿Tiene pollos, gallinas y gallos en la casa?</string>
     <string name="tienePatos">¿Tiene patos en la casa?</string>
     <string name="tienePerros">¿Tiene perros en la casa?</string>
@@ -213,10 +214,13 @@
     <string name="avesDentroCasa">¿Algunas veces están las aves dentro de la casa?</string>
     <string name="otrosAnimalesDentroCasa">¿Algunas veces están los otros animales dentro de la casa?</string>
 
-    <string name="personaFumaDentroCasa">35. ¿Alguna persona fuma dentro de la casa?</string>
-    <string name="tieneRecoleccionBasura">36. ¿Tiene servicio de recolección de basura?</string>
-    <string name="cuantasVecesRecBasura">37. ¿Cuantas veces a la semana tiene servicio de recolección de basura?  </string>
-    <string name="dondePasaRecBasura">38. ¿Dónde pasa? </string>
-
+    <string name="personaFumaDentroCasa">31. ¿Alguna persona fuma dentro de la casa?</string>
+    <string name="personaFumaDentroFueraCasa">31.1 ¿Dónde fuma?</string>
+    <string name="tieneRecoleccionBasura">32. ¿Tiene servicio de recolección de basura?</string>
+    <string name="cuantasVecesRecBasura">32.1 ¿Cuantas veces a la semana tiene servicio de recolección de basura?  </string>
+    <string name="dondePasaRecBasura">32.2 ¿Dónde pasa? </string>
+    <string name="dondePasaRecBasuraOtros"> Otros Especifique : </string>
+    <string name="vistoAnimalesSalvajes">33. Ud. ¿Ha visto en su casa o en los alrededores de su vivienda algunos de estos animales salvajes? </string>
+    <string name="vistoAnimalesSalvajesOtros"> Otros Especifique Animal Salvaje: </string>
     <string name="horasSinAguaHint">(0–24h)</string>
 </resources>

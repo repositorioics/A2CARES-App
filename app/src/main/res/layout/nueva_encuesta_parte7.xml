@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/opcionExplicaronTratamiento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:text="7. ¿Le explicaron el tratamiento de la enfermedad que UD. o su niño/a presentaron(s)?     "
+        android:textAppearance="@style/TextViewEstiloSeguimiento"
+        android:textStyle="bold" />
+
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroupP07"
+        android:layout_below="@+id/opcionExplicaronTratamiento"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <RadioButton android:id="@+id/radioExplicaronTratamiento1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:layout_marginLeft="12dp"
+            android:onClick="onRadioExplicaronTratamientoClicked"/>
+        <RadioButton android:id="@+id/radioExplicaronTratamiento2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:layout_marginLeft="12dp"
+            android:onClick="onRadioExplicaronTratamientoClicked"/>
+        <RadioButton android:id="@+id/radioExplicaronTratamiento3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:layout_marginLeft="12dp"
+            android:onClick="onRadioExplicaronTratamientoClicked"/>
+        <RadioButton android:id="@+id/radioExplicaronTratamiento4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4"
+            android:layout_marginLeft="12dp"
+            android:onClick="onRadioExplicaronTratamientoClicked"/>
+        <RadioButton android:id="@+id/radioExplicaronTratamiento5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:layout_marginLeft="12dp"
+            android:onClick="onRadioExplicaronTratamientoClicked"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/txtvHaTenidoArbovirus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="140dp"
+        android:text="8. Si Ud. o su niño/a tiene o ha tenido Arbovirosis (DENGUE, CHIKUNGUNYA, ZIKA) conoce la importancia del seguimiento de esta enfermedad:"
+        android:textAppearance="@style/TextViewEstiloSeguimiento"
+        android:textStyle="bold" />
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroupP3_1"
+        android:layout_below="@+id/txtvHaTenidoArbovirus"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioHaTenidoArbovirusS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Si"
+            android:layout_marginLeft="7dp"
+            android:onClick="onRadioHaTenidoArbovirusClicked"/>
+        <RadioButton android:id="@+id/radioHaTenidoArbovirusN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:layout_marginLeft="15dp"
+            android:onClick="onRadioHaTenidoArbovirusClicked"/>
+        <RadioButton android:id="@+id/radioNoAplicaNoTieneAbovirusNA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Aplica"
+            android:layout_marginLeft="15dp"
+            android:onClick="onRadioHaTenidoArbovirusClicked"/>
+
+    </RadioGroup>
+    <LinearLayout
+        android:id="@+id/pregunta8_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radioGroupP3_1"
+        android:visibility="gone"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/txtvPeligrosEnfermedad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="25dp"
+        android:text="8.1. ¿Le fueron explicados los peligros de esta enfermedad?:  "
+        android:textStyle="bold"
+        android:textAppearance="@style/TextViewEstiloSeguimiento" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroupP3_2"
+        android:layout_below="@+id/txtvPeligrosEnfermedad"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioPeligrosEnfermedadS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Si"
+            android:layout_marginLeft="7dp"
+            android:onClick="onRadioDificultadBuscarAtencionClicked"/>
+        <RadioButton android:id="@+id/radioPeligrosEnfermedadN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:layout_marginLeft="15dp"
+            android:onClick="onRadioDificultadBuscarAtencionClicked"/>
+
+
+    </RadioGroup>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/txtvMedicoDijoTenerCuidado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="40dp"
+        android:text="8.2. ¿El médico le dijo del cuidado que debe tener con su niño:     "
+        android:textStyle="bold"
+        android:textAppearance="@style/TextViewEstiloSeguimiento" />
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroupP3_3"
+        android:layout_below="@+id/txtvMedicoDijoTenerCuidado"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/radioMedicoDijoTenerCuidadoS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Si"
+            android:layout_marginLeft="7dp"
+            android:onClick="onRadioDificultadBuscarAtencionClicked"/>
+        <RadioButton android:id="@+id/radioMedicoDijoTenerCuidadoN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No"
+            android:layout_marginLeft="15dp"
+            android:onClick="onRadioDificultadBuscarAtencionClicked"/>
+    </RadioGroup>
+    </LinearLayout>
+</RelativeLayout>

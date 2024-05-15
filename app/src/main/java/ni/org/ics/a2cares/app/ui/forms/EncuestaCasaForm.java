@@ -32,6 +32,8 @@ public class EncuestaCasaForm extends AbstractWizardModel {
     private String[] catMuroCerco;
     private String[] catInodoroLetrina;
     private String[] catFrecVaAgua;
+    private String[] catFDondePasaBasura;
+    private String[] catVistoAnimalesSalvajes;
     private EstudioDBAdapter estudiosAdapter;
     private EncuestaCasaFormLabels labels;
 
@@ -57,33 +59,35 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         catMuroCerco = estudiosAdapter.getMessageResourcesForCatalog("CAT_MUROCERCO");
         catInodoroLetrina = estudiosAdapter.getMessageResourcesForCatalog("CAT_INODOROLET");
         catFrecVaAgua = estudiosAdapter.getMessageResourcesForCatalog("CAT_FREC_VA_AGUA");
+        catFDondePasaBasura = estudiosAdapter.getMessageResourcesForCatalog("CAT_DONDE_PASA_BASURA");
+        catVistoAnimalesSalvajes = estudiosAdapter.getMessageResourcesForCatalog("CAT_VISTO_ANIMALES_SALVAJES");
         estudiosAdapter.close();
 
         Calendar calendar = Calendar.getInstance();
 
-        Page npPersonas = new NumberPage(this, labels.getCuantasPersonas(), "", Constants.WIZARD, true).setRequired(true);
-        Page npMujeres = new NumberPage(this, labels.getCuantasMujeres(), labels.getCuantasMujeresHint(), Constants.WIZARD, true).setRequired(true);
-        Page tpEdadM1 = new TextPage(this, labels.getEdadMujer1(), labels.getEdadMujer1Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadM2 = new TextPage(this, labels.getEdadMujer2(), labels.getEdadMujer2Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadM3 = new TextPage(this, labels.getEdadMujer3(), labels.getEdadMujer3Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadM4 = new TextPage(this, labels.getEdadMujer4(), labels.getEdadMujer4Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadM5 = new TextPage(this, labels.getEdadMujer5(), labels.getEdadMujer5Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadM6 = new TextPage(this, labels.getEdadMujer6(), labels.getEdadMujer6Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadM7 = new TextPage(this, labels.getEdadMujer7(), labels.getEdadMujer7Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadM8 = new TextPage(this, labels.getEdadMujer8(), labels.getEdadMujer8Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadM9 = new TextPage(this, labels.getEdadMujer9(), labels.getEdadMujer9Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadM10 = new TextPage(this, labels.getEdadMujer10(), labels.getEdadMujer10Hint(), Constants.WIZARD, false).setRequired(true);
+        Page npPersonas = new NumberPage(this, labels.getCuantasPersonas(), "", Constants.WIZARD, true).setRequired(false);
+        Page npMujeres = new NumberPage(this, labels.getCuantasMujeres(), labels.getCuantasMujeresHint(), Constants.WIZARD, true).setRangeValidation(true,0,10).setRequired(true);
+        Page tpEdadM1 = new NumberPage(this, labels.getEdadMujer1(), labels.getEdadMujer1Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadM2 = new NumberPage(this, labels.getEdadMujer2(), labels.getEdadMujer2Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadM3 = new NumberPage(this, labels.getEdadMujer3(), labels.getEdadMujer3Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadM4 = new NumberPage(this, labels.getEdadMujer4(), labels.getEdadMujer4Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadM5 = new NumberPage(this, labels.getEdadMujer5(), labels.getEdadMujer5Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadM6 = new NumberPage(this, labels.getEdadMujer6(), labels.getEdadMujer6Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadM7 = new NumberPage(this, labels.getEdadMujer7(), labels.getEdadMujer7Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadM8 = new NumberPage(this, labels.getEdadMujer8(), labels.getEdadMujer8Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadM9 = new NumberPage(this, labels.getEdadMujer9(), labels.getEdadMujer9Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadM10 = new NumberPage(this, labels.getEdadMujer10(), labels.getEdadMujer10Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
         Page npHombres = new NumberPage(this, labels.getCuantosHombres(), labels.getCuantosHombresHint(), Constants.WIZARD, true).setRequired(true);
-        Page tpEdadH1 = new TextPage(this, labels.getEdadHombre1(), labels.getEdadHombre1Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadH2 = new TextPage(this, labels.getEdadHombre2(), labels.getEdadHombre2Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadH3 = new TextPage(this, labels.getEdadHombre3(), labels.getEdadHombre3Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadH4 = new TextPage(this, labels.getEdadHombre4(), labels.getEdadHombre4Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadH5 = new TextPage(this, labels.getEdadHombre5(), labels.getEdadHombre5Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadH6 = new TextPage(this, labels.getEdadHombre6(), labels.getEdadHombre6Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadH7 = new TextPage(this, labels.getEdadHombre7(), labels.getEdadHombre7Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadH8 = new TextPage(this, labels.getEdadHombre8(), labels.getEdadHombre8Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadH9 = new TextPage(this, labels.getEdadHombre9(), labels.getEdadHombre9Hint(), Constants.WIZARD, false).setRequired(true);
-        Page tpEdadH10 = new TextPage(this, labels.getEdadHombre10(), labels.getEdadHombre10Hint(), Constants.WIZARD, false).setRequired(true);
+        Page tpEdadH1 = new NumberPage(this, labels.getEdadHombre1(), labels.getEdadHombre1Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadH2 = new NumberPage(this, labels.getEdadHombre2(), labels.getEdadHombre2Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadH3 = new NumberPage(this, labels.getEdadHombre3(), labels.getEdadHombre3Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadH4 = new NumberPage(this, labels.getEdadHombre4(), labels.getEdadHombre4Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadH5 = new NumberPage(this, labels.getEdadHombre5(), labels.getEdadHombre5Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadH6 = new NumberPage(this, labels.getEdadHombre6(), labels.getEdadHombre6Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadH7 = new NumberPage(this, labels.getEdadHombre7(), labels.getEdadHombre7Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadH8 = new NumberPage(this, labels.getEdadHombre8(), labels.getEdadHombre8Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadH9 = new NumberPage(this, labels.getEdadHombre9(), labels.getEdadHombre9Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
+        Page tpEdadH10 = new NumberPage(this, labels.getEdadHombre10(), labels.getEdadHombre10Hint(), Constants.WIZARD, false).setPatternValidation(true, "^[0-9]{1,2}?$").setRequired(true);
 
         Page npCuartos = new NumberPage(this, labels.getCuantoCuartos(), "", Constants.WIZARD, true).setRequired(true);
         Page npCuartosDormir = new NumberPage(this, labels.getCuartosDormir(), "", Constants.WIZARD, true).setRequired(true);
@@ -134,13 +138,14 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         Page scLavadora = new SingleFixedChoicePage(this, labels.getLavadoraFuncionando(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
 
         Page scTieneMuro = new SingleFixedChoicePage(this, labels.getTieneMuro(), "", Constants.WIZARD, true).setChoices(catMuroCerco).setRequired(true);
+        Page scTieneInternet = new SingleFixedChoicePage(this, labels.getTieneInternet(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scTieneInodoro = new SingleFixedChoicePage(this, labels.getTieneInodoro(), "", Constants.WIZARD, true).setChoices(catInodoroLetrina).setRequired(true);
         Page npACantInodoro = new NumberPage(this, labels.getCantInodoro(), labels.getCantInodoroHint(), Constants.WIZARD, false).setRangeValidation(true,1, 9).setRequired(true);
         Page npCantLetrina = new NumberPage(this, labels.getCantLetrina(), labels.getCantLetrinaHint(), Constants.WIZARD, false).setRangeValidation(true,1, 9).setRequired(true);
         Page scTieneServicioEnergia = new SingleFixedChoicePage(this, labels.getTieneServicioEnergia(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scTieneMedidorEnergia = new SingleFixedChoicePage(this, labels.getTieneMedidorEnergia(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page scCasaDosPisos = new SingleFixedChoicePage(this, labels.getCasaDosPisos(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
-        Page scTieneInternet = new SingleFixedChoicePage(this, labels.getTieneInternet(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
+
         Page scTieneOtrosServicios = new MultipleFixedChoicePage(this, labels.getTieneOtrosServicios(), "", Constants.WIZARD, true).setChoices(catServicios).setRequired(false);
 
         Page scTieneVehiculo = new SingleFixedChoicePage(this, labels.getTieneVehiculo(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
@@ -165,7 +170,7 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         Page tpMarcaOtroMedioTrans =  new TextPage(this, labels.getMarcaOtroMedioTrans(), "", Constants.WIZARD, false).setRequired(true);
 
         Page scTipoCocina = new SingleFixedChoicePage(this, labels.getTipoCocina(), "", Constants.WIZARD, true).setChoices(catTipoCocina).setRequired(true);
-        Page npQuemadores = new NumberPage(this, labels.getCuantosQuemadores(), "", Constants.WIZARD, true).setRangeValidation(true,1,10).setRequired(true);
+        Page npQuemadores = new NumberPage(this, labels.getCuantosQuemadores(), "", Constants.WIZARD, false).setRangeValidation(true,1,10).setRequired(true);
         Page scHorno = new SingleFixedChoicePage(this, labels.getTieneHorno(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scCocina = new SingleFixedChoicePage(this, labels.getCocinaConLenia(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scCocinaUbicacion = new SingleFixedChoicePage(this, labels.getUbicacionCocinaLenia(), labels.getUbicacionCocinaLeniaHint(), Constants.WIZARD, false).setChoices(catDentroFuera[0],catDentroFuera[1]).setRequired(true);
@@ -213,24 +218,29 @@ public class EncuestaCasaForm extends AbstractWizardModel {
         Page scFuman = new SingleFixedChoicePage(this, labels.getPersonaFumaDentroCasa(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page scBasura = new SingleFixedChoicePage(this, labels.getTieneRecoleccionBasura(), "", Constants.WIZARD, true).setChoices(catSiNo).setRequired(true);
         Page npVecesBasura = new NumberPage(this, labels.getCuantasVecesRecBasura(), "", Constants.WIZARD, false).setRangeValidation(true,1,7).setRequired(true);
-        Page tpDondeBasura =  new TextPage(this, labels.getDondePasaRecBasura(), "", Constants.WIZARD, false).setRequired(true);
+       // Page tpDondeBasura =  new TextPage(this, labels.getDondePasaRecBasura(), "", Constants.WIZARD, false).setRequired(true);
+        Page tpDondeBasura = new SingleFixedChoicePage(this, labels.getDondePasaRecBasura(), "", Constants.WIZARD, true).setChoices(catFDondePasaBasura).setRequired(true);
+        Page tpDondeBasuraOtros = new TextPage(this, labels.getDondePasaRecBasuraOtros(), "", Constants.WIZARD, false).setRequired(true);
+        Page vistoAnimalesSalvajes = new MultipleFixedChoicePage(this, labels.getVistoAnimalesSalvajes(), "", Constants.WIZARD, true).setChoices(catVistoAnimalesSalvajes).setRequired(true);
+        Page vistoAnimalesSalvajesOtros = new TextPage(this, labels.getVistoAnimalesSalvajesOtros(), "", Constants.WIZARD, false).setRequired(true);
+
 
         Page finTamizajeLabel = new LabelPage(this,labels.getFinTamizajeLabel(),"", Constants.WIZARD, true).setRequired(false);
 
         return new PageList(
-                npPersonas, npMujeres, tpEdadM1, tpEdadM2, tpEdadM3, tpEdadM4, tpEdadM5, tpEdadM6, tpEdadM7, tpEdadM8, tpEdadM9, tpEdadM10,
-                npHombres, tpEdadH1, tpEdadH2, tpEdadH3, tpEdadH4, tpEdadH5, tpEdadH6, tpEdadH7, tpEdadH8, tpEdadH9, tpEdadH10,
+                npMujeres, tpEdadM1, tpEdadM2, tpEdadM3, tpEdadM4, tpEdadM5, tpEdadM6, tpEdadM7, tpEdadM8, tpEdadM9, tpEdadM10,
+                npHombres, tpEdadH1, tpEdadH2, tpEdadH3, tpEdadH4, tpEdadH5, tpEdadH6, tpEdadH7, tpEdadH8, tpEdadH9, tpEdadH10,npPersonas,
                 npCuartos, npCuartosDormir, scProblemaAgua, npHorasSinAgua, scFrecSinAgua, tpOtraFrecSinAgua, scPozo, scMedidorAgua, scTanque, scLlaveAgua, scLlaveCompartida, scAlmacenaAgua, scEnBarriles, npNumBarriles, scBarrilesTapados,
                 scEnTanques, npNumTanques, scTanquesTapados, scEnPilas, npNumPilas, scPilasTapadas, scCepillaPilas, tpFrecCepilla, scEnOtrosRec, tpDescOtrosRec, npNumOtrosRec, scOtrosRecTapados,
                 scCambiadoCasa, scRemoCasa, scLavandero, mcParedes, tpParedesOtroDesc, mcPiso, tpPisoOtroDesc, scTecho, tpTechoOtroDesc, scCasaPropia, scAbanico, npAbanico,
-                scTelevisor, npNumTelevisor, scRefrigerador, npNumRefrigerador, scAireAcondicionado, npNumAire, scAireAcondicionadoFun, scLavadora, scTieneMuro, scTieneInodoro, npACantInodoro, npCantLetrina, scTieneServicioEnergia, scTieneMedidorEnergia,
-                scCasaDosPisos, scTieneInternet, scTieneOtrosServicios, scTieneVehiculo, scMoto, npAnioMoto, tpMarcaMoto, scMTCarro, npAnioFabCarro, tpMarcaCarro, scMTMicrobus, npAnioFabMicrobus, tpMarcaMicrobus,
+                scTelevisor, npNumTelevisor, scRefrigerador, npNumRefrigerador, scAireAcondicionado, npNumAire, scAireAcondicionadoFun, scLavadora, scTieneMuro,scTieneInternet, scTieneInodoro, npACantInodoro, npCantLetrina, scTieneServicioEnergia, scTieneMedidorEnergia,
+                scCasaDosPisos, scTieneOtrosServicios, scTieneVehiculo, scMoto, npAnioMoto, tpMarcaMoto, scMTCarro, npAnioFabCarro, tpMarcaCarro, scMTMicrobus, npAnioFabMicrobus, tpMarcaMicrobus,
                 scMTCamioneta, npAnioFabCamioneta, tpMarcaCamioneta, scMTCamion, npAnioFabCamion, tpMarcaCamion, scMTOtro, tpMTOtroDesc, npAnioFabOtroMedioTrans, tpMarcaOtroMedioTrans,
                 scTipoCocina, npQuemadores, scHorno, scCocina, scCocinaUbicacion, scCocinaPeriodicidad, npNumCocinaD, npNumCocinaS, npNumCocinaQ, npNumCocinaM,
                 scAnimales, scAnimalesGallinas, npCantGallinas, scGallinasDC, scAnimalesPatos, npCantPatos, scPatosDC, scAnimalesPerros, npCantPerros, scPerrosDC, scAnimalesGatos, npCantGatos, scGatosDC,
                 scAnimalesCerdos, npCantCerdos, scCerdosDC, scAnimalesVacas, npCantVacas, scVacasDC, scAnimalesCabras, npCantCabras, scCabrasDC, scAnimalesCaballos, npCantCaballos, scCaballosDC,
                 scAnimalesPelibueys, npCantPelibueys, scPelibueysDC, scAnimalesAves, npCantAves, scAvesDC, scOtrosAnimales, npCantOtrosAnimales, scOtrosAnimalesDC,
-                scFuman, scBasura, npVecesBasura, tpDondeBasura, finTamizajeLabel
+                scFuman, scBasura, npVecesBasura, tpDondeBasura,tpDondeBasuraOtros,vistoAnimalesSalvajes,vistoAnimalesSalvajesOtros, finTamizajeLabel
                         );
     }
 }

@@ -12,7 +12,7 @@ import ni.org.ics.a2cares.app.R;
  */
 public class MuestraFormLabels {
 
-    private String fechaMuestra;
+  //  private String fechaMuestra;
     private String tuboBHC;
     private String codigoBHC;
     private String razonNoBHC;
@@ -35,7 +35,7 @@ public class MuestraFormLabels {
     public MuestraFormLabels() {
         Resources res = MyIcsApplication.getContext().getResources();
 
-        fechaMuestra = res.getString(R.string.fechaMuestra);
+     //   fechaMuestra = res.getString(R.string.fechaMuestra);
         tuboBHC = res.getString(R.string.tuboBHC);
         codigoBHC = res.getString(R.string.codigoBHC);
         razonNoBHC = res.getString(R.string.razonNoBHC);
@@ -56,9 +56,9 @@ public class MuestraFormLabels {
         volumenBHCSugerido = res.getString(R.string.volumenBHCSugerido);
     }
 
-    public String getFechaMuestra() {
-        return fechaMuestra;
-    }
+  //  public String getFechaMuestra() {
+        //return fechaMuestra;
+    //}
 
     public String getTuboBHC() {
         return tuboBHC;

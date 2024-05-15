@@ -1,5 +1,7 @@
 package ni.org.ics.a2cares.app;
 
+import static android.R.drawable.ic_dialog_info;
+
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -24,6 +26,8 @@ import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.activities.BuscarCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.BuscarParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.activities.cambioDomicilio.CambioDomicilioMainActivity;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaAdmisionActivity;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoControlTemperaturaTermoActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoControlAsistenciaActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoControlAsistenciaGPSActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoTamizajeActivity;
@@ -180,6 +184,27 @@ public class MainActivity extends AbstractAsyncActivity {
                             showToast(getApplicationContext().getString(R.string.perm_error));
                         }
                         break;
+                    case 12: //Admision Pacientes
+                        estudiosAdapter.open();
+                        Boolean role_Admision_Pacientes = estudiosAdapter.buscarRol(username, "ROLE_ADMISION_PACIENTES");
+                        estudiosAdapter.close();
+                        if (role_Admision_Pacientes){
+                            // i = new Intent(getApplicationContext(), NuevoControlAsistenciaActivity.class);
+                            i = new Intent(getApplicationContext(), NuevaAdmisionActivity.class);
+                            startActivity(i);
+
+                        }
+                        else{
+                            showToast(getApplicationContext().getString(R.string.perm_error));
+                        }
+                        break;
+                    case 13:
+                        i = new Intent(getApplicationContext(),
+                                NuevoControlTemperaturaTermoActivity.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                       // i.putExtras(arguments);
+                        startActivity(i);
+                        break;
                     default:
                         break;
                 }
@@ -255,7 +280,7 @@ public class MainActivity extends AbstractAsyncActivity {
             if (requestCode == UPDATE_SERVER){
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getApplicationContext().getString(R.string.confirm));
-                builder.setIcon(android.R.drawable.ic_dialog_info);
+                builder.setIcon(ic_dialog_info);
                 builder.setMessage(getApplicationContext().getString(R.string.no_data_to_send))
                         .setCancelable(false)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -270,7 +295,7 @@ public class MainActivity extends AbstractAsyncActivity {
             if (requestCode == UPDATE_EQUIPO||requestCode == UPDATE_SERVER){
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getApplicationContext().getString(R.string.confirm));
-                builder.setIcon(android.R.drawable.ic_dialog_info);
+                builder.setIcon(ic_dialog_info);
                 builder.setMessage(getApplicationContext().getString(R.string.success))
                         .setCancelable(false)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -349,7 +374,7 @@ public class MainActivity extends AbstractAsyncActivity {
                 break;
             case NO_DATA_SEND:
                 builder.setTitle(getApplicationContext().getString(R.string.confirm));
-                builder.setIcon(android.R.drawable.ic_dialog_info);
+                builder.setIcon(ic_dialog_info);
                 builder.setMessage(getApplicationContext().getString(R.string.no_data_to_send))
                         .setCancelable(false)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {

@@ -631,6 +631,8 @@ public class MainDBConstants {
     public static final String otraRazonVisitaNoExitosa = "otraRazonVisitaNoExitosa";
     public static final String direccion_cambio_domicilio = "direccion_cambio_domicilio";
     public static final String telefono_cambio_domicilio = "telefono_cambio_domicilio";
+    public static final String telefono_1_actualizado = "telefono_1_actualizado";
+    public static final String telefono_2_actualizado = "telefono_2_actualizado";
 
     //crear tabla Visitas
     public static final String CREATE_VISITA_TABLE = "create table if not exists "
@@ -643,6 +645,8 @@ public class MainDBConstants {
             + otraRazonVisitaNoExitosa + " text, "
             + direccion_cambio_domicilio + " text, "
             + telefono_cambio_domicilio + " text, "
+            + telefono_1_actualizado + " text, "
+            + telefono_2_actualizado + " text, "
             + recordDate + " date, "
             + recordUser + " text, "
             + pasive + " text, "
@@ -1046,6 +1050,29 @@ public class MainDBConstants {
             + codigoParticipante
             + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
+    //Tabla Control de Temperatura Termo
+    public static final String CONTROL_TEMPERATURA_TERMO_TABLE = "control_temperatura_termo";
+
+    //Campos tabla CONTROL_TEMPERATURA_TERMO
+    public static final String horaTomaTemperatura  = "horaTomaTemperatura";
+    public static final String fechaTomaTemperatura = "fechaTomaTemperatura";
+    public static final String usuarioregistroT = "usuarioRegistro";
+    public static final String temperaturaTermo = "temperaturaTermo";
+    //Crear tabla CONTROL_TEMPERATURA_TERMO
+    public static final String CREATE_CONTROL_TEMPERATURA_TERMO_TABLE = "create table if not exists "
+            + CONTROL_TEMPERATURA_TERMO_TABLE + " ("
+            + id + " integer not null,  "
+            + fechaTomaTemperatura + " date, "
+            + horaTomaTemperatura + " text, "
+            + usuarioregistroT + " text, "
+            + temperaturaTermo + " real, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + id + "));";
+
     //Tabla Control de Asistencia personal A2CARES
     public static final String CONTROL_ASISTENCIA_TABLE = "control_asistencia";
 
@@ -1089,7 +1116,409 @@ public class MainDBConstants {
             + deviceId + ","
             + estado
             + ") values (?,?,?,?,?,?,?,?,?,?,?,?)";
+    //Tabla Control de Asistencia personal A2CARES
+    public static final String ADMISION_PACIENTES_TABLE = "admision_pacientes";
+
+    //Campos tabla ADMISION PACIENTES
+    public static final String perteneceEstudio  = "perteneceEstudio";
+    public static final String febril  = "febril";
+    public static final String edad = "edad";
+    public static final String numeroHoja = "numeroHoja";
+
+    //Crear tabla ADMISION PACIENTES
+    public static final String CREATE_ADMISION_PACIENTES_TABLE = "create table if not exists "
+            + ADMISION_PACIENTES_TABLE + " ("
+            + id + " integer not null,  "
+            + perteneceEstudio + " text, "
+            + codigoParticipante + " text, "
+            + febril + " text, "
+            + edad + " integer not null,  "
+            + sexo + " text, "
+            + numeroHoja +" integer not null,  "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + id + "));";
 
 
+    public static final String INSERT_ADMISION_PACIENTES_TABLE = "insert into "
+            + ADMISION_PACIENTES_TABLE + " ("
+            + id + ","
+            + perteneceEstudio + ","
+            + codigoParticipante + ","
+            + febril + ","
+            + edad + ","
+            + sexo + ","
+            + numeroHoja + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    public static final String INFORME_FIN_DIA_MEDICOS_TABLE = "informe_fin_dia_medicos";
+
+    //Campos tabla ADMISION PACIENTES
+    public static final String puestoSalud  = "puestoSalud";
+    public static final String fechaConsulta  = "fechaConsulta";
+    public static final String numPartCohorte = "numPartCohorte";
+
+    public static final String codPartAtend1 = "codPartAtend1";
+    public static final String codPartAtend2 = "codPartAtend2";
+    public static final String codPartAtend3 = "codPartAtend3";
+    public static final String codPartAtend4 = "codPartAtend4";
+    public static final String codPartAtend5 = "codPartAtend5";
+    public static final String codPartAtend6 = "codPartAtend6";
+    public static final String codPartAtend7 = "codPartAtend7";
+    public static final String codPartAtend8 = "codPartAtend8";
+    public static final String codPartAtend9 = "codPartAtend9";
+    public static final String codPartAtend10 = "codPartAtend10";
+    public static final String codPartAtend11 = "codPartAtend11";
+    public static final String codPartAtend12 = "codPartAtend12";
+    public static final String codPartAtend13 = "codPartAtend13";
+    public static final String codPartAtend14 = "codPartAtend14";
+    public static final String codPartAtend15 = "codPartAtend15";
+    public static final String codPartAtend16 = "codPartAtend16";
+    public static final String codPartAtend17 = "codPartAtend17";
+    public static final String codPartAtend18 = "codPartAtend18";
+    public static final String codPartAtend19 = "codPartAtend19";
+    public static final String codPartAtend20 = "codPartAtend20";
+
+    public static final String codPartAtend1Diagnostico = "codPartAtend1Diagnostico";
+    public static final String codPartAtend2Diagnostico = "codPartAtend2Diagnostico";
+    public static final String codPartAtend3Diagnostico = "codPartAtend3Diagnostico";
+    public static final String codPartAtend4Diagnostico = "codPartAtend4Diagnostico";
+    public static final String codPartAtend5Diagnostico = "codPartAtend5Diagnostico";
+    public static final String codPartAtend6Diagnostico = "codPartAtend6Diagnostico";
+    public static final String codPartAtend7Diagnostico = "codPartAtend7Diagnostico";
+    public static final String codPartAtend8Diagnostico = "codPartAtend8Diagnostico";
+    public static final String codPartAtend9Diagnostico = "codPartAtend9Diagnostico";
+    public static final String codPartAtend10Diagnostico = "codPartAtend10Diagnostico";
+    public static final String codPartAtend11Diagnostico = "codPartAtend11Diagnostico";
+    public static final String codPartAtend12Diagnostico = "codPartAtend12Diagnostico";
+    public static final String codPartAtend13Diagnostico = "codPartAtend13Diagnostico";
+    public static final String codPartAtend14Diagnostico = "codPartAtend14Diagnostico";
+    public static final String codPartAtend15Diagnostico = "codPartAtend15Diagnostico";
+    public static final String codPartAtend16Diagnostico = "codPartAtend16Diagnostico";
+    public static final String codPartAtend17Diagnostico = "codPartAtend17Diagnostico";
+    public static final String codPartAtend18Diagnostico = "codPartAtend18Diagnostico";
+    public static final String codPartAtend19Diagnostico = "codPartAtend19Diagnostico";
+    public static final String codPartAtend20Diagnostico = "codPartAtend20Diagnostico";
+
+    public static final String numPartNoCohorte = "numPartNoCohorte";
+    public static final String numTotalAtendidos = "numTotalAtendidos";
+    public static final String numFebrilA = "numFebrilA";
+    public static final String numInRespAgudaA = "numInRespAgudaA";
+
+    public static final String numEnfDiarreaAgudaA = "numEnfDiarreaAgudaA";
+    public static final String numETI = "numETI";
+    public static final String numRAG = "numRAG";
+    public static final String numConjuntivitis = "numConjuntivitis";
+    public static final String numControlPrenatal = "numControlPrenatal";
+    public static final String numNeumonia = "numNeumonia";
+    public static final String numPap = "numPap";
+    public static final String numPlanificacionFam = "numPlanificacionFam";
+    public static final String numGotaGruesa = "numGotaGruesa";
+    public static final String numCronicos = "numCronicos";
+    public static final String numTraslados = "numTraslados";
+    public static final String numCaptacionA = "numCaptacionA";
+    public static final String numCaptacionB = "numCaptacionB";
+    public static final String numCaptacionC = "numCaptacionC";
+    public static final String numCaptacionD = "numCaptacionD";
+    public static final String numSeguimientoA = "numSeguimientoA";
+    public static final String numSeguimientoB = "numSeguimientoB";
+    public static final String numSeguimientoD = "numSeguimientoD";
+    public static final String numConvPendPuesto = "numConvPendPuesto";
+    public static final String numVisitaAterreno = "numVisitaAterreno";
+    public static final String numTrasladosDengue = "numTrasladosDengue";
+
+    public static final String codPartTraslado1 = "codPartTraslado1";
+    public static final String codPartTraslado2 = "codPartTraslado2";
+    public static final String codPartTraslado3 = "codPartTraslado3";
+    public static final String codPartTraslado4 = "codPartTraslado4";
+    public static final String codPartTraslado5 = "codPartTraslado5";
+    public static final String codPartTraslado6 = "codPartTraslado6";
+    public static final String codPartTraslado7 = "codPartTraslado7";
+    public static final String codPartTraslado8 = "codPartTraslado8";
+    public static final String codPartTraslado9 = "codPartTraslado9";
+    public static final String codPartTraslado10 = "codPartTraslado10";
+
+    public static final String codPartTraslado1Diagnostico = "codPartTraslado1Diagnostico";
+    public static final String codPartTraslado2Diagnostico = "codPartTraslado2Diagnostico";
+    public static final String codPartTraslado3Diagnostico = "codPartTraslado3Diagnostico";
+    public static final String codPartTraslado4Diagnostico = "codPartTraslado4Diagnostico";
+    public static final String codPartTraslado5Diagnostico = "codPartTraslado5Diagnostico";
+    public static final String codPartTraslado6Diagnostico = "codPartTraslado6Diagnostico";
+    public static final String codPartTraslado7Diagnostico = "codPartTraslado7Diagnostico";
+    public static final String codPartTraslado8Diagnostico = "codPartTraslado8Diagnostico";
+    public static final String codPartTraslado9Diagnostico = "codPartTraslado9Diagnostico";
+    public static final String codPartTraslado10Diagnostico = "codPartTraslado10Diagnostico";
+
+    public static final String numNegatTrasladosDengue = "numNegatTrasladosDengue";
+
+    public static final String codNegatPartTraslado1 = "codNegatPartTraslado1";
+    public static final String codNegatPartTraslado2 = "codNegatPartTraslado2";
+    public static final String codNegatPartTraslado3 = "codNegatPartTraslado3";
+    public static final String codNegatPartTraslado4 = "codNegatPartTraslado4";
+    public static final String codNegatPartTraslado5 = "codNegatPartTraslado5";
+    public static final String codNegatPartTraslado6 = "codNegatPartTraslado6";
+    public static final String codNegatPartTraslado7 = "codNegatPartTraslado7";
+    public static final String codNegatPartTraslado8 = "codNegatPartTraslado8";
+    public static final String codNegatPartTraslado9 = "codNegatPartTraslado9";
+    public static final String codNegatPartTraslado10 = "codNegatPartTraslado10";
+
+    public static final String codNegaPartTraslado1Diagnostico = "codNegaPartTraslado1Diagnostico";
+    public static final String codNegaPartTraslado2Diagnostico = "codNegaPartTraslado2Diagnostico";
+    public static final String codNegaPartTraslado3Diagnostico = "codNegaPartTraslado3Diagnostico";
+    public static final String codNegaPartTraslado4Diagnostico = "codNegaPartTraslado4Diagnostico";
+    public static final String codNegaPartTraslado5Diagnostico = "codNegaPartTraslado5Diagnostico";
+    public static final String codNegaPartTraslado6Diagnostico = "codNegaPartTraslado6Diagnostico";
+    public static final String codNegaPartTraslado7Diagnostico = "codNegaPartTraslado7Diagnostico";
+    public static final String codNegaPartTraslado8Diagnostico = "codNegaPartTraslado8Diagnostico";
+    public static final String codNegaPartTraslado9Diagnostico = "codNegaPartTraslado9Diagnostico";
+    public static final String codNegaPartTraslado10Diagnostico = "codNegaPartTraslado10Diagnostico";
+
+    public static final String nomMedico = "nomMedico";
+
+    //Crear tabla ADMISION PACIENTES
+    public static final String CREATE_INFORME_FIN_DIA_MEDICOS_TABLE = "create table if not exists "
+            + INFORME_FIN_DIA_MEDICOS_TABLE + " ("
+            + id + " integer not null,  "
+            + fechaConsulta + " date, "
+            + puestoSalud + " text, "
+            + numPartCohorte + " integer not null,  "
+            + codPartAtend1 + " text, "
+            + codPartAtend2 + " text, "
+            + codPartAtend3 + " text, "
+            + codPartAtend4 + " text, "
+            + codPartAtend5 + " text, "
+            + codPartAtend6 + " text, "
+            + codPartAtend7 + " text, "
+            + codPartAtend8 + " text, "
+            + codPartAtend9 + " text, "
+            + codPartAtend10 + " text, "
+            + codPartAtend11 + " text, "
+            + codPartAtend12 + " text, "
+            + codPartAtend13 + " text, "
+            + codPartAtend14 + " text, "
+            + codPartAtend15 + " text, "
+            + codPartAtend16 + " text, "
+            + codPartAtend17 + " text, "
+            + codPartAtend18 + " text, "
+            + codPartAtend19 + " text, "
+            + codPartAtend20 + " text, "
+            + codPartAtend1Diagnostico + " text, "
+            + codPartAtend2Diagnostico + " text, "
+            + codPartAtend3Diagnostico + " text, "
+            + codPartAtend4Diagnostico + " text, "
+            + codPartAtend5Diagnostico + " text, "
+            + codPartAtend6Diagnostico + " text, "
+            + codPartAtend7Diagnostico + " text, "
+            + codPartAtend8Diagnostico + " text, "
+            + codPartAtend9Diagnostico + " text, "
+            + codPartAtend10Diagnostico + " text, "
+            + codPartAtend11Diagnostico + " text, "
+            + codPartAtend12Diagnostico + " text, "
+            + codPartAtend13Diagnostico + " text, "
+            + codPartAtend14Diagnostico + " text, "
+            + codPartAtend15Diagnostico + " text, "
+            + codPartAtend16Diagnostico + " text, "
+            + codPartAtend17Diagnostico + " text, "
+            + codPartAtend18Diagnostico + " text, "
+            + codPartAtend19Diagnostico + " text, "
+            + codPartAtend20Diagnostico + " text, "
+            + numPartNoCohorte + " integer not null,  "
+            + numTotalAtendidos + " integer not null,  "
+            + numFebrilA + " integer not null,  "
+            + numInRespAgudaA + " integer not null,  "
+            + numEnfDiarreaAgudaA + " integer not null,  "
+            + numETI + " integer not null,  "
+            + numRAG + " integer not null,  "
+            + numConjuntivitis + " integer not null,  "
+            + numControlPrenatal + " integer not null,  "
+            + numNeumonia + " integer not null,  "
+            + numPap + " integer not null,  "
+            + numPlanificacionFam + " integer not null,  "
+            + numGotaGruesa + " integer not null,  "
+            + numCronicos + " integer not null,  "
+            + numTraslados + " integer not null,  "
+            + numCaptacionA + " integer not null,  "
+            + numCaptacionB + " integer not null,  "
+            + numCaptacionC + " integer not null,  "
+            + numCaptacionD + " integer not null,  "
+            + numSeguimientoA + " integer not null,  "
+            + numSeguimientoB + " integer not null,  "
+            + numSeguimientoD + " integer not null,  "
+            + numConvPendPuesto + " integer not null,  "
+            + numVisitaAterreno + " integer not null,  "
+            + numTrasladosDengue + " integer not null,  "
+            + codPartTraslado1 + " text, "
+            + codPartTraslado2 + " text, "
+            + codPartTraslado3 + " text, "
+            + codPartTraslado4 + " text, "
+            + codPartTraslado5 + " text, "
+            + codPartTraslado6 + " text, "
+            + codPartTraslado7 + " text, "
+            + codPartTraslado8 + " text, "
+            + codPartTraslado9 + " text, "
+            + codPartTraslado10 + " text, "
+            + codPartTraslado1Diagnostico + " text, "
+            + codPartTraslado2Diagnostico + " text, "
+            + codPartTraslado3Diagnostico + " text, "
+            + codPartTraslado4Diagnostico + " text, "
+            + codPartTraslado5Diagnostico + " text, "
+            + codPartTraslado6Diagnostico + " text, "
+            + codPartTraslado7Diagnostico + " text, "
+            + codPartTraslado8Diagnostico + " text, "
+            + codPartTraslado9Diagnostico + " text, "
+            + codPartTraslado10Diagnostico + " text, "
+            + numNegatTrasladosDengue + " integer not null,  "
+            + codNegatPartTraslado1 + " text, "
+            + codNegatPartTraslado2 + " text, "
+            + codNegatPartTraslado3 + " text, "
+            + codNegatPartTraslado4 + " text, "
+            + codNegatPartTraslado5 + " text, "
+            + codNegatPartTraslado6 + " text, "
+            + codNegatPartTraslado7 + " text, "
+            + codNegatPartTraslado8 + " text, "
+            + codNegatPartTraslado9 + " text, "
+            + codNegatPartTraslado10 + " text, "
+            + codNegaPartTraslado1Diagnostico + " text, "
+            + codNegaPartTraslado2Diagnostico + " text, "
+            + codNegaPartTraslado3Diagnostico + " text, "
+            + codNegaPartTraslado4Diagnostico + " text, "
+            + codNegaPartTraslado5Diagnostico + " text, "
+            + codNegaPartTraslado6Diagnostico + " text, "
+            + codNegaPartTraslado7Diagnostico + " text, "
+            + codNegaPartTraslado8Diagnostico + " text, "
+            + codNegaPartTraslado9Diagnostico + " text, "
+            + codNegaPartTraslado10Diagnostico + " text, "
+            + nomMedico + " text, "
+            + recordDate + " date, "
+            + recordUser + " text, "
+            + pasive + " text, "
+            + deviceId + " text, "
+            + estado + " text not null, "
+            + "primary key (" + id + "));";
+
+
+    public static final String INSERT_INFORME_FIN_DIA_MEDICOS_TABLE = "insert into "
+            + INFORME_FIN_DIA_MEDICOS_TABLE + " ("
+            + id + ","
+            + fechaConsulta + ","
+            + puestoSalud + ","
+            + numPartCohorte + ","
+            + codPartAtend1 + ","
+            + codPartAtend2 + ","
+            + codPartAtend3 + ","
+            + codPartAtend4 + ","
+            + codPartAtend5 + ","
+            + codPartAtend6 + ","
+            + codPartAtend7 + ","
+            + codPartAtend8 + ","
+            + codPartAtend9 + ","
+            + codPartAtend10 + ","
+            + codPartAtend11 + ","
+            + codPartAtend12 + ","
+            + codPartAtend13 + ","
+            + codPartAtend14 + ","
+            + codPartAtend15 + ","
+            + codPartAtend16 + ","
+            + codPartAtend17 + ","
+            + codPartAtend18 + ","
+            + codPartAtend19 + ","
+            + codPartAtend20 + ","
+            + codPartAtend1Diagnostico + ","
+            + codPartAtend2Diagnostico + ","
+            + codPartAtend3Diagnostico + ","
+            + codPartAtend4Diagnostico + ","
+            + codPartAtend5Diagnostico + ","
+            + codPartAtend6Diagnostico + ","
+            + codPartAtend7Diagnostico + ","
+            + codPartAtend8Diagnostico + ","
+            + codPartAtend9Diagnostico + ","
+            + codPartAtend10Diagnostico + ","
+            + codPartAtend11Diagnostico + ","
+            + codPartAtend12Diagnostico + ","
+            + codPartAtend13Diagnostico + ","
+            + codPartAtend14Diagnostico + ","
+            + codPartAtend15Diagnostico + ","
+            + codPartAtend16Diagnostico + ","
+            + codPartAtend17Diagnostico + ","
+            + codPartAtend18Diagnostico + ","
+            + codPartAtend19Diagnostico + ","
+            + codPartAtend20Diagnostico + ","
+            + numPartNoCohorte + ","
+            + numTotalAtendidos + ","
+            + numFebrilA + ","
+            + numInRespAgudaA + ","
+            + numEnfDiarreaAgudaA + ","
+            + numETI + ","
+            + numRAG + ","
+            + numConjuntivitis + ","
+            + numControlPrenatal + ","
+            + numNeumonia + ","
+            + numPap + ","
+            + numPlanificacionFam + ","
+            + numGotaGruesa + ","
+            + numCronicos + ","
+            + numTraslados + ","
+            + numCaptacionA + ","
+            + numCaptacionB + ","
+            + numCaptacionC + ","
+            + numCaptacionD + ","
+            + numVisitaAterreno + ","
+            + numTrasladosDengue + ","
+            + codPartTraslado1 + ","
+            + codPartTraslado2 + ","
+            + codPartTraslado3 + ","
+            + codPartTraslado4 + ","
+            + codPartTraslado5 + ","
+            + codPartTraslado6 + ","
+            + codPartTraslado7 + ","
+            + codPartTraslado8 + ","
+            + codPartTraslado9 + ","
+            + codPartTraslado10 + ","
+            + codPartTraslado1Diagnostico + ","
+            + codPartTraslado2Diagnostico + ","
+            + codPartTraslado3Diagnostico + ","
+            + codPartTraslado4Diagnostico + ","
+            + codPartTraslado5Diagnostico + ","
+            + codPartTraslado6Diagnostico + ","
+            + codPartTraslado7Diagnostico + ","
+            + codPartTraslado8Diagnostico + ","
+            + codPartTraslado9Diagnostico + ","
+            + codPartTraslado10Diagnostico + ","
+            + numNegatTrasladosDengue + ","
+            + codNegatPartTraslado1 + ","
+            + codNegatPartTraslado2 + ","
+            + codNegatPartTraslado3 + ","
+            + codNegatPartTraslado4 + ","
+            + codNegatPartTraslado5 + ","
+            + codNegatPartTraslado6 + ","
+            + codNegatPartTraslado7 + ","
+            + codNegatPartTraslado8 + ","
+            + codNegatPartTraslado9 + ","
+            + codNegatPartTraslado10 + ","
+            + codNegaPartTraslado1Diagnostico + ","
+            + codNegaPartTraslado2Diagnostico + ","
+            + codNegaPartTraslado3Diagnostico + ","
+            + codNegaPartTraslado4Diagnostico + ","
+            + codNegaPartTraslado5Diagnostico + ","
+            + codNegaPartTraslado6Diagnostico + ","
+            + codNegaPartTraslado7Diagnostico + ","
+            + codNegaPartTraslado8Diagnostico + ","
+            + codNegaPartTraslado9Diagnostico + ","
+            + codNegaPartTraslado10Diagnostico + ","
+            + nomMedico + ","
+            + recordDate + ","
+            + recordUser + ","
+            + pasive + ","
+            + deviceId + ","
+            + estado
+            + ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 }

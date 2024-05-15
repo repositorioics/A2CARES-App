@@ -161,6 +161,7 @@ public class EncuestaCasaFormLabels {
     protected String tieneRecoleccionBasura; //36
     protected String cuantasVecesRecBasura; //37
     protected String dondePasaRecBasura; //38
+    protected String dondePasaRecBasuraOtros; //38
 
     protected String edadMujer1Hint;
     protected String edadMujer2Hint;
@@ -210,12 +211,14 @@ public class EncuestaCasaFormLabels {
     protected String frecCepillaPilasHint;
     protected String cantInodoroHint;
     protected String cantLetrinaHint;
+    protected String vistoAnimalesSalvajes;
+    protected String vistoAnimalesSalvajesOtros;
 
     protected String finTamizajeLabel;
 
     public EncuestaCasaFormLabels(){
         Resources res = MyIcsApplication.getContext().getResources();
-        cuantasPersonas = res.getString(R.string.cuantasPersonas);
+        cuantasPersonas = res.getString(R.string.cuantasPersonasT);
         cuantasMujeres = res.getString(R.string.cuantasMujeres);
         cuantasMujeresHint = res.getString(R.string.cuantasMujeresHint);
         edadMujer1 = res.getString(R.string.edadMujer1);
@@ -365,6 +368,9 @@ public class EncuestaCasaFormLabels {
         tieneRecoleccionBasura = res.getString(R.string.tieneRecoleccionBasura);
         cuantasVecesRecBasura = res.getString(R.string.cuantasVecesRecBasura);
         dondePasaRecBasura = res.getString(R.string.dondePasaRecBasura);
+        dondePasaRecBasuraOtros = res.getString(R.string.dondePasaRecBasuraOtros);
+        vistoAnimalesSalvajes = res.getString(R.string.vistoAnimalesSalvajes);
+        vistoAnimalesSalvajesOtros = res.getString(R.string.vistoAnimalesSalvajesOtros);
 
         edadMujer1Hint = res.getString(R.string.edadMujer1Hint);
         edadMujer2Hint = res.getString(R.string.edadMujer2Hint);
@@ -991,7 +997,15 @@ public class EncuestaCasaFormLabels {
     public String getDondePasaRecBasura() {
         return dondePasaRecBasura;
     }
-
+    public String getDondePasaRecBasuraOtros() {
+        return dondePasaRecBasuraOtros;
+    }
+    public String getVistoAnimalesSalvajes() {
+        return vistoAnimalesSalvajes;
+    }
+    public String getVistoAnimalesSalvajesOtros() {
+        return vistoAnimalesSalvajesOtros;
+    }
     public String getHorasSinAguaHint() {
         return horasSinAguaHint;
     }

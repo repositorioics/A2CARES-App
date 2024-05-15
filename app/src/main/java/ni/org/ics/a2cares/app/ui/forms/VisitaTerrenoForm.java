@@ -45,8 +45,10 @@ public class VisitaTerrenoForm extends AbstractWizardModel {
         Page otraRazonVisitaNoExitosa = new TextPage(this,labels.getOtraRazonVisitaNoExitosa(),labels.getOtraRazonVisitaNoExitosaHint(), Constants.WIZARD, false).setRequired(true);
         Page direccion_cambio_domicilio = new TextPage(this,labels.getDireccion_cambio_domicilio(),labels.getDireccion_cambio_domicilioHint(), Constants.WIZARD, false).setRequired(false);
         Page telefono_cambio_domicilio = new NumberPage(this,labels.getTelefono_cambio_domicilio(),labels.getTelefono_cambio_domicilioHint(), Constants.WIZARD, false).setPatternValidation(true, "^$|^[3|8|5|7]{1}\\d{7}$").setRequired(false);
+        Page telefono1  = new NumberPage(this,labels.getTelefono_1_Actualizado(),labels.getTelefono_1_Actualizado(), Constants.WIZARD, false).setPatternValidation(true, "^$|^[2|3|8|5|7]{1}\\d{7}$").setRequired(false);
+        Page telefono2  = new NumberPage(this,labels.getTelefono_2_Actualizado(),labels.getTelefono_2_Actualizado(), Constants.WIZARD, false).setPatternValidation(true, "^$|^[2|3|8|5|7]{1}\\d{7}$").setRequired(false);
 
-        return new PageList(visitaExitosa, razonVisitaNoExitosa, otraRazonVisitaNoExitosa,direccion_cambio_domicilio,telefono_cambio_domicilio);
+        return new PageList(visitaExitosa, razonVisitaNoExitosa, otraRazonVisitaNoExitosa,direccion_cambio_domicilio,telefono_cambio_domicilio,telefono1,telefono2);
     }
 
     public VisitaTerrenoFormLabels getLabels() {

@@ -1,6 +1,7 @@
 package ni.org.ics.a2cares.app.ui.activities.enterdata;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,8 +17,13 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
+import org.joda.time.DateMidnight;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +44,8 @@ import ni.org.ics.a2cares.app.ui.activities.list.ListaMuestrasParticipanteActivi
 import ni.org.ics.a2cares.app.ui.activities.menu.MenuParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.forms.EncuestaPesoTallaForm;
 import ni.org.ics.a2cares.app.ui.forms.EncuestaPesoTallaFormLabels;
-import ni.org.ics.a2cares.app.ui.forms.MuestraForm;
-import ni.org.ics.a2cares.app.ui.forms.MuestraFormLabels;
+import ni.org.ics.a2cares.app.ui.forms.Muestra1Form;
+import ni.org.ics.a2cares.app.ui.forms.MuestraForm1Labels;
 import ni.org.ics.a2cares.app.utils.Constants;
 import ni.org.ics.a2cares.app.utils.DateUtil;
 import ni.org.ics.a2cares.app.utils.DeviceInfo;
@@ -49,6 +55,7 @@ import ni.org.ics.a2cares.app.wizard.model.DatePage;
 import ni.org.ics.a2cares.app.wizard.model.LabelPage;
 import ni.org.ics.a2cares.app.wizard.model.ModelCallbacks;
 import ni.org.ics.a2cares.app.wizard.model.MultipleFixedChoicePage;
+import ni.org.ics.a2cares.app.wizard.model.NewDatePage;
 import ni.org.ics.a2cares.app.wizard.model.NumberPage;
 import ni.org.ics.a2cares.app.wizard.model.Page;
 import ni.org.ics.a2cares.app.wizard.model.SingleFixedChoicePage;
@@ -78,7 +85,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
 
-    private MuestraFormLabels labels;
+    private MuestraForm1Labels labels;
     private EstudioDBAdapter estudiosAdapter;
     private DeviceInfo infoMovil;
     private static Participante participante = new Participante();
@@ -104,17 +111,31 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
         visitaExitosa = getIntent().getBooleanExtra(Constants.VISITA_EXITOSA, false);
 
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
-        mWizardModel = new MuestraForm(this,mPass);
+        mWizardModel = new Muestra1Form(this,mPass);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }
         mWizardModel.registerListener(this);
-        labels = new MuestraFormLabels();
+        labels = new MuestraForm1Labels();
+            getSupportActionBar().getDisplayOptions();
+
+          /*  DateMidnight maxDate;
+
+            maxDate = new DateMidnight(new Date());
+
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            String salida = df.format(maxDate.getMillis());
+
+            NewDatePage fechad = (NewDatePage) mWizardModel.findByKey(labels.getFechaMuestra());
+            fechad.setValue(salida);*/
+
+
 
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
         mStepPagerStrip = (StepPagerStrip) findViewById(R.id.strip);
+
         mStepPagerStrip.setOnPageSelectedListener(new StepPagerStrip.OnPageSelectedListener() {
             @Override
             public void onPageStripSelected(int position) {
@@ -126,6 +147,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
         });
 
         mNextButton = (Button) findViewById(R.id.next_button);
+        mNextButton.setEnabled(true);
         mPrevButton = (Button) findViewById(R.id.prev_button);
 
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -296,7 +318,12 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                 TypedValue v = new TypedValue();
                 getTheme().resolveAttribute(android.R.attr.textAppearanceButton, v, true);
                 mNextButton.setTextAppearance(this, v.resourceId);
-                mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
+                if (position == 0){
+                    mNextButton.setEnabled(true);
+                   mPagerAdapter.setCutOffPage(1);
+                }else {
+                    mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
+                }
             }
             TypedValue v = new TypedValue();
             getTheme().resolveAttribute(android.R.attr.textAppearanceButton, v, true);
@@ -386,12 +413,20 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
     public void updateModel(Page page){
         try {
             boolean visible = false;
+
+
+            if (page.getTitle().equals(labels.getVolumenRojoSugerido())) {
+               // visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getTuboRojo()), true, null);
+                onPageTreeChanged();
+            }
+            //  totalpersonas.setValue(total).setHint(total);
             if (page.getTitle().equals(labels.getTuboRojo())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCodigoRojo()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getVolumenRojo()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoRojo()), !visible, null);
-                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoRojo()), false, null);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoRojo()), !visible, null);
 
                /*Page tmp = mWizardModel.findByKey(labels.getTuboBHC());
                 boolean tomoBHC = tmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && tmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
@@ -400,6 +435,17 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getPinchazos()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getObservacion()), visible, null);
 
+                onPageTreeChanged();
+            }
+            if (page.getTitle().equals(labels.getRazonNoRojo())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).contains("Otra");
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoRojo()), visible, null);
+                onPageTreeChanged();
+            }
+
+            if (page.getTitle().equals(labels.getRazonNoBHC())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).contains("Otra");
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoBHC()), visible, null);
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getObservacion())) {
@@ -412,7 +458,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getCodigoBHC()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getVolumenBHC()), visible, null);
                 changeStatus(mWizardModel.findByKey(labels.getRazonNoBHC()), !visible, null);
-                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoBHC()), false, null);
+                changeStatus(mWizardModel.findByKey(labels.getOtraRazonNoBHC()), !visible, null);
 
                 Page tmp = mWizardModel.findByKey(labels.getTuboRojo());
                 boolean tomoRojo = tmp.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && tmp.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
@@ -450,9 +496,9 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
         else if (clase.equals("class ni.org.ics.a2cares.app.wizard.model.MultipleFixedChoicePage")){
             MultipleFixedChoicePage modifPage = (MultipleFixedChoicePage) page; modifPage.setValue("").setmVisible(visible);
         }
-        else if (clase.equals("class ni.org.ics.a2cares.app.wizard.model.DatePage")){
+       /* else if (clase.equals("class ni.org.ics.a2cares.app.wizard.model.DatePage")){
             DatePage modifPage = (DatePage) page; modifPage.setValue("").setmVisible(visible);
-        }
+        }*/
         else if (clase.equals("class ni.org.ics.a2cares.app.wizard.model.TimePage")){
             TimePage modifPage = (TimePage) page; modifPage.setValue("").setmVisible(visible);
         }
@@ -483,8 +529,9 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
             String catPinchazos = "CAT_PINCHAZOS";
             String catObservacion = "CAT_OBSERV_MX";
 
-            String fechaMuestra = datos.getString(this.getString(R.string.fechaMuestra));
+
             String tuboRojo = datos.getString(this.getString(R.string.tuboRojo));
+            String fechaMuestra = datos.getString(this.getString(R.string.fechaMuestra));
             String codigoRojo = datos.getString(this.getString(R.string.codigoRojo));
             String volumenRojo = datos.getString(this.getString(R.string.volumenRojo));
             String razonNoRojo = datos.getString(this.getString(R.string.razonNoRojo));
@@ -519,6 +566,14 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
                     codigoBHC = codigoBHC.substring(3,7);
                   }
             }
+            DateMidnight maxDate;
+
+            maxDate = new DateMidnight(new Date());
+
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            String fec = df.format(maxDate.getMillis());
+
+
             muestra.setCodigoBHC(codigoBHC);
             muestra.setCodigoRojo(codigoRojo);
             muestra.setOtraRazonNoBHC(otraRazonNoBHC);
@@ -531,7 +586,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
             muestra.setProposito("MA");
             muestra.setEstudiosAct(Constants.ESTUDIO);
             muestra.setTerreno("1");
-            muestra.setFechaMuestra(DateUtil.StringToDate(fechaMuestra, "dd/MM/yyyy"));
+            muestra.setFechaMuestra(DateUtil.StringToDate(fec, "dd/MM/yyyy"));
 
 
             //Metadata
@@ -593,6 +648,7 @@ public class NuevaMuestraActivity extends AbstractAsyncActivity implements
             // TODO: be smarter about this
             if (object == mPrimaryItem) {
                 // Re-use the current fragment (its position never changes)
+                mNextButton.setEnabled(true);
                 return POSITION_UNCHANGED;
             }
 

@@ -163,8 +163,15 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 		mBarcodeButton.setOnClickListener(new View.OnClickListener()  {
 			@Override
 			public void onClick(View v) {
+
 				Intent i = new Intent("com.google.zxing.client.android.SCAN");
 				try {
+
+					//String packageString = "com.yourapplication.packagename";
+				//	Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+					//intent.setPackage(packageString);
+				//	i.putExtra("SCAN_MODE", "SCAN_MODE");
+				//	startActivityForResult(i, 123);
 					startActivityForResult(i, BARCODE_CAPTURE);
 				} catch (ActivityNotFoundException e) {
 					Toast t = Toast.makeText(getApplicationContext(),
@@ -275,11 +282,11 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 		switch (opcion) {
 			case 0:
 				filtro = MainDBConstants.codigo + "='" + parametro +"'";
-				filtroR = MainDBConstants.participante + "='" + parametro +"'";
+
 				break;
 			case 1:
 				filtro = MainDBConstants.codigo + "='" + parametro +"'";
-				filtroR = MainDBConstants.participante + "='" + parametro +"'";
+
 				break;
 			case 2:
 				filtro = MainDBConstants.nombre1 + " like '%" + parametro + "%' or " + MainDBConstants.nombre2 + " like '%" + parametro + "%'";
@@ -322,8 +329,8 @@ public class BuscarParticipanteActivity extends AbstractAsyncActivity {
 				recepcionenfermom = estudiosAdapter.getRecepcionEnfermo1(MainDBConstants.participante  + "='" + mParticipantes.get(0).getCodigo()+"'", null);
 				Date fechaactual = new Date(System.currentTimeMillis());
 				int milisecondsByDay = 86400000;
-				if (recepcionenfermom.getFechaRecepcion() != null) {
-					int dias = (int) ((fechaactual.getTime() - recepcionenfermom.getFechaRecepcion().getTime()) / milisecondsByDay);
+				if (recepcionenfermom != null) {
+					int dias = (int) ((fechaactual.getTime() - recepcionenfermom.getFis().getTime()) / milisecondsByDay) + 1;
 
 					recepcionenfermom.setPositivo(String.valueOf(dias));
 					//  recepcionenfermom.setFis();

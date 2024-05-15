@@ -341,6 +341,11 @@ public class NuevaVisitaTerrenoActivity extends AbstractAsyncActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 visitaExitosa = visible;
                 changeStatus(mWizardModel.findByKey(labels.getRazonVisitaNoExitosa()), !visible);
+                changeStatus(mWizardModel.findByKey(labels.getTelefono_1_Actualizado()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getTelefono_2_Actualizado()), visible);
+                if(visible){
+                    changeStatus(mWizardModel.findByKey(labels.getOtraRazonVisitaNoExitosa()), false);
+                }
                 onPageTreeChanged();
             }
             if(page.getTitle().equals(labels.getRazonVisitaNoExitosa())){
@@ -412,6 +417,9 @@ public class NuevaVisitaTerrenoActivity extends AbstractAsyncActivity implements
             String direccion = datos.getString(this.getString(R.string.direccion_cambio_domicilio));
             String telefono1 = datos.getString(this.getString(R.string.telefono_cambio_domicilio));
 
+            String telefono1A = datos.getString(this.getString(R.string.telefono_1_actualizado));
+            String telefono2A = datos.getString(this.getString(R.string.telefono_2_actualizado));
+
             VisitaTerrenoParticipante visita = new VisitaTerrenoParticipante();
             visita.setCodigoVisita(infoMovil.getId());
             visita.setRecordDate(new Date());
@@ -433,6 +441,9 @@ public class NuevaVisitaTerrenoActivity extends AbstractAsyncActivity implements
             visita.setOtraRazonVisitaNoExitosa(otraRazonVisitaNoExitosa);
             visita.setDireccion_cambio_domicilio(direccion);
             visita.setTelefono_cambio_domicilio(telefono1);
+
+            visita.setTelefono_1_Actualizado(telefono1A);
+            visita.setTelefono_2_Actualizado(telefono2A);
 
             estudiosAdapter.crearVisitaTerrenoParticipante(visita);
 

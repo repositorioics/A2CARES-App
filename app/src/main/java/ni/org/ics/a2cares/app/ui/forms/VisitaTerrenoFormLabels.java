@@ -21,6 +21,9 @@ public class VisitaTerrenoFormLabels {
     protected String direccion_cambio_domicilioHint ;
     protected String telefono_cambio_domicilio;
     protected String telefono_cambio_domicilioHint ;
+    protected String telefono_1_Actualizado ;
+    protected String telefono_2_Actualizado ;
+
 
     public VisitaTerrenoFormLabels() {
         Resources res = MyIcsApplication.getContext().getResources();
@@ -34,6 +37,8 @@ public class VisitaTerrenoFormLabels {
         otraRazonVisitaNoExitosaHint = res.getString(R.string.otraRazonVisitaNoExitosaHint);
         direccion_cambio_domicilio = res.getString(R.string.direccion_cambio_domicilio );
         telefono_cambio_domicilio = res.getString(R.string.telefono_cambio_domicilio );
+        telefono_1_Actualizado = res.getString(R.string.telefono_1_actualizado );
+        telefono_2_Actualizado = res.getString(R.string.telefono_2_actualizado );
     }
 
     public String getFechaVisita() {
@@ -80,6 +85,14 @@ public class VisitaTerrenoFormLabels {
 
     public String getTelefono_cambio_domicilioHint () {
         return telefono_cambio_domicilio;
+    }
+
+    public String getTelefono_1_Actualizado() {
+        return telefono_1_Actualizado;
+    }
+
+    public String getTelefono_2_Actualizado() {
+        return telefono_2_Actualizado;
     }
 
 

@@ -5,10 +5,12 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,7 @@ import ni.org.ics.a2cares.app.AbstractAsyncActivity;
 import ni.org.ics.a2cares.app.MyIcsApplication;
 import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
+import ni.org.ics.a2cares.app.domain.core.ControlAsistencia;
 import ni.org.ics.a2cares.app.entomologia.adapters.MenuEntomologiaAdapter;
 import ni.org.ics.a2cares.app.entomologia.constants.EntomologiaBConstants;
 import ni.org.ics.a2cares.app.entomologia.domain.CuestionarioHogar;
@@ -28,6 +31,8 @@ import ni.org.ics.a2cares.app.entomologia.server.DownloadAllEntoActivity;
 import ni.org.ics.a2cares.app.entomologia.server.UploadAllEntoActivity;
 import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import ni.org.ics.a2cares.app.ui.activities.BuscarCasaActivity;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoControlAsistenciaGPSEntoActivity;
+import ni.org.ics.a2cares.app.ui.activities.server.UploadAllActivity;
 import ni.org.ics.a2cares.app.utils.Constants;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 
@@ -55,8 +60,13 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
 
     private EstudioDBAdapter estudiosAdapter;
 
+
+	private SharedPreferences settings;
+
+	private String username;
 	private ArrayList<CuestionarioHogar> mCuestionarios = new ArrayList<CuestionarioHogar>();
 	private ArrayList<CuestionarioPuntoClave> mCuestionariosPC = new ArrayList<CuestionarioPuntoClave>();
+
 
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP_MR1)
 	@Override
@@ -65,7 +75,14 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu_participante);
 
-        textView = (TextView) findViewById(R.id.label);
+		settings =
+				PreferenceManager.getDefaultSharedPreferences(this);
+		username =
+				settings.getString(PreferencesActivity.KEY_USERNAME,
+						null);
+
+
+		textView = (TextView) findViewById(R.id.label);
         gridView = (GridView) findViewById(R.id.gridView1);
         menu_entomologia = getResources().getStringArray(R.array.menu_entomologia);
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
@@ -123,11 +140,26 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
 						i.putExtra(Constants.MENU_ENTO, true);
 						startActivity(i);
 						break;
-					case 7:
+					case 7: //Control Asistencia
+						//estudiosAdapter.open();
+						//Boolean esPersonA2cares = estudiosAdapter.buscarRol(username, "ROLE_PERSONAL_A2CARES");
+						//estudiosAdapter.close();
+						//if (esPersonA2cares){
+						// i = new Intent(getApplicationContext(), NuevoControlAsistenciaActivity.class);
+						i = new Intent(getApplicationContext(), NuevoControlAsistenciaGPSEntoActivity.class);
+						startActivity(i);
+
+						/*}
+						else{
+							showToast(getApplicationContext().getString(R.string.perm_error));
+						}*/
+						break;
+					case 8:
 						createDialog(EXIT);
 						break;
 					default:
 						break;
+
 				}
 			}
 		});
@@ -238,6 +270,7 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
 					dialog.dismiss();
 					Intent ie = new Intent(getApplicationContext(), UploadAllEntoActivity.class);
 					startActivityForResult(ie, UPDATE_SERVER);
+
 				}
 			});
 			builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -338,6 +371,7 @@ public class MenuEntomologiaActivity extends AbstractAsyncActivity {
 			estudiosAdapter.open();
 			mCuestionarios = (ArrayList<CuestionarioHogar>) estudiosAdapter.getCuestionariosHogar(MainDBConstants.recordDate + ">=" + timeStamp.getTime(), EntomologiaBConstants.codigoVivienda);
 			mCuestionariosPC = (ArrayList<CuestionarioPuntoClave>) estudiosAdapter.getCuestionariosPuntoClave(EntomologiaBConstants.TODAY + ">=" + timeStamp.getTime(), EntomologiaBConstants.nombrePuntoClave);
+			//masistenciaEnto = (ArrayList<ControlAsistencia>) estudiosAdapter.getControlAsistencial(EntomologiaBConstants.TODAY + ">=" + timeStamp.getTime(),EntomologiaBConstants.USUARIO);
 			//mCuestionariosPC = (ArrayList<CuestionarioPuntoClave>) estudiosAdapter.getCuestionariosPuntoClave(EntomologiaBConstants.TODAY + ">=" + "1664554960000", EntomologiaBConstants.nombrePuntoClave);
 			estudiosAdapter.close();
             showLoadingProgressDialog();

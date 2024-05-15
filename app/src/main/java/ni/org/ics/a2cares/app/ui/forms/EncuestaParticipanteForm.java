@@ -104,7 +104,7 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
         Page otroLugarCuidan = new TextPage(this, labels.getOtroLugarCuidan(), "", Constants.WIZARD, false).setRequired(true);
 
         Page alfabeto = new SingleFixedChoicePage(this, labels.getAlfabeto(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
-        Page nivelEducacion = new SingleFixedChoicePage(this, labels.getNivelEducacion(), "", Constants.WIZARD, true).setChoices(catNivelEdu).setRequired(true);
+        Page nivelEducacion = new SingleFixedChoicePage(this, labels.getNivelEducacion(), "", Constants.WIZARD, false).setChoices(catNivelEdu).setRequired(true);
 
         Page trabaja = new SingleFixedChoicePage(this, labels.getTrabaja(), "", Constants.WIZARD, false).setChoices(catSiNo).setRequired(true);
         Page tipoTrabajo = new SingleFixedChoicePage(this, labels.getTipoTrabajo(), "", Constants.WIZARD, false).setChoices(catTipoTrab).setRequired(true);
@@ -239,12 +239,12 @@ public class EncuestaParticipanteForm extends AbstractWizardModel {
 
         return new PageList(emancipado, descEmancipado, otraDescEmanc, embarazada, conoceFur, fur, asisteEscuela, gradoEstudia, nombreEscuela, turno, cuidan, cuantosCuidan, nombreCDI, direccionCDI, otroLugarCuidan,
                 alfabeto, nivelEducacion, trabaja, tipoTrabajo, ocupacionActual, personaVive, ordenNac, padreAlfabeto, papaNivel, trabajaPadre, papaTipoTra, madreAlfabeta, mamaNivel, trabajaMadre, mamaTipoTra,
-                comparteHab, hab1, hab2, hab3, hab4, hab5, comparteCama, cama1, cama2, cama3, cama4, cama5, fuma, periodicidadFuma, cantidadCigarrillos, fumaDentroCasa, tuberculosisPulmonarActual, anioDiagTubpulActual, mesDiagTubpulActual,
+                comparteHab,hab1, hab2, hab3, hab4, hab5, comparteCama, cama1, cama2, cama3, cama4, cama5, fuma, periodicidadFuma, cantidadCigarrillos, fumaDentroCasa, tuberculosisPulmonarActual, anioDiagTubpulActual, mesDiagTubpulActual,
                 tratamientoTubpulActual, completoTratamientoTubpulActual, tuberculosisPulmonarPasado, fechaDiagTubpulPasadoDes, anioDiagTubpulPasado, mesDiagTubpulPasado, tratamientoTubpulPasado, completoTratamientoTubpulPas,
                 alergiaRespiratoria, anioAlergia, asma, anioAsma, enfermedadCronica, cardiopatia, anioCardio, enfermPulmonarObstCronica, anioEPOC, diabetes, anioDiabetes, presionAlta, anioPA, otrasEnfermedades, descOtrasEnfermedades,
-                tenidoDengue, anioDengue, diagMedicoDengue, dondeDengue, tenidoZika, anioZika, diagMedicoZika, dondeZika, tenidoChik, anioChik, diagMedicoChik, dondeChik,
+                tenidoDengue,anioDengue, diagMedicoDengue, dondeDengue, tenidoZika, anioZika, diagMedicoZika, dondeZika, tenidoChik, anioChik, diagMedicoChik, dondeChik,
                 vacunaFiebreAma, anioVacunaFiebreAma, vacunaCovid, anioVacunaCovid, mesVacunaCovid, tomarFotoTarjetaCovid, tieneTarjetaVacuna, tomarFotoTarjeta,
-                fiebre, tiempoFiebre, lugarConsFiebre, noAcudioCs, automedicoFiebre, tenidoDengueUA, unidadSaludDengue, centroSaludDengue, otroCentroSaludDengue, puestoSaludDengue, otroPuestoSaludDengue, hospitalDengue, otroHospitalDengue, hospitalizadoDengue, ambulatorioDengue, diagnosticoDengue,
+                fiebre, tiempoFiebre, lugarConsFiebre, noAcudioCs, automedicoFiebre, tenidoDengueUA,unidadSaludDengue, centroSaludDengue, otroCentroSaludDengue, puestoSaludDengue, otroPuestoSaludDengue, hospitalDengue, otroHospitalDengue, hospitalizadoDengue, ambulatorioDengue, diagnosticoDengue,
                 rashUA, recuerdaMes, rashMes, rashCara, rashMiembrosSup, rashTorax, rashAbdomen, rashMiembrosInf, rashDias, consultaRashUA, unidadSaludRash, centroSaludRash, otroCentroSaludRash, puestoSaludRash, otroPuestoSaludRash, diagnosticoRash,
                 finTamizajeLabel);
     }

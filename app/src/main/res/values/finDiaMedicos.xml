@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="fechaAtencion">1. Fecha de Atención o Consulta:</string>
+    <string name="puestoSalud">2. Puesto de Salud:</string>
+    <string name="numPartAtendidos">3. # De Participantes del Estudio Atendidos:</string>
+
+    <string name="codPartAtend1"> Ingrese el Código 1 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend2"> Ingrese el Código 2 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend3"> Ingrese el Código 3 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend4"> Ingrese el Código 4 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend5"> Ingrese el Código 5 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend6"> Ingrese el Código 6 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend7"> Ingrese el Código 7 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend8"> Ingrese el Código 8 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend9"> Ingrese el Código 9 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend10"> Ingrese el Código 10 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend11"> Ingrese el Código 11 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend12"> Ingrese el Código 22 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend13"> Ingrese el Código 13 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend14"> Ingrese el Código 14 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend15"> Ingrese el Código 15 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend16"> Ingrese el Código 16 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend17"> Ingrese el Código 17 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend18"> Ingrese el Código 18 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend19"> Ingrese el Código 19 del Paciente del Estudio Atendido</string>
+    <string name="codPartAtend20"> Ingrese el Código 20 del Paciente del Estudio Atendido</string>
+
+    <string name="codPartAtend1Diagnostico"> Ingrese el Diagnóstico del Paciente 1 del Estudio Atendido</string>
+    <string name="codPartAtend2Diagnostico"> Ingrese el Diagnóstico del Paciente 2 del Estudio Atendido</string>
+    <string name="codPartAtend3Diagnostico"> Ingrese el Diagnóstico del Paciente 3 del Estudio Atendido</string>
+    <string name="codPartAtend4Diagnostico"> Ingrese el Diagnóstico del Paciente 4 del Estudio Atendido</string>
+    <string name="codPartAtend5Diagnostico"> Ingrese el Diagnóstico del Paciente 5 del Estudio Atendido</string>
+    <string name="codPartAtend6Diagnostico"> Ingrese el Diagnóstico del Paciente 6 del Estudio Atendido</string>
+    <string name="codPartAtend7Diagnostico"> Ingrese el Diagnóstico del Paciente 7 del Estudio Atendido</string>
+    <string name="codPartAtend8Diagnostico"> Ingrese el Diagnóstico del Paciente 8 del Estudio Atendido</string>
+    <string name="codPartAtend9Diagnostico"> Ingrese el Diagnóstico del Paciente 9 del Estudio Atendido</string>
+    <string name="codPartAtend10Diagnostico"> Ingrese el Diagnóstico del Paciente 10 del Estudio Atendido</string>
+    <string name="codPartAtend11Diagnostico"> Ingrese el Diagnóstico del Paciente 11 del Estudio Atendido</string>
+    <string name="codPartAtend12Diagnostico"> Ingrese el Diagnóstico del Paciente 12 del Estudio Atendido</string>
+    <string name="codPartAtend13Diagnostico"> Ingrese el Diagnóstico del Paciente 13 del Estudio Atendido</string>
+    <string name="codPartAtend14Diagnostico"> Ingrese el Diagnóstico del Paciente 14 del Estudio Atendido</string>
+    <string name="codPartAtend15Diagnostico"> Ingrese el Diagnóstico del Paciente 15 del Estudio Atendido</string>
+    <string name="codPartAtend16Diagnostico"> Ingrese el Diagnóstico del Paciente 16 del Estudio Atendido</string>
+    <string name="codPartAtend17Diagnostico"> Ingrese el Diagnóstico del Paciente 17 del Estudio Atendido</string>
+    <string name="codPartAtend18Diagnostico"> Ingrese el Diagnóstico del Paciente 18 del Estudio Atendido</string>
+    <string name="codPartAtend19Diagnostico"> Ingrese el Diagnóstico del Paciente 19 del Estudio Atendido</string>
+    <string name="codPartAtend20Diagnostico"> Ingrese el Diagnóstico del Paciente 20 del Estudio Atendido</string>
+
+    <string name="numPartNoCohorteAtendidos">5. # De Pacientes no cohorte atendidos: </string>
+    <string name="totalPartAtendidos">6. Total, Pacientes Atendidos:</string>
+    <string name="numPacienFebrilAtendidos">7. # Pacientes febriles atendidos:</string>
+    <string name="numInfeccionRespAguda">8. # Infección respiratoria aguda:</string>
+    <string name="numEnfermedadDiarrAguda">9. # Enfermedad diarreíca aguda:</string>
+    <string name="numEti">10. # ETI:</string>
+    <string name="numRag">11. # IRAG:</string>
+    <string name="numConjuntivitis">12. # Conjuntivitis:</string>
+    <string name="numControlParental">13. # Control Prenatal:</string>
+    <string name="numNeumonia">14. # Neumonía:</string>
+    <string name="numPap">15. # Realización de PAP:</string>
+    <string name="numPlanifFamiliar">16. # Planificación Familiar:</string>
+    <string name="numGotaGruesa">17. # Gota Gruesa:</string>
+    <string name="numPacientesCronicos">18. # Pacientes Crónicos:</string>
+    <string name="numTraslados">19. # Traslados:</string>
+    <string name="numCaptacionA">20. # Captación A:</string>
+    <string name="numCaptacionB">21. # Captación B:</string>
+    <string name="numCaptacionC">22. # Captación C:</string>
+    <string name="numCaptacionD">23. # Captación D:</string>
+    <string name="numSeguimientoA">24. # Seguimiento A:</string>
+    <string name="numSeguimientoB">25. # Seguimiento B:</string>
+    <string name="numSeguimientoD">26. # Seguimiento D:</string>
+    <string name="numConvaPendientes">27. # Convalecientes Pendientes en Puesto:</string>
+    <string name="numVisitaTerreno">28. # Visita a Terreno:</string>
+    <string name="numPartTrasladados">29 # Participantes Trasladados por Dengue a Hospital o UAF de CSEL:</string>
+    <string name="codPartTraslado1">Ingrese el Código 1 del Paciente del Estudio Trasladado:</string>
+    <string name="codPartTraslado2">Ingrese el Código 2 del Paciente del Estudio Trasladado:</string>
+    <string name="codPartTraslado3">Ingrese el Código 3 del Paciente del Estudio Trasladado:</string>
+    <string name="codPartTraslado4">Ingrese el Código 4 del Paciente del Estudio Trasladado:</string>
+    <string name="codPartTraslado5">Ingrese el Código 5 del Paciente del Estudio Trasladado:</string>
+    <string name="codPartTraslado6">Ingrese el Código 6 del Paciente del Estudio Trasladado:</string>
+    <string name="codPartTraslado7">Ingrese el Código 7 del Paciente del Estudio Trasladado:</string>
+    <string name="codPartTraslado8">Ingrese el Código 8 del Paciente del Estudio Trasladado:</string>
+    <string name="codPartTraslado9">Ingrese el Código 9 del Paciente del Estudio Trasladado:</string>
+    <string name="codPartTraslado10">Ingrese el Código 10 del Paciente del Estudio Trasladado:</string>
+
+    <string name="codPartTraslado1Diagnostico">Ingrese el Diagnóstico 1 del Paciente Trasladado:</string>
+    <string name="codPartTraslado2Diagnostico">Ingrese el Diagnóstico 2 del Paciente Trasladado:</string>
+    <string name="codPartTraslado3Diagnostico">Ingrese el Diagnóstico 3 del Paciente Trasladado:</string>
+    <string name="codPartTraslado4Diagnostico">Ingrese el Diagnóstico 4 del Paciente Trasladado:</string>
+    <string name="codPartTraslado5Diagnostico">Ingrese el Diagnóstico 5 del Paciente Trasladado:</string>
+    <string name="codPartTraslado6Diagnostico">Ingrese el Diagnóstico 6 del Paciente Trasladado:</string>
+    <string name="codPartTraslado7Diagnostico">Ingrese el Diagnóstico 7 del Paciente Trasladado:</string>
+    <string name="codPartTraslado8Diagnostico">Ingrese el Diagnóstico 8 del Paciente Trasladado:</string>
+    <string name="codPartTraslado9Diagnostico">Ingrese el Diagnóstico 9 del Paciente Trasladado:</string>
+    <string name="codPartTraslado10Diagnostico">Ingrese el Diagnóstico 10 del Paciente Trasladado:</string>
+
+    <string name="numPartNegatTraslado">31. # Participantes con negativa de traslado por Dengue:</string>
+    <string name="codNegatPartTraslado1">Ingrese el Código 1 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegatPartTraslado2">Ingrese el Código 2 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegatPartTraslado3">Ingrese el Código 3 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegatPartTraslado4">Ingrese el Código 4 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegatPartTraslado5">Ingrese el Código 5 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegatPartTraslado6">Ingrese el Código 6 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegatPartTraslado7">Ingrese el Código 7 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegatPartTraslado8">Ingrese el Código 8 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegatPartTraslado9">Ingrese el Código 9 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegatPartTraslado10">Ingrese el Código 10 del Paciente con Negativa a Trasladado:</string>
+
+    <string name="codNegaPartTraslado1Diagnostico">Ingrese el Diagnóstico 1 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegaPartTraslado2Diagnostico">Ingrese el Diagnóstico 2 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegaPartTraslado3Diagnostico">Ingrese el Diagnóstico 3 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegaPartTraslado4Diagnostico">Ingrese el Diagnóstico 4 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegaPartTraslado5Diagnostico">Ingrese el Diagnóstico 5 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegaPartTraslado6Diagnostico">Ingrese el Diagnóstico 6 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegaPartTraslado7Diagnostico">Ingrese el Diagnóstico 7 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegaPartTraslado8Diagnostico">Ingrese el Diagnóstico 8 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegaPartTraslado9Diagnostico">Ingrese el Diagnóstico 9 del Paciente con Negativa a Trasladado:</string>
+    <string name="codNegaPartTraslado10Diagnostico">Ingrese el Diagnóstico 10 del Paciente con Negativa a Trasladado:</string>
+
+
+
+</resources>

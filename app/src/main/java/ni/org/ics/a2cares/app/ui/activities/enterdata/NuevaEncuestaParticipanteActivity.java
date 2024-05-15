@@ -18,8 +18,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.joda.time.DateTime;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +86,7 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
     private Participante participante;
     private boolean visitaExitosa = false;
     private int anios = 0;
+    private int anioRegistro = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -172,6 +176,7 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
         }
 
         int anioNacimiento = DateUtil.getYear(participante.getFechaNac());
+        anioRegistro = DateUtil.getYear(participante.getRecordDate());
         int anioActual = DateUtil.getActualYear();
         boolean esMujer = participante.getSexo().equalsIgnoreCase("F");
 
@@ -472,12 +477,14 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getDescEmancipado()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getOtraDescEmanc()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getNivelEducacion()), true);
                 onPageTreeChanged();
             }
 
             if(page.getTitle().equals(labels.getDescEmancipado())){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otro");
                 changeStatus(mWizardModel.findByKey(labels.getOtraDescEmanc()), visible);
+
                 onPageTreeChanged();
             }
 
@@ -485,6 +492,7 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getConoceFUR()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getFur()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getNivelEducacion()), true);
                 onPageTreeChanged();
             }
 
@@ -499,12 +507,14 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                 changeStatus(mWizardModel.findByKey(labels.getGradoEstudia()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getNombreEscuela()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getTurno()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getNivelEducacion()), !visible);
 
                 changeStatus(mWizardModel.findByKey(labels.getCuidan()), !visible);
                 changeStatus(mWizardModel.findByKey(labels.getOtroLugarCuidan()), false);
                 changeStatus(mWizardModel.findByKey(labels.getNombreCDI()), !visible);
                 changeStatus(mWizardModel.findByKey(labels.getDireccionCDI()), !visible);
                 changeStatus(mWizardModel.findByKey(labels.getCuantosCuidan()), !visible);
+
                 onPageTreeChanged();
             }
 
@@ -550,6 +560,7 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                 changeStatus(mWizardModel.findByKey(labels.getHab3()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getHab4()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getHab5()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getComparteCama()), visible);
                 onPageTreeChanged();
             }
 
@@ -708,7 +719,7 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                 onPageTreeChanged();
             }
             //25.	¿El participante ha tenido dengue en algún momento en la vida?
-            if(page.getTitle().equals(labels.getTenidoDengue())){
+            if(page.getTitle().equals(labels.getTenidoDengue()) && anioRegistro == DateTime.now().getYear()){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAnioDengue()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDiagMedicoDengue()), visible);
@@ -721,26 +732,26 @@ public class NuevaEncuestaParticipanteActivity extends AbstractAsyncActivity imp
                 onPageTreeChanged();
             }
             //26.	¿El participante ha tenido Zika en algún momento en la vida?
-            if(page.getTitle().equals(labels.getTenidoZika())){
+            if(page.getTitle().equals(labels.getTenidoZika()) && anioRegistro == DateTime.now().getYear()){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAnioZika()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDiagMedicoZika()), visible);
                 onPageTreeChanged();
             }
-            if(page.getTitle().equals(labels.getDiagMedicoZika())) {
+            if(page.getTitle().equals(labels.getDiagMedicoZika()) && anioRegistro == DateTime.now().getYear()) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 //realizar validacion sin no
                 changeStatus(mWizardModel.findByKey(labels.getDondeZika()), visible);
                 onPageTreeChanged();
             }
             //27.	¿El participante ha tenido Chikungunya en algún momento en la vida?
-            if(page.getTitle().equals(labels.getTenidoChik())){
+            if(page.getTitle().equals(labels.getTenidoChik()) && anioRegistro == DateTime.now().getYear()){
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getAnioChik()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDiagMedicoChik()), visible);
                 onPageTreeChanged();
             }
-            if(page.getTitle().equals(labels.getDiagMedicoChik())) {
+            if(page.getTitle().equals(labels.getDiagMedicoChik())&& anioRegistro == DateTime.now().getYear()) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 //realizar validacion sin no
                 changeStatus(mWizardModel.findByKey(labels.getDondeChik()), visible);

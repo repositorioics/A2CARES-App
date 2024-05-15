@@ -380,34 +380,56 @@ public class NuevoControlAsistenciaFragment extends Fragment {
                 AM_PM = "a.m.";
                 if (minutes < 10) {
                     horaentrada = (hour12hrs + ":0" + minutes + ":" + seconds + " " + AM_PM);
+                    if (seconds < 10) {
+                        horaentrada = (hour12hrs + ":0" + minutes + ":0" + seconds + " " + AM_PM);
+                    }else {
+                        horaentrada = (hour12hrs + ":0" + minutes + ":" + seconds + " " + AM_PM);
+                    }
                 }else {
-                    horaentrada = (hour12hrs + ":" + minutes + ":" + seconds + " " + AM_PM);
+                    if (seconds < 10) {
+                        horaentrada = (hour12hrs + ":" + minutes + ":0" + seconds + " " + AM_PM);
+                    }else {
+                        horaentrada = (hour12hrs + ":" + minutes + ":" + seconds + " " + AM_PM);
+                    }
+
                 }
+
             } else {
                 AM_PM = "p.m.";
                 if (minutes < 10) {
                     horasalida = (hour12hrs + ":0" + minutes + ":" + seconds + " " + AM_PM);
+                    if (seconds < 10) {
+                        horasalida = (hour12hrs + ":0" + minutes + ":0" + seconds + " " + AM_PM);
+                    }else {
+                        horasalida = (hour12hrs + ":0" + minutes + ":" + seconds + " " + AM_PM);
+                    }
                 }else {
-                    horasalida = (hour12hrs + ":" + minutes + ":" + seconds + " " + AM_PM);
+                    if (seconds < 10) {
+                        horasalida = (hour12hrs + ":" + minutes + ":0" + seconds + " " + AM_PM);
+                    }else {
+                        horasalida = (hour12hrs + ":" + minutes + ":" + seconds + " " + AM_PM);
+                    }
                 }
             }
             if (minutes < 10)
             {
-                mInputHoraAsistencia.setText(hour12hrs + ":0" + minutes + ":" + seconds + " " + AM_PM);
+                if (seconds < 10) {
+                    mInputHoraAsistencia.setText(hour12hrs + ":0" + minutes + ":0" + seconds + " " + AM_PM);
+                }else{
+                    mInputHoraAsistencia.setText(hour12hrs + ":0" + minutes + ":" + seconds + " " + AM_PM);
+                }
             }else {
-                mInputHoraAsistencia.setText(hour12hrs + ":" + minutes + ":" + seconds + " " + AM_PM);
+                if (seconds < 10) {
+                    mInputHoraAsistencia.setText(hour12hrs + ":" + minutes + ":0" + seconds + " " + AM_PM);
+                }else{
+                    mInputHoraAsistencia.setText(hour12hrs + ":" + minutes + ":" + seconds + " " + AM_PM);
+                }
             }
        // tmD.show();
             default:
                 break;
         }
 
-      /*  Intent i = new Intent(getActivity().getApplicationContext(),
-                CoordenadasOnlyActivity.class);
-        i.putExtra(Constants.COD_PARTICIPANTE, "0000");
-        i.putExtra(Constants.MENU_ENTO, 0);
-        MapaBarriosPage page = (MapaBarriosPage) mPage;
-        startActivityForResult(i, PART_CAPTURE);*/
     }
     private boolean validarEntrada() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -450,10 +472,6 @@ public class NuevoControlAsistenciaFragment extends Fragment {
     public void onActivityCreated(Bundle savedState){
         super.onActivityCreated(savedState);
          latitudP= (EditText) getView().findViewById(R.id.latitud);
-
-        // latitud = Double.valueOf(latitudP.getText().toString());
-        //String cadena = getActivity().;
-        // ahora puedes trabajar con el dato leido de un campo de la actividad
 
     }
 

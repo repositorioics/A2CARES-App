@@ -24,6 +24,7 @@ public class Constants {
     //formularios
     public static final String YES = "Si";
     public static final String OTRO = "Otro";
+    public static final String OTROS = "Otros";
     public static final String NO = "No";
     public static final String NA = "NA";
 
@@ -69,6 +70,7 @@ public class Constants {
     public static final String DESDE_PARTICIPANTE = "desde_participante";
     public static final String DESDE_MEDICO = "desde_medico";
     public static final String DESDE_LABO = "desde_laboratorio";
+    public static final String DESDE_ADMISION = "desde_admision";
 
     public static final String UBICACION = "ubicacion";
     public static final int UBICACION_NJ = 1;

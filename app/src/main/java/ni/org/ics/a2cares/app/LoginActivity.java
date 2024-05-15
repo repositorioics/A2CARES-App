@@ -6,6 +6,7 @@ package ni.org.ics.a2cares.app;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
 
 import android.Manifest;
 import android.animation.Animator;
@@ -264,7 +265,7 @@ public class LoginActivity extends AppCompatActivity {
 		mPasswordView.setError(null);
 
 		// Store values at the time of the login attempt.
-		mUser = mUserView.getText().toString();
+		mUser = mUserView.getText().toString().toLowerCase().trim();
 		mPassword = mPasswordView.getText().toString();
 		url=mUrlView.getText().toString();
 		((MyIcsApplication) this.getApplication()).setPassApp(mPassword);

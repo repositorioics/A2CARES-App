@@ -202,6 +202,9 @@ public class EncuestasDBConstants {
     public static final String tieneRecoleccionBasura = "tieneRecoleccionBasura";
     public static final String cuantasVecesRecBasura = "cuantasVecesRecBasura";
     public static final String dondePasaRecBasura = "dondePasaRecBasura";
+    public static final String dondePasaRecBasuraOtros = "dondePasaRecBasuraOtros";
+    public static final String vistoAnimalesSalvajes = "vistoAnimalesSalvajes";
+    public static final String vistoAnimalesSalvajesOtros = "vistoAnimalesSalvajesOtros";
 
     //crear tabla EncuestaPesoTalla
     public static final String CREATE_ENCUESTA_CASA_TABLE = "create table if not exists "
@@ -211,27 +214,27 @@ public class EncuestasDBConstants {
             + participante + " text not null, "
             + cuantasPersonas + " integer, "
             + cuantasMujeres + " integer, "
-            + edadMujer1 + " text, "
-            + edadMujer2 + " text, "
-            + edadMujer3 + " text, "
-            + edadMujer4 + " text, "
-            + edadMujer5 + " text, "
-            + edadMujer6 + " text, "
-            + edadMujer7 + " text, "
-            + edadMujer8 + " text, "
-            + edadMujer9 + " text, "
-            + edadMujer10 + " text, "
+            + edadMujer1 + " integer, "
+            + edadMujer2 + " integer, "
+            + edadMujer3 + " integer, "
+            + edadMujer4 + " integer, "
+            + edadMujer5 + " integer, "
+            + edadMujer6 + " integer, "
+            + edadMujer7 + " integer, "
+            + edadMujer8 + " integer, "
+            + edadMujer9 + " integer, "
+            + edadMujer10 + " integer, "
             + cuantosHombres + " integer, "
-            + edadHombre1 + " text, "
-            + edadHombre2 + " text, "
-            + edadHombre3 + " text, "
-            + edadHombre4 + " text, "
-            + edadHombre5 + " text, "
-            + edadHombre6 + " text, "
-            + edadHombre7 + " text, "
-            + edadHombre8 + " text, "
-            + edadHombre9 + " text, "
-            + edadHombre10 + " text, "
+            + edadHombre1 + " integer, "
+            + edadHombre2 + " integer, "
+            + edadHombre3 + " integer, "
+            + edadHombre4 + " integer, "
+            + edadHombre5 + " integer, "
+            + edadHombre6 + " integer, "
+            + edadHombre7 + " integer, "
+            + edadHombre8 + " integer, "
+            + edadHombre9 + " integer, "
+            + edadHombre10 + " integer, "
             + cantidadCuartos + " integer, "
             + cantidadCuartosDormir + " integer, "
             + problemaAgua + " text, "
@@ -356,6 +359,9 @@ public class EncuestasDBConstants {
             + tieneRecoleccionBasura + " text, "
             + cuantasVecesRecBasura + " text, "
             + dondePasaRecBasura + " text, "
+            + dondePasaRecBasuraOtros + " text, "
+            + vistoAnimalesSalvajes + " text, "
+            + vistoAnimalesSalvajesOtros + " text, "
             + MainDBConstants.recordDate + " date, "
             + MainDBConstants.recordUser + " text, "
             + MainDBConstants.pasive + " text, "
@@ -650,65 +656,46 @@ public class EncuestasDBConstants {
     public static final String ENCUESTA_SATISFACCION_USUARIO_TABLE = "encuestaSatisfaccionUsuario";
 
     public static final String codigoParticipante = "codigoParticipante";
-    public static final String atencionMedica = "atencionMedica";
-    public static final String familaAmistades = "familaAmistades";
-    public static final String desicionPropia = "desicionPropia";
-    public static final String obsequiosOfreceEstudio = "obsequiosOfreceEstudio";
-    public static final String ayudaRecibeComunidad = "ayudaRecibeComunidad";
-    public static final String examenesLaboratorio = "examenesLaboratorio";
-    public static final String interesCientificoPersonalP1 = "interesCientificoPersonalP1";
-    public static final String informacionAyudaOtros = "informacionAyudaOtros";
-    public static final String otraP1 = "otraP1";
-    public static final String calidadAtencionMedica = "calidadAtencionMedica";
-    public static final String atencionOportuna = "atencionOportuna";
-    public static final String buenaCoordinacionhosp = "buenaCoordinacionhosp";
-    public static final String infoEstadoSalud = "infoEstadoSalud";
-    public static final String enseniaPrevEnfermedades = "enseniaPrevEnfermedades";
-    public static final String infoConsMejoraConocimientos = "infoConsMejoraConocimientos";
-    public static final String interesCientificoPersonalP2 = "interesCientificoPersonalP2";
-    public static final String mejorarTratamientoDengue = "mejorarTratamientoDengue";
-    public static final String unicaManeraRecibirAtencionMed = "unicaManeraRecibirAtencionMed";
-    public static final String otraP2 = "otraP2";
-    public static final String difBuscarAtencionMed = "difBuscarAtencionMed";
-    public static final String centroSaludLejos = "centroSaludLejos";
-    public static final String costoTrasnporteElevado = "costoTrasnporteElevado";
-    public static final String trabajoTiempo = "trabajoTiempo";
-    public static final String noQueriapasarConsulta = "noQueriapasarConsulta";
-    public static final String horarioClases = "horarioClases";
-    public static final String temorTomenMx = "temorTomenMx";
-    public static final String temorInfoPersonal = "temorInfoPersonal";
-    public static final String otraP3 = "otraP3";
-    public static final String recomendariaAmigoFamiliar = "recomendariaAmigoFamiliar";
-    public static final String atencionCalidad = "atencionCalidad";
-    public static final String respNecesidadesSaludOportuna = "respNecesidadesSaludOportuna";
-    public static final String tiempoEsperaCorto = "tiempoEsperaCorto";
-    public static final String mejorAtencionQueSeguro = "mejorAtencionQueSeguro";
-    public static final String examenLabNecesarios = "examenLabNecesarios";
-    public static final String conocimientosImportantes = "conocimientosImportantes";
-    public static final String pocosRequisitos = "pocosRequisitos";
-    public static final String otraP_4_1 = "otraP_4_1";
-    public static final String atencionPersonalMala = "atencionPersonalMala";
-    public static final String noDanRespNecesidades = "noDanRespNecesidades";
-    public static final String tiempoEsperaLargo = "tiempoEsperaLargo";
-    public static final String mejorAtencionOtraUnidadSalud = "mejorAtencionOtraUnidadSalud";
-    public static final String solicitaDemasiadaMx = "solicitaDemasiadaMx";
-    public static final String muchosRequisitos = "muchosRequisitos";
-    public static final String noExplicanHacenMx = "noExplicanHacenMx";
-    public static final String noConfianza = "noConfianza";
-    public static final String otraP_4_2 = "otraP_4_2";
-    public static final String comprendeProcedimientos = "comprendeProcedimientos";
-    public static final String noComodoRealizarPreg = "noComodoRealizarPreg";
-    public static final String noRespondieronPreg = "noRespondieronPreg";
-    public static final String explicacionRapida = "explicacionRapida";
-    public static final String noDejaronHacerPreg = "noDejaronHacerPreg";
-    public static final String otraP_5_1 = "otraP_5_1";
-    public static final String brindaronConsejosPrevencionEnfer = "brindaronConsejosPrevencionEnfer";
-    public static final String entiendoProcedimientosEstudios = "entiendoProcedimientosEstudios";
-    public static final String satisfecho = "satisfecho";
-    public static final String comodoInfoRecolectada = "comodoInfoRecolectada";
-    public static final String noComodoPreguntas = "noComodoPreguntas";
-    public static final String recomendacionMejorarAtencion = "recomendacionMejorarAtencion";
-    public static final String importanciaRecibirInformacion = "importanciaRecibirInformacion";
+    public static final String atencionPersonalEstudio_P1 = "atencionPersonalEstudio_P1";
+    public static final String tiempoAtencionRecibido_P2 = "tiempoAtencionRecibido_P2";
+    public static final String atencionRecibidaEnfermeria_P3 = "atencionRecibidaEnfermeria_P3";
+    public static final String atencionRecibidaDoctores_P4 = "atencionRecibidaDoctores_P4";
+    public static final String ambienteDondeRecibeAtencion_P5 = "ambienteDondeRecibeAtencion_P5";
+    public static final String explicaronDiagnostico_P6 = "explicaronDiagnostico_P6";
+    public static final String explicaronTratamiento_P7 = "explicaronTratamiento_P7";
+    public static final String tieneArbovirusImportanciaSeg_P8 = "tieneArbovirusImportanciaSeg_P8";
+    public static final String explicaronPeligrosArbovirus_P8_1 = "explicaronPeligrosArbovirus_P8_1";
+    public static final String medicoDijoCuidados_P8_2 = "medicoDijoCuidados_P8_2";
+    public static final String dificultadAtencion_P9 = "dificultadAtencion_P9";
+    public static final String centroSaludLejos_P9_1 = "centroSaludLejos_P9_1";
+    public static final String costoTrasnporteElevado_P9_2 = "costoTrasnporteElevado_P9_2";
+    public static final String trabajoTiempo_P9_3 = "trabajoTiempo_P9_3";
+    public static final String noQueriapasarConsulta_P9_4 = "noQueriapasarConsulta_P9_4";
+    public static final String otrasEspecifique_P9_5 = "otrasEspecifique_P9_5";
+    public static final String recomendariaAmigoFamiliar_P10 = "recomendariaAmigoFamiliar_P10";
+    public static final String atencionCalidad_P10_1 = "atencionCalidad_P10_1";
+    public static final String respNecesidadesSaludOportuna_P10_1 = "respNecesidadesSaludOportuna_P10_1";
+    public static final String tiempoEsperaCorto_P10_1 = "tiempoEsperaCorto_P10_1";
+    public static final String mejorAtencionQueSeguro_P10_1 = "mejorAtencionQueSeguro_P10_1";
+    public static final String examenLabNecesarios_P10_1 = "examenLabNecesarios_P10_1";
+    public static final String pocosRequisitos_P10_1 = "pocosRequisitos_P10_1";
+    public static final String otraP_10_1 = "otraP_10_1";
+    public static final String atencionPersonalMala_P10_2 = "atencionPersonalMala_P10_2";
+    public static final String noDanRespNecesidades_P10_2 = "noDanRespNecesidades_P10_2";
+    public static final String tiempoEsperaLargo_P10_2 = "tiempoEsperaLargo_P10_2";
+    public static final String mejorAtencionOtraUnidadSalud_P10_2 = "mejorAtencionOtraUnidadSalud_P10_2";
+    public static final String solicitaDemasiadaMx_P10_2 = "solicitaDemasiadaMx_P10_2";
+    public static final String muchosRequisitos_P10_2 = "muchosRequisitos_P10_2";
+    public static final String noExplicanHacenMx_P10_2 = "noExplicanHacenMx_P10_2";
+    public static final String noConfianza_P10_2 = "noConfianza_P10_2";
+    public static final String otraP_10_2 = "otraP_10_2";
+    public static final String comprendeProcedimientos_P11 = "comprendeProcedimientos_P11";
+    public static final String noComodoRealizarPreg_P11_1 = "noComodoRealizarPreg_P11_1";
+    public static final String noRespondieronPreg_P11_1 = "noRespondieronPreg_P11_1";
+    public static final String explicacionRapida_P11_1 = "explicacionRapida_P11_1";
+    public static final String noDejaronHacerPreg_P11_1 = "noDejaronHacerPreg_P11_1";
+    public static final String otraP_11_1 = "otraP_11_1";
+
     public static final String identificadoEquipo = "identificadoEquipo";
     public static final String fechaRegistro = "fechaRegistro";
     public static final String creado = "creado";
@@ -728,65 +715,45 @@ public class EncuestasDBConstants {
     public static final String CREATE_ENCUESTA_SATISFACCION_USUARIO_TABLE = "create table if not exists "
             + ENCUESTA_SATISFACCION_USUARIO_TABLE + " ("
             + codigoParticipante + " text not null, "
-            + atencionMedica + " text, "
-            + familaAmistades + " text, "
-            + desicionPropia + " text, "
-            + obsequiosOfreceEstudio + " text, "
-            + ayudaRecibeComunidad + " text, "
-            + examenesLaboratorio + " text, "
-            + interesCientificoPersonalP1 + " text, "
-            + informacionAyudaOtros + " text, "
-            + otraP1 + " text, "
-            + calidadAtencionMedica + " text, "
-            + atencionOportuna + " text, "
-            + buenaCoordinacionhosp + " text, "
-            + infoEstadoSalud + " text, "
-            + enseniaPrevEnfermedades + " text, "
-            + infoConsMejoraConocimientos + " text, "
-            + interesCientificoPersonalP2 + " text, "
-            + mejorarTratamientoDengue + " text, "
-            + unicaManeraRecibirAtencionMed + " text, "
-            + otraP2 + " text, "
-            + difBuscarAtencionMed + " text, "
-            + centroSaludLejos + " text, "
-            + costoTrasnporteElevado + " text, "
-            + trabajoTiempo + " text, "
-            + noQueriapasarConsulta + " text, "
-            + horarioClases + " text, "
-            + temorTomenMx + " text, "
-            + temorInfoPersonal + " text, "
-            + otraP3 + " text, "
-            + recomendariaAmigoFamiliar + " text, "
-            + atencionCalidad + " text, "
-            + respNecesidadesSaludOportuna + " text, "
-            + tiempoEsperaCorto + " text, "
-            + mejorAtencionQueSeguro + " text, "
-            + examenLabNecesarios + " text, "
-            + conocimientosImportantes + " text, "
-            + pocosRequisitos + " text, "
-            + otraP_4_1 + " text, "
-            + atencionPersonalMala + " text, "
-            + noDanRespNecesidades + " text, "
-            + tiempoEsperaLargo + " text, "
-            + mejorAtencionOtraUnidadSalud + " text, "
-            + solicitaDemasiadaMx + " text, "
-            + muchosRequisitos + " text, "
-            + noExplicanHacenMx + " text, "
-            + noConfianza + " text, "
-            + otraP_4_2 + " text, "
-            + comprendeProcedimientos + " text, "
-            + noComodoRealizarPreg + " text, "
-            + noRespondieronPreg + " text, "
-            + explicacionRapida + " text, "
-            + noDejaronHacerPreg + " text, "
-            + otraP_5_1 + " text, "
-            + brindaronConsejosPrevencionEnfer + " text, "
-            + entiendoProcedimientosEstudios + " text, "
-            + satisfecho + " text, "
-            + comodoInfoRecolectada + " text, "
-            + noComodoPreguntas + " text, "
-            + recomendacionMejorarAtencion + " text, "
-            + importanciaRecibirInformacion + " text, "
+            + atencionPersonalEstudio_P1 + " text, "
+            + tiempoAtencionRecibido_P2 + " text, "
+            + atencionRecibidaEnfermeria_P3 + " text, "
+            + atencionRecibidaDoctores_P4 + " text, "
+            + ambienteDondeRecibeAtencion_P5 + " text, "
+            + explicaronDiagnostico_P6 + " text, "
+            + explicaronTratamiento_P7 + " text, "
+            + tieneArbovirusImportanciaSeg_P8 + " text, "
+            + explicaronPeligrosArbovirus_P8_1 + " text, "
+            + medicoDijoCuidados_P8_2 + " text, "
+            + dificultadAtencion_P9 + " text, "
+            + centroSaludLejos_P9_1 + " text, "
+            + costoTrasnporteElevado_P9_2 + " text, "
+            + trabajoTiempo_P9_3 + " text, "
+            + noQueriapasarConsulta_P9_4 + " text, "
+            + otrasEspecifique_P9_5 + " text, "
+            + recomendariaAmigoFamiliar_P10 + " text, "
+            + atencionCalidad_P10_1 + " text, "
+            + respNecesidadesSaludOportuna_P10_1 + " text, "
+            + tiempoEsperaCorto_P10_1 + " text, "
+            + mejorAtencionQueSeguro_P10_1 + " text, "
+            + examenLabNecesarios_P10_1 + " text, "
+            + pocosRequisitos_P10_1 + " text, "
+            + otraP_10_1 + " text, "
+            + atencionPersonalMala_P10_2 + " text, "
+            + noDanRespNecesidades_P10_2 + " text, "
+            + tiempoEsperaLargo_P10_2 + " text, "
+            + mejorAtencionOtraUnidadSalud_P10_2 + " text, "
+            + solicitaDemasiadaMx_P10_2 + " text, "
+            + muchosRequisitos_P10_2 + " text, "
+            + noExplicanHacenMx_P10_2 + " text, "
+            + noConfianza_P10_2 + " text, "
+            + otraP_10_2 + " text, "
+            + comprendeProcedimientos_P11 + " text, "
+            + noComodoRealizarPreg_P11_1 + " text, "
+            + noRespondieronPreg_P11_1 + " text, "
+            + explicacionRapida_P11_1 + " text, "
+            + noDejaronHacerPreg_P11_1 + " text, "
+            + otraP_11_1 + " text, "
             + identificadoEquipo + " text, "
             + pasive + " text, "
             + estado + " text not null, "

@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.simpleframework.xml.convert.Convert;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -83,7 +85,8 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
     private boolean notificarCambios = true;
     private Participante participante;
     private boolean visitaExitosa = false;
-
+    int totalfem = 0;
+    int totalmasc = 0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -343,6 +346,7 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
     public void updateModel(Page page){
         try{
             boolean visible = false;
+
             if(page.getTitle().equals(labels.getCuantasMujeres())){
                 int cantMujeres = 0;
                 if (page.getData().getString(TextPage.SIMPLE_DATA_KEY) !=null)
@@ -357,6 +361,7 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getEdadMujer8()), cantMujeres >= 8);
                 changeStatus(mWizardModel.findByKey(labels.getEdadMujer9()), cantMujeres >= 9);
                 changeStatus(mWizardModel.findByKey(labels.getEdadMujer10()), cantMujeres >= 10);
+                totalfem = cantMujeres;
                 onPageTreeChanged();
             }
 
@@ -374,6 +379,17 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getEdadHombre8()), cantHombres >= 8);
                 changeStatus(mWizardModel.findByKey(labels.getEdadHombre9()), cantHombres >= 9);
                 changeStatus(mWizardModel.findByKey(labels.getEdadHombre10()), cantHombres >= 10);
+                totalmasc = cantHombres;
+                NumberPage totalpersonas = (NumberPage) mWizardModel.findByKey(labels.getCuantasPersonas());
+                String total = String.valueOf(totalfem + totalmasc);
+               // changeStatus(mWizardModel.findByKey(labels.getCuantasPersonas()), true);
+              //  totalpersonas.setValue(total).setHint(total);
+                totalpersonas.setHint(" Fremeninos + Masculinos = "+total);
+                totalpersonas.setmHintTextColor("red");
+              //  totalpersonas.setValue(total);
+
+
+
                 onPageTreeChanged();
             }
 
@@ -397,6 +413,15 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getOtraFrecuenciaSeVaAgua()), visible);
                 onPageTreeChanged();
             }
+
+            if (page.getTitle().equals(labels.getVistoAnimalesSalvajes())) {
+                visible = page.getData().getStringArrayList(TextPage.SIMPLE_DATA_KEY).contains(Constants.OTROS);
+                if (visible) {
+                    changeStatus(mWizardModel.findByKey(labels.getVistoAnimalesSalvajesOtros()), visible);
+                    changeStatus(mWizardModel.findByKey(labels.getDondePasaRecBasuraOtros()), false);
+                }
+                onPageTreeChanged();
+            }
             if (page.getTitle().equals(labels.getLlaveAgua())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Fuera");
                 changeStatus(mWizardModel.findByKey(labels.getLlaveCompartida()), visible);
@@ -416,9 +441,14 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                 changeStatus(mWizardModel.findByKey(labels.getNumTanques()), false);
                 changeStatus(mWizardModel.findByKey(labels.getTanquesTapados()), false);
                 changeStatus(mWizardModel.findByKey(labels.getAlmacenaOtrosRecipientes()), visible);
+                changeStatus(mWizardModel.findByKey(labels.getCambiadoCasa()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getOtrosRecipientes()), false);
                 changeStatus(mWizardModel.findByKey(labels.getNumOtrosRecipientes()), false);
                 changeStatus(mWizardModel.findByKey(labels.getOtrosRecipientesTapados()), false);
+                if (visible == false){
+                    changeStatus(mWizardModel.findByKey(labels.getCambiadoCasa()), true);
+                    changeStatus(mWizardModel.findByKey(labels.getRemodeladoCasa()), true);
+                }
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getAlmacenaEnBarriles())) {
@@ -488,8 +518,11 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getNumAireAcondicionado()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getAireAcondicionadoFuncionando()), visible);
+
+
                 onPageTreeChanged();
             }
+
             if (page.getTitle().equals(labels.getTieneInodoro())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && (page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Inodoro") || page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Ambos") );
                 changeStatus(mWizardModel.findByKey(labels.getCantInodoro()), visible);
@@ -499,9 +532,15 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
 
                 onPageTreeChanged();
             }
+            if (page.getTitle().equals(labels.getTieneMuro())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
+                changeStatus(mWizardModel.findByKey(labels.getTieneInternet()), true);
+                onPageTreeChanged();
+            }
             if (page.getTitle().equals(labels.getTieneServicioEnergia())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getTieneMedidorEnergia()), visible);
+
                 onPageTreeChanged();
             }
             if (page.getTitle().equals(labels.getTieneVehiculo())) {
@@ -566,7 +605,13 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             }
             if (page.getTitle().equals(labels.getTipoCocina())) {
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Ninguna");
-                changeStatus(mWizardModel.findByKey(labels.getCuantosQuemadores()), !visible);
+                if (visible) {
+                    changeStatus(mWizardModel.findByKey(labels.getCuantosQuemadores()), false);
+                    changeStatus(mWizardModel.findByKey(labels.getTieneHorno()), false);
+                }else{
+                    changeStatus(mWizardModel.findByKey(labels.getCuantosQuemadores()), true);
+                    changeStatus(mWizardModel.findByKey(labels.getTieneHorno()), true);
+                }
                 onPageTreeChanged();
             }
 
@@ -698,9 +743,16 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                 visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY) != null && page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches(Constants.YES);
                 changeStatus(mWizardModel.findByKey(labels.getCuantasVecesRecBasura()), visible);
                 changeStatus(mWizardModel.findByKey(labels.getDondePasaRecBasura()), visible);
+
                 onPageTreeChanged();
             }
-
+            if (page.getTitle().equals(labels.getDondePasaRecBasura())) {
+                visible = page.getData().getString(TextPage.SIMPLE_DATA_KEY).matches("Otros");
+                if (visible) {
+                    changeStatus(mWizardModel.findByKey(labels.getDondePasaRecBasuraOtros()), visible);
+                }
+                onPageTreeChanged();
+            }
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -899,6 +951,9 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             String tieneRecoleccionBasura = datos.getString(this.getString(R.string.tieneRecoleccionBasura));
             String cuantasVecesRecBasura = datos.getString(this.getString(R.string.cuantasVecesRecBasura));
             String dondePasaRecBasura = datos.getString(this.getString(R.string.dondePasaRecBasura));
+            String dondePasaRecBasuraOtros = datos.getString(this.getString(R.string.dondePasaRecBasuraOtros));
+            String vistoAnimalesSalvajes = datos.getString(this.getString(R.string.vistoAnimalesSalvajes));
+            String vistoAnimalesSalvajesOtros = datos.getString(this.getString(R.string.vistoAnimalesSalvajesOtros));
 
             EncuestaCasa encuestaCasa = new EncuestaCasa();
             encuestaCasa.setCodigo(infoMovil.getId());
@@ -909,7 +964,25 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             encuestaCasa.setDeviceid(infoMovil.getDeviceId());
             encuestaCasa.setEstado(Constants.STATUS_NOT_SUBMITTED);
             encuestaCasa.setPasive(Constants.STATUS_NOT_PASIVE);
-
+            if (tieneValor(dondePasaRecBasura)) {
+                MessageResource resource = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + dondePasaRecBasura + "' and "
+                        + MainDBConstants.catRoot + "='CAT_DONDE_PASA_BASURA'", null);
+                if (resource != null) encuestaCasa.setDondePasaRecBasura(resource.getCatKey());
+                encuestaCasa.setDondePasaRecBasuraOtros(dondePasaRecBasuraOtros);
+            }
+            if (tieneValor(vistoAnimalesSalvajes)) {
+                String keysAnimales = "";
+                vistoAnimalesSalvajes = vistoAnimalesSalvajes.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(", " , "','");
+                List<MessageResource> animalesS = estudiosAdapter.getMessageResources(MainDBConstants.spanish + " in ('" + vistoAnimalesSalvajes + "') and "
+                        + MainDBConstants.catRoot + "='CAT_VISTO_ANIMALES_SALVAJES'", null);
+                for(MessageResource ms : animalesS) {
+                    keysAnimales += ms.getCatKey() + ",";
+                }
+                if (!keysAnimales.isEmpty())
+                    keysAnimales = keysAnimales.substring(0, keysAnimales.length() - 1);
+                encuestaCasa.setVistoAnimalesSalvajes(keysAnimales);
+                encuestaCasa.setVistoAnimalesSalvajesOtros(vistoAnimalesSalvajesOtros);
+            }
             if (tieneValor(problemaAgua)) {
                 MessageResource resource = estudiosAdapter.getMessageResource(MainDBConstants.spanish + "='" + problemaAgua + "' and "
                         + MainDBConstants.catRoot + "='CAT_SINO'", null);
@@ -1335,27 +1408,115 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
                         + MainDBConstants.catRoot + "='CAT_FREC_VA_AGUA'", null);
                 if (resource != null) encuestaCasa.setFrecuenciaSeVaAgua(resource.getCatKey());
             }
+             int valorDefault = 999;
+            if(edadMujer1 != null){
+                encuestaCasa.setEdadMujer1( Integer.valueOf(edadMujer1));
+            }else{
+                encuestaCasa.setEdadMujer1(valorDefault);
+            }
+            if(edadMujer2 != null){
+                encuestaCasa.setEdadMujer2(Integer.valueOf(edadMujer2));
+            }
+            else{
+                encuestaCasa.setEdadMujer2(valorDefault);
+            }
+            if(edadMujer3 != null){
+                encuestaCasa.setEdadMujer3(Integer.valueOf(edadMujer3));
+            }
+            else{
+                encuestaCasa.setEdadMujer3(valorDefault);
+            }
+            if(edadMujer4 != null){
+                encuestaCasa.setEdadMujer4(Integer.valueOf(edadMujer4));
+            }else{
+                encuestaCasa.setEdadMujer4(valorDefault);
+            }
+            if(edadMujer5 != null){
+                encuestaCasa.setEdadMujer5(Integer.valueOf(edadMujer5));
+            }else{
+                encuestaCasa.setEdadMujer5(valorDefault);
+            }
+            if(edadMujer6 != null){
+                encuestaCasa.setEdadMujer6(Integer.valueOf(edadMujer6));
+            }else{
+                encuestaCasa.setEdadMujer6(valorDefault);
+            }
+            if(edadMujer7 != null){
+                encuestaCasa.setEdadMujer7(Integer.valueOf(edadMujer7));
+            }else{
+                encuestaCasa.setEdadMujer7(valorDefault);
+            }
+            if(edadMujer8 != null){
+                encuestaCasa.setEdadMujer8(Integer.valueOf(edadMujer8));
+            }else{
+                encuestaCasa.setEdadMujer8(valorDefault);
+            }
+            if(edadMujer9 != null){
+                encuestaCasa.setEdadMujer9(Integer.valueOf(edadMujer9));
+            }else{
+                encuestaCasa.setEdadMujer9(valorDefault);
+            }
+            if(edadMujer10 != null){
+                encuestaCasa.setEdadMujer10(Integer.valueOf(edadMujer10));
+            }else{
+                encuestaCasa.setEdadMujer10(valorDefault);
+            }
 
-            encuestaCasa.setEdadMujer1(edadMujer1);
-            encuestaCasa.setEdadMujer2(edadMujer2);
-            encuestaCasa.setEdadMujer3(edadMujer3);
-            encuestaCasa.setEdadMujer4(edadMujer4);
-            encuestaCasa.setEdadMujer5(edadMujer5);
-            encuestaCasa.setEdadMujer6(edadMujer6);
-            encuestaCasa.setEdadMujer7(edadMujer7);
-            encuestaCasa.setEdadMujer8(edadMujer8);
-            encuestaCasa.setEdadMujer9(edadMujer9);
-            encuestaCasa.setEdadMujer10(edadMujer10);
-            encuestaCasa.setEdadHombre1(edadHombre1);
-            encuestaCasa.setEdadHombre2(edadHombre2);
-            encuestaCasa.setEdadHombre3(edadHombre3);
-            encuestaCasa.setEdadHombre4(edadHombre4);
-            encuestaCasa.setEdadHombre5(edadHombre5);
-            encuestaCasa.setEdadHombre6(edadHombre6);
-            encuestaCasa.setEdadHombre7(edadHombre7);
-            encuestaCasa.setEdadHombre8(edadHombre8);
-            encuestaCasa.setEdadHombre9(edadHombre9);
-            encuestaCasa.setEdadHombre10(edadHombre10);
+            if(edadHombre1 != null){
+                encuestaCasa.setEdadHombre1(Integer.valueOf(edadHombre1));
+            }else{
+                encuestaCasa.setEdadHombre1(valorDefault);
+            }
+            if(edadHombre2 != null){
+                encuestaCasa.setEdadHombre2(Integer.valueOf(edadHombre2));
+            }else{
+                encuestaCasa.setEdadHombre2(valorDefault);
+            }
+            if(edadHombre3 != null){
+                encuestaCasa.setEdadHombre3(Integer.valueOf(edadHombre3));
+            }else{
+                encuestaCasa.setEdadHombre3(valorDefault);
+            }
+            if(edadHombre4 != null){
+                encuestaCasa.setEdadHombre4(Integer.valueOf(edadHombre4));
+            }else{
+                encuestaCasa.setEdadHombre4(valorDefault);
+            }
+            if(edadHombre5 != null){
+                encuestaCasa.setEdadHombre5(Integer.valueOf(edadHombre5));
+            }else{
+                encuestaCasa.setEdadHombre5(valorDefault);
+            }
+            if(edadHombre6 != null){
+                encuestaCasa.setEdadHombre6(Integer.valueOf(edadHombre6));
+            }else{
+                encuestaCasa.setEdadHombre6(valorDefault);
+            }
+            if(edadHombre7 != null){
+                encuestaCasa.setEdadHombre7(Integer.valueOf(edadHombre7));
+            }else{
+                encuestaCasa.setEdadHombre7(valorDefault);
+            }
+            if(edadHombre8 != null){
+                encuestaCasa.setEdadHombre8(Integer.valueOf(edadHombre8));
+            }else{
+                encuestaCasa.setEdadHombre8(valorDefault);
+            }
+            if(edadHombre9 != null){
+                encuestaCasa.setEdadHombre9(Integer.valueOf(edadHombre9));
+            }else{
+                encuestaCasa.setEdadHombre9(valorDefault);
+            }
+            if(edadHombre10 != null){
+                encuestaCasa.setEdadHombre10(Integer.valueOf(edadHombre10));
+            }else{
+                encuestaCasa.setEdadHombre10(valorDefault);
+            }
+
+
+
+
+
             encuestaCasa.setOtrosRecipientes(otrosRecipientes);
             encuestaCasa.setOtroMaterialParedes(otroMaterialParedes);
             encuestaCasa.setOtroMaterialPiso(otroMaterialPiso);
@@ -1367,9 +1528,11 @@ public class NuevaEncuestaCasaActivity extends AbstractAsyncActivity implements
             encuestaCasa.setMarcaCamioneta(marcaCamioneta);
             encuestaCasa.setMarcaCamion(marcaCamion);
             encuestaCasa.setMarcaOtroMedioTrans(marcaOtroMedioTrans);
-            encuestaCasa.setDondePasaRecBasura(dondePasaRecBasura);
+          //  encuestaCasa.setDondePasaRecBasura(dondePasaRecBasura);
             encuestaCasa.setFrecCepillaPilas(frecCepillaPilas);
             encuestaCasa.setOtraFrecuenciaSeVaAgua(otraFrecuenciaSeVaAgua);
+
+            encuestaCasa.setCuantasPersonas(Integer.parseInt(cuantasMujeres)+Integer.parseInt(cuantosHombres));
 
             if (tieneValor(cuantasPersonas)) encuestaCasa.setCuantasPersonas(Integer.parseInt(cuantasPersonas));
             if (tieneValor(cuantasMujeres)) encuestaCasa.setCuantasMujeres(Integer.parseInt(cuantasMujeres));

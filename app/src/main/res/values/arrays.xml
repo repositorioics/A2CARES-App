@@ -13,6 +13,8 @@
         <item>@string/main_10</item>
         <item>@string/main_11</item>
         <item>@string/main_12</item>
+        <item>@string/main_13</item>
+        <item>@string/main_14</item>
      </string-array>
 
      <string-array name="menu_participante">
@@ -49,6 +51,7 @@
 
     <string-array name="menu_doctor">
         <item>@string/lab_orders</item>
+        <item>@string/informe_fin_dia_medicos</item>
     </string-array>
 
     <string-array name="autosize_text_sizes">
@@ -67,6 +70,7 @@
         <item>@string/download</item>
         <item>@string/upload</item>
         <item>@string/main_3</item>
+        <item>@string/marcar_asistencia</item>
         <item>@string/exit</item>
     </string-array>
 
@@ -77,5 +81,8 @@
 
     <string-array name="menu_asistencia">
         <item>@string/marcar_asistencia</item>
+    </string-array>
+    <string-array name="menu_admision">
+        <item>@string/admision</item>
     </string-array>
 </resources>

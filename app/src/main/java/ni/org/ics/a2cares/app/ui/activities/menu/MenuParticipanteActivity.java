@@ -4,10 +4,12 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +20,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import org.joda.time.DateTime;
+
+import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +42,8 @@ import ni.org.ics.a2cares.app.domain.core.Participante;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaCasa;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaParticipante;
 import ni.org.ics.a2cares.app.domain.survey.EncuestaPesoTalla;
+import ni.org.ics.a2cares.app.preferences.PreferencesActivity;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaAdmisionActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaParticipanteActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevaEncuestaPesoTallaActivity;
@@ -87,6 +94,9 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
     private final int OPCION_ENCUESTA_SATISFACCION = 8;
     private final int OPCION_RECONSENTIMIENTO = 9;
     private static final int EXIT = 1;
+    private String username;
+    private SharedPreferences settings;
+    private int anioRegistro = 0;
 
     private AlertDialog alertDialog;
 
@@ -109,6 +119,11 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         String mPass = ((MyIcsApplication) this.getApplication()).getPassApp();
         estudiosAdapter = new EstudioDBAdapter(this.getApplicationContext(),mPass,false,false);
         new FetchDataCasaTask().execute();
+        settings =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        username =
+                settings.getString(PreferencesActivity.KEY_USERNAME,
+                        null);
 
 
         gridView.setOnItemClickListener(new OnItemClickListener() {
@@ -310,6 +325,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
             position = Integer.valueOf(values[0]);
             Bundle arguments = new Bundle();
             Intent i;
+            anioRegistro = DateUtil.getYear(participante.getRecordDate());
             if(participante.getProcesos().getRetirado().equals(1)) {
                 position = -1;
             }
@@ -387,23 +403,39 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                         startActivity(i);
                         break;
                     case OPCION_MUESTRAS_ENF:
-                        arguments.putSerializable(Constants.PARTICIPANTE, participante);
-                        i = new Intent(getApplicationContext(),
-                                NuevaMuestraEnfermoActivity.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtras(arguments);
-                        startActivity(i);
-                        finish();
+                        estudiosAdapter.open();
+                        Boolean role_Enfermeria = estudiosAdapter.buscarRol(username, "ROLE_ENF");
+                        estudiosAdapter.close();
+                        if (role_Enfermeria){
+                            arguments.putSerializable(Constants.PARTICIPANTE, participante);
+                            i = new Intent(getApplicationContext(),
+                                    NuevaMuestraEnfermoActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                            finish();
+
+                        }
+                        else{
+
+                       //    showToast("No tiene permisos para esta opción");
+                        }
+
+
                         break;
                     case OPCION_ENCUESTA_SATISFACCION:
                         arguments.putSerializable(Constants.PARTICIPANTE, participante);
-                        i = new Intent(getApplicationContext(),
-                                NuevaEncuestaSatisfaccionActivity.class);
-                        i.putExtra(Constants.VISITA_EXITOSA, visitaExitosa);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        i.putExtras(arguments);
-                        startActivity(i);
-                        finish();
+                        if (anioRegistro != DateTime.now().getYear()) {
+                            i = new Intent(getApplicationContext(),
+                                    NuevaEncuestaSatisfaccionActivity.class);
+                            i.putExtra(Constants.VISITA_EXITOSA, visitaExitosa);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            i.putExtras(arguments);
+                            startActivity(i);
+                            finish();
+                        }else{
+                              showToast("La encuesta de satisfacción no aplica para nuevos ingresos.");
+                        }
                         break;
                     case OPCION_RECONSENTIMIENTO:
                         arguments.putSerializable(Constants.PARTICIPANTE, participante);
@@ -461,11 +493,11 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
                     pendienteEncuestaPeso = true;
                 }*/
                 //actualizar por cualquier cambio en la base
-                participante = estudiosAdapter.getParticipante(MainDBConstants.participante  + "='" + participante.getCodigo()+"'", null);
-                recepcionenfermom = estudiosAdapter.getRecepcionEnfermo1(MainDBConstants.codigo + "='" + participante.getCodigo()+"'", null);
+                participante = estudiosAdapter.getParticipante(MainDBConstants.codigo  + "='" + participante.getCodigo()+"'", null);
+                recepcionenfermom = estudiosAdapter.getRecepcionEnfermo1(MainDBConstants.participante + "='" + participante.getCodigo()+"'", null);
                 mMuestrasEnf = estudiosAdapter.getMuestrasEnfermo(MainDBConstants.fechaMuestra + " = "+ DateUtil.getTodayWithZeroTime().getTime(), null);
 
-                estudiosAdapter.close();
+
 
 
                 pendienteEncuestaCasa = participante.getProcesos().getPendienteEnCasa().equalsIgnoreCase(Constants.YESKEYSND);
@@ -476,6 +508,7 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
 
                 pendienteEncuestaSatisfaccion = participante.getProcesos().getEsatUsuario().equalsIgnoreCase(Constants.YESKEYSND);
                 pendienteReconsentimiento = participante.getProcesos().getReconsent().equalsIgnoreCase(Constants.YESKEYSND);
+                estudiosAdapter.close();
             } catch (Exception e) {
                 Log.e(TAG, e.getLocalizedMessage(), e);
                 return "error";
@@ -486,58 +519,95 @@ public class MenuParticipanteActivity extends AbstractAsyncActivity {
         protected void onPostExecute(String resultado) {
             // after the request completes, hide the progress indicator
             String edadFormateada = "";
-            recepcionenfermom = estudiosAdapter.getRecepcionEnfermo1(MainDBConstants.participante  + "='" + participante.getCodigo()+"'", null);
+            String edadFormateadaM = "";
+
+
 
             if (!participante.getEdad().equalsIgnoreCase("ND")) {
                 String edad[] = participante.getEdad().split("/");
+             //   String edadMuestreo[] = participante.getEdadMuestreo().split("/");
+
                 if (edad.length > 0) {
                     edadFormateada = edad[0] + " años " + edad[1] + " meses " + edad[2] + " dias";
+                    edadFormateadaM = edad[0];
                 }
+
             }
             textView.setText("");
             textView.setTextColor(Color.BLACK);
-            String header = participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo()+ " - " +
-                    getString(R.string.participant)+ ": "+ participante.getCodigo()+ "</font> <br /> <small>"
-                    + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>";
+            if (participante.getProcesos().getReconsent().equalsIgnoreCase("1")) {
+                String header = participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo() + " - " +
+                        getString(R.string.participant) + ": " + participante.getCodigo() + "</font> <br /> <small>"
+                        + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + " <br /> <font color='red'>" + "   PENDIENTE RECONSENTIMIENTO" + "</small>";
+                textView.setText(Html.fromHtml(header));
+              //  participante.getProcesos().setReconsent("1");
+            }else{
+                String header = participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo() + " - " +
+                        getString(R.string.participant) + ": " + participante.getCodigo() + "</font> <br /> <small>"
+                        + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>";
+                textView.setText(Html.fromHtml(header));
+            }
 
-            textView.setText(Html.fromHtml(header));
-            if(participante.getProcesos().getPendienteMxTx().equalsIgnoreCase("1")) {
-                Date d = new Date();
 
-                String Dateinicio = String.valueOf(recepcionenfermom.getFechaRecepcion());
-                SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
-                Date fechafis = null;
+            if (participante != null) {
+                if (participante.getProcesos().getPendienteMxTx().equalsIgnoreCase("1")) {
+                    Date d = new Date();
+                    //   recepcionenfermom = estudiosAdapter.getRecepcionEnfermo1(MainDBConstants.participante  + "='" + participante.getCodigo()+"'", null);
+                    // String Dateinicio = String.valueOf(recepcionenfermom.getFis());
+                    SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+                    Date fechafis = null;
 
-                fechafis = (recepcionenfermom.getFis());
+                    //   fechafis = (recepcionenfermom.getFis());
 
-                Date fechaactual = new Date(System.currentTimeMillis());
-                int milisecondsByDay = 86400000;
-                int dias = (int) ((fechaactual.getTime()- recepcionenfermom.getFechaRecepcion().getTime() ) / milisecondsByDay);
+                    Date fechaactual = new Date(System.currentTimeMillis());
+                    int milisecondsByDay = 86400000;
+                    if (recepcionenfermom != null) {
+                        int dias = (int) ((fechaactual.getTime() - recepcionenfermom.getFis().getTime()) / milisecondsByDay) + 1;
+                        int edadMuestreo = (int) ((fechaactual.getTime() - recepcionenfermom.getFis().getTime()) / milisecondsByDay) + 1;
 
-                if ( dias < 14) {
-                    String header1 = String.format(String.format(participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo() + " - " +
-                            getString(R.string.participant) + ": " + participante.getCodigo() + "</font> <br /> <small>"
-                            + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>"
-                            + " <br /> <font color='blue'>" + getString(R.string.alerta_conva) + " --Días Conv.: " + dias + " --Fis.: " + date.format(recepcionenfermom.getFis())) );
-                    textView.setText(Html.fromHtml(header1));
+                        if (dias < 14) {
+                            if (participante.getProcesos().getReconsent().equalsIgnoreCase("1")) {
+                                String header1 = String.format(String.format(participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo() + " - " +
+                                        getString(R.string.participant) + ": " + participante.getCodigo() + "</font> <br /> <small>"
+                                        + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>"
+                                        + " <br /> <font color='blue'>" + getString(R.string.alerta_seguimiento) + " --Días Seguimiento.: " + dias + " --Fis.: " + date.format(recepcionenfermom.getFis()) + "  PENDIENTE RECONSENTIMIENTO"));
+                                textView.setText(Html.fromHtml(header1));
+                            } else {
+                                String header1 = String.format(String.format(participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo() + " - " +
+                                        getString(R.string.participant) + ": " + participante.getCodigo() + "</font> <br /> <small>"
+                                        + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>"
+                                        + " <br /> <font color='blue'>" + getString(R.string.alerta_seguimiento) + " --Días Seguimiento.: " + dias + " --Fis.: " + date.format(recepcionenfermom.getFis())));
+                                textView.setText(Html.fromHtml(header1));
+                            }
+
+                        }
+                        if (dias > 13 && dias < 45) {
+                            if (participante.getProcesos().getReconsent().equalsIgnoreCase("1")) {
+                                String header1 = participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo() + " - " +
+                                        getString(R.string.participant) + ": " + participante.getCodigo() + "</font> <br /> <small>"
+                                        + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>"
+                                        + " <br /> <font color='red'>" + getString(R.string.alerta_conva) + " --Días Conv.:" + dias + " --Fif.: " + date.format(recepcionenfermom.getFis()) + "  PENDIENTE RECONSENTIMIENTO";
+                                textView.setText(Html.fromHtml(header1));
+                            } else {
+                                String header1 = participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo() + " - " +
+                                        getString(R.string.participant) + ": " + participante.getCodigo() + "</font> <br /> <small>"
+                                        + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>"
+                                        + " <br /> <font color='red'>" + getString(R.string.alerta_conva) + " --Días Conv.:" + dias + " --Fif.: " + date.format(recepcionenfermom.getFis());
+                                textView.setText(Html.fromHtml(header1));
+                            }
+
+                        }
+                    }
                 }
-                if ( dias > 13 && dias < 45) {
+
+                if (participante.getProcesos().getRetirado().equals(1)) {
                     String header1 = participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo() + " - " +
                             getString(R.string.participant) + ": " + participante.getCodigo() + "</font> <br /> <small>"
                             + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>"
-                            + " <br /> <font color='red'>" + getString(R.string.alerta_conva) + " --Días Conv.:" + dias + " --Fis.: " + date.format(recepcionenfermom.getFis());
+                            + " <br /> <font color='red'>" + getString(R.string.alerta_retirado);
                     textView.setText(Html.fromHtml(header1));
                 }
             }
-
-            if(participante.getProcesos().getRetirado().equals(1)) {
-                String header1 = participante.getNombreCompleto() + "<br /> <font size='2'>" + getString(R.string.casa) + ": " + participante.getCasa().getCodigo()+ " - " +
-                        getString(R.string.participant)+ ": "+ participante.getCodigo()+ "</font> <br /> <small>"
-                        + getString(R.string.edad) + ": " + edadFormateada + " - " + getString(R.string.sexo) + ": " + participante.getSexo() + "</small>"
-                        + " <br /> <font color='red'>" + getString(R.string.alerta_retirado) ;
-                textView.setText(Html.fromHtml(header1));
-            }
-
 
             gridView.setAdapter(new MenuParticipanteAdapter(getApplicationContext(), R.layout.menu_item_2, menu_participante, participante, pendienteEncuestaCasa, pendienteEncuestaParticip,
                     pendienteEncuestaPeso, pendienteMuestras, pendienteObseq, visitaExitosa, mMuestrasEnf.size(), pendienteEncuestaSatisfaccion,pendienteReconsentimiento));

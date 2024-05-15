@@ -72,11 +72,11 @@ public class MenuEntomologiaAdapter extends ArrayAdapter<String> {
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
 			case 7:
-				img = getContext().getResources().getDrawable(R.mipmap.ic_menu_back);
+				img = getContext().getResources().getDrawable(R.mipmap.icon_asistencia1);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
 			default:
-				img = getContext().getResources().getDrawable(R.mipmap.ic_help);
+				img = getContext().getResources().getDrawable(R.mipmap.ic_menu_back);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
 		}

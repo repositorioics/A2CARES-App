@@ -27,6 +27,7 @@ import ni.org.ics.a2cares.app.R;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
 import ni.org.ics.a2cares.app.domain.medico.OrdenLaboratorio;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoInformeFinDiaMedicoActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaOrdenesLaboratorioActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaParticipantesCasaActivity;
 import ni.org.ics.a2cares.app.ui.activities.list.ListaTelefonosActivity;
@@ -40,7 +41,8 @@ public class MenuMedicoActivity extends AbstractAsyncActivity {
 	private String[] menu_doctor;
 
     private final int OPCION_LISTA_ORDENES_LAB = 0;
-    private final int OPCION_LISTA_TELEFONOS = 1;
+   // private final int OPCION_LISTA_TELEFONOS = 1;
+	private final int OPCION_INFORME_FIN_DIA = 1;
 
 	private EstudioDBAdapter estudiosAdapter;
 
@@ -72,13 +74,20 @@ public class MenuMedicoActivity extends AbstractAsyncActivity {
 						i.putExtras(arguments);
 						startActivity(i);
 			        	break;
-                    case OPCION_LISTA_TELEFONOS:
+                   /* case OPCION_LISTA_TELEFONOS:
     					i = new Intent(getApplicationContext(),
     							ListaTelefonosActivity.class);
     					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     					i.putExtras(arguments);
     					startActivity(i);
-    					break;
+    					break;*/
+					case OPCION_INFORME_FIN_DIA :
+						i = new Intent(getApplicationContext(),
+								NuevoInformeFinDiaMedicoActivity.class);
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;
 				    default:
                         break;
 		        }

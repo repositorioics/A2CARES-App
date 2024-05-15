@@ -168,6 +168,9 @@ public class EncuestaCasaHelper {
         cv.put(EncuestasDBConstants.tieneRecoleccionBasura, encuesta.getTieneRecoleccionBasura());
         cv.put(EncuestasDBConstants.cuantasVecesRecBasura, encuesta.getCuantasVecesRecBasura());
         cv.put(EncuestasDBConstants.dondePasaRecBasura, encuesta.getDondePasaRecBasura());
+        cv.put(EncuestasDBConstants.dondePasaRecBasuraOtros, encuesta.getDondePasaRecBasuraOtros());
+        cv.put(EncuestasDBConstants.vistoAnimalesSalvajes, encuesta.getVistoAnimalesSalvajes());
+        cv.put(EncuestasDBConstants.vistoAnimalesSalvajesOtros, encuesta.getVistoAnimalesSalvajesOtros());
 
         if (encuesta.getRecordDate() != null) cv.put(MainDBConstants.recordDate, encuesta.getRecordDate().getTime());
         cv.put(MainDBConstants.recordUser, encuesta.getRecordUser());
@@ -187,27 +190,26 @@ public class EncuestaCasaHelper {
 
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cuantasPersonas)) > 0) mEncuesta.setCuantasPersonas(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cuantasPersonas)));
         mEncuesta.setCuantasMujeres(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cuantasMujeres)));
-        mEncuesta.setEdadMujer1(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadMujer1)));
-        mEncuesta.setEdadMujer2(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadMujer2)));
-        mEncuesta.setEdadMujer3(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadMujer3)));
-        mEncuesta.setEdadMujer4(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadMujer4)));
-        mEncuesta.setEdadMujer5(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadMujer5)));
-        mEncuesta.setEdadMujer6(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadMujer6)));
-        mEncuesta.setEdadMujer7(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadMujer7)));
-        mEncuesta.setEdadMujer8(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadMujer8)));
-        mEncuesta.setEdadMujer9(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadMujer9)));
-        mEncuesta.setEdadMujer10(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadMujer10)));
+        mEncuesta.setEdadMujer1(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadMujer1)));
+        mEncuesta.setEdadMujer2(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadMujer2)));
+        mEncuesta.setEdadMujer3(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadMujer3)));
+        mEncuesta.setEdadMujer4(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadMujer4)));
+        mEncuesta.setEdadMujer5(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadMujer5)));
+        mEncuesta.setEdadMujer6(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadMujer7)));
+        mEncuesta.setEdadMujer8(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadMujer8)));
+        mEncuesta.setEdadMujer9(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadMujer9)));
+        mEncuesta.setEdadMujer10(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadMujer10)));
         mEncuesta.setCuantosHombres(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cuantosHombres)));
-        mEncuesta.setEdadHombre1(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadHombre1)));
-        mEncuesta.setEdadHombre2(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadHombre2)));
-        mEncuesta.setEdadHombre3(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadHombre3)));
-        mEncuesta.setEdadHombre4(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadHombre4)));
-        mEncuesta.setEdadHombre5(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadHombre5)));
-        mEncuesta.setEdadHombre6(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadHombre6)));
-        mEncuesta.setEdadHombre7(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadHombre7)));
-        mEncuesta.setEdadHombre8(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadHombre8)));
-        mEncuesta.setEdadHombre9(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadHombre9)));
-        mEncuesta.setEdadHombre10(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.edadHombre10)));
+        mEncuesta.setEdadHombre1(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadHombre1)));
+        mEncuesta.setEdadHombre2(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadHombre2)));
+        mEncuesta.setEdadHombre3(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadHombre3)));
+        mEncuesta.setEdadHombre4(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadHombre4)));
+        mEncuesta.setEdadHombre5(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadHombre5)));
+        mEncuesta.setEdadHombre6(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadHombre6)));
+        mEncuesta.setEdadHombre7(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadHombre7)));
+        mEncuesta.setEdadHombre8(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadHombre8)));
+        mEncuesta.setEdadHombre9(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadHombre9)));
+        mEncuesta.setEdadHombre10(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.edadHombre10)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartos)) > 0) mEncuesta.setCantidadCuartos(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartos)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartosDormir)) > 0) mEncuesta.setCantidadCuartosDormir(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cantidadCuartosDormir)));
         mEncuesta.setProblemaAgua(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.problemaAgua)));
@@ -330,6 +332,9 @@ public class EncuestaCasaHelper {
         mEncuesta.setOtrosAnimalesDentroCasa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.otrosAnimalesDentroCasa)));
         mEncuesta.setPersonaFumaDentroCasa(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.personaFumaDentroCasa)));
         mEncuesta.setTieneRecoleccionBasura(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.tieneRecoleccionBasura)));
+        mEncuesta.setDondePasaRecBasuraOtros(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.dondePasaRecBasuraOtros)));
+        mEncuesta.setVistoAnimalesSalvajes(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.vistoAnimalesSalvajes)));
+        mEncuesta.setVistoAnimalesSalvajesOtros(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.vistoAnimalesSalvajesOtros)));
         if (cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cuantasVecesRecBasura)) > 0) mEncuesta.setCuantasVecesRecBasura(cursor.getInt(cursor.getColumnIndex(EncuestasDBConstants.cuantasVecesRecBasura)));
         mEncuesta.setDondePasaRecBasura(cursor.getString(cursor.getColumnIndex(EncuestasDBConstants.dondePasaRecBasura)));
 

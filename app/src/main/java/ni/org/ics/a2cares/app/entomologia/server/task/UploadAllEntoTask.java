@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import ni.org.ics.a2cares.app.database.EstudioDBAdapter;
 import ni.org.ics.a2cares.app.database.constants.MainDBConstants;
+import ni.org.ics.a2cares.app.domain.core.ControlAsistencia;
 import ni.org.ics.a2cares.app.entomologia.domain.CuestionarioHogar;
 import ni.org.ics.a2cares.app.entomologia.domain.CuestionarioHogarPoblacion;
 import ni.org.ics.a2cares.app.entomologia.domain.CuestionarioPuntoClave;
@@ -35,12 +36,14 @@ public class UploadAllEntoTask extends UploadTask {
     private List<CuestionarioHogar> mCuestHogar = new ArrayList<CuestionarioHogar>();
     private List<CuestionarioHogarPoblacion> mCuestHogarPob = new ArrayList<CuestionarioHogarPoblacion>();
     private List<CuestionarioPuntoClave> mCuestPuntoClave = new ArrayList<CuestionarioPuntoClave>();
+    private List<ControlAsistencia> masistenciaEnto = new ArrayList<ControlAsistencia>();
 
     public static final String ENTO_CUESTIONARIO_HOGAR = "1";
     public static final String ENTO_CUESTIONARIO_HOGAR_POB = "2";
     public static final String ENTO_CUESTIONARIO_PUNTO_CLAVE = "3";
+    public static final String ENTO_CONTROL_ASISTENCIA = "4";
 
-    private static final String TOTAL_TASK_CASOS = "3";
+    private static final String TOTAL_TASK_CASOS = "4";
 
     @Override
     protected String doInBackground(String... values) {
@@ -55,6 +58,7 @@ public class UploadAllEntoTask extends UploadTask {
             mCuestHogar = estudioAdapter.getCuestionariosHogar(filtro, null);
             mCuestHogarPob = estudioAdapter.getCuestionariosHogarPoblacion(filtro, null);
             mCuestPuntoClave = estudioAdapter.getCuestionariosPuntoClave(filtro, null);
+            masistenciaEnto = estudioAdapter.getControlAsistencial(filtro, null);
 
             publishProgress("Datos completos!", "2", "2");
 
@@ -82,7 +86,12 @@ public class UploadAllEntoTask extends UploadTask {
                     actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENTO_CUESTIONARIO_PUNTO_CLAVE);
                     return error;
                 }
-
+                actualizarBaseDatos(Constants.STATUS_SUBMITTED, ENTO_CONTROL_ASISTENCIA);
+                error = cargarControlAsistencia(url, username, password);
+                if (!error.matches("Datos recibidos!")) {
+                    actualizarBaseDatos(Constants.STATUS_NOT_SUBMITTED, ENTO_CONTROL_ASISTENCIA);
+                    return error;
+                }
             }
         } catch (Exception e1) {
 
@@ -97,7 +106,8 @@ public class UploadAllEntoTask extends UploadTask {
     private boolean noHayDatosEnviar() {
         return mCuestHogar.size() <= 0 &&
                 mCuestHogarPob.size() <= 0 &&
-                mCuestPuntoClave.size() <= 0;
+                mCuestPuntoClave.size() <= 0 &&
+                masistenciaEnto.size() <= 0;
     }
 
     private void actualizarBaseDatos(char estado, String opcion) throws Exception {
@@ -132,6 +142,16 @@ public class UploadAllEntoTask extends UploadTask {
                     estudioAdapter.editarCuestionarioPuntoClave(puntoClave);
                     publishProgress("Actualizando cuestionario punto clave en base de datos local", Integer.valueOf(mCuestPuntoClave.indexOf(puntoClave)).toString(), Integer
                             .valueOf(c).toString());
+                }
+            }
+        }
+        if(opcion.equalsIgnoreCase(ENTO_CONTROL_ASISTENCIA)){
+            c = masistenciaEnto.size();
+            if(c>0){
+                for (ControlAsistencia controlAsistencia : masistenciaEnto) {
+                    controlAsistencia.setEstado(estado);
+                    estudioAdapter.editarControlAsistencia(controlAsistencia);
+                    publishProgress("Actualizando los cambios de Control de Asistencia en base de datos local", Integer.valueOf(masistenciaEnto.indexOf(controlAsistencia)).toString(), Integer.valueOf(c).toString());
                 }
             }
         }
@@ -243,4 +263,38 @@ public class UploadAllEntoTask extends UploadTask {
         }
     }
 
+    /********************* CONTROL ASISTENCIA ************************/
+    // url, username, password
+    protected String cargarControlAsistencia(String url, String username,String password) throws Exception {
+        try {
+
+            if(masistenciaEnto.size()>0 ){
+                // La URL de la solicitud POST
+                publishProgress("Enviando Control de Asistencia de Personal!", ENTO_CONTROL_ASISTENCIA, TOTAL_TASK_CASOS);
+                final String urlRequest = url + "/movil/controlasistencia";
+                ControlAsistencia[] envio = masistenciaEnto.toArray(new ControlAsistencia[masistenciaEnto.size()]);
+
+                HttpHeaders requestHeaders = new HttpHeaders();
+                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
+                requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+                requestHeaders.setAuthorization(authHeader);
+                HttpEntity<ControlAsistencia[]> requestEntity =
+                        new HttpEntity<ControlAsistencia[]>(envio, requestHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+                // Hace la solicitud a la red, pone los participantes y espera un mensaje de respuesta del servidor
+                ResponseEntity<String> response = restTemplate.exchange(urlRequest, HttpMethod.POST, requestEntity,
+                        String.class);
+                return response.getBody();
+
+            }
+            else{
+                return Constants.DATOS_RECIBIDOS;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            return e.getMessage();
+        }
+    }
 }

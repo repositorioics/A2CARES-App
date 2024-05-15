@@ -51,6 +51,11 @@ public class MenuLaboratorioAdapter extends ArrayAdapter<String> {
 				img=getContext().getResources().getDrawable(R.mipmap.ic_bhc);
 				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
 				break;
+			/*case 3:
+				textView.setText(values[position]);
+				img=getContext().getResources().getDrawable(R.mipmap.ic_temperatura_termo);
+				textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);
+				break;*/
             default:
                 img=getContext().getResources().getDrawable(R.mipmap.ic_help);
                 textView.setCompoundDrawablesWithIntrinsicBounds(null, img, null, null);

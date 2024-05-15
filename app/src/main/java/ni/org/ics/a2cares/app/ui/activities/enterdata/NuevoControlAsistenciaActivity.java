@@ -550,35 +550,7 @@ public class NuevoControlAsistenciaActivity extends AppCompatActivity implements
 				builder.setMessage(this.getString(R.string.exiting));
 				builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
-						/*if (mCasa != null) {
-							Intent i = new Intent(getApplicationContext(),
-									MenuCasaActivity.class);
-							i.putExtra(Constants.CASA, mCasa);
-							i.putExtra(Constants.VISITA_EXITOSA, visExitosa);
-							i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-							startActivity(i);
-							finish();
-						} else if (mPunto != null) {
-							finish();
-						} else if (codigoParticipante!=null){
-							Intent intent1 = new Intent();
-							intent1.putExtra("CODE_RESULT", "");
-							setResult(RESULT_OK, intent1);
-							finish();
-						} else if (esEntomologia) {
-							finish();
-						} else {
-							// Finish app
-							Intent i = new Intent(getApplicationContext(),
-									MenuParticipanteActivity.class);
 
-							i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-							startActivity(i);
-							Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.err_cancel), Toast.LENGTH_LONG);
-							toast.show();
-							dialog.dismiss();
-							finish();
-						}*/
 					}
 				});
 				builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
@@ -589,67 +561,7 @@ public class NuevoControlAsistenciaActivity extends AppCompatActivity implements
 					}
 				});
 				break;
-			/*case SAVE:
-				builder.setTitle(this.getString(R.string.confirm));
-				if (codigoParticipante != null && codigoParticipante.equalsIgnoreCase("00000")) {
-					builder.setMessage("Confirma agregar coordenada al nuevo participante?");
-				} else if (esEntomologia) {
-					builder.setMessage("Confirma agregar coordenada al cuestionario?");
-				}
-				else {
-					//builder.setMessage("Desea agregar coordenada al participante " + (mParticipante != null ? mParticipante.getCodigo() : codigoParticipante) + "?");
-				}*/
-				/*builder.setPositiveButton(this.getString(R.string.yes), new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						// Finish app
-						dialog.dismiss();
-						//saveCoordinate();
-						if (!inputLatlong.getText().toString().isEmpty()) {
-							if (mLocationMarker.getPosition() != null) {
-								if (codigoParticipante!=null || esEntomologia){
-									Intent intent1 = new Intent();
-									intent1.putExtra("CODE_RESULT", inputLatlong.getText().toString());
-									setResult(RESULT_OK, intent1);
-									finish();
-								}else {
-									new     SaveCoordenadaTask().execute(mLocationMarker.getPosition().toString(),
-											String.format(Locale.getDefault(), getString(R.string.marker_latlng_format), mLocationMarker.getPosition().latitude),
-											String.format(Locale.getDefault(), getString(R.string.marker_latlng_format), mLocationMarker.getPosition().longitude));
 
-								}
-
-							}else {
-								showToast(getApplicationContext().getString(R.string.error_marker));
-							}
-						}else{
-							showToast(getApplicationContext().getString(R.string.wrongSelect,getApplicationContext().getString(R.string.latlng)));
-						}
-					}
-				});
-				builder.setNegativeButton(this.getString(R.string.no), new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// Do nothing
-						dialog.dismiss();
-					}
-				});
-				break;*/
-			   /*case INFO:
-				builder.setTitle(this.getString(R.string.direccion)+ " -> "+ mParticipante.getCodigo());
-				if (mCoordenadas!=null && mCoordenadas.getDireccion()!=null) {
-					builder.setMessage(mCoordenadas.getDireccion());
-				} else if (mParticipante.getCasa().getDireccion()!=null) {
-					builder.setMessage(mParticipante.getCasa().getDireccion());
-				} else {
-					builder.setMessage(getApplicationContext().getString(R.string.without_direction));
-				}
-				builder.setPositiveButton(this.getString(R.string.ok), new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						// Finish app
-						dialog.dismiss();
-					}
-				});
-				break;*/
 			default:
 				break;
 		}

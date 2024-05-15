@@ -18,27 +18,27 @@ public class EncuestaCasa extends BaseMetaData {
     private String participante; //participantes encuestado
     private int cuantasPersonas; //1
     private int cuantasMujeres; //2
-    private String edadMujer1;
-    private String edadMujer2;
-    private String edadMujer3;
-    private String edadMujer4;
-    private String edadMujer5;
-    private String edadMujer6;
-    private String edadMujer7;
-    private String edadMujer8;
-    private String edadMujer9;
-    private String edadMujer10;
+    private Integer edadMujer1;
+    private Integer edadMujer2;
+    private Integer edadMujer3;
+    private Integer edadMujer4;
+    private Integer edadMujer5;
+    private Integer edadMujer6;
+    private Integer edadMujer7;
+    private Integer edadMujer8;
+    private Integer edadMujer9;
+    private Integer edadMujer10;
     private int cuantosHombres; //3
-    private String edadHombre1;
-    private String edadHombre2;
-    private String edadHombre3;
-    private String edadHombre4;
-    private String edadHombre5;
-    private String edadHombre6;
-    private String edadHombre7;
-    private String edadHombre8;
-    private String edadHombre9;
-    private String edadHombre10;
+    private Integer edadHombre1;
+    private Integer edadHombre2;
+    private Integer edadHombre3;
+    private Integer edadHombre4;
+    private Integer edadHombre5;
+    private Integer edadHombre6;
+    private Integer edadHombre7;
+    private Integer edadHombre8;
+    private Integer edadHombre9;
+    private Integer edadHombre10;
     private int cantidadCuartos;
     private int cantidadCuartosDormir;
     private String problemaAgua; //6
@@ -162,7 +162,10 @@ public class EncuestaCasa extends BaseMetaData {
     private String personaFumaDentroCasa; //35
     private String tieneRecoleccionBasura; //36
     private Integer cuantasVecesRecBasura; //37
-    private String dondePasaRecBasura; //38
+    private String dondePasaRecBasura; //32
+    private String dondePasaRecBasuraOtros; //32
+    private String vistoAnimalesSalvajes; //33
+    private String vistoAnimalesSalvajesOtros; //33.1
 
     public String getCodigo() {
         return codigo;
@@ -204,83 +207,83 @@ public class EncuestaCasa extends BaseMetaData {
         this.cuantasMujeres = cuantasMujeres;
     }
 
-    public String getEdadMujer1() {
+    public Integer getEdadMujer1() {
         return edadMujer1;
     }
 
-    public void setEdadMujer1(String edadMujer1) {
+    public void setEdadMujer1(Integer edadMujer1) {
         this.edadMujer1 = edadMujer1;
     }
 
-    public String getEdadMujer2() {
+    public Integer getEdadMujer2() {
         return edadMujer2;
     }
 
-    public void setEdadMujer2(String edadMujer2) {
+    public void setEdadMujer2(Integer edadMujer2) {
         this.edadMujer2 = edadMujer2;
     }
 
-    public String getEdadMujer3() {
+    public Integer getEdadMujer3() {
         return edadMujer3;
     }
 
-    public void setEdadMujer3(String edadMujer3) {
+    public void setEdadMujer3(Integer edadMujer3) {
         this.edadMujer3 = edadMujer3;
     }
 
-    public String getEdadMujer4() {
+    public Integer getEdadMujer4() {
         return edadMujer4;
     }
 
-    public void setEdadMujer4(String edadMujer4) {
+    public void setEdadMujer4(Integer edadMujer4) {
         this.edadMujer4 = edadMujer4;
     }
 
-    public String getEdadMujer5() {
+    public Integer getEdadMujer5() {
         return edadMujer5;
     }
 
-    public void setEdadMujer5(String edadMujer5) {
+    public void setEdadMujer5(Integer edadMujer5) {
         this.edadMujer5 = edadMujer5;
     }
 
-    public String getEdadMujer6() {
+    public Integer getEdadMujer6() {
         return edadMujer6;
     }
 
-    public void setEdadMujer6(String edadMujer6) {
+    public void setEdadMujer6(Integer edadMujer6) {
         this.edadMujer6 = edadMujer6;
     }
 
-    public String getEdadMujer7() {
+    public Integer getEdadMujer7() {
         return edadMujer7;
     }
 
-    public void setEdadMujer7(String edadMujer7) {
+    public void setEdadMujer7(Integer edadMujer7) {
         this.edadMujer7 = edadMujer7;
     }
 
-    public String getEdadMujer8() {
+    public Integer getEdadMujer8() {
         return edadMujer8;
     }
 
-    public void setEdadMujer8(String edadMujer8) {
+    public void setEdadMujer8(Integer edadMujer8) {
         this.edadMujer8 = edadMujer8;
     }
 
-    public String getEdadMujer9() {
+    public Integer getEdadMujer9() {
         return edadMujer9;
     }
 
-    public void setEdadMujer9(String edadMujer9) {
+    public void setEdadMujer9(Integer edadMujer9) {
         this.edadMujer9 = edadMujer9;
     }
 
-    public String getEdadMujer10() {
+    public Integer getEdadMujer10() {
         return edadMujer10;
     }
 
-    public void setEdadMujer10(String edadMujer10) {
+    public void setEdadMujer10(Integer edadMujer10) {
         this.edadMujer10 = edadMujer10;
     }
 
@@ -292,83 +295,83 @@ public class EncuestaCasa extends BaseMetaData {
         this.cuantosHombres = cuantosHombres;
     }
 
-    public String getEdadHombre1() {
+    public Integer getEdadHombre1() {
         return edadHombre1;
     }
 
-    public void setEdadHombre1(String edadHombre1) {
+    public void setEdadHombre1(Integer edadHombre1) {
         this.edadHombre1 = edadHombre1;
     }
 
-    public String getEdadHombre2() {
+    public Integer getEdadHombre2() {
         return edadHombre2;
     }
 
-    public void setEdadHombre2(String edadHombre2) {
+    public void setEdadHombre2(Integer edadHombre2) {
         this.edadHombre2 = edadHombre2;
     }
 
-    public String getEdadHombre3() {
+    public Integer getEdadHombre3() {
         return edadHombre3;
     }
 
-    public void setEdadHombre3(String edadHombre3) {
+    public void setEdadHombre3(Integer edadHombre3) {
         this.edadHombre3 = edadHombre3;
     }
 
-    public String getEdadHombre4() {
+    public Integer getEdadHombre4() {
         return edadHombre4;
     }
 
-    public void setEdadHombre4(String edadHombre4) {
+    public void setEdadHombre4(Integer edadHombre4) {
         this.edadHombre4 = edadHombre4;
     }
 
-    public String getEdadHombre5() {
+    public Integer getEdadHombre5() {
         return edadHombre5;
     }
 
-    public void setEdadHombre5(String edadHombre5) {
+    public void setEdadHombre5(Integer edadHombre5) {
         this.edadHombre5 = edadHombre5;
     }
 
-    public String getEdadHombre6() {
+    public Integer getEdadHombre6() {
         return edadHombre6;
     }
 
-    public void setEdadHombre6(String edadHombre6) {
+    public void setEdadHombre6(Integer edadHombre6) {
         this.edadHombre6 = edadHombre6;
     }
 
-    public String getEdadHombre7() {
+    public Integer getEdadHombre7() {
         return edadHombre7;
     }
 
-    public void setEdadHombre7(String edadHombre7) {
+    public void setEdadHombre7(Integer edadHombre7) {
         this.edadHombre7 = edadHombre7;
     }
 
-    public String getEdadHombre8() {
+    public Integer getEdadHombre8() {
         return edadHombre8;
     }
 
-    public void setEdadHombre8(String edadHombre8) {
+    public void setEdadHombre8(Integer edadHombre8) {
         this.edadHombre8 = edadHombre8;
     }
 
-    public String getEdadHombre9() {
+    public Integer getEdadHombre9() {
         return edadHombre9;
     }
 
-    public void setEdadHombre9(String edadHombre9) {
+    public void setEdadHombre9(Integer edadHombre9) {
         this.edadHombre9 = edadHombre9;
     }
 
-    public String getEdadHombre10() {
+    public Integer getEdadHombre10() {
         return edadHombre10;
     }
 
-    public void setEdadHombre10(String edadHombre10) {
+    public void setEdadHombre10(Integer edadHombre10) {
         this.edadHombre10 = edadHombre10;
     }
 
@@ -1362,6 +1365,29 @@ public class EncuestaCasa extends BaseMetaData {
 
     public void setDondePasaRecBasura(String dondePasaRecBasura) {
         this.dondePasaRecBasura = dondePasaRecBasura;
+    }
+
+    public String getDondePasaRecBasuraOtros() {
+        return dondePasaRecBasuraOtros;
+    }
+
+    public void setDondePasaRecBasuraOtros(String dondePasaRecBasuraOtros) {
+        this.dondePasaRecBasuraOtros = dondePasaRecBasuraOtros;
+    }
+
+    public String getVistoAnimalesSalvajes() {
+        return vistoAnimalesSalvajes;
+    }
+
+    public void setVistoAnimalesSalvajes(String vistoAnimalesSalvajes) {
+        this.vistoAnimalesSalvajes = vistoAnimalesSalvajes;
+    }
+    public String getVistoAnimalesSalvajesOtros() {
+        return vistoAnimalesSalvajesOtros;
+    }
+
+    public void setVistoAnimalesSalvajesOtros(String vistoAnimalesSalvajesOtros) {
+        this.vistoAnimalesSalvajesOtros = vistoAnimalesSalvajesOtros;
     }
 
     @Override

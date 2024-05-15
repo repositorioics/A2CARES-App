@@ -72,7 +72,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1.0"
             android:textStyle="bold"
+            android:textColor="@color/review_green"
             android:textSize="18sp"
+            android:paddingLeft="8dip"
         />
 
     </LinearLayout>

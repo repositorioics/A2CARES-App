@@ -20,6 +20,8 @@
     <string name="main_10">Médicos</string>
     <string name="main_11">Cambio de Domicilio</string>
     <string name="main_12">Control de Asistencia</string>
+    <string name="main_13">Admisión Puestos</string>
+    <string name="main_14">Temperatura Termo</string>
     <string name="datos_part">Datos participante</string>
     <string name="participants">Lista Participantes</string>
     <string name="phones">Teléfonos</string>
@@ -29,6 +31,8 @@
     <string name="menu_doctor">Menu Médicos</string>
     <string name="lab_orders">Ordenes Laboratorio</string>
     <string name="marcar_asistencia">Control de Asistencia</string>
+    <string name="admision">Admision A2CARES</string>
+    <string name="informe_fin_dia_medicos">Informe Fin Dia Medicos</string>
 
     <string name="exit">Salir</string>
     <string name="success">Operación exitosa!</string>
@@ -66,8 +70,12 @@
     <string name="text_notfound">Valor no encontrado!</string>
     <string name="scan_error">Esta lectura es inválida!</string>
     <string name="alerta_conva">Pendiente Convaleciente, consulte con su Supervisor</string>
+    <string name="alerta_seguimiento">Paciente en Seguimiento </string>
+    <string name="alerta_pendiente_muestra_anual">YA TIENE MUESTRA ANUAL</string>
+    <string name="alerta_no_pendiente_muestra_anual">NO TIENE MUESTRA ANUAL</string>
     <string name="alerta_retirado">Participante Retirado</string>
     <string name="enter_guardado">Asistencia guardada con éxito</string>
+    <string name="error_necesita_descargar">La base de datos no contiene registros. DESCARGAR DATOS.</string>
     <string name="procesando_espere">Procesando ubicación actual - De Guardar nuevamente</string>
 
     <!-- Formularios-->
@@ -78,6 +86,10 @@
     <string name="submit_confirm_message">Guardar la informacion en la base de datos?</string>
     <string name="submit_confirm_button">Guardar</string>
     <string name="submit_confirm_button_asist">Guardar Asistencia</string>
+    <string name="submit_confirm_button_asist_temp">Guardar Temperatura</string>
+    <string name="submit_confirm_button_asist_temp1">Temperatura Guardada con éxito.</string>
+    <string name="submit_valor_temperatura">El valor de Temperatura debe estar en el rango (2 a 10)</string>
+    <string name="submit_valor_temperaturaVacio">El valor de Temperatura no debe estar vacío</string>
     <string name="cancel">Cancelar</string>
     <string name="is_null">(Nulo)</string>
     <string name="loading">Cargando.....</string>
@@ -92,11 +104,13 @@
     <string name="sick_samples">Muestras Enfermo</string>
     <string name="satisfaction_survey">Encuensta de Satisfacción Usuario</string>
     <string name="reconsent">Reconsentimiento</string>
+    <string name="pendiente_reconsent">PENDIENTE RECONSENTIMIENTO</string>
 
     <string name="code">Código</string>
     <string name="casa">Casa</string>
     <string name="participant">Participante</string>
     <string name="usuarioa2cares">Usuario:</string>
+    <string name="usuarioBioanalista">Bioanalista/Flebotomista:</string>
     <string name="ubicaciona2cares">Ubicación Actual:</string>
     <string name="edad">Edad</string>
     <string name="notavailable">No disponible</string>
@@ -164,6 +178,8 @@
     <string name="visitaNoExitosa">Visita registrada. Se guardó en la base de datos una visita fallida por <xliff:g id="razon">%1$s</xliff:g></string>
     <string name="direccion_cambio_domicilio">Dirección de nuevo domicilio.</string>
     <string name="telefono_cambio_domicilio">Teléfono de nuevo domicilio.</string>
+    <string name="telefono_1_actualizado">Actualizar Teléfono 1.</string>
+    <string name="telefono_2_actualizado">Actualizar Teléfono 2.</string>
 
     <!-- Mapas -->
     <string name="marker_detail_latlng">(%1$.6f, %2$.6f)</string>
@@ -203,6 +219,7 @@
     <string name="lab_1">Recepción Rojo Laboratorio</string>
     <string name="lab_3">Recepción Enfermo Laboratorio</string>
 
+
     <!-- datos pendientes-->
     <string name="confirm_pendiente">Hay datos pendientes de ingreso, ¿Confirma que desea salir?</string>
     <string name="header_pending_data">Por favor ingrese porque razón no ingreso la información debida.</string>
@@ -240,6 +257,7 @@
     <!-- muestras de enfermo bioanalista-->
     <string name="sick_sample_title">Agregar muestra de enfermo</string>
     <string name="control_asistencia_sample_title">Control de Asistencia Personal A2CARES</string>
+    <string name="control_temperatura_termo_title">Control de Temperatura - Termos</string>
     <string name="wrong_fis_2">FIS es posterior a la fecha de toma</string>
     <string name="wrong_fif_3">FIF es posterior a la fecha de toma</string>
     <!-- muestras de enfermo laboratorio-->

@@ -20,6 +20,7 @@ import ni.org.ics.a2cares.app.AbstractAsyncActivity;
 import ni.org.ics.a2cares.app.MainActivity;
 import ni.org.ics.a2cares.app.MyIcsApplication;
 import ni.org.ics.a2cares.app.R;
+import ni.org.ics.a2cares.app.ui.activities.enterdata.NuevoControlTemperaturaTermoActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.RecepcionBhcActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.RecepcionRojoActivity;
 import ni.org.ics.a2cares.app.ui.activities.enterdata.RecepcionRojoLaboratorioActivity;
@@ -34,6 +35,7 @@ public class MenuLaboratorioActivity extends AbstractAsyncActivity {
 	private String[] menu_casa;
     private AlertDialog alertDialog;
 
+	private final int OPCION_TEMPERATURA_TERMO = 3;
     private final int OPCION_RECEPCION_BHC = 2;
     private final int OPCION_RECEPCION_ROJO = 0;
 	private final int OPCION_RECEPCION_ENFERMO = 1;
@@ -79,6 +81,13 @@ public class MenuLaboratorioActivity extends AbstractAsyncActivity {
 						i.putExtras(arguments);
 						startActivity(i);
 						break;
+				/*	case OPCION_TEMPERATURA_TERMO:
+						i = new Intent(getApplicationContext(),
+								NuevoControlTemperaturaTermoActivity.class);
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						i.putExtras(arguments);
+						startActivity(i);
+						break;*/
 				    default:
                         break;
 		        }

@@ -1170,7 +1170,7 @@ public class NuevoReconsentimientoActivity extends AbstractAsyncActivity impleme
                         procesos.setRetirado(0);
                         //aca siempre va a marcar si, porque no hay registro de encuestas, ya que no se descargan del server
                         List<EncuestaCasa> mEncuestasCasas = estudiosAdapter.getEncuestaCasas(MainDBConstants.casa + "=" + casa.getCodigo(), null);
-                        if (mEncuestasCasas.size() <= 0) {
+                      /*  if (mEncuestasCasas.size() <= 0) {
                             procesos.setPendienteEnCasa(Constants.YESKEYSND);
                         } else {
                             procesos.setPendienteEnCasa(Constants.NOKEYSND);
@@ -1180,14 +1180,16 @@ public class NuevoReconsentimientoActivity extends AbstractAsyncActivity impleme
                             procesos.setPendienteObseq(Constants.YESKEYSND);
                         } else {
                             procesos.setPendienteObseq(Constants.NOKEYSND);
-                        }
-
-                        procesos.setPendienteEncPart(Constants.YESKEYSND);
-                        procesos.setPendientePyT(Constants.YESKEYSND);
-                        procesos.setPendienteMxMA(Constants.YESKEYSND);
-                        procesos.setPendienteMxTx(Constants.NOKEYSND);
+                        }*/
+                        procesos.setPendienteEnCasa(participante1.getProcesos().getPendienteEnCasa());
+                        procesos.setPendienteEncPart(participante1.getProcesos().getPendienteEncPart());
+                        procesos.setPendientePyT(participante1.getProcesos().getPendientePyT());
+                        procesos.setPendienteMxMA(participante1.getProcesos().getPendienteMxMA());
+                        procesos.setPendienteMxTx(participante1.getProcesos().getPendienteMxTx());
                         //encuesta de satisfaccion de usuario
-                        procesos.setEsatUsuario(Constants.YESKEYSND);
+                        procesos.setEsatUsuario(participante1.getProcesos().getEsatUsuario());
+                        procesos.setPendienteObseq(participante1.getProcesos().getPendienteObseq());
+                        procesos.setReconsent(Constants.NOKEYSND);
 
                         //meta data
                         procesos.setRecordDate(new Date());
@@ -1195,14 +1197,14 @@ public class NuevoReconsentimientoActivity extends AbstractAsyncActivity impleme
                         procesos.setDeviceid(infoMovil.getDeviceId());
                         procesos.setEstado('0');
                         procesos.setPasive('0');
-                      //  estudiosAdapter.crearParticipanteProcesos(procesos);
+                        estudiosAdapter.editarParticipanteProcesos(procesos);
 
                         Intent i = new Intent(getApplicationContext(),
                                 MenuParticipanteActivity.class);
                         Bundle arguments = new Bundle();
                         arguments.putSerializable(Constants.PARTICIPANTE, participante);
                         i.putExtras(arguments);
-                        i.putExtra(Constants.VISITA_EXITOSA, !mUser.getVisitas()); //si hay que pedir la visita, se envia que la visita no es exitosa
+                        i.putExtra(Constants.VISITA_EXITOSA, true); //si hay que pedir la visita, se envia que la visita no es exitosa
                         startActivity(i);
                         showToast(getString(R.string.success));
                     } else {
